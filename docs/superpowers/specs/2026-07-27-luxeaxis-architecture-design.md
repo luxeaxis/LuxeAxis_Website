@@ -154,7 +154,7 @@ tokens/
     "primary-hover-bg": { "$value": "{semantic.accent-hover}" }
   },
   "nav": {
-    "bg": { "$value": "color-mix(in srgb, {semantic.surface} 55%, transparent)" }
+    "height": { "$value": "72px" }
   }
 }
 ```
@@ -170,7 +170,7 @@ Component variables are declared **once**, as `var()` references. A runtime `dat
 
 **Three semantic roles must be added** to complete the set: `accent-hover`, `field-bg`, `field-border-focus`.
 
-`color-mix()` is used for the glass recipe so the fill tracks the theme surface. Style Dictionary emits a resolved `rgba()` declaration immediately before it as a fallback, so browsers without `color-mix` support get the correct dark-theme glass rather than a transparent nav.
+The glass fill (`--nav-bg`) is **computed at build time** from `color.brand.*` and `opacity.glass-*`, and emitted as a resolved `rgba()` per theme. `color-mix()` was considered and rejected: with both themes generated at build time there is no runtime `--surface` override for it to track, so it would have bought only a browser-support caveat and a hand-written literal fallback that duplicates the navy primitive — which the tokens-only rule forbids.
 
 ### 2.3 Required custom transforms
 
