@@ -324,7 +324,7 @@ Spec §2.2 requires these; the source file has none of them. Add to `theme.dark`
 And to `theme.light`:
 
 ```jsonc
-"accent-hover":       { "$value": "#15656E", "$description": "Teal darkened for hover; on ivory 6.1:1." },
+"accent-hover":       { "$value": "#15656E", "$description": "Teal darkened for hover; on ivory 6.46:1." },
 "field-bg":           { "$value": "rgba(13,43,78,0.03)" },
 "field-border-focus": { "$value": "{color.brand.teal}" }
 ```
@@ -723,6 +723,35 @@ describe('contrastRatio', () => {
 
   it('is symmetric', () => {
     expect(contrastRatio('#C9A84C', '#0D2B4E')).toBeCloseTo(contrastRatio('#0D2B4E', '#C9A84C'), 4);
+  });
+
+  // The three assertions above are all invariant to transposed luminance
+  // coefficients — grey, identity and order-reversal cannot expose which
+  // weight lands on which channel. This one pins them.
+  it('weights the channels correctly on an asymmetric pair', () => {
+    expect(contrastRatio('#0D2B4E', '#FCFAF5')).toBeCloseTo(13.67, 2);
+  });
+
+  it('expands 3-digit hex', () => {
+    expect(contrastRatio('#fff', '#000000')).toBeCloseTo(contrastRatio('#ffffff', '#000000'), 4);
+  });
+
+  // The monochrome case above survives most expansion bugs. This one does not:
+  // a padding or mis-ordering bug gives a different colour entirely.
+  it('expands 3-digit hex on a non-grey value', () => {
+    expect(contrastRatio('#0d2', '#000000')).toBeCloseTo(contrastRatio('#00dd22', '#000000'), 4);
+  });
+
+  it('parses rgb()', () => {
+    expect(contrastRatio('rgb(255, 255, 255)', '#000000')).toBeCloseTo(21, 1);
+  });
+
+  it('parses rgba() and ignores its alpha, which is deliberate', () => {
+    expect(contrastRatio('rgba(255, 255, 255, 0.5)', '#000000')).toBeCloseTo(21, 1);
+  });
+
+  it('throws on an unparseable colour rather than returning a wrong number', () => {
+    expect(() => contrastRatio('not-a-colour', '#000000')).toThrow();
   });
 });
 
