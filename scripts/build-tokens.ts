@@ -152,9 +152,10 @@ async function main() {
   // inspecting the generated styles/tokens.dark.css, which (before this
   // filtering) declares `--theme-dark-surface`, `--theme-light-surface`,
   // etc. `--theme-` is therefore the exact, verified prefix to strip.
-  const darkDeclarations = getDeclarations(darkRaw).filter(
-    (line) => !/--theme-/.test(line),
-  );
+  const darkDeclarations = getDeclarations(darkRaw).filter((line) => {
+    const name = declName(line);
+    return name !== null && !name.startsWith('theme-');
+  });
 
   // light -> [data-theme="light"] keeps ONLY the semantic role variables —
   // the role list comes from tokens/modes/dark.json's `semantic` object
@@ -178,4 +179,8 @@ async function main() {
   );
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
+
