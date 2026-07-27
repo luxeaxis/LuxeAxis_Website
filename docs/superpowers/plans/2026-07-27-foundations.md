@@ -169,23 +169,61 @@ export default defineConfig({
 
 - [ ] **Step 5: Create `eslint.config.mjs` enforcing the layering rule**
 
+Three things about this config are non-obvious and were each established by direct experiment. Do not "simplify" them back:
+
+- `eslint-config-next@14.2.20` ships only a legacy eslintrc config and throws under ESLint 9's flat-config loader. Import `@next/eslint-plugin-next` directly instead.
+- `@next/next/no-duplicate-head` and `no-page-custom-font` call the removed `context.getAncestors()` API and crash under ESLint 9. Both are Pages-Router-only and irrelevant to this App Router project.
+- `no-restricted-imports` matches `group` entries with the **`ignore` package (gitignore syntax)**, not minimatch. Bash extglobs like `!(registry)` are treated as a literal path segment and match nothing. The gitignore-native way to say "everything under `three/` except `registry`" is a blanket glob followed by a `!`-prefixed negation in the same group.
+
 ```js
-import next from 'eslint-config-next';
+import tsParser from '@typescript-eslint/parser';
+import nextPlugin from '@next/eslint-plugin-next';
 
 export default [
-  ...next(),
+  { ignores: ['.next/**', 'node_modules/**'] },
   {
+    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: { sourceType: 'module', ecmaFeatures: { jsx: true } },
+    },
+    plugins: { '@next/next': nextPlugin },
+    rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
+      '@next/next/no-duplicate-head': 'off',
+      '@next/next/no-page-custom-font': 'off',
+    },
+  },
+  {
+    // The one DOM→WebGL seam. Repo-wide: nothing anywhere may reach into
+    // three/ except through the registry.
+    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     rules: {
       'no-restricted-imports': ['error', {
         patterns: [
-          { group: ['@/features/*'], message: 'components/ may not import from features/ — see spec §1.2 layering.' },
-          { group: ['@/three/!(registry)'], message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2.' },
+          { group: ['@/three/**', '!@/three/registry'], message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2.' },
+        ],
+      }],
+    },
+  },
+  {
+    // Scoped to components/ only. Routes ARE permitted to import features —
+    // that is the layering direction, not a violation — so this rule must not
+    // apply repo-wide.
+    files: ['components/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': ['error', {
+        patterns: [
+          { group: ['@/features/**'], message: 'components/ may not import from features/ — see spec §1.2 layering.' },
         ],
       }],
     },
   },
 ];
 ```
+
+Requires two extra devDependencies: `@next/eslint-plugin-next@14.2.20` and `@typescript-eslint/parser@8.18.1`.
 
 - [ ] **Step 6: Create a placeholder app so `next build` succeeds**
 
@@ -1438,7 +1476,7 @@ import type { SceneId } from '@/three/registry';
   setActiveScene: (activeScene) => set({ activeScene }),
 ```
 
-This import is the single permitted DOM→WebGL edge. The Task 1 lint rule blocks `@/three/!(registry)`; the negation admits `@/three/registry` and nothing else. Do not "simplify" that pattern — it is load-bearing.
+This import is the single permitted DOM→WebGL edge. The Task 1 lint rule uses the group `['@/three/**', '!@/three/registry']`; the negation admits `@/three/registry` and nothing else. Do not "simplify" that pattern — it is load-bearing.
 
 - [ ] **Step 4: Create the nine placeholder posters**
 
