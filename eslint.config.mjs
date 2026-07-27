@@ -33,6 +33,8 @@ export default [
     },
   },
   {
+    // The one DOM→WebGL seam. Repo-wide: nothing anywhere may reach into
+    // three/ except through the registry.
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     rules: {
       // ESLint's `no-restricted-imports` "patterns" option matches `group`
@@ -44,8 +46,20 @@ export default [
       // one group: a blanket glob followed by a `!`-prefixed negation.
       'no-restricted-imports': ['error', {
         patterns: [
-          { group: ['@/features/*'], message: 'components/ may not import from features/ — see spec §1.2 layering.' },
           { group: ['@/three/**', '!@/three/registry'], message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2.' },
+        ],
+      }],
+    },
+  },
+  {
+    // Scoped to components/ only. Routes ARE permitted to import features —
+    // that is the layering direction, not a violation — so this rule must not
+    // apply repo-wide.
+    files: ['components/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': ['error', {
+        patterns: [
+          { group: ['@/features/**'], message: 'components/ may not import from features/ — see spec §1.2 layering.' },
         ],
       }],
     },
