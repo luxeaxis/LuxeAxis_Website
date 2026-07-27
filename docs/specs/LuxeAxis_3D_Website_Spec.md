@@ -152,13 +152,13 @@ Contrast ratios below are computed (WCAG 2.x). **Follow the usage rules — they
 | `--color-gold` | `#C9A84C` | **Interactive/importance accent on dark** | On navy **6.24:1 ✅AA**; Navy text *on* gold **6.24:1 ✅AA** |
 | `--color-gold-deep` | `#B8860B` | Gold for large text/icons only | On navy **4.38:1 (AA large only)**; **never** gold body text on ivory (2.19:1 ❌) |
 | `--color-teal` | `#1A7A85` | Human/wellness signal; links on light | On ivory **4.83:1 ✅AA**; White on teal **5.04:1 ✅AA**; **never** teal on navy (2.83:1 ❌) |
-| `--color-ink` | `#111315` | Text on gold buttons/light chips | On gold-light **8.26:1 ✅AAA** |
+| `--color-ink` | `#111315` | Text on gold buttons/light chips | On gold-light **8.15:1 ✅AAA** |
 
 **Hard rules baked from the math:**
 1. Body text on navy → **ivory or white only**. Gold is for emphasis words, rules, icons, and large display — not paragraphs.
 2. Gold-light `#C9A84C` is the interactive gold on dark (buttons, links, focus). Gold-deep `#B8860B` is reserved for headings/iconography.
 3. **Never** put gold text on ivory (fails) or teal text on navy (fails). Teal is a *light-surface* colour and a 3D material colour, not a dark-surface text colour.
-4. Primary button = gold-light fill + `--color-ink` label (8.26:1). Secondary = ivory outline on navy. Never rely on colour alone for state (add icon/underline) — colour-blind safe.
+4. Primary button = gold-light fill + `--color-ink` label (8.15:1). Secondary = ivory outline on navy. Never rely on colour alone for state (add icon/underline) — colour-blind safe.
 
 ```css
 :root{

@@ -39,7 +39,7 @@ Primitives are the palette. Semantics assign *meaning* per theme. Component toke
 | **Never teal `#1A7A85` as text on navy** — use `teal-bright #4FB6C4` | brand teal on navy 2.83:1 ❌; teal-bright 5.99:1 ✅ |
 | Brand teal is a **fill** (white/ivory label) or **text on ivory** (4.83:1) | verified |
 | Status colors switch by surface: `*-on-dark` (lighter) vs `*-on-light` (deeper) | e.g. error 5.54:1 on navy / 6.29:1 on ivory |
-| Primary button = gold fill + **ink** label | ink on gold 8.26:1 AAA |
+| Primary button = gold fill + **ink** label | ink on gold 8.15:1 AAA |
 | State is **never color-only** — pair with icon, underline, or text | color-blind safety |
 
 **Metallic gold gradient** (`color.gradient.gold-metallic`) is decorative only — logo, hero, large brand moments. Never on body text or small UI (it smears and fails contrast at small sizes).

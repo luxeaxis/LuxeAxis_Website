@@ -17,7 +17,7 @@
       "gold-champagne":{ "$value": "#E7C874", "$description": "Highlight stop for the metallic gradient; primary hover on gold." },
       "teal":          { "$value": "#1A7A85", "$description": "Human/wellness signal. Fill (white text 5.04:1) or text on ivory (4.83:1). NEVER text on navy." },
       "teal-bright":   { "$value": "#4FB6C4", "$description": "Accessible teal for TEXT/ICON on DARK. On navy = 5.99:1 AA." },
-      "ink":           { "$value": "#111315", "$description": "Label color on gold fills. On gold = 8.26:1 AAA." }
+      "ink":           { "$value": "#111315", "$description": "Label color on gold fills. On gold = 8.15:1 AAA." }
     },
     "neutral-on-dark": {
       "$description": "Text/icon ramp for use on navy surfaces (all verified).",
@@ -93,7 +93,7 @@
       "border":             { "$value": "rgba(13,43,78,0.14)" },
       "border-strong":      { "$value": "rgba(13,43,78,0.24)" },
       "focus-ring":         { "$value": "#1A7A85" },
-      "accent-hover":       { "$value": "#15656E", "$description": "Teal darkened for hover; on ivory 6.1:1." },
+      "accent-hover":       { "$value": "#15656E", "$description": "Teal darkened for hover; on ivory 6.46:1." },
       "field-bg":           { "$value": "rgba(13,43,78,0.03)" },
       "field-border-focus": { "$value": "{color.brand.teal}" }
     }

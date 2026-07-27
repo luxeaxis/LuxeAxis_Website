@@ -17,6 +17,32 @@ describe('contrastRatio', () => {
   it('is symmetric', () => {
     expect(contrastRatio('#C9A84C', '#0D2B4E')).toBeCloseTo(contrastRatio('#0D2B4E', '#C9A84C'), 4);
   });
+
+  it('pins the luminance coefficients: navy on ivory is 13.67', () => {
+    expect(contrastRatio('#0D2B4E', '#FCFAF5')).toBeCloseTo(13.67, 2);
+  });
+});
+
+describe('colour parsing', () => {
+  it('expands 3-digit hex the same as its 6-digit equivalent (#fff vs #ffffff)', () => {
+    expect(contrastRatio('#fff', '#000000')).toBeCloseTo(contrastRatio('#ffffff', '#000000'), 6);
+  });
+
+  it('expands 3-digit hex the same as its 6-digit equivalent for a non-grey colour', () => {
+    expect(contrastRatio('#0d2', '#FCFAF5')).toBeCloseTo(contrastRatio('#00dd22', '#FCFAF5'), 6);
+  });
+
+  it('parses rgb(...) — rgb(255, 255, 255) on #000000 gives 21', () => {
+    expect(contrastRatio('rgb(255, 255, 255)', '#000000')).toBeCloseTo(21, 1);
+  });
+
+  it('parses rgba(...) and ignores its alpha channel', () => {
+    expect(contrastRatio('rgba(255, 255, 255, 0.3)', '#000000')).toBeCloseTo(21, 1);
+  });
+
+  it('throws on an unparseable colour', () => {
+    expect(() => contrastRatio('not-a-colour', '#000000')).toThrow();
+  });
 });
 
 describe('verified pairings hold', () => {
