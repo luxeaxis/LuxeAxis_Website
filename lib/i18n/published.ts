@@ -9,7 +9,7 @@ export const PUBLISHED: { ta: string[] } = {
   ta: ['/'],
 };
 
-function normalise(route: string): string {
+export function normalise(route: string): string {
   const trimmed = route.replace(/\/+$/, '');
   return trimmed === '' ? '/' : trimmed;
 }

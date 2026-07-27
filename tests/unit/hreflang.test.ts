@@ -22,4 +22,30 @@ describe('alternatesFor', () => {
   it('canonicalises to the English URL', () => {
     expect(alternatesFor('/pricing').canonical).toBe('https://luxeaxis.com/pricing');
   });
+
+  it('treats the empty route and the root route identically', () => {
+    expect(alternatesFor('')).toEqual(alternatesFor('/'));
+  });
+
+  it('normalises a trailing-slash route to the same output as its clean equivalent, including the ta alternate', () => {
+    // PUBLISHED.ta only contains '/', so the root's two spellings ('' and '/')
+    // are the only inputs that exercise the ta branch without stubbing the
+    // published-routes module. This proves the ta URL built from '' matches
+    // the ta URL built from '/' exactly - the branch that used to skip
+    // normalisation entirely.
+    const clean = alternatesFor('/');
+    const trailing = alternatesFor('');
+    expect(trailing.languages.ta).toBe(clean.languages.ta);
+    expect(trailing.languages.ta).toBe('https://luxeaxis.com/ta');
+  });
+
+  it('never produces a double slash after the origin, on any URL in the result', () => {
+    const results = [alternatesFor(''), alternatesFor('/'), alternatesFor('/pricing'), alternatesFor('/pricing/')];
+    for (const { languages, canonical } of results) {
+      for (const url of [...Object.values(languages), canonical]) {
+        const afterOrigin = url.replace(/^https?:\/\//, '');
+        expect(afterOrigin.includes('//')).toBe(false);
+      }
+    }
+  });
 });
