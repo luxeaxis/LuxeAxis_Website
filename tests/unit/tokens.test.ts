@@ -55,4 +55,17 @@ describe('token build', () => {
   it('leaves no unresolved aliases', () => {
     expect(css).not.toMatch(/\{[a-z][a-z0-9.-]*\}/i);
   });
+
+  it('does not publish the internal theme tier', () => {
+    // theme.* maps semantic roles to primitives. Publishing it would let a
+    // component read var(--theme-light-surface) and bypass the semantic API.
+    expect(css).not.toMatch(/--theme-/);
+  });
+
+  it('resolves semantic tokens to literal values in both themes', () => {
+    expect(css).toMatch(/--surface:\s*#0D2B4E/i);
+    expect(css).toMatch(/--surface:\s*#FCFAF5/i);
+    expect(css).toMatch(/--accent:\s*#C9A84C/i);
+    expect(css).toMatch(/--accent:\s*#1A7A85/i);
+  });
 });
