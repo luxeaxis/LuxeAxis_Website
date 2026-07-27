@@ -12,6 +12,11 @@ next-env.d.ts
 # testing
 coverage/
 
+# generated (tokens)
+styles/tokens.css
+styles/tokens.dark.css
+styles/tokens.light.css
+
 # misc
 .DS_Store
 *.log

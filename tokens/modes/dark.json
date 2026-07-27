@@ -1,0 +1,21 @@
+{
+  "semantic": {
+    "$type": "color",
+    "surface":            { "$value": "{theme.dark.surface}" },
+    "surface-deep":       { "$value": "{theme.dark.surface-deep}" },
+    "surface-raised":     { "$value": "{theme.dark.surface-raised}" },
+    "on-surface":         { "$value": "{theme.dark.on-surface}" },
+    "on-surface-2":       { "$value": "{theme.dark.on-surface-2}" },
+    "on-surface-muted":   { "$value": "{theme.dark.on-surface-muted}" },
+    "accent":             { "$value": "{theme.dark.accent}" },
+    "accent-contrast":    { "$value": "{theme.dark.accent-contrast}" },
+    "accent-hover":       { "$value": "{theme.dark.accent-hover}" },
+    "signal":             { "$value": "{theme.dark.signal}" },
+    "border-subtle":      { "$value": "{theme.dark.border-subtle}" },
+    "border":             { "$value": "{theme.dark.border}" },
+    "border-strong":      { "$value": "{theme.dark.border-strong}" },
+    "focus-ring":         { "$value": "{theme.dark.focus-ring}" },
+    "field-bg":           { "$value": "{theme.dark.field-bg}" },
+    "field-border-focus": { "$value": "{theme.dark.field-border-focus}" }
+  }
+}

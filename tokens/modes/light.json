@@ -1,0 +1,21 @@
+{
+  "semantic": {
+    "$type": "color",
+    "surface":            { "$value": "{theme.light.surface}" },
+    "surface-deep":       { "$value": "{theme.light.surface-deep}" },
+    "surface-raised":     { "$value": "{theme.light.surface-raised}" },
+    "on-surface":         { "$value": "{theme.light.on-surface}" },
+    "on-surface-2":       { "$value": "{theme.light.on-surface-2}" },
+    "on-surface-muted":   { "$value": "{theme.light.on-surface-muted}" },
+    "accent":             { "$value": "{theme.light.accent}" },
+    "accent-contrast":    { "$value": "{theme.light.accent-contrast}" },
+    "accent-hover":       { "$value": "{theme.light.accent-hover}" },
+    "signal":             { "$value": "{theme.light.signal}" },
+    "border-subtle":      { "$value": "{theme.light.border-subtle}" },
+    "border":             { "$value": "{theme.light.border}" },
+    "border-strong":      { "$value": "{theme.light.border-strong}" },
+    "focus-ring":         { "$value": "{theme.light.focus-ring}" },
+    "field-bg":           { "$value": "{theme.light.field-bg}" },
+    "field-border-focus": { "$value": "{theme.light.field-border-focus}" }
+  }
+}
