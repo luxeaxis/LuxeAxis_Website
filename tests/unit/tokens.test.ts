@@ -63,9 +63,10 @@ describe('token build', () => {
   });
 
   it('resolves semantic tokens to literal values in both themes', () => {
-    expect(css).toMatch(/--surface:\s*#0D2B4E/i);
-    expect(css).toMatch(/--surface:\s*#FCFAF5/i);
-    expect(css).toMatch(/--accent:\s*#C9A84C/i);
-    expect(css).toMatch(/--accent:\s*#1A7A85/i);
+    const [, darkBlock, lightBlock] = css.split(/:root\s*\{|\[data-theme="light"\]\s*\{/);
+    expect(darkBlock).toMatch(/--surface:\s*#0D2B4E/i);
+    expect(darkBlock).toMatch(/--accent:\s*#C9A84C/i);
+    expect(lightBlock).toMatch(/--surface:\s*#FCFAF5/i);
+    expect(lightBlock).toMatch(/--accent:\s*#1A7A85/i);
   });
 });

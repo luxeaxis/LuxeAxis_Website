@@ -4,6 +4,10 @@ import './../tokens/transforms';
 // Appended below the per-theme builds: the nav glass recipe, derived from
 // the surface and opacity tokens.
 import tokens from '../tokens/luxe-axis.tokens.json';
+// The semantic role list for the light-theme override block (see the
+// concatenation step at the bottom of this file) is derived from this file
+// instead of hardcoded, so it can never drift from the tokens themselves.
+import darkMode from '../tokens/modes/dark.json';
 
 const MODES = [
   { name: 'dark',  selector: ':root' },
@@ -35,30 +39,31 @@ async function main() {
       source: ['tokens/luxe-axis.tokens.json', `tokens/modes/${mode.name}.json`],
       usesDtcg: true,
       expand: { include: ['typography'] },
-      // Filtering out theme.* (below) is deliberate: semantic tokens still
-      // author-reference it (`{theme.dark.surface}`, etc.) so their *value*
-      // resolves correctly, but Style Dictionary's css/variables format
+      // No file-level `filter` is used here (deliberately — see the removed
+      // filter this replaces). Style Dictionary's css/variables format
       // triggers its reference-sort pass whenever `outputReferences` is any
       // truthy value — a function included — regardless of what that
       // function returns per token (see formattedVariables.js:
       // `if (outputReferences) { ...sortByReference... }`, which is not
       // gated per-token). That pass walks every referencing token's
-      // original value, notices `theme.*` was filtered out of this file,
-      // and logs "filtered out token references were found" even though
-      // the resolved value is already correct and no reference to
-      // `theme.*` is ever emitted. Style Dictionary's own message for this
-      // is "Ignore this warning if intentional" — it is: `theme.*` is
-      // withheld by design (see the filter below), not by mistake.
-      // `warnings: 'disabled'` silences it (confirmed empirically: without
-      // it, both tokens.dark.css and tokens.light.css log this warning to
-      // stdout on every `pnpm tokens` run; with it, stdout is clean and
-      // stderr stays empty either way — Style Dictionary always logs via
-      // console.log, never console.error). This also silences the
-      // token-name-collision warning for this build; that tradeoff is
-      // accepted here because collisions are covered by
-      // tests/unit/tokens.test.ts's "declares component tokens exactly
-      // once" assertion instead.
-      log: { warnings: 'disabled' },
+      // original value and, if the referenced token was withheld from this
+      // file by a `filter`, logs "filtered out token references were
+      // found" via `getReferences.js`'s `unfilteredTokens` fallback path —
+      // even when the resolved value is already correct. A blanket
+      // `log: { warnings: 'disabled' }` would silence that cosmetic
+      // message, but it has no per-category granularity: it also silences
+      // the name-collision warning (this pipeline has a real one to catch
+      // — see the `name/luxe-css` comment in tokens/transforms.ts about
+      // why `component.field.*` and `component.nav.*` keep their full path
+      // to avoid colliding with the semantic tier) and the unknown
+      // CSS font-shorthand warning (relevant here because `expand: {
+      // include: ['typography'] }` runs over `clamp()` font sizes). Instead,
+      // every token is left in-file for both builds (no `filter` below), so
+      // no reference ever resolves via the `unfilteredTokens` fallback and
+      // the warning never fires — nothing needs suppressing. The theme-tier
+      // exclusion and the dark/light split now happen textually, after the
+      // fact, in the concatenation step at the bottom of this file, working
+      // from the generated (git-ignored) intermediate files.
       platforms: {
         css: {
           transformGroup: 'css',
@@ -67,31 +72,23 @@ async function main() {
           files: [{
             destination: `tokens.${mode.name}.css`,
             format: 'css/variables',
-            // theme.* is an internal mapping from semantic ROLE to PRIMITIVE
-            // (e.g. theme.dark.surface -> color.brand.navy) that exists only
-            // so each mode file has something for the semantic tier to alias.
-            // It must never be published: doing so would let a component read
-            // var(--theme-light-surface) directly and bypass the semantic
-            // tier entirely, which defeats the whole purpose of this
-            // pipeline. It's excluded from BOTH builds below.
-            //
-            // Beyond that, the dark build emits everything else (primitives,
-            // semantic, component — dark is the default `:root` theme), while
-            // the light build emits ONLY the semantic overrides. Primitives,
-            // component tokens, and every scale are theme-independent —
-            // emitting them twice would declare each variable twice and
-            // defeat the whole point of the semantic tier.
-            filter: (token) =>
-              token.path[0] !== 'theme' &&
-              (mode.name === 'dark' || token.path[0] === 'semantic'),
+            // No filter here — see the comment on `source`/`expand` above for
+            // why. This intermediate file (styles/tokens.${mode.name}.css) is
+            // generated and git-ignored, so it transiently contains every
+            // tier, including theme.* and (for the light build) the full
+            // dark/light primitive and component scales. Only the final
+            // styles/tokens.css, assembled in the concatenation step below,
+            // has to be clean — that's where theme.* gets dropped and the
+            // light build gets narrowed down to just its semantic overrides.
             options: {
               selector: mode.selector,
               // Component tokens (`--btn-primary-bg`, etc.) keep their var()
               // reference — e.g. `var(--accent)` — so flipping `data-theme`
               // re-resolves them live with no rebuild. Semantic tokens
               // cannot do the same: they alias `theme.<mode>.*` internally,
-              // and that tier is filtered out above, so an unresolved
-              // reference would point at a variable that no longer exists.
+              // and that tier is dropped from the final output (see the
+              // concatenation step below), so an unresolved reference would
+              // point at a variable that no longer exists.
               // Resolving semantic tokens to literals also means the light
               // block's `--surface: #FCFAF5` genuinely overrides the dark
               // block's `--surface: #0D2B4E` in the cascade, instead of both
@@ -120,9 +117,65 @@ async function main() {
     .map(({ selector, fill }) => `${selector} {\n  --nav-bg: ${fill};\n}`)
     .join('\n');
 
-  const dark = readFileSync('styles/tokens.dark.css', 'utf8');
-  const light = readFileSync('styles/tokens.light.css', 'utf8');
-  writeFileSync('styles/tokens.css', `/* GENERATED by scripts/build-tokens.ts — do not edit. */\n${dark}\n${light}\n${GLASS}\n`);
+  // Both intermediate files are now unfiltered (see the `files[0]` comment
+  // above), so each contains every tier — primitives, theme.*, semantic,
+  // component, and every theme-independent scale. Rebuild the final
+  // dark/light blocks textually, keeping only what belongs in each.
+  //
+  // A css/variables file has exactly one rule (its declarations may span
+  // several lines each, but never nest another `{ ... }`), so the first `{`
+  // and the last `}` in the file bound the full declaration list.
+  function getDeclarations(css: string): string[] {
+    const open = css.indexOf('{');
+    const close = css.lastIndexOf('}');
+    return css
+      .slice(open + 1, close)
+      .split('\n')
+      .map((line) => line.trimEnd())
+      .filter((line) => line.trim().length > 0);
+  }
+
+  // Pulls the bare custom-property name out of a declaration line, e.g.
+  // `  --surface: #0D2B4E;` -> `surface`.
+  function declName(line: string): string | null {
+    const match = line.match(/--([a-z0-9-]+):/i);
+    return match?.[1] ?? null;
+  }
+
+  const darkRaw = readFileSync('styles/tokens.dark.css', 'utf8');
+  const lightRaw = readFileSync('styles/tokens.light.css', 'utf8');
+
+  // dark -> :root keeps everything EXCEPT the internal theme tier. The
+  // `name/luxe-css` transform (tokens/transforms.ts) sends theme.* tokens
+  // down its default (unabbreviated) path-join branch, so e.g.
+  // `theme.dark.surface` becomes `--theme-dark-surface` — confirmed by
+  // inspecting the generated styles/tokens.dark.css, which (before this
+  // filtering) declares `--theme-dark-surface`, `--theme-light-surface`,
+  // etc. `--theme-` is therefore the exact, verified prefix to strip.
+  const darkDeclarations = getDeclarations(darkRaw).filter(
+    (line) => !/--theme-/.test(line),
+  );
+
+  // light -> [data-theme="light"] keeps ONLY the semantic role variables —
+  // the role list comes from tokens/modes/dark.json's `semantic` object
+  // (any mode file has the same role keys; dark.json is used as the
+  // canonical source) rather than being hardcoded, so it can't drift from
+  // the tokens themselves.
+  const semanticRoles = new Set(
+    Object.keys(darkMode.semantic).filter((key) => !key.startsWith('$')),
+  );
+  const lightDeclarations = getDeclarations(lightRaw).filter((line) => {
+    const name = declName(line);
+    return name !== null && semanticRoles.has(name);
+  });
+
+  const darkBlock = [':root {', ...darkDeclarations, '}'].join('\n');
+  const lightBlock = ['[data-theme="light"] {', ...lightDeclarations, '}'].join('\n');
+
+  writeFileSync(
+    'styles/tokens.css',
+    `/* GENERATED by scripts/build-tokens.ts — do not edit. */\n${darkBlock}\n${lightBlock}\n${GLASS}\n`,
+  );
 }
 
 main();
