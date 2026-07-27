@@ -1,0 +1,303 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Luxe Axis Interface System — design tokens (W3C DTCG format). Three tiers: primitive -> semantic(theme) -> component. Contrast for text/icon pairings verified against navy #0D2B4E and ivory #FCFAF5. Companion to LuxeAxis_Design_System.md.",
+
+  "color": {
+    "$type": "color",
+    "brand": {
+      "navy":          { "$value": "#0D2B4E", "$description": "Primary brand base / dark surface. Ivory & white text = AAA." },
+      "navy-900":      { "$value": "#081B32", "$description": "Deepest void — canvas bg, gradients." },
+      "navy-700":      { "$value": "#143A5F", "$description": "Elevated dark surface (card on navy)." },
+      "navy-600":      { "$value": "#1B4670", "$description": "Elevated-2 / hover on dark surface." },
+      "ivory":         { "$value": "#FCFAF5", "$description": "Primary light surface / text on navy." },
+      "ivory-hi":      { "$value": "#FFFFFF", "$description": "Raised card on light surface." },
+      "ivory-sunken":  { "$value": "#F1EEE7", "$description": "Sunken / inset area on light surface." },
+      "gold":          { "$value": "#C9A84C", "$description": "Interactive gold on DARK (buttons/links/focus). On navy = 6.24:1 AA." },
+      "gold-deep":     { "$value": "#B8860B", "$description": "Headings/icons on light. On ivory = 3.12:1 (LARGE/icon only)." },
+      "gold-champagne":{ "$value": "#E7C874", "$description": "Highlight stop for the metallic gradient; primary hover on gold." },
+      "teal":          { "$value": "#1A7A85", "$description": "Human/wellness signal. Fill (white text 5.04:1) or text on ivory (4.83:1). NEVER text on navy." },
+      "teal-bright":   { "$value": "#4FB6C4", "$description": "Accessible teal for TEXT/ICON on DARK. On navy = 5.99:1 AA." },
+      "ink":           { "$value": "#111315", "$description": "Label color on gold fills. On gold = 8.26:1 AAA." }
+    },
+    "neutral-on-dark": {
+      "$description": "Text/icon ramp for use on navy surfaces (all verified).",
+      "primary":   { "$value": "#FCFAF5", "$description": "13.67:1 AAA" },
+      "secondary": { "$value": "#C3CBD6", "$description": "8.71:1 AAA" },
+      "tertiary":  { "$value": "#96A2B2", "$description": "5.51:1 AA — muted body/caption OK" },
+      "disabled":  { "$value": "#5E6E82", "$description": "Disabled/placeholder (exempt from AA)." }
+    },
+    "neutral-on-light": {
+      "$description": "Text/icon ramp for use on ivory surfaces.",
+      "primary":   { "$value": "#0D2B4E", "$description": "13.67:1 AAA" },
+      "secondary": { "$value": "#435468", "$description": "7.44:1 AAA" },
+      "tertiary":  { "$value": "#6A7889", "$description": "4.32:1 — placeholder/disabled/large only; use secondary for small meaningful text" },
+      "disabled":  { "$value": "#9AA4B0", "$description": "Disabled/placeholder (exempt from AA)." }
+    },
+    "status": {
+      "$description": "Feedback colors ship in per-surface variants: *-on-dark (lighter) for navy, *-on-light (deeper) for ivory.",
+      "success":          { "$value": "#2E9E67" },
+      "success-on-dark":  { "$value": "#6FCF97", "$description": "on navy 7.5:1 AAA" },
+      "success-on-light": { "$value": "#167A4E", "$description": "on ivory 5.13:1 AA" },
+      "warning":          { "$value": "#C98A22" },
+      "warning-on-dark":  { "$value": "#F0C24E", "$description": "on navy 8.51:1 AAA" },
+      "warning-on-light": { "$value": "#8A5E0F", "$description": "on ivory 5.46:1 AA" },
+      "error":            { "$value": "#C6503E" },
+      "error-on-dark":    { "$value": "#EB8578", "$description": "on navy 5.54:1 AA" },
+      "error-on-light":   { "$value": "#A83525", "$description": "on ivory 6.29:1 AA" },
+      "info":             { "$value": "#3E7FB0" },
+      "info-on-dark":     { "$value": "#7FB0D9", "$description": "on navy 6.19:1 AA" },
+      "info-on-light":    { "$value": "#2C6B99", "$description": "on ivory 5.49:1 AA" }
+    },
+    "gradient": {
+      "$type": "other",
+      "gold-metallic": { "$value": "linear-gradient(135deg,#E7C874 0%,#C9A84C 45%,#A87B2E 100%)", "$description": "DECORATIVE ONLY — logo/hero/large brand. Never body text or small UI." },
+      "void":          { "$value": "radial-gradient(120% 120% at 50% 0%, #143A5F 0%, #0D2B4E 45%, #081B32 100%)" }
+    }
+  },
+
+  "theme": {
+    "$type": "color",
+    "dark": {
+      "$description": "Default theme — navy surface.",
+      "surface":            { "$value": "{color.brand.navy}" },
+      "surface-deep":       { "$value": "{color.brand.navy-900}" },
+      "surface-raised":     { "$value": "{color.brand.navy-700}" },
+      "surface-raised-2":   { "$value": "{color.brand.navy-600}" },
+      "on-surface":         { "$value": "{color.neutral-on-dark.primary}" },
+      "on-surface-2":       { "$value": "{color.neutral-on-dark.secondary}" },
+      "on-surface-muted":   { "$value": "{color.neutral-on-dark.tertiary}" },
+      "accent":             { "$value": "{color.brand.gold}" },
+      "accent-contrast":    { "$value": "{color.brand.ink}" },
+      "signal":             { "$value": "{color.brand.teal-bright}" },
+      "border-subtle":      { "$value": "rgba(252,250,245,0.10)" },
+      "border":             { "$value": "rgba(252,250,245,0.16)" },
+      "border-strong":      { "$value": "rgba(252,250,245,0.28)" },
+      "focus-ring":         { "$value": "#EAD48A", "$description": "≥3:1 vs navy" }
+    },
+    "light": {
+      "$description": "Light theme — ivory surface (reading-heavy pages).",
+      "surface":            { "$value": "{color.brand.ivory}" },
+      "surface-deep":       { "$value": "{color.brand.ivory-sunken}" },
+      "surface-raised":     { "$value": "{color.brand.ivory-hi}" },
+      "surface-raised-2":   { "$value": "{color.brand.ivory-hi}" },
+      "on-surface":         { "$value": "{color.neutral-on-light.primary}" },
+      "on-surface-2":       { "$value": "{color.neutral-on-light.secondary}" },
+      "on-surface-muted":   { "$value": "{color.neutral-on-light.tertiary}" },
+      "accent":             { "$value": "{color.brand.teal}", "$description": "On light, teal is the interactive accent (gold fails as text on ivory)." },
+      "accent-contrast":    { "$value": "{color.brand.ivory-hi}" },
+      "signal":             { "$value": "{color.brand.teal}" },
+      "border-subtle":      { "$value": "rgba(13,43,78,0.08)" },
+      "border":             { "$value": "rgba(13,43,78,0.14)" },
+      "border-strong":      { "$value": "rgba(13,43,78,0.24)" },
+      "focus-ring":         { "$value": "#1A7A85" }
+    }
+  },
+
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "display": { "$value": ["Playfair Display", "Georgia", "serif"], "$description": "Headlines / editorial voice." },
+      "ui":      { "$value": ["Inter", "system-ui", "sans-serif"], "$description": "Body / UI." },
+      "display-ta": { "$value": ["Noto Serif Tamil", "serif"] },
+      "ui-ta":      { "$value": ["Noto Sans Tamil", "sans-serif"] },
+      "mono":    { "$value": ["ui-monospace", "SFMono-Regular", "monospace"], "$description": "Prices, calculators." }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular":  { "$value": 400 },
+      "medium":   { "$value": 500 },
+      "semibold": { "$value": 600 },
+      "bold":     { "$value": 700 }
+    },
+    "tracking": {
+      "$type": "dimension",
+      "tight":  { "$value": "-0.02em", "$description": "Display headlines." },
+      "normal": { "$value": "0em" },
+      "wide":   { "$value": "0.04em", "$description": "Overlines / small-caps labels." },
+      "wider":  { "$value": "0.18em", "$description": "Wordmark / eyebrow style." }
+    },
+    "leading": {
+      "$type": "number",
+      "tight":   { "$value": 1.1 },
+      "snug":    { "$value": 1.25 },
+      "normal":  { "$value": 1.6 },
+      "relaxed": { "$value": 1.75 }
+    }
+  },
+
+  "typography": {
+    "$type": "typography",
+    "$description": "Composite type ramp. fontSize uses fluid clamp() values.",
+    "display":   { "$value": { "fontFamily": "{font.family.display}", "fontWeight": "{font.weight.semibold}", "fontSize": "clamp(2.75rem, 6vw, 5.5rem)", "lineHeight": "{font.leading.tight}", "letterSpacing": "{font.tracking.tight}" } },
+    "h1":        { "$value": { "fontFamily": "{font.family.display}", "fontWeight": "{font.weight.semibold}", "fontSize": "clamp(2rem, 4vw, 3.25rem)", "lineHeight": "{font.leading.snug}", "letterSpacing": "{font.tracking.tight}" } },
+    "h2":        { "$value": { "fontFamily": "{font.family.display}", "fontWeight": "{font.weight.medium}",   "fontSize": "clamp(1.5rem, 2.5vw, 2.25rem)", "lineHeight": "{font.leading.snug}", "letterSpacing": "{font.tracking.normal}" } },
+    "h3":        { "$value": { "fontFamily": "{font.family.ui}", "fontWeight": "{font.weight.semibold}", "fontSize": "clamp(1.25rem, 1.6vw, 1.5rem)", "lineHeight": "{font.leading.snug}", "letterSpacing": "{font.tracking.normal}" } },
+    "body-lg":   { "$value": { "fontFamily": "{font.family.ui}", "fontWeight": "{font.weight.regular}", "fontSize": "clamp(1.0625rem, 1.2vw, 1.1875rem)", "lineHeight": "{font.leading.normal}", "letterSpacing": "{font.tracking.normal}" } },
+    "body":      { "$value": { "fontFamily": "{font.family.ui}", "fontWeight": "{font.weight.regular}", "fontSize": "clamp(1rem, 1.1vw, 1.125rem)", "lineHeight": "{font.leading.normal}", "letterSpacing": "{font.tracking.normal}" } },
+    "small":     { "$value": { "fontFamily": "{font.family.ui}", "fontWeight": "{font.weight.regular}", "fontSize": "0.875rem", "lineHeight": "{font.leading.normal}", "letterSpacing": "{font.tracking.normal}" } },
+    "overline":  { "$value": { "fontFamily": "{font.family.ui}", "fontWeight": "{font.weight.semibold}", "fontSize": "0.75rem", "lineHeight": "{font.leading.snug}", "letterSpacing": "{font.tracking.wide}" }, "$description": "Uppercase eyebrows / labels." },
+    "price":     { "$value": { "fontFamily": "{font.family.mono}", "fontWeight": "{font.weight.medium}", "fontSize": "clamp(1.25rem,2vw,1.75rem)", "lineHeight": "{font.leading.tight}", "letterSpacing": "{font.tracking.normal}" }, "$description": "Tabular numerals for pricing/calculator." }
+  },
+
+  "space": {
+    "$type": "dimension",
+    "$description": "4px base grid. Use for padding, gaps, stacks.",
+    "0":  { "$value": "0" },
+    "1":  { "$value": "4px" },
+    "2":  { "$value": "8px" },
+    "3":  { "$value": "12px" },
+    "4":  { "$value": "16px" },
+    "5":  { "$value": "24px" },
+    "6":  { "$value": "32px" },
+    "7":  { "$value": "48px" },
+    "8":  { "$value": "64px" },
+    "9":  { "$value": "96px" },
+    "10": { "$value": "128px" },
+    "section-y": { "$value": "clamp(64px, 10vw, 128px)", "$description": "Vertical rhythm between page sections." },
+    "gutter":    { "$value": "clamp(16px, 5vw, 96px)", "$description": "Page outer margin." }
+  },
+
+  "size": {
+    "$type": "dimension",
+    "touch-min":   { "$value": "44px", "$description": "Minimum touch target." },
+    "control-sm":  { "$value": "36px" },
+    "control-md":  { "$value": "44px" },
+    "control-lg":  { "$value": "52px" },
+    "icon-sm":     { "$value": "16px" },
+    "icon-md":     { "$value": "20px" },
+    "icon-lg":     { "$value": "24px" },
+    "container":   { "$value": "1280px", "$description": "Max content width (12-col)." },
+    "measure":     { "$value": "68ch", "$description": "Max reading line length." }
+  },
+
+  "radius": {
+    "$type": "dimension",
+    "sm":   { "$value": "8px" },
+    "md":   { "$value": "14px", "$description": "Glass panels, inputs." },
+    "lg":   { "$value": "24px", "$description": "Cards." },
+    "pill": { "$value": "999px" },
+    "round":{ "$value": "50%" }
+  },
+
+  "border-width": {
+    "$type": "dimension",
+    "hairline": { "$value": "1px" },
+    "regular":  { "$value": "1.5px", "$description": "Icon stroke / default." },
+    "focus":    { "$value": "2px" },
+    "focus-offset": { "$value": "2px" }
+  },
+
+  "elevation": {
+    "$type": "shadow",
+    "$description": "On DARK, elevation is expressed with light (inner glow + border), not black drop shadows. On LIGHT, soft navy-tinted shadows.",
+    "dark-1": { "$value": [ { "color": "rgba(252,250,245,0.06)", "offsetX": "0", "offsetY": "0", "blur": "0", "spread": "1px" }, { "color": "rgba(201,168,76,0.10)", "offsetX": "0", "offsetY": "8px", "blur": "40px", "spread": "0" } ] },
+    "dark-2": { "$value": [ { "color": "rgba(252,250,245,0.10)", "offsetX": "0", "offsetY": "0", "blur": "0", "spread": "1px" }, { "color": "rgba(8,27,50,0.55)", "offsetX": "0", "offsetY": "24px", "blur": "60px", "spread": "0" } ] },
+    "light-1": { "$value": [ { "color": "rgba(13,43,78,0.08)", "offsetX": "0", "offsetY": "8px", "blur": "30px", "spread": "0" } ] },
+    "light-2": { "$value": [ { "color": "rgba(13,43,78,0.12)", "offsetX": "0", "offsetY": "20px", "blur": "50px", "spread": "0" } ] }
+  },
+
+  "opacity": {
+    "$type": "number",
+    "disabled":     { "$value": 0.4 },
+    "muted":        { "$value": 0.64 },
+    "scrim":        { "$value": 0.6, "$description": "Text scrim over 3D/photo." },
+    "glass-dark":   { "$value": 0.55, "$description": "Navy fill opacity under glass blur." },
+    "glass-light":  { "$value": 0.7 }
+  },
+
+  "blur": {
+    "$type": "dimension",
+    "glass": { "$value": "14px", "$description": "backdrop-filter for glass surfaces." },
+    "glass-strong": { "$value": "22px" }
+  },
+
+  "z-index": {
+    "$type": "number",
+    "base": { "$value": 0 }, "canvas": { "$value": 0 }, "content": { "$value": 10 },
+    "sticky": { "$value": 100 }, "header": { "$value": 200 }, "drawer": { "$value": 300 },
+    "overlay": { "$value": 400 }, "modal": { "$value": 500 }, "toast": { "$value": 600 }, "tooltip": { "$value": 700 }
+  },
+
+  "breakpoint": {
+    "$type": "dimension",
+    "xs": { "$value": "0px" }, "sm": { "$value": "480px" }, "md": { "$value": "768px" },
+    "lg": { "$value": "1024px" }, "xl": { "$value": "1280px" }, "2xl": { "$value": "1536px" }
+  },
+
+  "duration": {
+    "$type": "duration",
+    "instant": { "$value": "80ms",  "$description": "State swaps below perception of animation." },
+    "micro":   { "$value": "120ms", "$description": "Hover, press, focus." },
+    "ui":      { "$value": "240ms", "$description": "Menus, toggles, tooltips." },
+    "enter":   { "$value": "480ms", "$description": "Element entrances, expands." },
+    "section": { "$value": "800ms", "$description": "Section reveals." },
+    "signature": { "$value": "1200ms", "$description": "Hero/brand choreography." }
+  },
+
+  "easing": {
+    "$type": "cubicBezier",
+    "standard": { "$value": [0.4, 0, 0.2, 1],  "$description": "General UI." },
+    "entrance": { "$value": [0.16, 1, 0.3, 1], "$description": "Decelerate — things settle." },
+    "exit":     { "$value": [0.4, 0, 1, 1],    "$description": "Accelerate away (faster than entrance)." },
+    "spatial":  { "$value": [0.65, 0.05, 0.36, 1], "$description": "Camera / 3D / weighted moves." }
+  },
+
+  "motion": {
+    "distance": {
+      "$type": "dimension",
+      "rise":  { "$value": "16px", "$description": "Default entrance offset (fade+rise)." },
+      "lift":  { "$value": "8px",  "$description": "Hover lift for cards/objects." },
+      "nudge": { "$value": "4px",  "$description": "Micro shift (icon on hover)." }
+    },
+    "press-scale": { "$type": "number", "$value": 0.98, "$description": "Scale on active press." },
+    "stagger": {
+      "$type": "duration",
+      "tight":  { "$value": "60ms" },
+      "default":{ "$value": "80ms" },
+      "loose":  { "$value": "90ms" }
+    },
+    "parallax-max": { "$type": "number", "$value": 0.12, "$description": "Max viewport displacement fraction." }
+  },
+
+  "component": {
+    "button": {
+      "height-sm": { "$type": "dimension", "$value": "{size.control-sm}" },
+      "height-md": { "$type": "dimension", "$value": "{size.control-md}" },
+      "height-lg": { "$type": "dimension", "$value": "{size.control-lg}" },
+      "padding-x-md": { "$type": "dimension", "$value": "{space.5}" },
+      "radius": { "$type": "dimension", "$value": "{radius.pill}" },
+      "primary-bg":   { "$type": "color", "$value": "{color.brand.gold}" },
+      "primary-fg":   { "$type": "color", "$value": "{color.brand.ink}" },
+      "primary-hover-bg": { "$type": "color", "$value": "{color.brand.gold-champagne}" },
+      "gap": { "$type": "dimension", "$value": "{space.2}" },
+      "dur": { "$type": "duration", "$value": "{duration.micro}" }
+    },
+    "card": {
+      "radius":   { "$type": "dimension", "$value": "{radius.lg}" },
+      "padding":  { "$type": "dimension", "$value": "{space.6}" },
+      "gap":      { "$type": "dimension", "$value": "{space.4}" },
+      "bg-dark":  { "$type": "color", "$value": "{theme.dark.surface-raised}" },
+      "border-dark": { "$type": "color", "$value": "{theme.dark.border-subtle}" },
+      "shadow-dark": { "$type": "shadow", "$value": "{elevation.dark-1}" },
+      "hover-lift": { "$type": "dimension", "$value": "{motion.distance.lift}" }
+    },
+    "field": {
+      "height":   { "$type": "dimension", "$value": "{size.control-lg}" },
+      "radius":   { "$type": "dimension", "$value": "{radius.md}" },
+      "padding-x":{ "$type": "dimension", "$value": "{space.4}" },
+      "bg-dark":  { "$type": "color", "$value": "rgba(252,250,245,0.04)" },
+      "border-dark": { "$type": "color", "$value": "{theme.dark.border}" },
+      "border-focus": { "$type": "color", "$value": "{color.brand.gold}" },
+      "border-error": { "$type": "color", "$value": "{color.status.error-on-dark}" },
+      "label-dur": { "$type": "duration", "$value": "{duration.micro}" }
+    },
+    "nav": {
+      "height":      { "$type": "dimension", "$value": "72px" },
+      "height-condensed": { "$type": "dimension", "$value": "56px" },
+      "bg":          { "$type": "color", "$value": "rgba(13,43,78,0.55)" },
+      "blur":        { "$type": "dimension", "$value": "{blur.glass}" },
+      "border":      { "$type": "color", "$value": "{theme.dark.border-subtle}" },
+      "dur":         { "$type": "duration", "$value": "{duration.ui}" }
+    }
+  }
+}
