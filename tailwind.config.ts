@@ -13,6 +13,7 @@ export default {
         accent: 'var(--accent)',
         'accent-contrast': 'var(--accent-contrast)',
         signal: 'var(--signal)',
+        'focus-ring': 'var(--focus-ring)',
       },
       borderRadius: { sm: 'var(--radius-sm)', md: 'var(--radius-md)', lg: 'var(--radius-lg)', pill: 'var(--radius-pill)' },
       transitionDuration: { micro: 'var(--duration-micro)', ui: 'var(--duration-ui)', enter: 'var(--duration-enter)' },

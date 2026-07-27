@@ -1,3 +1,7 @@
 export default function PricingPage() {
-  return <main><h1>Pricing</h1></main>;
+  return (
+    <main id="main" tabIndex={-1}>
+      <h1>Pricing</h1>
+    </main>
+  );
 }
