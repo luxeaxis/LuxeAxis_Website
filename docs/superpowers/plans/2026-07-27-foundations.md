@@ -154,6 +154,8 @@ export default {
 };
 ```
 
+Task 4 wraps this with `next-intl`'s `createNextIntlPlugin()`. Without that wrapper the webpack alias to `i18n/request.ts` is never registered and message loading silently fails.
+
 ```ts
 // vitest.config.ts
 import { defineConfig } from 'vitest/config';
@@ -980,7 +982,7 @@ Expected: FAIL — module not found.
 
 ```ts
 // lib/seo/hreflang.ts
-import { isPublished } from '@/lib/i18n/published';
+import { isPublished, normalise } from '@/lib/i18n/published';
 
 const ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? 'https://luxeaxis.com';
 
@@ -988,17 +990,22 @@ export function alternatesFor(route: string): {
   languages: Record<string, string>;
   canonical: string;
 } {
-  const path = route === '/' ? '' : route;
-  const en = `${ORIGIN}/${path}`.replace(/([^:])\/+/g, '$1/').replace(/\/$/, '') || ORIGIN;
-  const canonical = route === '/' ? `${ORIGIN}/` : en;
+  // One normalisation, shared with isPublished. Building the `ta` alternate
+  // from a differently-normalised path is the trailing-slash bug this
+  // function is most prone to.
+  const normalised = normalise(route);
+  const canonical = new URL(normalised, ORIGIN).toString();
+  const taPath = normalised === '/' ? '/ta' : `/ta${normalised}`;
 
   const languages: Record<string, string> = { en: canonical };
-  if (isPublished(route, 'ta')) languages.ta = `${ORIGIN}/ta${path}`;
+  if (isPublished(normalised, 'ta')) languages.ta = new URL(taPath, ORIGIN).toString();
   languages['x-default'] = canonical;
 
   return { languages, canonical };
 }
 ```
+
+`normalise()` must be exported from `lib/i18n/published.ts` for this. `new URL('/', origin)` yields the trailing slash the root canonical needs, and strips it nowhere else — which is the observable behaviour the tests pin.
 
 - [ ] **Step 8: Run it to verify it passes**
 
@@ -1149,7 +1156,10 @@ test('published Tamil route renders with lang="ta"', async ({ page }) => {
 
 test('unpublished Tamil route 307s to English instead of showing English under lang="ta"', async ({ page }) => {
   const response = await page.goto('/ta/pricing');
-  expect(response?.request().redirectedFrom()?.response()?.status()).toBe(307);
+  // Request.response() returns a Promise in Playwright 1.49 — it must be
+  // awaited before .status(), or this is a TS2339 and a runtime TypeError.
+  const redirect = await response?.request().redirectedFrom()?.response();
+  expect(redirect?.status()).toBe(307);
   expect(new URL(page.url()).pathname).toBe('/pricing');
 });
 ```
