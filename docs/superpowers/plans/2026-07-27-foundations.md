@@ -1424,7 +1424,7 @@ git commit -m "feat: app shell with store, phase-1 tier resolution, and skip lin
 ## Task 6: The SceneSlot contract
 
 **Files:**
-- Create: `three/registry.ts`, `components/SceneSlot.tsx`
+- Create: `three/registry.ts`, `components/SceneSlot.tsx`, `components/TierProbe.tsx`
 - Create: `public/posters/hero.avif` (a placeholder solid-navy image, replaced by workstream `B-01`)
 - Test: `tests/unit/registry.test.ts`, `tests/unit/scene-slot.test.tsx`
 
@@ -1707,6 +1707,25 @@ export function SceneSlot({
 
 Run: `pnpm vitest run tests/unit/scene-slot.test.tsx`
 Expected: PASS, 3 tests.
+
+- [ ] **Step 9b: Give `useDeviceTier` a call site**
+
+Task 5 built the hook but nothing invokes it, so the store's pessimistic `T1` defaults never update. `app/[locale]/layout.tsx` is a Server Component and cannot call a hook, so mount a thin client component that renders nothing:
+
+```tsx
+// components/TierProbe.tsx
+'use client';
+import { useDeviceTier } from '@/lib/tier/useDeviceTier';
+
+/** Resolves the device tier into the store on mount. Renders nothing — it
+ *  exists because the layout is a Server Component and cannot call a hook. */
+export function TierProbe() {
+  useDeviceTier();
+  return null;
+}
+```
+
+Mount it once in `app/[locale]/layout.tsx`, inside `<body>`. With `SCENES` empty nothing consumes the resolved tier yet, but the resolution must be live and correct before the first scene is ever registered — otherwise the first scene to land inherits an untested tier path.
 
 - [ ] **Step 10: Use it on the home page**
 
