@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# generated
+next-env.d.ts
+*.tsbuildinfo
+
+# testing
+coverage/
+
+# misc
+.DS_Store
+*.log
