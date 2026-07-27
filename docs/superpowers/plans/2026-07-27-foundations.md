@@ -414,6 +414,11 @@ for (const mode of MODES) {
         files: [{
           destination: `tokens.${mode.name}.css`,
           format: 'css/variables',
+          // The light build emits ONLY the semantic overrides. Primitives,
+          // component tokens, and every scale are theme-independent — emitting
+          // them twice would declare each variable twice and defeat the whole
+          // point of the semantic tier.
+          filter: mode.name === 'light' ? (token) => token.path[0] === 'semantic' : undefined,
           options: { outputReferences: true, selector: mode.selector },
         }],
       },
@@ -1041,7 +1046,9 @@ git commit -m "feat: bilingual routing with per-route Tamil publication gate"
 
 **Interfaces:**
 - Consumes: `Locale` from Task 4
-- Produces: `type Tier = 'T0' | 'T1' | 'T2' | 'T3'` · `resolveTier(env: TierEnv): Tier` · `useAppStore()` exposing `{ tier, reducedMotion, activeScene, setTier, setActiveScene }`
+- Produces: `type Tier = 'T0' | 'T1' | 'T2' | 'T3'` · `resolveTier(env: TierEnv): Tier` · `useAppStore()` exposing `{ tier, reducedMotion, setTier, setReducedMotion }`
+
+The store deliberately does **not** carry `activeScene` yet. That field needs `SceneId`, which Task 6 defines — a task owns the state it introduces, and importing forward would break this task's typecheck.
 
 Spec §4.1, phase 1 only. Phase 2 (`detect-gpu`) belongs to the task that introduces the WebGL chunk and is deliberately not here.
 
@@ -1155,15 +1162,12 @@ pnpm add zustand@5.0.2
 'use client';
 import { create } from 'zustand';
 import type { Tier } from '@/lib/tier/resolve';
-import type { SceneId } from '@/three/registry';
 
 type AppState = {
   tier: Tier;
   reducedMotion: boolean;
-  activeScene: SceneId | null;
   setTier: (tier: Tier) => void;
   setReducedMotion: (value: boolean) => void;
-  setActiveScene: (scene: SceneId | null) => void;
 };
 
 export const useAppStore = create<AppState>((set) => ({
@@ -1171,10 +1175,8 @@ export const useAppStore = create<AppState>((set) => ({
   // default would flash live scenes onto devices that cannot hold 30fps.
   tier: 'T1',
   reducedMotion: true,
-  activeScene: null,
   setTier: (tier) => set({ tier }),
   setReducedMotion: (reducedMotion) => set({ reducedMotion }),
-  setActiveScene: (activeScene) => set({ activeScene }),
 }));
 ```
 
@@ -1269,8 +1271,8 @@ git commit -m "feat: app shell with store, phase-1 tier resolution, and skip lin
 - Test: `tests/unit/registry.test.ts`, `tests/unit/scene-slot.test.tsx`
 
 **Interfaces:**
-- Consumes: `useAppStore` from Task 5
-- Produces: `SceneId`, `ScenePoster`, `SceneModule`, `POSTERS`, `SCENES`, `<SceneSlot id={SceneId}>`
+- Consumes: `useAppStore` from Task 5 (extended here with `activeScene`)
+- Produces: `SCENE_IDS`, `SceneId`, `ScenePoster`, `SceneModule`, `POSTERS`, `SCENES`, `<SceneSlot id={SceneId}>`, and `useAppStore().activeScene`
 
 Spec §1.3. This is the architectural keystone. `SCENES` stays empty for the whole of this plan, which is the point — §1.4 says the contract validates the pipeline with zero polygons.
 
@@ -1403,16 +1405,60 @@ export const POSTERS: Record<SceneId, ScenePoster> = {
 export const SCENES: Partial<Record<SceneId, () => Promise<SceneModule>>> = {};
 ```
 
-- [ ] **Step 4: Create the nine placeholder posters**
+Now extend the Task 5 store with the field that needed `SceneId`. Add to `AppState`, to the initial state, and to the returned object in `lib/store.ts`:
 
-Workstream `B-01` replaces these with art-directed stills. Until then, generate solid-navy files at the declared aspect ratios so the parity gate has something real to assert against:
+```ts
+import type { SceneId } from '@/three/registry';
 
-```bash
-mkdir -p public/posters
-pnpm dlx sharp-cli -i /dev/null -o public/posters/hero.avif 2>/dev/null || true
+// in AppState:
+  activeScene: SceneId | null;
+  setActiveScene: (scene: SceneId | null) => void;
+
+// in the create() body:
+  activeScene: null,
+  setActiveScene: (activeScene) => set({ activeScene }),
 ```
 
-If `sharp-cli` is unavailable, create them with any image tool at `#0D2B4E`, sized to match each `aspect`: `hero` 1920×1080, `persona-router` 1920×1080, `vastu` 1600×1200, `space-score` 1200×1200, `space-os` 1600×1200, `portfolio` 1920×1080, `journey` 1080×1920, `pricing-axis` 1920×1080, `nri-globe` 1200×1200.
+This import is the single permitted DOM→WebGL edge. The Task 1 lint rule blocks `@/three/!(registry)`; the negation admits `@/three/registry` and nothing else. Do not "simplify" that pattern — it is load-bearing.
+
+- [ ] **Step 4: Create the nine placeholder posters**
+
+Workstream `B-01` replaces these with art-directed stills. Until then, generate solid-navy files at the declared aspect ratios so the parity gate has something real to assert against.
+
+```bash
+pnpm add -D sharp@0.33.5
+```
+
+```ts
+// scripts/make-placeholder-posters.ts
+import sharp from 'sharp';
+import { mkdirSync } from 'node:fs';
+import { POSTERS, SCENE_IDS } from '../three/registry';
+
+const NAVY = { r: 13, g: 43, b: 78 };
+const LONG_EDGE = 1920;
+
+mkdirSync('public/posters', { recursive: true });
+
+for (const id of SCENE_IDS) {
+  const poster = POSTERS[id];
+  const [w, h] = poster.aspect.split('/').map(Number) as [number, number];
+  const scale = LONG_EDGE / Math.max(w, h);
+  const width = Math.round(w * scale);
+  const height = Math.round(h * scale);
+
+  await sharp({ create: { width, height, channels: 3, background: NAVY } })
+    .avif({ quality: 50 })
+    .toFile(`public/posters/${id}.avif`);
+
+  console.log(`${id}.avif  ${width}x${height}`);
+}
+```
+
+Run: `pnpm tsx scripts/make-placeholder-posters.ts`
+Expected: nine lines of output, one per scene, and nine files in `public/posters/`.
+
+Deriving the dimensions from `POSTERS[id].aspect` rather than a hand-written size table means the placeholders cannot drift out of sync with the registry the parity gate reads.
 
 - [ ] **Step 5: Run the parity test to verify it passes**
 
