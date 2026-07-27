@@ -19,11 +19,13 @@
   },
   "dependencies": {
     "next": "14.2.20",
+    "next-intl": "3.26.3",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "14.2.20",
+    "@playwright/test": "1.49.1",
     "@types/node": "22.10.2",
     "@types/react": "18.3.17",
     "@types/react-dom": "18.3.5",
