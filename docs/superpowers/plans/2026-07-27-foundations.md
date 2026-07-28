@@ -1773,6 +1773,22 @@ git commit -m "feat: SceneSlot contract with poster registry and parity gate"
 
 Spec §6.2. Each gate must be proven to fail on a seeded violation before it is trusted.
 
+- [ ] **Step 0: Protect the DOM→WebGL seam rule**
+
+The seam restriction on `three/` is the architecture's single most load-bearing constraint, and it has already been silently disabled once. ESLint flat config **replaces rather than merges** a rule's options when a later `files:`-scoped block sets the same rule name — so the `components/`-scoped `features/` rule dropped the repo-wide `three/` restriction for every file under `components/`, which is exactly where `SceneSlot` lives. Task 6 found and patched it by repeating the pattern literally.
+
+A duplicated literal invites the same bug the next time a scoped block sets that rule. Extract it once and assert it:
+
+```js
+// eslint.config.mjs
+const SEAM = {
+  group: ['@/three/**', '!@/three/registry'],
+  message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2.',
+};
+```
+
+Spread `SEAM` into the `patterns` array of **every** block that sets `no-restricted-imports`. Then add a test that fails if enforcement lapses — run ESLint programmatically against an in-memory file under `components/` importing `@/three/internal/whatever` and assert `no-restricted-imports` reports it. Without that test, `pnpm verify` stays silent the next time the hole reopens.
+
 - [ ] **Step 1: Write the no-WebGL e2e test**
 
 Spec §6.2 gate 4. QA §12 D requires this and nothing automates it.
