@@ -55,10 +55,25 @@ export default [
     // Scoped to components/ only. Routes ARE permitted to import features —
     // that is the layering direction, not a violation — so this rule must not
     // apply repo-wide.
+    //
+    // This block's `no-restricted-imports` entry must repeat the three/ seam
+    // pattern from the repo-wide block above, not just add the features/
+    // restriction. Flat config merges rules per matching config object in
+    // array order, but for a given rule key the LAST matching object's
+    // options entirely replace earlier ones — options are not concatenated
+    // across objects (confirmed via `eslint --print-config` on a file under
+    // components/: with only the features/ pattern here, the effective
+    // config for that file dropped the three/ pattern entirely, so a probe
+    // import of `@/three/internal/whatever` from components/ went unflagged).
+    // Since every file in components/ matches both this block and the
+    // repo-wide one below, omitting the three/ pattern here would silently
+    // disable that seam for the one directory that imports from three/ the
+    // most.
     files: ['components/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': ['error', {
         patterns: [
+          { group: ['@/three/**', '!@/three/registry'], message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2.' },
           { group: ['@/features/**'], message: 'components/ may not import from features/ — see spec §1.2 layering.' },
         ],
       }],

@@ -5,5 +5,9 @@ import { resolve } from 'node:path';
 export default defineConfig({
   plugins: [react()],
   resolve: { alias: { '@': resolve(__dirname, '.') } },
-  test: { environment: 'node', include: ['tests/unit/**/*.test.ts?(x)'] },
+  test: {
+    environment: 'node',
+    environmentMatchGlobs: [['tests/unit/**/*.test.tsx', 'jsdom']],
+    include: ['tests/unit/**/*.test.ts?(x)'],
+  },
 });
