@@ -1,0 +1,26 @@
+name: verify
+on:
+  pull_request:
+  push: { branches: [main] }
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - name: Tokens build (fails on unresolved alias)
+        run: pnpm tokens
+      - name: Typecheck, lint (zero warnings), unit tests
+        run: pnpm verify
+      - run: pnpm build
+      - name: Bundle budget
+        run: pnpm size
+      - name: Install browsers
+        run: pnpm exec playwright install --with-deps chromium
+      - name: End-to-end, accessibility, no-WebGL
+        run: pnpm test:e2e

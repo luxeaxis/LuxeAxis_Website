@@ -10,6 +10,22 @@ import tsParser from '@typescript-eslint/parser';
 // brief; it is just not the module we import here.
 import nextPlugin from '@next/eslint-plugin-next';
 
+// The one DOM→WebGL seam, extracted so every `no-restricted-imports` block
+// spreads the identical pattern object rather than repeating the literal.
+// Flat config REPLACES a rule's options wholesale when a later `files:`-scoped
+// block sets the same rule key — it does not merge `patterns` arrays across
+// blocks (confirmed via `eslint --print-config` on a components/ file: a
+// components/-scoped block that set only the features/ pattern silently
+// dropped this one for every file under components/, exactly where SceneSlot
+// lives). Every block below that touches `no-restricted-imports` MUST spread
+// SEAM into its `patterns` array, or the seam goes unenforced for that scope.
+// `tests/unit/eslint-seam.test.ts` lints a virtual components/ file
+// programmatically and fails if this ever lapses again.
+const SEAM = {
+  group: ['@/three/**', '!@/three/registry'],
+  message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2.',
+};
+
 export default [
   {
     ignores: ['.next/**', 'node_modules/**'],
@@ -44,11 +60,7 @@ export default [
       // exercising the `ignore` package directly). The gitignore-native way
       // to say "everything under three/ except registry" is two patterns in
       // one group: a blanket glob followed by a `!`-prefixed negation.
-      'no-restricted-imports': ['error', {
-        patterns: [
-          { group: ['@/three/**', '!@/three/registry'], message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2.' },
-        ],
-      }],
+      'no-restricted-imports': ['error', { patterns: [SEAM] }],
     },
   },
   {
@@ -56,24 +68,23 @@ export default [
     // that is the layering direction, not a violation — so this rule must not
     // apply repo-wide.
     //
-    // This block's `no-restricted-imports` entry must repeat the three/ seam
-    // pattern from the repo-wide block above, not just add the features/
-    // restriction. Flat config merges rules per matching config object in
-    // array order, but for a given rule key the LAST matching object's
-    // options entirely replace earlier ones — options are not concatenated
-    // across objects (confirmed via `eslint --print-config` on a file under
-    // components/: with only the features/ pattern here, the effective
-    // config for that file dropped the three/ pattern entirely, so a probe
-    // import of `@/three/internal/whatever` from components/ went unflagged).
-    // Since every file in components/ matches both this block and the
-    // repo-wide one below, omitting the three/ pattern here would silently
-    // disable that seam for the one directory that imports from three/ the
-    // most.
+    // This block's `no-restricted-imports` entry must spread SEAM alongside
+    // the features/ restriction, not just add the latter. Flat config merges
+    // rules per matching config object in array order, but for a given rule
+    // key the LAST matching object's options entirely replace earlier ones —
+    // options are not concatenated across objects (confirmed via
+    // `eslint --print-config` on a file under components/: with only the
+    // features/ pattern here, the effective config for that file dropped the
+    // three/ pattern entirely, so a probe import of `@/three/internal/whatever`
+    // from components/ went unflagged). Since every file in components/
+    // matches both this block and the repo-wide one above, omitting SEAM here
+    // would silently disable that seam for the one directory that imports
+    // from three/ the most.
     files: ['components/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': ['error', {
         patterns: [
-          { group: ['@/three/**', '!@/three/registry'], message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2.' },
+          SEAM,
           { group: ['@/features/**'], message: 'components/ may not import from features/ — see spec §1.2 layering.' },
         ],
       }],

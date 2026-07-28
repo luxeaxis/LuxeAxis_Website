@@ -1,0 +1,13 @@
+[
+  {
+    "name": "home route JS",
+    "path": [
+      ".next/static/chunks/**/*.js",
+      "!.next/static/chunks/pages/**",
+      "!.next/static/chunks/main-*.js",
+      "!.next/static/chunks/polyfills-*.js"
+    ],
+    "limit": "200 kB",
+    "gzip": true
+  }
+]
