@@ -19,7 +19,7 @@ describe('alternatesFor', () => {
     expect(languages).not.toHaveProperty('ta');
   });
 
-  it('canonicalises to the English URL', () => {
+  it('canonicalises to the English URL when no locale is given', () => {
     expect(alternatesFor('/pricing').canonical).toBe('https://luxeaxis.com/pricing');
   });
 
@@ -37,6 +37,30 @@ describe('alternatesFor', () => {
     const trailing = alternatesFor('');
     expect(trailing.languages.ta).toBe(clean.languages.ta);
     expect(trailing.languages.ta).toBe('https://luxeaxis.com/ta');
+  });
+
+  // Every Tamil page used to canonicalise to its English URL, because pages
+  // exported a static `metadata` object shared by both locales. Google reads
+  // that as "/ta is a duplicate of /" and drops it, which negates the whole
+  // bilingual routing feature.
+  it('canonicalises a Tamil page to its own URL, not to the English one', () => {
+    const ta = alternatesFor('/', 'ta');
+    expect(ta.canonical).toBe('https://luxeaxis.com/ta');
+    expect(ta.canonical).not.toBe(alternatesFor('/', 'en').canonical);
+  });
+
+  it('keeps the English canonical unchanged when the locale is passed explicitly', () => {
+    expect(alternatesFor('/', 'en').canonical).toBe('https://luxeaxis.com/');
+    expect(alternatesFor('/pricing', 'en').canonical).toBe('https://luxeaxis.com/pricing');
+  });
+
+  it('advertises the same alternates regardless of which locale is rendering', () => {
+    expect(alternatesFor('/', 'ta').languages).toEqual(alternatesFor('/', 'en').languages);
+  });
+
+  it('points x-default at the default locale even while rendering Tamil', () => {
+    // x-default names the fallback for unmatched languages, not "this page".
+    expect(alternatesFor('/', 'ta').languages['x-default']).toBe('https://luxeaxis.com/');
   });
 
   it('never produces a double slash after the origin, on any URL in the result', () => {
