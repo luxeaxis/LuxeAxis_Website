@@ -16,6 +16,8 @@
     "border-strong":      { "$value": "{theme.light.border-strong}" },
     "focus-ring":         { "$value": "{theme.light.focus-ring}" },
     "field-bg":           { "$value": "{theme.light.field-bg}" },
-    "field-border-focus": { "$value": "{theme.light.field-border-focus}" }
+    "field-border-focus": { "$value": "{theme.light.field-border-focus}" },
+    "error":              { "$value": "{theme.light.error}" },
+    "success":            { "$value": "{theme.light.success}" }
   }
 }

@@ -16,6 +16,8 @@
     "border-strong":      { "$value": "{theme.dark.border-strong}" },
     "focus-ring":         { "$value": "{theme.dark.focus-ring}" },
     "field-bg":           { "$value": "{theme.dark.field-bg}" },
-    "field-border-focus": { "$value": "{theme.dark.field-border-focus}" }
+    "field-border-focus": { "$value": "{theme.dark.field-border-focus}" },
+    "error":              { "$value": "{theme.dark.error}" },
+    "success":            { "$value": "{theme.dark.success}" }
   }
 }

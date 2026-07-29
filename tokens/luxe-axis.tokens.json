@@ -75,7 +75,9 @@
       "focus-ring":         { "$value": "#EAD48A", "$description": "≥3:1 vs navy" },
       "accent-hover":       { "$value": "{color.brand.gold-champagne}" },
       "field-bg":           { "$value": "rgba(252,250,245,0.04)" },
-      "field-border-focus": { "$value": "{color.brand.gold}" }
+      "field-border-focus": { "$value": "{color.brand.gold}" },
+      "error":              { "$value": "{color.status.error-on-dark}", "$description": "Promoted from the status primitive tier for Field's error state (§3.4)." },
+      "success":            { "$value": "{color.status.success-on-dark}", "$description": "Promoted from the status primitive tier for Field's success state (§3.4)." }
     },
     "light": {
       "$description": "Light theme — ivory surface (reading-heavy pages).",
@@ -95,7 +97,9 @@
       "focus-ring":         { "$value": "#1A7A85" },
       "accent-hover":       { "$value": "#15656E", "$description": "Teal darkened for hover; on ivory 6.46:1." },
       "field-bg":           { "$value": "rgba(13,43,78,0.03)" },
-      "field-border-focus": { "$value": "{color.brand.teal}" }
+      "field-border-focus": { "$value": "{color.brand.teal}" },
+      "error":              { "$value": "{color.status.error-on-light}", "$description": "Promoted from the status primitive tier for Field's error state (§3.4)." },
+      "success":            { "$value": "{color.status.success-on-light}", "$description": "Promoted from the status primitive tier for Field's success state (§3.4)." }
     }
   },
 

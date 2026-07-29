@@ -10,6 +10,21 @@ import type { Config } from 'tailwindcss';
 // Everything below maps to a variable the token build actually emits. A design
 // token that cannot be spent is not a design system, it's documentation.
 
+// Control and icon sizes exist as `size.control-*` / `size.icon-*` tokens
+// (see tokens/luxe-axis.tokens.json) and are already emitted as CSS custom
+// properties, but no scale exposed them to Tailwind's `height`/`width`
+// theme — the primitives brief needed Button/Field heights (36/44/52) and
+// Icon dimensions (16/20/24), so both are added here rather than reaching
+// for an arbitrary-value literal at each call site.
+const controlAndIconSize = {
+  'control-sm': 'var(--size-control-sm)',
+  'control-md': 'var(--size-control-md)',
+  'control-lg': 'var(--size-control-lg)',
+  'icon-sm': 'var(--size-icon-sm)',
+  'icon-md': 'var(--size-icon-md)',
+  'icon-lg': 'var(--size-icon-lg)',
+};
+
 const space = {
   0: 'var(--space-0)',
   1: 'var(--space-1)',
@@ -52,8 +67,15 @@ export default {
         'field-bg': 'var(--field-bg)',
         'field-border-focus': 'var(--field-border-focus)',
         'nav-bg': 'var(--nav-bg)',
+        // Promoted from the status primitive tier (`color.status.*`) to the
+        // semantic tier for Field's error/success states (§3.4) — see the
+        // tokens/modes/*.json + tokens.json comments at `theme.*.error`.
+        error: 'var(--error)',
+        success: 'var(--success)',
       },
       spacing: space,
+      height: controlAndIconSize,
+      width: controlAndIconSize,
       borderRadius: {
         sm: 'var(--radius-sm)',
         md: 'var(--radius-md)',
@@ -118,6 +140,11 @@ export default {
       maxWidth: { container: 'var(--size-container)', measure: 'var(--size-measure)' },
       minHeight: { touch: 'var(--size-touch-min)' },
       minWidth: { touch: 'var(--size-touch-min)' },
+      // `motion.press-scale` (0.98) is a token, not a stylistic pick — Tailwind's
+      // built-in `scale-*` utilities are percentage-keyed (50/75/90/95…) and have
+      // no slot for it, so it needs its own theme key rather than an inline
+      // arbitrary value at every pressable component.
+      scale: { press: 'var(--motion-press-scale)' },
     },
   },
   plugins: [],
