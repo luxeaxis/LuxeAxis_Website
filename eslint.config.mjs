@@ -22,9 +22,50 @@ import nextPlugin from '@next/eslint-plugin-next';
 // `tests/unit/eslint-seam.test.ts` lints a virtual components/ file
 // programmatically and fails if this ever lapses again.
 const SEAM = {
-  group: ['@/three/**', '!@/three/registry'],
+  group: [
+    // Alias (`@/three/**`) and relative (`../three/**`, `./three/**`) forms
+    // reaching into the three/ directory from outside it. One pattern covers
+    // both: `ignore` matches on the "three" path *segment* wherever it
+    // occurs, not on how the specifier got there, so `@/three/x` and
+    // `../../three/x` both match `**/three/**`.
+    '**/three/**',
+    '!**/three/registry',
+    // The bare npm package (`import 'three'`) and any subpath import from it
+    // (`three/examples/...`), which would bypass the registry's budget/tier
+    // gating just as surely as reaching into our own three/ directory does.
+    // Anchored with a leading slash deliberately: an *unanchored* `three`
+    // pattern matches the directory named `three` at any depth (equivalent
+    // to `**/three`), and once `ignore` treats a path as an excluded
+    // directory, its gitignore semantics forbid re-including anything
+    // beneath it — including the `!**/three/registry` negation above,
+    // regardless of list order (confirmed empirically: with an unanchored
+    // `three` pattern anywhere in this group, `@/three/registry` came back
+    // blocked no matter where the negation was placed). Anchoring to the
+    // start of the specifier with `/three` avoids that trap, since npm
+    // package specifiers always start at position zero and never collide
+    // with our own three/ directory (which is only ever reached via `@/` or
+    // a relative prefix, never bare).
+    '/three',
+    '/three/**',
+    // Scoped packages built on top of three, e.g. @react-three/fiber,
+    // @react-three/drei — same bypass risk as importing `three` directly.
+    '@react-three/*',
+  ],
   message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2.',
 };
+
+// Mirrors SEAM for dynamic `import()`. `no-restricted-imports` only inspects
+// static `import`/`export from` declarations — it has no visibility into
+// `ImportExpression` nodes — yet dynamic import is exactly the scene-loading
+// mechanism three/registry.ts's `SceneModule` type commits to
+// (`() => Promise<SceneModule>`), so leaving this open would let a consumer
+// dynamically import straight past the registry with no static trace at all.
+// `no-restricted-syntax` selectors are esquery, not the `ignore` package, so
+// this is a hand-rolled regex kept in sync with SEAM.group by the shared
+// probe cases in tests/unit/eslint-seam.test.ts rather than by construction —
+// there is no library that understands both selector syntax.
+const SEAM_DYNAMIC_IMPORT_SELECTOR =
+  'ImportExpression[source.value=/^three$|(^|\\/)three\\/(?!registry(?:$|\\/))|^@react-three\\//]';
 
 export default [
   {
@@ -50,8 +91,13 @@ export default [
   },
   {
     // The one DOM→WebGL seam. Repo-wide: nothing anywhere may reach into
-    // three/ except through the registry.
+    // three/ except through the registry. `ignores` scopes the restriction to
+    // *consumers* — three/registry.ts and everything else under three/ must
+    // still be free to import whatever they need (the npm `three` package,
+    // relative siblings, @react-three/* if it's ever used inside the seam
+    // implementation itself).
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
+    ignores: ['three/**'],
     rules: {
       // ESLint's `no-restricted-imports` "patterns" option matches `group`
       // entries with the `ignore` package (gitignore syntax), not minimatch —
@@ -61,6 +107,10 @@ export default [
       // to say "everything under three/ except registry" is two patterns in
       // one group: a blanket glob followed by a `!`-prefixed negation.
       'no-restricted-imports': ['error', { patterns: [SEAM] }],
+      'no-restricted-syntax': ['error', {
+        selector: SEAM_DYNAMIC_IMPORT_SELECTOR,
+        message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2. A dynamic import() of three/ internals, the `three` package, or @react-three/* bypasses it just as a static import would.',
+      }],
     },
   },
   {
