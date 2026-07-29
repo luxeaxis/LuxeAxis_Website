@@ -21,6 +21,9 @@ styles/tokens.css
 styles/tokens.dark.css
 styles/tokens.light.css
 
+# knowledge graph output (regenerate with /graphify)
+graphify-out/
+
 # misc
 .DS_Store
 *.log
