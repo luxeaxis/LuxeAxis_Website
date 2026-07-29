@@ -160,7 +160,14 @@ export function Field(props: FieldProps) {
       )}
       <label htmlFor={id} className={LABEL_BASE}>
         {label}
-        {required && <span className="text-on-surface-muted"> (required)</span>}
+        {/* `on-surface-2`, not `on-surface-muted`. "(required)" is small
+            meaningful text, and the muted role is documented as
+            "placeholder/disabled/large only; use secondary for small
+            meaningful text". Muted also renders here over the COMPOSITED
+            field background (surface + a translucent overlay), which is
+            slightly darker than surface itself — on light that dropped it to
+            4.27:1, below AA. Caught by axe on /style. */}
+        {required && <span className="text-on-surface-2"> (required)</span>}
       </label>
       {/* `text-small` (tailwind.config.ts `fontSize.small` ->
           `--typography-small-font-size`, 0.875rem) instead of Tailwind's

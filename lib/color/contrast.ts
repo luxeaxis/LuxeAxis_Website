@@ -26,6 +26,33 @@ function luminance(color: string): number {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
+/**
+ * Composites a translucent colour over an opaque backdrop, returning the
+ * resulting opaque colour.
+ *
+ * Needed because several surfaces in this system are translucent overlays —
+ * `--field-bg` is `rgba(13,43,78,0.03)` over the theme surface — so text
+ * rendered on them sits on a background that is NOT the surface token. Testing
+ * a text role against `surface` alone therefore overstates its contrast: the
+ * muted role measured 4.51:1 on ivory but 4.27:1 on the composited field
+ * background, below AA, which axe caught on /style after the suite had passed.
+ */
+export function compositeOver(overlay: string, backdrop: string): string {
+  const alpha = alphaOf(overlay);
+  const fg = parse(overlay);
+  const bg = parse(backdrop);
+  const mixed = fg.map((channel, i) =>
+    Math.round(channel * alpha + bg[i]! * (1 - alpha)),
+  ) as [number, number, number];
+  return `rgb(${mixed[0]}, ${mixed[1]}, ${mixed[2]})`;
+}
+
+/** Alpha channel of an `rgba()` string; 1 for any opaque format. */
+function alphaOf(color: string): number {
+  const match = color.trim().match(/^rgba\(\s*\d+[,\s]+\d+[,\s]+\d+[,\s/]+([\d.]+)\s*\)$/i);
+  return match ? Number(match[1]) : 1;
+}
+
 /** WCAG 2.x contrast ratio, in [1, 21]. Symmetric in its arguments. */
 export function contrastRatio(fg: string, bg: string): number {
   const a = luminance(fg);

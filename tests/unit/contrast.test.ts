@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { contrastRatio } from '@/lib/color/contrast';
+import { compositeOver, contrastRatio } from '@/lib/color/contrast';
 import tokens from '@/tokens/luxe-axis.tokens.json';
 
 const brand = tokens.color.brand;
@@ -143,6 +143,39 @@ describe('the promoted error/success roles clear AA on their own surface', () =>
 
   it('success on light clears AA against ivory', () => {
     expect(contrastRatio(status['success-on-light'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+// Every assertion above measures a text role against `surface`. But components
+// do not only render on surface — `--field-bg` is a translucent overlay, so text
+// inside a Field sits on surface COMPOSITED with that overlay, which is slightly
+// darker. The suite passed while the real rendered contrast was below AA: the
+// muted role measured 4.51:1 on ivory but 4.27:1 on the composited field
+// background, and only axe on /style caught it. These close that gap.
+describe('text roles clear AA on composited surfaces, not just on surface', () => {
+  const darkField = compositeOver(tokens.theme.dark['field-bg'].$value, brand.navy.$value);
+  const lightField = compositeOver(tokens.theme.light['field-bg'].$value, brand.ivory.$value);
+
+  it('composites a translucent overlay to the value the browser actually paints', () => {
+    // rgba(13,43,78,0.03) over #FCFAF5 — the exact background axe reported.
+    expect(lightField).toBe('rgb(245, 244, 240)');
+  });
+
+  it('primary text clears AAA on the field background in both themes', () => {
+    expect(contrastRatio(onDark.primary.$value, darkField)).toBeGreaterThanOrEqual(7);
+    expect(contrastRatio(onLight.primary.$value, lightField)).toBeGreaterThanOrEqual(7);
+  });
+
+  it('secondary text clears AA on the field background in both themes', () => {
+    // Field's "(required)" marker uses this role precisely because muted does
+    // not survive the composite on light.
+    expect(contrastRatio(onDark.secondary.$value, darkField)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(onLight.secondary.$value, lightField)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('the error role stays legible on the field background it borders', () => {
+    expect(contrastRatio(status['error-on-dark'].$value, darkField)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(status['error-on-light'].$value, lightField)).toBeGreaterThanOrEqual(4.5);
   });
 });
 
