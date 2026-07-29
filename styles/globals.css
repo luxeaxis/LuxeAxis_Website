@@ -83,4 +83,36 @@
       scroll-behavior: auto !important;
     }
   }
+
+  /* Header's glass recipe (design system §1.7) — one of exactly three
+     places glass is permitted, because the header must float legibly over
+     scrolling content while reading as "a layer above" it. The recipe is
+     the documented one verbatim: translucent surface fill + blur + a
+     hairline of light on the top edge. `saturate(1.1)` has no token of its
+     own (no colour/space/duration/easing token models a filter saturation
+     multiplier) — it is copied from the recipe text in §1.7, not invented
+     here.
+     `.lx-glass--condensed` swaps in the stronger blur step the header
+     gains once scrolled past 80px (§3.3, N1 "Header condense") — everything
+     else about the recipe is unchanged between the two states. */
+  .lx-glass {
+    background-color: var(--nav-bg);
+    backdrop-filter: blur(var(--component-nav-blur)) saturate(1.1);
+    -webkit-backdrop-filter: blur(var(--component-nav-blur)) saturate(1.1);
+    border-bottom: var(--border-width-hairline) solid var(--component-nav-border);
+  }
+  .lx-glass--condensed {
+    backdrop-filter: blur(var(--blur-glass-strong)) saturate(1.1);
+    -webkit-backdrop-filter: blur(var(--blur-glass-strong)) saturate(1.1);
+  }
+
+  /* Solid fallback where `backdrop-filter` isn't supported at all (§1.7:
+     "Always ship a solid fallback where backdrop-filter is unsupported").
+     Legibility must never depend on what happens to be scrolling behind an
+     unsupported blur, so this drops straight to the opaque surface colour. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .lx-glass {
+      background-color: var(--surface);
+    }
+  }
 }

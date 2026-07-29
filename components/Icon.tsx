@@ -18,7 +18,8 @@ export type IconName =
   | 'chevron-left'
   | 'close'
   | 'check'
-  | 'alert-circle';
+  | 'alert-circle'
+  | 'menu';
 
 export type IconSize = 'sm' | 'md' | 'lg';
 
@@ -44,6 +45,10 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <path d="M12 16.25h.01" />
     </>
   ),
+  // Hamburger — MobileSheet's trigger (spec §3.3 "Mobile sheet. Hamburger →
+  // full-screen sheet…"). Three parallel strokes, same weight/joins as every
+  // other glyph in this set.
+  menu: <path d="M4 7h16M4 12h16M4 17h16" />,
 };
 
 type IconBaseProps = {

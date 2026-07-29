@@ -6,6 +6,8 @@ import { notFound } from 'next/navigation';
 import { LOCALES, type Locale } from '@/lib/i18n/published';
 import { SkipLink } from '@/components/SkipLink';
 import { TierProbe } from '@/components/TierProbe';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import '@/styles/globals.css';
 
 // The brand name is a proper noun, not translated content, so it is safe to
@@ -74,10 +76,18 @@ export default async function LocaleLayout({
     <html lang={locale} data-theme="dark" className={fontVars}>
       <body className="lx-grain bg-surface text-on-surface">
         <TierProbe />
+        {/* Must stay the first focusable element in the DOM — Header adds
+            several more focusable controls (logo, nav, Book Audit, LangSwitch,
+            hamburger) ahead of `#main`, which is exactly what the skip link
+            exists to let a keyboard user bypass. */}
         <SkipLink />
         {/* Decorative: the meaning lives in the DOM beside it, never in it. */}
         <div className="lx-axis" aria-hidden="true" />
-        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
+          <Header />
+          {children}
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );
