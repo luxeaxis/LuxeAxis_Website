@@ -2,3 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 @import './tokens.css';
+
+/* Bridge next/font's generated families into the token variables, so
+   components keep consuming `--font-family-*` and never reference a font
+   directly. Tamil overrides bind to [lang] rather than a class, so the
+   correct family follows the locale automatically. */
+:root {
+  --font-family-display: var(--font-display), Georgia, serif;
+  --font-family-ui: var(--font-ui), system-ui, sans-serif;
+}
+[lang='ta'] {
+  --font-family-display: var(--font-display-ta), Georgia, serif;
+  --font-family-ui: var(--font-ui-ta), system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-family-ui);
+    /* Tabular figures everywhere by default: prices and calculator values
+       must not jitter as they update. */
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2 {
+    font-family: var(--font-family-display);
+    letter-spacing: var(--font-tracking-tight);
+    line-height: var(--font-leading-tight);
+  }
+
+  /* Never remove focus without a stronger cue. This is the floor. */
+  :focus-visible {
+    outline: var(--border-width-focus) solid var(--focus-ring);
+    outline-offset: var(--border-width-focus-offset);
+  }
+}
+
+@layer components {
+  /* The one decorative element in the system. A hairline of light on the
+     navy void — the brand's Axis metaphor, rendered without WebGL so it
+     costs nothing and survives the no-JS and reduced-motion paths intact.
+     Offset off-centre (38%) rather than halved: a centred line reads as a
+     divider, an offset one reads as a spine content hangs from. */
+  .lx-axis {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 38%;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--color-brand-gold-champagne) 12%,
+      var(--color-brand-gold) 50%,
+      var(--color-brand-gold-deep) 88%,
+      transparent 100%
+    );
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* The grain is what keeps a flat navy from reading as a cheap gradient —
+     it suggests a specified material rather than a screen colour. */
+  .lx-grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

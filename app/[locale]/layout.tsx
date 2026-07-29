@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Playfair_Display, Inter, Noto_Serif_Tamil, Noto_Sans_Tamil } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -16,6 +17,39 @@ export const metadata: Metadata = {
   title: 'Luxe Axis',
 };
 
+// Only the two weights that appear above the fold are preloaded; the font
+// budget is ≤130KB PER LOCALE, not globally, which is why the Tamil families
+// carry `preload: false` and are only attached to the <html> class list on
+// /ta. Loading all four everywhere would blow the budget on both locales at
+// once.
+const display = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['500', '600'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const ui = Inter({
+  subsets: ['latin'],
+  variable: '--font-ui',
+  display: 'swap',
+});
+
+const displayTa = Noto_Serif_Tamil({
+  subsets: ['tamil'],
+  weight: ['500', '600'],
+  variable: '--font-display-ta',
+  display: 'swap',
+  preload: false,
+});
+
+const uiTa = Noto_Sans_Tamil({
+  subsets: ['tamil'],
+  variable: '--font-ui-ta',
+  display: 'swap',
+  preload: false,
+});
+
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
@@ -32,11 +66,17 @@ export default async function LocaleLayout({
   setRequestLocale(locale as Locale);
   const messages = await getMessages();
 
+  const fontVars = [display.variable, ui.variable]
+    .concat(locale === 'ta' ? [displayTa.variable, uiTa.variable] : [])
+    .join(' ');
+
   return (
-    <html lang={locale} data-theme="dark">
-      <body className="bg-surface text-on-surface">
+    <html lang={locale} data-theme="dark" className={fontVars}>
+      <body className="lx-grain bg-surface text-on-surface">
         <TierProbe />
         <SkipLink />
+        {/* Decorative: the meaning lives in the DOM beside it, never in it. */}
+        <div className="lx-axis" aria-hidden="true" />
         <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
       </body>
     </html>
