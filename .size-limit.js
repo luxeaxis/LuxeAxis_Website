@@ -88,19 +88,56 @@ const toGlobPath = (p) => p.split(path.sep).join('/')
 const lastSegment = (key) => key.slice(key.lastIndexOf('/') + 1)
 const ownPathOf = (key) => key.slice(0, key.length - lastSegment(key).length - 1)
 
-const isLayoutEntry = (key) => lastSegment(key) === 'layout'
+// `layout` is not the only wrapper whose JS ships with the routes beneath it.
+// `template`, `error`, `loading`, `not-found`, `global-error` and `default`
+// (parallel routes) all do too. Treating only `layout` as a wrapper meant the
+// first `app/[locale]/error.tsx` or `loading.tsx` anyone added would both
+// fabricate its own "route JS" check for a URL nobody navigates to AND go
+// unattributed to the real routes that serve it — the identical bug this file
+// was already fixed for twice, waiting to happen a third time.
+const NAVIGABLE_ENTRY_TYPES = new Set(['page', 'route'])
+const WRAPPER_ENTRY_TYPES = new Set([
+  'layout',
+  'template',
+  'error',
+  'loading',
+  'not-found',
+  'global-error',
+  'default'
+])
 
-const layoutEntries = Object.entries(routes)
-  .filter(([key]) => isLayoutEntry(key))
+// Fail loud on an entry type we don't recognise rather than guessing. Guessing
+// "wrapper" would silently drop a navigable route's own budget check; guessing
+// "navigable" would fabricate a check and under-attribute real routes. Either
+// way the gate would keep reporting green while measuring the wrong thing,
+// which is the failure mode this whole file exists to prevent.
+for (const key of Object.keys(routes)) {
+  const entryType = lastSegment(key)
+  if (!NAVIGABLE_ENTRY_TYPES.has(entryType) && !WRAPPER_ENTRY_TYPES.has(entryType)) {
+    throw new Error(
+      `[size-limit] Unrecognised App Router entry type "${entryType}" in ` +
+        `${manifestPath} (key: "${key}").\n` +
+        '  This file must know whether it is a navigable route (gets its own ' +
+        'budget check) or a wrapper (its chunks are attributed to the routes ' +
+        'nested under it). Add it to NAVIGABLE_ENTRY_TYPES or ' +
+        'WRAPPER_ENTRY_TYPES in .size-limit.js.'
+    )
+  }
+}
+
+const isNavigableEntry = (key) => NAVIGABLE_ENTRY_TYPES.has(lastSegment(key))
+
+const wrapperEntries = Object.entries(routes)
+  .filter(([key]) => !isNavigableEntry(key))
   .map(([key, chunks]) => ({ routePath: ownPathOf(key), chunks }))
 
-// Ancestor layouts of `routePath`: layouts whose own path is `routePath`
-// itself (the layout directly wrapping this route) or a proper prefix of it
+// Ancestor wrappers of `routePath`: wrappers whose own path is `routePath`
+// itself (the one directly wrapping this route) or a proper prefix of it
 // (an ancestor further up the tree, including the root layout at "").
-const ancestorLayoutsOf = (routePath) =>
-  layoutEntries.filter(
-    ({ routePath: layoutPath }) =>
-      routePath === layoutPath || routePath.startsWith(`${layoutPath}/`)
+const ancestorWrappersOf = (routePath) =>
+  wrapperEntries.filter(
+    ({ routePath: wrapperPath }) =>
+      routePath === wrapperPath || routePath.startsWith(`${wrapperPath}/`)
   )
 
 // Ancestor-layout attribution closes the specific gap this file was last
@@ -177,11 +214,14 @@ const extraChunksFor = (routeKey) => {
   return [...chunks]
 }
 
+let clientReferenceChunkTotal = 0
+
 const checks = Object.entries(routes)
-  .filter(([route]) => !isLayoutEntry(route))
+  .filter(([route]) => isNavigableEntry(route))
   .map(([route, chunks]) => {
-    const ancestorChunks = ancestorLayoutsOf(ownPathOf(route)).flatMap((l) => l.chunks)
+    const ancestorChunks = ancestorWrappersOf(ownPathOf(route)).flatMap((w) => w.chunks)
     const clientReferenceChunks = extraChunksFor(route)
+    clientReferenceChunkTotal += clientReferenceChunks.length
     // Dedupe: shared chunks (e.g. the webpack runtime, main-app bootstrap,
     // or a provider chunk bundled into a sibling route's own file) can
     // appear in more than one of the three sources above.
@@ -198,6 +238,27 @@ const checks = Object.entries(routes)
 if (checks.length === 0) {
   throw new Error(
     `[size-limit] ${manifestPath} listed no JS chunks for any route — refusing to generate an empty budget.`
+  )
+}
+
+// `extraChunksFor` returns [] on two silent paths: a missing manifest file, and
+// a manifest whose `clientModules` shape it doesn't recognise. Left unchecked,
+// a change to Next's internal RSC manifest format would make every route
+// silently measure ~6.4 kB LESS than it actually ships — undercounting, which
+// is the direction that manufactures false confidence, and precisely the bug
+// this mechanism was added to fix. A budget gate that quietly stops measuring
+// is worse than no gate. If we found routes but the RSC manifests contributed
+// nothing at all, that is a format change, not a legitimately empty result.
+if (clientReferenceChunkTotal === 0) {
+  throw new Error(
+    '[size-limit] Found ' +
+      `${checks.length} navigable route(s), but no client-reference manifest ` +
+      'yielded any chunks.\n' +
+      "  That almost certainly means Next.js's internal RSC manifest shape " +
+      'changed (globalThis.__RSC_MANIFEST[route].clientModules[*].chunks).\n' +
+      '  Refusing to report a budget that silently undercounts. Try a clean ' +
+      're-build (`rm -rf .next && pnpm build`); if the shape really changed, ' +
+      'update extraChunksFor() in .size-limit.js.'
   )
 }
 
