@@ -18,6 +18,20 @@ test('unpublished Tamil route 307s to English instead of showing English under l
   expect(new URL(page.url()).pathname).toBe('/pricing');
 });
 
+// The build used to write .next/server/app/ta/pricing.html containing
+// <html lang="ta"> around an English <h1> — English under lang="ta", shipped to
+// disk, kept unreachable only by middleware. generateStaticParams now filters to
+// published locales so the artifact is never produced, and assertPublished()
+// 404s at render time if such a route is reached by a path middleware never
+// inspected (its matcher skips any path containing a dot).
+test('an unpublished Tamil route never serves English under lang="ta"', async ({ request }) => {
+  const response = await request.get('/ta/pricing', { maxRedirects: 0 });
+  expect(response.status()).toBe(307);
+  // Belt and braces: even the redirect's own body must not be an English page
+  // wearing a Tamil lang attribute.
+  expect(await response.text()).not.toMatch(/<html[^>]*lang="ta"/);
+});
+
 /** Walks `request().redirectedFrom()` back to the initial request and counts
  *  the hops. A test that only checks the final response is 200 would pass
  *  even at 12 hops (the infinite-loop bug this guards against resolved to a
