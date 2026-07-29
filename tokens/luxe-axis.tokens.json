@@ -30,7 +30,7 @@
       "$description": "Text/icon ramp for use on ivory surfaces.",
       "primary":   { "$value": "#0D2B4E", "$description": "13.67:1 AAA" },
       "secondary": { "$value": "#435468", "$description": "7.44:1 AAA" },
-      "tertiary":  { "$value": "#6A7889", "$description": "4.32:1 — placeholder/disabled/large only; use secondary for small meaningful text" },
+      "tertiary":  { "$value": "#677586", "$description": "4.51:1 AA — darkened from #6A7889 (4.32:1, failed AA) so the on-surface-muted role is conformant in BOTH themes; the semantic tier erases per-theme usage caveats, so a role that is safe on navy must be safe on ivory too." },
       "disabled":  { "$value": "#9AA4B0", "$description": "Disabled/placeholder (exempt from AA)." }
     },
     "status": {

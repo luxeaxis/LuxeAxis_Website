@@ -4,6 +4,7 @@ import tokens from '@/tokens/luxe-axis.tokens.json';
 
 const brand = tokens.color.brand;
 const onDark = tokens.color['neutral-on-dark'];
+const onLight = tokens.color['neutral-on-light'];
 
 describe('contrastRatio', () => {
   it('returns 21 for black on white', () => {
@@ -68,6 +69,43 @@ describe('verified pairings hold', () => {
 
   it('the focus ring is distinguishable against navy', () => {
     expect(contrastRatio(tokens.theme.dark['focus-ring'].$value, brand.navy.$value)).toBeGreaterThanOrEqual(3);
+  });
+});
+
+// The light theme is a shipped, selectable theme. Before these existed, the
+// suite asserted seven dark pairings and zero light ones — which is how
+// on-surface-muted came to pass AA on navy (5.51:1) and fail it on ivory
+// (4.32:1) while both resolved from one semantic role. The semantic tier
+// erases per-theme usage caveats, so a role safe in one theme must be safe
+// in the other.
+describe('verified pairings hold on the light theme too', () => {
+  it('navy body text on ivory reaches AAA', () => {
+    expect(contrastRatio(onLight.primary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(7);
+  });
+
+  it('secondary text on ivory reaches AAA', () => {
+    expect(contrastRatio(onLight.secondary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(7);
+  });
+
+  it('muted text on ivory reaches AA — the role that used to fail here', () => {
+    expect(contrastRatio(onLight.tertiary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('the muted role clears AA in BOTH themes, not just one', () => {
+    expect(contrastRatio(onDark.tertiary.$value, brand.navy.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(onLight.tertiary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('teal is the accessible accent for text on ivory', () => {
+    expect(contrastRatio(brand.teal.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('the accent hover state stays AA on ivory', () => {
+    expect(contrastRatio(tokens.theme.light['accent-hover'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('the light focus ring is distinguishable against ivory', () => {
+    expect(contrastRatio(tokens.theme.light['focus-ring'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(3);
   });
 });
 
