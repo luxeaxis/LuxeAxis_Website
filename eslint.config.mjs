@@ -9,6 +9,9 @@ import tsParser from '@typescript-eslint/parser';
 // no patch step. `eslint-config-next` itself stays in devDependencies per the
 // brief; it is just not the module we import here.
 import nextPlugin from '@next/eslint-plugin-next';
+import tseslint from 'typescript-eslint';
+import reactHooks from 'eslint-plugin-react-hooks';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 // The one DOM→WebGL seam, extracted so every `no-restricted-imports` block
 // spreads the identical pattern object rather than repeating the literal.
@@ -71,13 +74,23 @@ export default [
   {
     ignores: ['.next/**', 'node_modules/**'],
   },
+  // Dropping `eslint-config-next` for the ESLint 9 reason above also silently
+  // dropped every plugin it bundles. For the whole of this branch's history
+  // `pnpm lint` ran ~22 Next-specific rules and none of these three, so the
+  // binding constraint "no `any` without a written justification" had zero
+  // enforcement (tsc --strict catches implicit any, never explicit), every
+  // hook in the codebase was unchecked by rules-of-hooks/exhaustive-deps, and
+  // the WCAG 2.2 AA acceptance gate rested entirely on axe over three routes
+  // at runtime. These restore each of them directly.
+  ...tseslint.configs.recommended,
+  jsxA11y.flatConfigs.recommended,
   {
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     languageOptions: {
       parser: tsParser,
       parserOptions: { sourceType: 'module', ecmaFeatures: { jsx: true } },
     },
-    plugins: { '@next/next': nextPlugin },
+    plugins: { '@next/next': nextPlugin, 'react-hooks': reactHooks },
     rules: {
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
@@ -87,6 +100,7 @@ export default [
       // (`pages/_document`), which this App Router project doesn't use.
       '@next/next/no-duplicate-head': 'off',
       '@next/next/no-page-custom-font': 'off',
+      ...reactHooks.configs.recommended.rules,
     },
   },
   {
@@ -112,6 +126,15 @@ export default [
         message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2. A dynamic import() of three/ internals, the `three` package, or @react-three/* bypasses it just as a static import would.',
       }],
     },
+  },
+  {
+    // size-limit resolves its config through lilconfig and loads it as
+    // CommonJS, so this file cannot use ESM import syntax. Its third require()
+    // is also load-bearing at runtime rather than stylistic: it reads Next's
+    // generated page_client-reference-manifest.js, whose path is only known
+    // after a build, so it cannot be a static import under any module system.
+    files: ['.size-limit.js'],
+    rules: { '@typescript-eslint/no-require-imports': 'off' },
   },
   {
     // Scoped to components/ only. Routes ARE permitted to import features —
