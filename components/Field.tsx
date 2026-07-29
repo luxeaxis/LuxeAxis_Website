@@ -67,6 +67,9 @@ function omitKnownProps(props: Record<string, unknown>): Record<string, unknown>
 
 // Shared visual treatment for both the <input> and <textarea> control —
 // kept as one string so the two branches below can't drift from each other.
+// Height itself is deliberately NOT here — the single-line `<input>` and the
+// growable `<textarea>` need different height semantics (see below), so
+// each element applies its own `h-control-lg` / `min-h-control-lg`.
 const CONTROL_BASE = cx(
   'peer w-full rounded-md bg-field-bg px-4 pb-2 pt-5 text-on-surface',
   'border-hairline placeholder-transparent',
@@ -84,8 +87,12 @@ const LABEL_BASE = cx(
   'pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-2',
   'transition-all duration-micro ease-standard motion-reduce:transition-none',
   'text-base',
-  'peer-focus:top-3 peer-focus:-translate-y-0 peer-focus:text-xs',
-  'peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs',
+  // Floated size reads `text-overline` (tailwind.config.ts `fontSize.overline`
+  // -> `--typography-overline-font-size`, 0.75rem) instead of Tailwind's
+  // default `text-xs` (same 0.75rem value today, but not sourced from the
+  // token) — same reasoning as help/error/success below.
+  'peer-focus:top-3 peer-focus:-translate-y-0 peer-focus:text-overline',
+  'peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-overline',
 );
 
 export function Field(props: FieldProps) {
@@ -120,22 +127,33 @@ export function Field(props: FieldProps) {
   return (
     <div className="relative">
       {props.multiline ? (
+        // `min-h-control-lg` (not `h-control-lg`): a floor, not a fixed
+        // height — `rows` is what actually sizes a textarea, and a fixed
+        // height would clip a multi-row control down to one row's worth of
+        // space. The floor still guarantees the same ≥44px target (§5) a
+        // fixed height would.
         <textarea
           id={id}
           name={name}
           rows={props.rows ?? 4}
           placeholder=" "
-          className={cx(controlClassName, 'pt-6')}
+          className={cx(controlClassName, 'min-h-control-lg pt-6')}
           {...commonA11y}
           {...(nativeRest as TextareaHTMLAttributes<HTMLTextAreaElement>)}
         />
       ) : (
+        // `h-control-lg` pins the single-line control to the spec's
+        // `control-lg` (52px) exactly, rather than approximating it from
+        // `pt-5 pb-2` padding plus ambient line-height — nothing pinned that
+        // combination before, so it could drift silently if font metrics
+        // ever changed (the ≥44px floor from §5 has to hold, not just
+        // happen to hold today).
         <input
           id={id}
           name={name}
           type={props.type ?? 'text'}
           placeholder=" "
-          className={controlClassName}
+          className={cx(controlClassName, 'h-control-lg')}
           {...commonA11y}
           {...(nativeRest as InputHTMLAttributes<HTMLInputElement>)}
         />
@@ -144,20 +162,25 @@ export function Field(props: FieldProps) {
         {label}
         {required && <span className="text-on-surface-muted"> (required)</span>}
       </label>
+      {/* `text-small` (tailwind.config.ts `fontSize.small` ->
+          `--typography-small-font-size`, 0.875rem) instead of Tailwind's
+          default `text-sm` — same numeric value today, but now actually
+          reads the `typography.small` token instead of coinciding with it
+          by accident. */}
       <div className="mt-2 space-y-1">
         {help && (
-          <p id={helpId} className="text-sm text-on-surface-muted">
+          <p id={helpId} className="text-small text-on-surface-muted">
             {help}
           </p>
         )}
         {error && (
-          <p id={errorId} role="alert" className="flex items-center gap-2 text-sm text-error">
+          <p id={errorId} role="alert" className="flex items-center gap-2 text-small text-error">
             <Icon name="alert-circle" size="sm" decorative />
             <span>{error}</span>
           </p>
         )}
         {success && (
-          <p id={successId} className="flex items-center gap-2 text-sm text-success">
+          <p id={successId} className="flex items-center gap-2 text-small text-success">
             <Icon name="check" size="sm" decorative />
             <span>{success}</span>
           </p>

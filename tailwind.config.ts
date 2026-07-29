@@ -98,6 +98,18 @@ export default {
         section: 'var(--duration-section)',
         signature: 'var(--duration-signature)',
       },
+      // Tailwind's built-in `transition-colors` utility only ever animates
+      // `color, background-color, border-color, text-decoration-color, fill,
+      // stroke` — `transform` isn't in that list, so a component animating
+      // both colour AND `scale`/`translate` on the same trigger (Button's
+      // press scale, alongside its colour states) needs a named property
+      // list that includes both. `transition-all` was rejected as the fix
+      // (see Button.tsx) because it would also pick up layout properties
+      // (width, padding, etc.) that aren't meant to animate.
+      transitionProperty: {
+        'colors-transform':
+          'color, background-color, border-color, text-decoration-color, fill, stroke, transform',
+      },
       transitionTimingFunction: {
         standard: 'var(--easing-standard)',
         entrance: 'var(--easing-entrance)',
@@ -123,6 +135,17 @@ export default {
         scrim: 'var(--opacity-scrim)',
       },
       blur: { glass: 'var(--blur-glass)', 'glass-strong': 'var(--blur-glass-strong)' },
+      // `typography.small`/`typography.overline` composite tokens already
+      // get expanded into standalone `--typography-<name>-font-size` CSS
+      // vars by the token build (`expand: { include: ['typography'] }` in
+      // scripts/build-tokens.ts — confirmed present in styles/tokens.css).
+      // Exposing just the font-size half of each composite here is a clean,
+      // fully-wired change; the other sub-properties (weight, tracking,
+      // family) aren't part of this fontSize scale and are left alone.
+      fontSize: {
+        overline: 'var(--typography-overline-font-size)',
+        small: 'var(--typography-small-font-size)',
+      },
       // The z-index scale exists precisely so layering is decided once, in the
       // token file, rather than re-argued at each call site with a magic number.
       zIndex: {
@@ -138,7 +161,11 @@ export default {
         tooltip: 'var(--z-index-tooltip)',
       },
       maxWidth: { container: 'var(--size-container)', measure: 'var(--size-measure)' },
-      minHeight: { touch: 'var(--size-touch-min)' },
+      // `control-sm/md/lg` reused here (alongside `height` above) so a
+      // multi-row control (Field's `<textarea>`) can enforce the same
+      // ≥44px-floor scale as a MINIMUM without capping its ability to grow
+      // taller than one row — see Field.tsx's `min-h-control-lg`.
+      minHeight: { ...controlAndIconSize, touch: 'var(--size-touch-min)' },
       minWidth: { touch: 'var(--size-touch-min)' },
       // `motion.press-scale` (0.98) is a token, not a stylistic pick — Tailwind's
       // built-in `scale-*` utilities are percentage-keyed (50/75/90/95…) and have

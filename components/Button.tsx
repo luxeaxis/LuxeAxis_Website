@@ -82,8 +82,16 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
   primary: 'bg-accent text-accent-contrast hover:bg-accent-hover',
   secondary:
     'bg-transparent border-regular border-border-strong text-on-surface hover:border-accent',
+  // Underline is revealed on hover/focus rather than permanent — §3.1 calls
+  // for "accent + underline-draw" on tertiary, the same "Underline draw"
+  // pattern (§2.3) Link's `standalone` variant uses, and for the same
+  // reason: a tertiary button already sits inside its own surrounding
+  // button-like chrome (padding, group context), so it doesn't need a
+  // permanent underline the way an inline-prose link does to signal
+  // "this is interactive" at rest. See Link.tsx for the fuller rationale on
+  // why `inline` and this treatment deliberately differ.
   tertiary:
-    'bg-transparent text-accent underline decoration-[length:var(--border-width-regular)] underline-offset-4 hover:text-accent-hover',
+    'bg-transparent text-accent underline decoration-transparent decoration-[length:var(--border-width-regular)] underline-offset-4 hover:text-accent-hover hover:decoration-current focus-visible:decoration-current',
   icon: 'rounded-round border-regular border-border-subtle text-on-surface-2 hover:border-border hover:text-on-surface',
   destructive: 'bg-transparent border-regular border-error text-error hover:bg-error hover:text-accent-contrast',
 };
@@ -165,12 +173,36 @@ export function Button(props: ButtonProps) {
   // they are listed as separate rows in the global states table (§4), and a
   // button mid-submit isn't meant to read as broken/unavailable the way a
   // genuinely disabled one is.
+  //
+  // `isInert` (disabled OR loading) drives everything that should make the
+  // control genuinely un-activatable: `aria-disabled`, opacity, and the
+  // click guard below. It deliberately does NOT drive the native `disabled`
+  // attribute (button) or `href` removal (anchor) — those are reserved for
+  // `disabled` alone. The standard way a button *enters* `loading` is a
+  // keyboard/screen-reader user activating that exact button; setting
+  // native `disabled` on the currently-focused element forces the browser
+  // to blur it (`document.activeElement` resets to `<body>`), destroying
+  // tab position at the one moment it matters most (§5, "keyboard-complete,
+  // logical tab order"). Keeping it merely `aria-disabled` while loading
+  // leaves the element focusable and in place, while the guarded onClick
+  // below still makes activation a no-op — genuinely un-activatable without
+  // the focus side effect. `disabled` (not loading) is different: the
+  // control is truly out of play, so losing focus is correct there.
   const isInert = disabled || loading;
 
   const base = cx(
     'group relative inline-flex items-center justify-center gap-2',
     'font-medium overflow-hidden whitespace-nowrap',
-    'transition-colors duration-micro ease-standard',
+    // `transition-colors-transform` (tailwind.config.ts) rather than the
+    // built-in `transition-colors`: that utility's property list is `color,
+    // background-color, border-color, text-decoration-color, fill, stroke`
+    // — `transform` isn't in it, so `active:scale-press` below used to snap
+    // instantly instead of easing over `micro`/`standard` alongside the
+    // colour states, contradicting the "weighted, never snappy" feel
+    // (§2.2/§2.5). `transition-all` was rejected on purpose — it would also
+    // animate layout properties (width, padding…) this component never
+    // intends to animate.
+    'transition-colors-transform duration-micro ease-standard',
     'active:scale-press motion-reduce:active:scale-100',
     'focus-visible:outline focus-visible:outline-focus focus-visible:outline-offset-focus focus-visible:outline-focus-ring',
     disabled && 'opacity-disabled',
@@ -236,11 +268,23 @@ export function Button(props: ButtonProps) {
 
   if (as === 'a') {
     const { href, onClick, ...anchorRest } = rest as { href?: string; onClick?: (event: MouseEvent<HTMLAnchorElement>) => void };
-    const handleClick = isInert ? (event: MouseEvent<HTMLAnchorElement>) => event.preventDefault() : onClick;
+    // Guards activation via `preventDefault` + skipping the caller's
+    // `onClick` rather than removing `href`/going native-disabled — an
+    // anchor has no native `disabled`, but dropping `href` has the same
+    // focus-destroying effect (an `<a>` without `href` isn't focusable, so a
+    // browser blurs it if it's the currently-focused element). `href` stays
+    // in place through `loading`; it's removed only for genuine `disabled`.
+    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+      if (isInert) {
+        event.preventDefault();
+        return;
+      }
+      onClick?.(event);
+    };
     return (
       <a
         {...(anchorRest as AnchorHTMLAttributes<HTMLAnchorElement>)}
-        href={isInert ? undefined : href}
+        href={disabled ? undefined : href}
         aria-label={ariaLabel}
         aria-busy={loading || undefined}
         aria-disabled={isInert || undefined}
@@ -252,14 +296,34 @@ export function Button(props: ButtonProps) {
     );
   }
 
-  const { type = 'button', ...buttonRest } = rest as { type?: 'button' | 'submit' | 'reset' };
+  const { type = 'button', onClick, ...buttonRest } = rest as {
+    type?: 'button' | 'submit' | 'reset';
+    onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  };
+  // Native `disabled` is reserved for genuine `disabled`, not `loading` —
+  // setting `disabled` on the currently-focused element forces a browser
+  // blur (see the `isInert` comment above), which is exactly wrong the
+  // instant a keyboard/screen-reader activation is what put the button into
+  // `loading` in the first place. While merely `loading`, the button stays
+  // native-enabled and in the tab order; `aria-disabled` communicates the
+  // state to assistive tech, and this guarded handler makes activation a
+  // real no-op (aria-disabled alone doesn't stop a click from firing).
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (isInert) {
+      event.preventDefault();
+      return;
+    }
+    onClick?.(event);
+  };
   return (
     <button
       {...(buttonRest as ButtonHTMLAttributes<HTMLButtonElement>)}
       type={type}
-      disabled={isInert}
+      disabled={disabled}
+      aria-disabled={isInert || undefined}
       aria-label={ariaLabel}
       aria-busy={loading || undefined}
+      onClick={handleClick}
       className={base}
     >
       {content}

@@ -37,4 +37,45 @@ describe('Link', () => {
     const link = screen.getByRole('link', { name: 'Contact us' });
     expect(link.getAttribute('target')).toBeNull();
   });
+
+  describe('standalone variant', () => {
+    it('lays out the underline at rest but hides it via a transparent decoration colour, revealed on hover', () => {
+      render(
+        <Link href="/portfolio" variant="standalone">
+          Our portfolio
+        </Link>,
+      );
+      const link = screen.getByRole('link', { name: 'Our portfolio' });
+      // Still `underline` (the line is laid out — text isn't the only
+      // thing there) but coloured away at rest, and drawn back in via
+      // `hover:`/`focus-visible:decoration-current` — never a plain
+      // `hover:underline` that implies no line exists beforehand.
+      expect(link.className).toMatch(/\bunderline\b/);
+      expect(link.className).toMatch(/\bdecoration-transparent\b/);
+      expect(link.className).toMatch(/hover:decoration-current\b/);
+      expect(link.className).toMatch(/focus-visible:decoration-current\b/);
+    });
+
+    it('pairs the hover underline reveal with a text-colour change — never colour alone', () => {
+      render(
+        <Link href="/portfolio" variant="standalone">
+          Our portfolio
+        </Link>,
+      );
+      const link = screen.getByRole('link', { name: 'Our portfolio' });
+      expect(link.className).toMatch(/\btext-on-surface-2\b/);
+      expect(link.className).toMatch(/hover:text-on-surface\b/);
+    });
+
+    it('keeps a distinguishable, persistent underline colour on the current page', () => {
+      render(
+        <Link href="/portfolio" variant="standalone" aria-current="page">
+          Our portfolio
+        </Link>,
+      );
+      const link = screen.getByRole('link', { name: 'Our portfolio' });
+      expect(link.getAttribute('aria-current')).toBe('page');
+      expect(link.className).toMatch(/aria-\[current=page\]:decoration-accent\b/);
+    });
+  });
 });

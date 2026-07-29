@@ -5,19 +5,27 @@
  * Components are explicitly allowed to render directly, so no boundary is
  * needed here the way Button/Field need one for their handlers.
  *
- * The underline is deliberately ALWAYS ON, in both variants, rather than
- * appearing only on hover. Two rules in the brief pull in the same
- * direction: "never colour-only" (§5) and the explicit non-negotiable that
- * the underline "must not be the only signal removed on hover" — read
- * together, a hover state that *removes* the underline and leaves colour as
- * the sole cue is exactly the anti-pattern being ruled out. A permanent
- * underline is also what WCAG 1.4.1 (Use of Color) asks for on an inline
- * link sitting inside ordinary paragraph text, where nothing else marks it
- * as interactive. (The design doc's §3.3 nav pattern reveals its underline
- * only on hover/focus — that's a deliberately different treatment for
- * chrome-level nav items with their own surrounding affordances, e.g. a nav
- * bar's landmark and layout; it belongs to a future Nav component, not this
- * primitive.)
+ * `inline` and `standalone` deliberately differ on when the underline shows,
+ * and that split is intentional — don't "fix" it to match:
+ *
+ * - `inline` (prose): the underline is permanent. WCAG 1.4.1 (Use of Color)
+ *   requires a non-colour cue on a link sitting in ordinary paragraph text,
+ *   where nothing else marks it as interactive — removing the underline at
+ *   rest would leave colour as the only signal it's a link at all.
+ * - `standalone` (nav-like): the underline is revealed on hover/focus, per
+ *   §2.3's "Underline draw" pattern and §3.3's nav states table (`default
+ *   on-surface-2 → hover/focus … + underline-draw`). These links already sit
+ *   inside their own surrounding chrome (nav landmark, list layout), so they
+ *   don't need a permanent underline to read as interactive the way inline
+ *   prose links do — and making it permanent here would flatten the
+ *   current-page cue down to colour only (current vs. hover would then
+ *   differ solely in decoration *colour*, not presence). The current-page
+ *   state keeps its own persistent underline (`aria-current="page"`) so it
+ *   stays visually distinct from a link merely at rest.
+ *
+ * Neither variant ever signals hover/focus by colour alone: `standalone`
+ * pairs its text-colour change with the underline reveal, never colour in
+ * isolation.
  */
 
 import NextLink from 'next/link';
@@ -38,9 +46,21 @@ export type LinkProps = {
 } & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'children' | 'className'>;
 
 const VARIANT_CLASS: Record<LinkVariant, string> = {
+  // No explicit decoration-colour class needed: an unset `text-decoration-
+  // color` defaults to `currentColor`, so the underline (added in `classes`
+  // below) already tracks `text-accent`/`hover:text-accent-hover` for free.
   inline: 'text-accent hover:text-accent-hover',
+  // `decoration-transparent` at rest hides the underline (it's still laid
+  // out, just invisible) so `hover:`/`focus-visible:decoration-current`
+  // "draws" it back in — the reveal-on-hover pattern from the file-level
+  // comment. `aria-[current=page]:decoration-accent` wins over the
+  // `decoration-transparent` default despite appearing first in the class
+  // list: Tailwind's `aria-*` variant compiles to an attribute selector
+  // (`[aria-current="page"]`), which carries higher CSS specificity than the
+  // plain class selector `decoration-transparent` resolves to, so the
+  // cascade — not source order — decides here.
   standalone:
-    'text-on-surface-2 hover:text-on-surface aria-[current=page]:text-on-surface aria-[current=page]:decoration-accent',
+    'text-on-surface-2 decoration-transparent hover:text-on-surface hover:decoration-current focus-visible:text-on-surface focus-visible:decoration-current aria-[current=page]:text-on-surface aria-[current=page]:decoration-accent',
 };
 
 function isExternalHref(href: string): boolean {
