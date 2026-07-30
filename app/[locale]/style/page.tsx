@@ -1,9 +1,11 @@
 import type { ReactNode } from 'react';
 import { Button, type ButtonVariant } from '@/components/Button';
+import { FeatureCard, ProjectCard, StatCard, TierCard } from '@/components/Card';
 import { Field } from '@/components/Field';
 import { Icon, type IconName } from '@/components/Icon';
 import { Link } from '@/components/Link';
 import { Center, Cluster, Container, Grid, Stack } from '@/components/layout';
+import { SceneSlot } from '@/components/SceneSlot';
 import { assertPublished } from '@/lib/i18n/guard';
 import { alternatesFor } from '@/lib/seo/hreflang';
 import { isPublished, LOCALES, type Locale } from '@/lib/i18n/published';
@@ -279,6 +281,88 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
               <Icon key={name} name={name} size="lg" decorative />
             ))}
           </Cluster>
+        </Stack>
+
+        <Stack gap={4}>
+          <h3 className="font-display text-xl">Cards</h3>
+          {/* Every figure, inclusion and project name below is an obvious
+              placeholder — §3.2/the brief: "no invented copy and no
+              fabricated facts… demo content on /style must be obviously
+              illustrative." Nothing here is a real Luxe Axis project, price
+              or client number. */}
+          <p className="text-small text-on-surface-muted">
+            Specimen content only — figures, inclusions and the project name below are illustrative
+            placeholders, not real Luxe Axis data.
+          </p>
+
+          <Grid cols={2} gap={5}>
+            <ProjectCard
+              href="/portfolio"
+              eyebrow="Specimen"
+              title="Illustrative project"
+              neighbourhood="Adyar, Chennai"
+              tier="Signature"
+              media={{ kind: 'scene', sceneId: 'portfolio' }}
+            />
+            <FeatureCard
+              href="/intelligence"
+              icon="check"
+              title="Illustrative intelligence feature"
+              body="One line stating the capability's claim, not a description of pixels."
+            />
+          </Grid>
+
+          <Grid cols={3} gap={5}>
+            <TierCard
+              name="Essential"
+              price={{ amount: 500000, period: 'onwards (illustrative)' }}
+              inclusions={['Illustrative inclusion one', 'Illustrative inclusion two']}
+              cta={{ label: 'Book audit', href: '/book-audit' }}
+            />
+            <TierCard
+              name="Signature"
+              price={{ amount: 1000000, period: 'onwards (illustrative)' }}
+              inclusions={[
+                'Illustrative inclusion one',
+                'Illustrative inclusion two',
+                'Illustrative inclusion three',
+              ]}
+              cta={{ label: 'Book audit', href: '/book-audit' }}
+              recommended
+            />
+            <TierCard
+              name="Elite"
+              price={{ amount: 2000000, period: 'onwards (illustrative)' }}
+              inclusions={['Illustrative inclusion one', 'Illustrative inclusion two']}
+              cta={{ label: 'Book audit', href: '/book-audit' }}
+            />
+          </Grid>
+
+          <Grid cols={3} gap={5}>
+            <StatCard value={120} suffix="+" label="Illustrative projects delivered" />
+            <StatCard value={98} suffix="%" label="Illustrative client satisfaction" />
+            <StatCard value={12} label="Illustrative years in practice" />
+          </Grid>
+
+          <Stack gap={2}>
+            <Eyebrow>Glass card — floating over the 3D canvas only (§1.7)</Eyebrow>
+            {/* The literal permitted case: a card floating ON TOP of a
+                scene, not styled next to one. SceneSlot's own overlay slot
+                (`components/SceneSlot.tsx`) hosts it directly, the same
+                place a mega-menu panel or hero toast would sit — everywhere
+                else on the site this variant renders `surface="solid"`. */}
+            <SceneSlot id="portfolio">
+              <div className="max-w-xs p-6">
+                <FeatureCard
+                  href="/intelligence"
+                  icon="check"
+                  title="Floating over the scene"
+                  body="Glass keeps the scene's context visible instead of pasting a solid panel over it (§1.7)."
+                  surface="glass"
+                />
+              </div>
+            </SceneSlot>
+          </Stack>
         </Stack>
       </Stack>
     </div>

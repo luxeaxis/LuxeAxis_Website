@@ -109,6 +109,14 @@ export default {
       transitionProperty: {
         'colors-transform':
           'color, background-color, border-color, text-decoration-color, fill, stroke, transform',
+        // Card's hover state (§2.3 "Hover-lift": translateY + elevation step,
+        // together) needs `transform` and `box-shadow` to animate on one
+        // trigger. Two separate `transition-property` utilities can't be
+        // combined by stacking classes — `transition-property` is a single
+        // CSS declaration, so the later one in the compiled stylesheet wins
+        // outright rather than merging lists, the same reasoning
+        // `colors-transform` above already documents for colour + transform.
+        'shadow-transform': 'transform, box-shadow',
       },
       transitionTimingFunction: {
         standard: 'var(--easing-standard)',
@@ -128,6 +136,14 @@ export default {
         'dark-2': 'var(--elevation-dark-2)',
         'light-1': 'var(--elevation-light-1)',
         'light-2': 'var(--elevation-light-2)',
+        // Theme-resolved elevation steps — `--elevation-1`/`-2` are the
+        // scripts/build-tokens.ts alias that picks dark-1/2 vs light-1/2 for
+        // the active `data-theme`, the same indirection every colour role
+        // already gets (`--surface`, `--accent`…). Card is the first
+        // consumer: `shadow-1` at rest, `shadow-2` on hover, correct in both
+        // themes with no per-theme branching in component code.
+        1: 'var(--elevation-1)',
+        2: 'var(--elevation-2)',
       },
       opacity: {
         disabled: 'var(--opacity-disabled)',
