@@ -16,7 +16,6 @@
  */
 
 import { useEffect, useState } from 'react';
-import { useLocale } from 'next-intl';
 import { Button } from './Button';
 import { Link } from './Link';
 import { LangSwitch } from './LangSwitch';
@@ -24,6 +23,7 @@ import { MobileSheet } from './MobileSheet';
 import { Cluster, Container } from './layout';
 import { usePathname } from '@/i18n/navigation';
 import { NAV_ITEMS, BOOK_AUDIT } from '@/lib/nav';
+import type { Locale } from '@/lib/i18n/published';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
 
@@ -36,12 +36,11 @@ function isActiveRoute(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function Header() {
+export function Header({ locale }: { locale: Locale }) {
   const [condensed, setCondensed] = useState(false);
   // `?? '/'`: the underlying PathnameContext is `null` outside a mounted
   // Next.js router (e.g. an isolated unit-test render) — see LangSwitch.tsx.
   const pathname = usePathname() ?? '/';
-  const locale = useLocale();
 
   useEffect(() => {
     const onScroll = () => setCondensed(window.scrollY > CONDENSE_THRESHOLD_PX);
@@ -95,7 +94,7 @@ export function Header() {
 
           <Cluster gap={4} align="center" className="shrink-0">
             <div className="hidden md:block">
-              <LangSwitch />
+              <LangSwitch locale={locale} />
             </div>
             {/* Two real buttons, not one responsively-resized one: `md` size
                 reads right at desktop scale, but the primary CTA still has
@@ -109,7 +108,7 @@ export function Header() {
             <Button as="a" href={BOOK_AUDIT.href} size="sm" className="md:hidden">
               {BOOK_AUDIT.label}
             </Button>
-            <MobileSheet />
+            <MobileSheet locale={locale} />
           </Cluster>
         </div>
       </Container>

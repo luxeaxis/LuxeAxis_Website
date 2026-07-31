@@ -18,7 +18,7 @@ afterEach(() => {
 describe('LangSwitch', () => {
   it('on the published root, reading English: EN is current, தமிழ் is an offered link to /ta', () => {
     pathnameState.value = '/';
-    renderWithIntl(<LangSwitch />, 'en');
+    renderWithIntl(<LangSwitch locale="en" />, 'en');
 
     const en = screen.getByText('EN');
     expect(en.getAttribute('aria-current')).toBe('true');
@@ -30,7 +30,7 @@ describe('LangSwitch', () => {
 
   it('on the published root, reading Tamil: தமிழ் is current, EN links back to English', () => {
     pathnameState.value = '/';
-    renderWithIntl(<LangSwitch />, 'ta');
+    renderWithIntl(<LangSwitch locale="ta" />, 'ta');
 
     const ta = screen.getByText('தமிழ்');
     expect(ta.getAttribute('aria-current')).toBe('true');
@@ -41,13 +41,13 @@ describe('LangSwitch', () => {
 
   it('is absent entirely on a route with no Tamil translation while reading English', () => {
     pathnameState.value = '/pricing';
-    const { container } = renderWithIntl(<LangSwitch />, 'en');
+    const { container } = renderWithIntl(<LangSwitch locale="en" />, 'en');
     expect(container.querySelector('nav[aria-label="Language"]')).toBeNull();
   });
 
   it('never renders a தமிழ் link into an unpublished route (would 307 straight back)', () => {
     pathnameState.value = '/pricing';
-    renderWithIntl(<LangSwitch />, 'en');
+    renderWithIntl(<LangSwitch locale="en" />, 'en');
     expect(screen.queryByText('தமிழ்')).toBeNull();
   });
 });

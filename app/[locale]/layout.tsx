@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Playfair_Display, Inter, Noto_Serif_Tamil, Noto_Sans_Tamil } from 'next/font/google';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { LOCALES, type Locale } from '@/lib/i18n/published';
 import { SkipLink } from '@/components/SkipLink';
@@ -67,7 +66,6 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!(LOCALES as readonly string[]).includes(locale)) notFound();
   setRequestLocale(locale as Locale);
-  const messages = await getMessages();
 
   const fontVars = [display.variable, ui.variable]
     .concat(locale === 'ta' ? [displayTa.variable, uiTa.variable] : [])
@@ -84,19 +82,31 @@ export default async function LocaleLayout({
         <SkipLink />
         {/* Decorative: the meaning lives in the DOM beside it, never in it. */}
         <div className="lx-axis" aria-hidden="true" />
-        <NextIntlClientProvider messages={messages}>
-          {/* Mounted once, site-wide, so any future feature can call
-              `useToast()` without also remembering to wire a provider
-              (design system §3.5). No feature calls it yet — Toast ships
-              here as ready infrastructure, the same "built ahead of its
-              first consumer" position Header/Footer's nav shell already
-              takes for routes that don't exist yet. */}
-          <ToastProvider>
-            <Header />
-            {children}
-            <Footer />
-          </ToastProvider>
-        </NextIntlClientProvider>
+        {/* No NextIntlClientProvider.
+            It exists to hand messages to CLIENT components, and none consume
+            them: the only `useTranslations` call in the app is in
+            app/[locale]/page.tsx, a Server Component, which reads from
+            getRequestConfig rather than from this provider. Header and
+            LangSwitch previously called `useLocale()`, which is why the
+            provider was here — they now take `locale` as a prop, since this
+            layout is a Server Component and already knows it.
+
+            Measured: mounting it pulled next-intl's client runtime and its
+            vendor chunks into every route's client-reference manifest for
+            zero consumers. Re-add it (and revert the props) the moment a
+            client component genuinely needs translations — that is a real
+            requirement, not a regression. */}
+        {/* Mounted once, site-wide, so any future feature can call
+            `useToast()` without also remembering to wire a provider
+            (design system §3.5). No feature calls it yet — Toast ships
+            here as ready infrastructure, the same "built ahead of its
+            first consumer" position Header/Footer's nav shell already
+            takes for routes that don't exist yet. */}
+        <ToastProvider>
+          <Header locale={locale as Locale} />
+          {children}
+          <Footer />
+        </ToastProvider>
       </body>
     </html>
   );

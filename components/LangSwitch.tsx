@@ -18,11 +18,10 @@
  * all rather than a switch with only one, already-active option.
  */
 
-import { useLocale } from 'next-intl';
 import { usePathname } from '@/i18n/navigation';
 import { Link } from './Link';
 import { Cluster } from './layout';
-import { isPublished, normalise } from '@/lib/i18n/published';
+import { isPublished, normalise, type Locale } from '@/lib/i18n/published';
 
 const COOKIE_NAME = 'lx-locale';
 
@@ -37,8 +36,7 @@ function rememberLocale(locale: 'en' | 'ta') {
   document.cookie = `${COOKIE_NAME}=${locale}; Max-Age=31536000; Path=/; SameSite=Lax`;
 }
 
-export function LangSwitch({ className }: { className?: string }) {
-  const locale = useLocale();
+export function LangSwitch({ locale, className }: { locale: Locale; className?: string }) {
   // `next/navigation`'s underlying PathnameContext is `null` outside a real
   // Next.js router (e.g. an isolated unit test render) — `?? '/'` keeps this
   // component usable in that context instead of throwing on `.startsWith`.

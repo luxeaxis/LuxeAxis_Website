@@ -15,7 +15,7 @@ afterEach(() => {
 
 describe('MobileSheet', () => {
   it('starts closed: no dialog in the DOM, trigger reports aria-expanded=false', () => {
-    renderWithIntl(<MobileSheet />);
+    renderWithIntl(<MobileSheet locale="en" />);
     expect(screen.queryByRole('dialog')).toBeNull();
     const trigger = screen.getByRole('button', { name: 'Open menu' });
     expect(trigger.getAttribute('aria-expanded')).toBe('false');
@@ -24,7 +24,7 @@ describe('MobileSheet', () => {
   });
 
   it('opens on trigger click: dialog appears, locks body scroll, and moves focus into the panel', () => {
-    renderWithIntl(<MobileSheet />);
+    renderWithIntl(<MobileSheet locale="en" />);
     fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
 
     const dialog = screen.getByRole('dialog');
@@ -38,7 +38,7 @@ describe('MobileSheet', () => {
   });
 
   it('Esc returns focus to the trigger immediately, and the dialog unmounts once its close transition ends', () => {
-    renderWithIntl(<MobileSheet />);
+    renderWithIntl(<MobileSheet locale="en" />);
     const trigger = screen.getByRole('button', { name: 'Open menu' });
     fireEvent.click(trigger);
     const dialog = screen.getByRole('dialog');
@@ -57,7 +57,7 @@ describe('MobileSheet', () => {
   });
 
   it('clicking the in-panel close button closes it the same way as Esc', () => {
-    renderWithIntl(<MobileSheet />);
+    renderWithIntl(<MobileSheet locale="en" />);
     const trigger = screen.getByRole('button', { name: 'Open menu' });
     fireEvent.click(trigger);
     const dialog = screen.getByRole('dialog');
