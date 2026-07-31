@@ -19,6 +19,8 @@ export type IconName =
   | 'close'
   | 'check'
   | 'alert-circle'
+  | 'alert-triangle'
+  | 'info'
   | 'menu';
 
 export type IconSize = 'sm' | 'md' | 'lg';
@@ -43,6 +45,25 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7.75v5.5" />
       <path d="M12 16.25h.01" />
+    </>
+  ),
+  // Warning tone (Badge/InlineAlert/Toast, §3.5) — the same stem-plus-dot
+  // glyph as alert-circle, traced onto a triangle instead of a circle so the
+  // two severities stay visually distinct even before colour is read.
+  'alert-triangle': (
+    <>
+      <path d="M12 3.5 21.5 20h-19L12 3.5Z" />
+      <path d="M12 9.75v4.25" />
+      <path d="M12 17.25h.01" />
+    </>
+  ),
+  // Info tone (Badge/InlineAlert/Toast, §3.5) — the inverse of alert-circle's
+  // stem-plus-dot (dot on top, stem below), the conventional "i" glyph.
+  info: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5.25" />
+      <path d="M12 7.75h.01" />
     </>
   ),
   // Hamburger — MobileSheet's trigger (spec §3.3 "Mobile sheet. Hamburger →

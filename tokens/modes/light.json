@@ -18,6 +18,8 @@
     "field-bg":           { "$value": "{theme.light.field-bg}" },
     "field-border-focus": { "$value": "{theme.light.field-border-focus}" },
     "error":              { "$value": "{theme.light.error}" },
-    "success":            { "$value": "{theme.light.success}" }
+    "success":            { "$value": "{theme.light.success}" },
+    "warning":            { "$value": "{theme.light.warning}" },
+    "info":               { "$value": "{theme.light.info}" }
   }
 }

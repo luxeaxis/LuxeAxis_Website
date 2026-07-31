@@ -146,6 +146,29 @@ describe('the promoted error/success roles clear AA on their own surface', () =>
   });
 });
 
+// `warning`/`info` were promoted the same way, for the feedback/status set
+// (§3.5) — Badge/InlineAlert/Toast's warning and info tones. Same reasoning
+// as the block above: a promoted role with zero gate coverage is the exact
+// hole `on-surface-muted`'s history (documented above) already showed this
+// project repeats without one.
+describe('the promoted warning/info roles clear AA on their own surface', () => {
+  it('warning on dark clears AA against navy', () => {
+    expect(contrastRatio(status['warning-on-dark'].$value, brand.navy.$value)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('warning on light clears AA against ivory', () => {
+    expect(contrastRatio(status['warning-on-light'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('info on dark clears AA against navy', () => {
+    expect(contrastRatio(status['info-on-dark'].$value, brand.navy.$value)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('info on light clears AA against ivory', () => {
+    expect(contrastRatio(status['info-on-light'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
 // Every assertion above measures a text role against `surface`. But components
 // do not only render on surface — `--field-bg` is a translucent overlay, so text
 // inside a Field sits on surface COMPOSITED with that overlay, which is slightly

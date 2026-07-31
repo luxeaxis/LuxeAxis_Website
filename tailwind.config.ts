@@ -72,6 +72,13 @@ export default {
         // tokens/modes/*.json + tokens.json comments at `theme.*.error`.
         error: 'var(--error)',
         success: 'var(--success)',
+        // Same promotion, added for the feedback/status set (§3.5) — Badge,
+        // InlineAlert and Toast all need a warning and an info tone
+        // alongside error/success, and "never colour-only" still applies, so
+        // these need to be real semantic roles a component can name, not a
+        // reach for the withheld `color.status.warning`/`.info` primitives.
+        warning: 'var(--warning)',
+        info: 'var(--info)',
       },
       spacing: space,
       height: controlAndIconSize,
@@ -188,6 +195,22 @@ export default {
       // no slot for it, so it needs its own theme key rather than an inline
       // arbitrary value at every pressable component.
       scale: { press: 'var(--motion-press-scale)' },
+      // The shimmer sheen is "the one looping animation the whole system
+      // permits" (§2.3/§3.6) — Skeleton's only consumer. 1.4s has no home in
+      // `duration.*` (those tokens model transition durations — 80/120/240/
+      // 480/800/1200ms — not a sheen-sweep period; see Header.tsx's
+      // CONDENSE_THRESHOLD_PX for the same "spec-text literal, not a token
+      // family" reasoning already established in this codebase). Reported in
+      // the delivery notes as a value with no backing token, per the brief.
+      keyframes: {
+        shimmer: {
+          '0%': { backgroundPosition: '150% 0' },
+          '100%': { backgroundPosition: '-150% 0' },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 1.4s linear infinite',
+      },
     },
   },
   plugins: [],

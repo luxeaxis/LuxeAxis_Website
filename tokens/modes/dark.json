@@ -18,6 +18,8 @@
     "field-bg":           { "$value": "{theme.dark.field-bg}" },
     "field-border-focus": { "$value": "{theme.dark.field-border-focus}" },
     "error":              { "$value": "{theme.dark.error}" },
-    "success":            { "$value": "{theme.dark.success}" }
+    "success":            { "$value": "{theme.dark.success}" },
+    "warning":            { "$value": "{theme.dark.warning}" },
+    "info":               { "$value": "{theme.dark.info}" }
   }
 }

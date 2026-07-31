@@ -8,6 +8,7 @@ import { SkipLink } from '@/components/SkipLink';
 import { TierProbe } from '@/components/TierProbe';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { ToastProvider } from '@/components/Toast';
 import '@/styles/globals.css';
 
 // The brand name is a proper noun, not translated content, so it is safe to
@@ -84,9 +85,17 @@ export default async function LocaleLayout({
         {/* Decorative: the meaning lives in the DOM beside it, never in it. */}
         <div className="lx-axis" aria-hidden="true" />
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          {children}
-          <Footer />
+          {/* Mounted once, site-wide, so any future feature can call
+              `useToast()` without also remembering to wire a provider
+              (design system §3.5). No feature calls it yet — Toast ships
+              here as ready infrastructure, the same "built ahead of its
+              first consumer" position Header/Footer's nav shell already
+              takes for routes that don't exist yet. */}
+          <ToastProvider>
+            <Header />
+            {children}
+            <Footer />
+          </ToastProvider>
         </NextIntlClientProvider>
       </body>
     </html>
