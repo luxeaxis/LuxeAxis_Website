@@ -29,6 +29,23 @@ export function SceneSlot({
         sizes="100vw"
         className="object-cover"
       />
+      {/* Text scrim. `opacity.scrim` exists in the token file for exactly this
+          ("Text scrim over 3D/photo") and had no consumer.
+
+          This is a blind spot rather than a cosmetic choice: axe reports
+          text-over-image as "incomplete", never as a violation, because it
+          cannot know which pixel sits behind a glyph. So no gate in this
+          project can catch headline-over-photo contrast failing — and the
+          contrast suite only measures flat token pairs. Today every poster is
+          flat navy so nothing looks wrong; the moment real photography lands
+          under workstream B, a bright sky behind an ivory headline fails WCAG
+          with every check still green.
+          Sized from the deepest surface so the scrim darkens toward the void
+          rather than introducing a colour the palette does not contain. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-surface-deep opacity-scrim"
+      />
       <div className="relative z-10">{children}</div>
     </div>
   );

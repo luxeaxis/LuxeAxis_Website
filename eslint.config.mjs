@@ -72,7 +72,19 @@ const SEAM_DYNAMIC_IMPORT_SELECTOR =
 
 export default [
   {
-    ignores: ['.next/**', 'node_modules/**'],
+    // Anchored patterns like `.next/**` only match at the repo root, so build
+    // output inside a nested checkout is linted as if it were source. That is
+    // not hypothetical: a git worktree under `.claude/worktrees/<agent>/` with
+    // its own `.next` made `eslint .` fail on compiled Next.js chunks —
+    // thousands of `no-require-imports` errors in machine-generated code.
+    // `**/` makes each pattern match at any depth; `.claude/**` excludes agent
+    // scratch outright, since nothing under it is ever this project's source.
+    ignores: [
+      '**/.next/**',
+      '**/node_modules/**',
+      '.claude/**',
+      'styles/tokens*.css',
+    ],
   },
   // Dropping `eslint-config-next` for the ESLint 9 reason above also silently
   // dropped every plugin it bundles. For the whole of this branch's history

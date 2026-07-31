@@ -24,6 +24,10 @@ styles/tokens.light.css
 # knowledge graph output (regenerate with /graphify)
 graphify-out/
 
+# agent worktrees — scratch checkouts, never source. `.claude/launch.json`
+# is deliberately still tracked.
+.claude/worktrees/
+
 # misc
 .DS_Store
 *.log
