@@ -1,5 +1,14 @@
 import type { ReactNode } from 'react';
+import { Badge, type BadgeTone } from '@/components/Badge';
 import { Button, type ButtonVariant } from '@/components/Button';
+import { Chip } from '@/components/Chip';
+import { EmptyState } from '@/components/EmptyState';
+import { InlineAlert } from '@/components/InlineAlert';
+import { Progress } from '@/components/Progress';
+import { Skeleton } from '@/components/Skeleton';
+import { Tooltip } from '@/components/Tooltip';
+import type { StatusTone } from '@/lib/status';
+import { OverlayDemo } from './OverlayDemo';
 import { FeatureCard, ProjectCard, StatCard, TierCard } from '@/components/Card';
 import { Field } from '@/components/Field';
 import { Icon, type IconName } from '@/components/Icon';
@@ -194,6 +203,26 @@ const ICON_NAMES: readonly IconName[] = [
   'alert-circle',
 ];
 
+const BADGE_TONES: readonly BadgeTone[] = ['neutral', 'accent', 'success', 'warning', 'error', 'info'];
+const STATUS_TONES: readonly StatusTone[] = ['success', 'warning', 'error', 'info'];
+
+// Illustrative only. Real copy is content work and does not exist yet, so
+// these say what the component is for rather than pretending to be product
+// text — and none of them invent a fact about the business.
+const ALERT_TITLE: Record<StatusTone, string> = {
+  success: 'Your audit is booked',
+  warning: 'This estimate excludes civil work',
+  error: 'We could not save that change',
+  info: 'Pricing shown is a band, not a quote',
+};
+
+const ALERT_BODY: Record<StatusTone, string> = {
+  success: 'A designer will confirm the time by WhatsApp.',
+  warning: 'Structural changes are quoted separately after the site visit.',
+  error: 'Nothing was lost. Try again, or reach us on WhatsApp.',
+  info: 'The final figure follows the measured site survey.',
+};
+
 /** The specimen block rendered once per theme. Everything inside resolves its
  *  tokens from the nearest `data-theme`, so rendering it twice side by side is
  *  what makes a theme regression visible rather than merely testable. */
@@ -281,6 +310,74 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
               <Icon key={name} name={name} size="lg" decorative />
             ))}
           </Cluster>
+        </Stack>
+
+        {/* The feedback set renders per theme because status tones are the
+            roles most likely to diverge between them: each ships a lighter
+            *-on-dark and a deeper *-on-light variant, so a tone that reads
+            clearly on navy can wash out on ivory. Both are on screen at once
+            precisely so that is visible rather than merely asserted. */}
+        <Stack gap={3}>
+          <h3 className="font-display text-xl">Badges</h3>
+          <Cluster gap={2}>
+            {BADGE_TONES.map((tone) => (
+              <Badge key={tone} tone={tone}>
+                {tone}
+              </Badge>
+            ))}
+          </Cluster>
+          <Cluster gap={2}>
+            <Chip>Static chip</Chip>
+            <Chip selected>Selected</Chip>
+          </Cluster>
+        </Stack>
+
+        <Stack gap={3}>
+          <h3 className="font-display text-xl">Inline alerts</h3>
+          {STATUS_TONES.map((tone) => (
+            <InlineAlert key={tone} tone={tone} title={ALERT_TITLE[tone]}>
+              {ALERT_BODY[tone]}
+            </InlineAlert>
+          ))}
+        </Stack>
+
+        <Stack gap={3}>
+          <h3 className="font-display text-xl">Tooltip</h3>
+          <Cluster gap={3}>
+            <Tooltip content="Opens on hover and on focus, and is wired via aria-describedby.">
+              <Button variant="secondary">Hover or focus me</Button>
+            </Tooltip>
+          </Cluster>
+        </Stack>
+
+        <Stack gap={3}>
+          <h3 className="font-display text-xl">Progress</h3>
+          <Progress
+            value={62}
+            label="Uploading floor plan"
+            helpText="Honest percentages only — never a bar that moves to look busy."
+          />
+        </Stack>
+
+        <Stack gap={3}>
+          <h3 className="font-display text-xl">Skeleton</h3>
+          <Stack gap={3}>
+            <Skeleton variant="text" lines={3} label="Loading project summary" />
+            <Cluster gap={3} align="center">
+              <Skeleton variant="circle" />
+              <Skeleton variant="block" height="4rem" />
+            </Cluster>
+          </Stack>
+        </Stack>
+
+        <Stack gap={3}>
+          <h3 className="font-display text-xl">Empty state</h3>
+          <EmptyState
+            icon="alert-circle"
+            title="No projects match those filters"
+            body="Widen the neighbourhood or tier to see more work."
+            action={<Button variant="secondary">Clear filters</Button>}
+          />
         </Stack>
 
         <Stack gap={4}>
@@ -531,6 +628,14 @@ export default async function StylePage({ params }: { params: Promise<{ locale: 
               <ThemeSpecimen theme="dark" />
               <ThemeSpecimen theme="light" />
             </Grid>
+          </Section>
+
+          <Section
+            id="overlays"
+            title="Overlays and interaction"
+            lede="Modal, Toast and the interactive Chip states need handlers and open/closed state, so they sit outside the theme blocks behind triggers. Rendering an overlay permanently open on a reference page would trap focus and make everything below it unreachable."
+          >
+            <OverlayDemo />
           </Section>
         </Stack>
       </Container>
