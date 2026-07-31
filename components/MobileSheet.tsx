@@ -94,6 +94,22 @@ export function MobileSheet({ locale }: { locale: Locale }) {
       const first = items[0];
       const last = items[items.length - 1];
       if (!first || !last) return;
+      // Pull focus back in if it is not inside the panel at all. Checking only
+      // the first/last boundaries below is not enough: focus can legitimately
+      // sit OUTSIDE while this is open — returning from browser chrome or the
+      // address bar lands on the document's first focusable, which is the skip
+      // link, not the panel. Neither boundary branch fires there, so Tab would
+      // walk the whole background. `aria-modal` hides that content from
+      // screen readers but has no effect on keyboard order.
+      // Re-read the ref rather than closing over the narrowed `panel`:
+      // `onKeyDown` is a hoisted function declaration, so TypeScript cannot
+      // prove the outer `if (!panel) return` guard still holds when it runs.
+      const root = panelRef.current;
+      if (root && !root.contains(document.activeElement)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+        return;
+      }
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();

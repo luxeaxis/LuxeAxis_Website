@@ -146,3 +146,50 @@ describe('Modal', () => {
     expect(document.body.style.overflow).toBe('');
   });
 });
+
+// Regression: the trap used to act only when focus sat exactly on the first or
+// last focusable. Focus can legitimately be OUTSIDE an open dialog — returning
+// from browser chrome lands on the document's first focusable, which is the
+// skip link, not the panel. Neither boundary branch fired there, so Tab walked
+// the whole background. `aria-modal` hides that content from screen readers but
+// does nothing for keyboard order, so the JS trap is the only thing holding it.
+describe('Modal focus trap, when focus starts outside the panel', () => {
+  it('pulls focus back into the dialog on Tab', () => {
+    const outside = document.createElement('button');
+    outside.textContent = 'outside';
+    document.body.appendChild(outside);
+
+    const { getByRole } = render(
+      <Modal open onClose={() => {}} title="Trap">
+        <button type="button">inside</button>
+      </Modal>,
+    );
+
+    outside.focus();
+    expect(document.activeElement).toBe(outside);
+
+    fireEvent.keyDown(document, { key: 'Tab' });
+
+    const dialog = getByRole('dialog');
+    expect(dialog.contains(document.activeElement)).toBe(true);
+
+    outside.remove();
+  });
+
+  it('pulls focus back on Shift+Tab too', () => {
+    const outside = document.createElement('button');
+    document.body.appendChild(outside);
+
+    const { getByRole } = render(
+      <Modal open onClose={() => {}} title="Trap">
+        <button type="button">inside</button>
+      </Modal>,
+    );
+
+    outside.focus();
+    fireEvent.keyDown(document, { key: 'Tab', shiftKey: true });
+
+    expect(getByRole('dialog').contains(document.activeElement)).toBe(true);
+    outside.remove();
+  });
+});
