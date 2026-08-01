@@ -34,11 +34,6 @@ test.describe('/style documents the component surface', () => {
     await expect(page.locator('main [data-theme="light"]')).toHaveCount(1);
   });
 
-  test('the Tamil specimen carries lang="ta" so the font stack resolves', async ({ page }) => {
-    await page.goto('/style');
-    await expect(page.locator('[lang="ta"]').first()).toBeVisible();
-  });
-
   test('is not indexable — it is a developer reference, not a marketing surface', async ({ page }) => {
     await page.goto('/style');
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);

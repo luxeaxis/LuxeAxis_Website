@@ -24,11 +24,9 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button } from './Button';
 import { Link } from './Link';
-import { LangSwitch } from './LangSwitch';
 import { Stack } from './layout';
-import { usePathname } from '@/i18n/navigation';
+import { usePathname } from 'next/navigation';
 import { NAV_ITEMS, BOOK_AUDIT } from '@/lib/nav';
-import type { Locale } from '@/lib/i18n/published';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
 
@@ -39,15 +37,15 @@ function isActiveRoute(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function MobileSheet({ locale }: { locale: Locale }) {
+export function MobileSheet() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerId = useId();
   const panelId = useId();
   const titleId = useId();
-  // `?? '/'`: the underlying PathnameContext is `null` outside a mounted
-  // Next.js router (e.g. an isolated unit-test render) — see LangSwitch.tsx.
+  // `?? '/'`: `next/navigation`'s PathnameContext is `null` outside a mounted
+  // Next.js router, which is exactly the case in an isolated unit-test render.
   const pathname = usePathname() ?? '/';
 
   const openSheet = () => {
@@ -178,9 +176,6 @@ export function MobileSheet({ locale }: { locale: Locale }) {
                 </li>
               ))}
             </Stack>
-            <div className="mt-6">
-              <LangSwitch locale={locale} />
-            </div>
           </nav>
 
           {/* Sticky Book Audit bar pinned to the bottom safe-area (§3.3). */}

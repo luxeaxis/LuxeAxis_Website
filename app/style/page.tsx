@@ -1,5 +1,5 @@
+import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { setRequestLocale } from 'next-intl/server';
 import { Badge, type BadgeTone } from '@/components/Badge';
 import { Button, type ButtonVariant } from '@/components/Button';
 import { Chip } from '@/components/Chip';
@@ -16,25 +16,16 @@ import { Icon, type IconName } from '@/components/Icon';
 import { Link } from '@/components/Link';
 import { Center, Cluster, Container, Grid, Stack } from '@/components/layout';
 import { SceneSlot } from '@/components/SceneSlot';
-import { assertPublished } from '@/lib/i18n/guard';
-import { alternatesFor } from '@/lib/seo/hreflang';
-import { isPublished, LOCALES, type Locale } from '@/lib/i18n/published';
+import { canonicalFor } from '@/lib/seo/hreflang';
 
 const ROUTE = '/style';
 
-export function generateStaticParams() {
-  return LOCALES.filter((locale) => isPublished(ROUTE, locale)).map((locale) => ({ locale }));
-}
-
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  return {
-    title: 'Style reference — Luxe Axis',
-    alternates: alternatesFor(ROUTE, locale as Locale),
-    // A developer reference, not a marketing surface.
-    robots: { index: false, follow: false },
-  };
-}
+export const metadata: Metadata = {
+  title: 'Style reference — Luxe Axis',
+  alternates: canonicalFor(ROUTE),
+  // A developer reference, not a marketing surface.
+  robots: { index: false, follow: false },
+};
 
 /* ------------------------------------------------------------------ */
 /* Page-local presentation helpers. These exist only to document the   */
@@ -467,14 +458,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
   );
 }
 
-export default async function StylePage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  // Keeps this route static even once a specimen on it needs a translation —
-  // see app/[locale]/page.tsx for why the layout's identical call does not
-  // cover a page's own render.
-  setRequestLocale(locale as Locale);
-  assertPublished(ROUTE, locale as Locale);
-
+export default function StylePage() {
   return (
     <main id="main" tabIndex={-1} className="py-section-y">
       <Container>
@@ -534,20 +518,6 @@ export default async function StylePage({ params }: { params: Promise<{ locale: 
                 </Spec>
               ))}
             </Stack>
-          </Section>
-
-          <Section
-            id="tamil"
-            title="Tamil type"
-            lede="The Tamil families load only on /ta routes, so the font budget stays per-locale. This is a glyph specimen demonstrating the stack, not translated interface copy."
-          >
-            <div lang="ta">
-              <Spec token="font.family.display-ta">
-                <p className="font-display text-[length:var(--typography-h2-font-size)] text-on-surface">
-                  இடம் அறிவைச் சந்திக்கும் இடம்
-                </p>
-              </Spec>
-            </div>
           </Section>
 
           <Section

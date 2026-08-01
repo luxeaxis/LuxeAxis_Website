@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 
 /**
- * The 404 path, which had no coverage at all before app/[locale]/not-found.tsx
- * existed — and which most nav clicks currently reach, since lib/nav.ts and
+ * The 404 path, which had no coverage at all before app/not-found.tsx existed,
+ * and which most nav clicks currently reach — lib/nav.ts and
  * components/Footer.tsx link ahead of the build (see those files).
  *
  * `/portfolio` is used rather than a nonsense path on purpose: it is a real
@@ -17,11 +17,10 @@ test('an unbuilt nav route answers 404, not 200', async ({ request }) => {
   expect(response.status()).toBe(404);
 });
 
-test('the 404 renders inside the locale layout, not the framework fallback', async ({ page }) => {
+test('the 404 renders inside the app layout, not the framework fallback', async ({ page }) => {
   await page.goto('/portfolio');
 
-  // The whole point of routing 404s through app/[locale]/[...rest] — Next's own
-  // fallback sits above app/[locale]/layout.tsx and has none of this.
+  // Next's own fallback renders above app/layout.tsx and has none of this.
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('We could not find that page');
@@ -39,7 +38,9 @@ test('the 404 offers a way out that actually resolves', async ({ page }) => {
   // a prettier dead end.
   await page.getByRole('link', { name: 'Back to the home page' }).click();
   await expect(page).toHaveURL(/\/$/);
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Where Space Meets Intelligence');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'Your Chennai home, thoughtfully designed. Transparently priced.',
+  );
 });
 
 test('robots.txt points at a sitemap that lists only resolvable URLs', async ({ request }) => {
@@ -57,9 +58,9 @@ test('robots.txt points at a sitemap that lists only resolvable URLs', async ({ 
   expect(urls.length).toBeGreaterThan(0);
 
   // A sitemap is a promise that every URL in it resolves. Check the promise
-  // rather than the list: each entry is fetched against THIS server, so an
-  // unpublished /ta URL or a route deleted without updating lib/seo/routes.ts
-  // fails here instead of in Search Console weeks later.
+  // rather than the list: each entry is fetched against THIS server, so a route
+  // deleted without updating lib/seo/routes.ts fails here rather than in Search
+  // Console weeks later.
   for (const url of urls) {
     const response = await request.get(new URL(url).pathname, { maxRedirects: 0 });
     expect(response.status(), `${url} should resolve directly, without a redirect`).toBe(200);

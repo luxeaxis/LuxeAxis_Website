@@ -13,14 +13,32 @@ import { POSTERS, type SceneId } from '@/three/registry';
 export function SceneSlot({
   id,
   children,
+  layout = 'aspect',
 }: {
   id: SceneId;
   children: React.ReactNode;
+  /**
+   * `'aspect'` (default) reserves the poster's own ratio — right for a slot
+   * whose whole job is to hold media, where nothing else defines a height and
+   * the reserved box is what keeps CLS at zero.
+   *
+   * `'content'` lets the children define the height and the poster fill behind
+   * them. The hero needs this: at 16/9 on a 360px phone the slot is 202px tall,
+   * which will not hold a headline, a sub, two CTAs and a trust strip. It costs
+   * nothing in layout stability — the height comes from server-rendered DOM, so
+   * there is no shift to avoid — and every other guarantee is unchanged: same
+   * poster, same scrim, same upgrade path to a live scene, children still never
+   * move between poster and live modes.
+   */
+  layout?: 'aspect' | 'content';
 }) {
   const poster = POSTERS[id];
 
   return (
-    <div className="relative isolate w-full" style={{ aspectRatio: poster.aspect }}>
+    <div
+      className="relative isolate w-full"
+      style={layout === 'aspect' ? { aspectRatio: poster.aspect } : undefined}
+    >
       <Image
         src={poster.src}
         alt={poster.alt}

@@ -1,0 +1,87 @@
+import { Button } from '../Button';
+import { Container, Stack } from '../layout';
+import { BOOK_AUDIT } from '@/lib/nav';
+import type { Testimonial } from '@/lib/content/types';
+
+/**
+ * The closing band (Landing Blueprint §3.8) — "make saying yes feel easy,
+ * human, and low-risk: a chat, not a contract."
+ *
+ * Copy is the blueprint's own, verbatim, including the reassurance line. The
+ * primary CTA repeats here because §2's CTA rhythm calls for one primary action
+ * restated down the page, matched to the anxiety the preceding section just
+ * resolved — after pricing, the remaining worry is "will this be a hard sell",
+ * which is what the sub-line answers.
+ *
+ * Deliberately still and quiet: §3.8's 3D verdict is CALM/NONE at the moment of
+ * action — "no motion, no ambient 3D near the form or button; the moment of
+ * action must be frictionless and focused, with the CTA as the single brightest
+ * thing." So this section has no scene slot, no reveal and no hover theatre.
+ * Movement near the CTA steals the click.
+ *
+ * WhatsApp is named in the blueprint as the low-friction third rung, but no
+ * number has been supplied (`components/Footer.tsx` carries the same honest
+ * gap), so it is left out rather than wired to a placeholder that would fail on
+ * the one click that matters most.
+ */
+export function CTASection() {
+  return (
+    <section aria-labelledby="audit-heading" className="border-t-hairline border-border-subtle bg-surface-deep">
+      <Container className="py-section-y">
+        <Stack gap={6} className="max-w-measure">
+          <Stack gap={3}>
+            <h2
+              id="audit-heading"
+              className="font-display text-[length:var(--typography-h1-font-size)] leading-snug tracking-[var(--font-tracking-tight)] text-on-surface"
+            >
+              Let&rsquo;s talk about your space
+            </h2>
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
+              A free 45-minute audit with a real designer. No obligation, no hard sell.
+            </p>
+          </Stack>
+          <div>
+            <Button as="a" href={BOOK_AUDIT.href} size="lg">
+              {BOOK_AUDIT.label}
+            </Button>
+          </div>
+          <p className="text-small text-on-surface-muted">You&rsquo;ll speak to a designer, not a bot.</p>
+        </Stack>
+      </Container>
+    </section>
+  );
+}
+
+/**
+ * The testimonial beat that sits between pricing and the closing band in the
+ * home order (Cinematic §9.1).
+ *
+ * Empty today, and renders nothing rather than a placeholder quote. A
+ * testimonial with an invented name attached is a fabricated review — not a
+ * stylistic shortcut but a false statement about a real person who does not
+ * exist — and §3.5 turns entirely on this proof being documentary. `Testimonial`
+ * in the content model requires attribution for the same reason: an
+ * unattributed quote is indistinguishable from copywriting.
+ */
+export function TestimonialBand({ testimonials }: { testimonials: readonly Testimonial[] }) {
+  const featured = testimonials[0];
+  if (!featured) return null;
+
+  return (
+    <section aria-labelledby="testimonial-heading" className="w-full py-section-y">
+      <Container>
+        <Stack gap={5} className="max-w-measure">
+          <h2 id="testimonial-heading" className="sr-only">
+            What our clients say
+          </h2>
+          <blockquote className="font-display text-[length:var(--typography-h2-font-size)] leading-snug text-on-surface">
+            {featured.quote}
+          </blockquote>
+          <p className="text-small text-on-surface-2">
+            {featured.attribution.name} · {featured.attribution.context}
+          </p>
+        </Stack>
+      </Container>
+    </section>
+  );
+}

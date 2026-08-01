@@ -29,7 +29,7 @@ const SEAM_MESSAGE = 'three/registry.ts is the only DOM→WebGL seam';
  *  directory-specific. eslint.config.mjs currently has exactly one such
  *  directory-scoped override (components/, which re-adds a features/
  *  restriction), but the next one could just as easily land on app/ or
- *  features/ — and app/[locale]/page.tsx already imports SceneSlot, making
+ *  features/ — and app/page.tsx already imports SceneSlot, making
  *  app/ a live candidate today, not a hypothetical. Probing all four keeps
  *  the suite honest about the repo-wide claim it's meant to guard. */
 const SEAM_DIRS = ['components', 'app', 'features', 'lib'];

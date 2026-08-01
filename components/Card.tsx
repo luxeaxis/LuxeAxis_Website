@@ -208,7 +208,13 @@ export function ProjectCard({
 
 export type FeatureCardProps = {
   href: string;
-  icon: IconName;
+  /** Optional. A feature is usually best introduced by its glyph, but some
+   *  cards in this family lead with words alone — the home page's persona
+   *  tiles ask "which of these is you?", where any icon would be decoration
+   *  competing with the question, and an arrow specifically would collide with
+   *  the trailing arrow the card already draws. Omitting it drops the slot
+   *  entirely rather than reserving empty space. */
+  icon?: IconName;
   title: string;
   body?: string;
   surface?: CardSurface;
@@ -222,7 +228,7 @@ export function FeatureCard({ href, icon, title, body, surface = 'solid', classN
       className={cx('group block', frameClass({ surface, interactive: true }), className)}
     >
       <Stack gap={4}>
-        <Icon name={icon} size="lg" decorative className="text-accent" />
+        {icon && <Icon name={icon} size="lg" decorative className="text-accent" />}
         <div className="flex items-start justify-between gap-3">
           <h3 className="font-ui text-[length:var(--typography-h3-font-size)] font-semibold text-on-surface transition-colors duration-micro ease-standard group-hover:text-accent">
             {title}

@@ -19,13 +19,15 @@ However, comparison against the 8 capstone specifications (`docs/specs/*`) revea
 
 ---
 
+> **Scope change, August 2026 — Tamil / i18n removed.** The specs (`3D Website Spec` §2.3, `Design System` §3.3) require a bilingual EN/தமிழ் site, and §2.1 builds a primary persona around the Tamil diaspora. The client has since taken Tamil out of scope and the entire i18n stack has been removed. The NRI persona still exists in the IA (`/nri`, the persona router) — it is now served in English only. Reinstating Tamil is a rebuild, not a config change; this row is recorded so a future reader does not mistake the divergence from the specs for an oversight.
+
 ## 2. Gap Analysis Matrix
 
 | Domain | Spec Baseline Requirement | Current Codebase State | Status / Gap Level |
 |---|---|---|---|
 | **Design System & Tokens** | W3C DTCG tokens, CSS variables, Tailwind integration, `/style` guide | `tokens/`, `scripts/build-tokens.ts`, `app/[locale]/style/page.tsx` complete | 🟢 **100% Complete** |
 | **UI Primitives & Testing** | 24 UI components, WCAG AA contrast, ESLint seam rules, Vitest suite | All components in `components/` built with 248 unit tests passing | 🟢 **100% Complete** |
-| **i18n Infrastructure** | `next-intl` English & Tamil (`/en`, `/ta`), font preloading budget | `app/[locale]/layout.tsx`, message catalogs set up | 🟢 **100% Complete** |
+| **i18n Infrastructure** | `next-intl` English & Tamil (`/en`, `/ta`), font preloading budget | **Removed at the client's direction (Aug 2026).** The `[locale]` segment, `next-intl`, `middleware.ts`, the publication gate and `LangSwitch` are all deleted; the site is English-only and every route is statically prerendered. | ⚪ **Out of scope** |
 | **Core Landing & Sub-pages** | Home, Pricing/Calculator, Vastu Tool, Portfolio, NRI Concierge, Audit Flow | Only Home stub (`app/[locale]/page.tsx`) and Style route exist | 🟡 **High Gap (Phase 2)** |
 | **3D WebGL Subsystem** | Persistent `<Canvas>`, R3F dynamic scene loader, 9 Three.js scenes | `three/registry.ts` has posters & IDs, but `SCENES` object is empty | 🔴 **Critical Gap (Phase 4)** |
 | **Motion & Scroll Engine** | Lenis smooth scroll + GSAP `ScrollTrigger` + 3D axis sync | GSAP tokens exist, but Lenis & axis camera sync not connected | 🟡 **Medium Gap (Phase 3)** |

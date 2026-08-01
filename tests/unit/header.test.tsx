@@ -1,9 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, screen } from '@testing-library/react';
-import { renderWithIntl } from './helpers/render-with-intl';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
 const pathnameState = vi.hoisted(() => ({ value: '/pricing' }));
-vi.mock('@/i18n/navigation', () => ({ usePathname: () => pathnameState.value }));
+vi.mock('next/navigation', () => ({ usePathname: () => pathnameState.value }));
 
 import { Header } from '@/components/Header';
 
@@ -16,7 +15,7 @@ afterEach(() => {
 describe('Header', () => {
   it('marks the active top-level item with aria-current="page", never colour alone', () => {
     pathnameState.value = '/pricing';
-    renderWithIntl(<Header locale="en" />);
+    render(<Header />);
 
     const active = screen.getByRole('link', { name: 'Pricing' });
     expect(active.getAttribute('aria-current')).toBe('page');
@@ -30,14 +29,14 @@ describe('Header', () => {
   });
 
   it('renders every top-level nav item from the sitemap, capped at five', () => {
-    renderWithIntl(<Header locale="en" />);
+    render(<Header />);
     for (const label of ['Residential', 'Commercial', 'Intelligence', 'Portfolio', 'Pricing']) {
       expect(screen.getByRole('link', { name: label })).toBeDefined();
     }
   });
 
   it('the Book Audit CTA is present and links to the dedicated conversion route', () => {
-    renderWithIntl(<Header locale="en" />);
+    render(<Header />);
     const ctas = screen.getAllByRole('link', { name: 'Book Audit' });
     expect(ctas.length).toBeGreaterThan(0);
     for (const cta of ctas) {
@@ -46,14 +45,14 @@ describe('Header', () => {
   });
 
   it('the logo links home', () => {
-    renderWithIntl(<Header locale="en" />);
+    render(<Header />);
     const home = screen.getByRole('link', { name: 'Luxe Axis — home' });
     expect(home.getAttribute('href')).toBe('/');
   });
 
   it('condenses height and gains stronger blur once scrolled past the 80px threshold (§3.3 N1)', () => {
     const scrollY = vi.spyOn(window, 'scrollY', 'get').mockReturnValue(0);
-    const { container } = renderWithIntl(<Header locale="en" />);
+    const { container } = render(<Header />);
     const header = container.querySelector('header');
     expect(header).not.toBeNull();
     expect(header!.className).toMatch(/h-\[var\(--component-nav-height\)\]/);

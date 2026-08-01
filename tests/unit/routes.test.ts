@@ -14,12 +14,12 @@ import { INDEXABLE_ROUTES, NOINDEX_ROUTES } from '@/lib/seo/routes';
  * registry to the files on disk for the same reason.
  */
 
-const APP_DIR = join(process.cwd(), 'app', '[locale]');
+const APP_DIR = join(process.cwd(), 'app');
 
-/** Walks app/[locale] and returns the route path of every page.tsx found.
+/** Walks app/ and returns the route path of every page.tsx found.
  *  Dynamic segments are skipped: a bracketed directory is not a fixed URL, so
- *  it cannot appear in a sitemap. Today that is only the [...rest] catch-all,
- *  which exists purely to 404. */
+ *  it cannot appear in a sitemap. There are none today — the [...rest] catch-all
+ *  went with the locale segment — but /portfolio/[slug] is coming. */
 function routesOnDisk(dir: string = APP_DIR, prefix = ''): string[] {
   const found: string[] = [];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {

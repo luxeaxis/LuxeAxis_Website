@@ -1,40 +1,27 @@
-import { DEFAULT_LOCALE, isPublished, normalise, type Locale } from '@/lib/i18n/published';
-// Shared with app/sitemap.ts and app/robots.ts — see lib/seo/origin.ts for why
-// this is one constant rather than three matching literals.
-import { SITE_ORIGIN as ORIGIN } from './origin';
+import { SITE_ORIGIN } from './origin';
 
 /**
- * Builds the canonical URL and hreflang alternates for one route in one locale.
+ * Canonical URLs.
  *
- * `locale` is not optional in spirit: a page that omits it canonicalises to its
- * English URL, which is exactly the bug this parameter exists to prevent — every
- * Tamil page pointing `rel=canonical` at its English twin tells Google `/ta` is a
- * duplicate and gets it dropped, negating the bilingual routing entirely. It
- * defaults to `en` only so existing English call sites keep working unchanged.
+ * This module used to build hreflang alternates across `en`/`ta` and was the
+ * single source of truth for which locales a route was published in. The i18n
+ * stack is gone, so there is exactly one URL per route and the only thing left
+ * worth stating is the canonical — kept as a module rather than inlined at each
+ * page so the origin is read from one place (lib/seo/origin.ts) that the
+ * sitemap and robots.txt also read.
+ *
+ * `alternates.languages` is deliberately NOT emitted any more. A single-locale
+ * site that advertises language alternates is claiming translations it does not
+ * have, and a `hreflang="en"` pointing at the same URL as the canonical is
+ * noise at best.
  */
-export function alternatesFor(
-  route: string,
-  locale: Locale = DEFAULT_LOCALE,
-): { languages: Record<string, string>; canonical: string } {
-  // Normalise once, through the same function that decides publication
-  // (lib/i18n/published.ts), so every URL below is derived from a single
-  // canonical route string. Root normalises to '/', everything else loses
-  // its trailing slash.
-  const normalisedRoute = normalise(route);
+export function canonicalFor(route: string): { canonical: string } {
+  return { canonical: new URL(normalise(route), SITE_ORIGIN).href };
+}
 
-  const enHref = new URL(normalisedRoute, ORIGIN).href;
-  const taHref = new URL(
-    normalisedRoute === '/' ? '/ta' : `/ta${normalisedRoute}`,
-    ORIGIN,
-  ).href;
-
-  const languages: Record<string, string> = { en: enHref };
-  if (isPublished(normalisedRoute, 'ta')) languages.ta = taHref;
-  // x-default always points at the default locale, whichever locale is being
-  // rendered — it names the fallback for unmatched languages, not "this page".
-  languages['x-default'] = enHref;
-
-  // Each locale canonicalises to itself. A Tamil page is a translation, not a
-  // duplicate, and only says so if its canonical is its own URL.
-  return { languages, canonical: locale === 'ta' ? taHref : enHref };
+/** Strips a trailing slash so '/pricing/' and '/pricing' cannot canonicalise
+ *  to two different URLs. Root stays '/'. */
+export function normalise(route: string): string {
+  const trimmed = route.replace(/\/+$/, '');
+  return trimmed === '' ? '/' : trimmed;
 }

@@ -10,20 +10,18 @@
  * needs the current route via `usePathname`, itself a client-only hook. Both
  * of those are genuine per-render concerns of Header's own markup, not of
  * some inner leaf — splitting out a wrapper would just move the boundary
- * without shrinking the client bundle, since Button/Link/LangSwitch/
- * MobileSheet below it are already client leaves. Same trade-off Button.tsx
+ * without shrinking the client bundle, since Button/Link/MobileSheet below it
+ * are already client leaves. Same trade-off Button.tsx
  * documents for why it accepts `"use client"` despite mostly-static markup.
  */
 
 import { useEffect, useState } from 'react';
 import { Button } from './Button';
 import { Link } from './Link';
-import { LangSwitch } from './LangSwitch';
 import { MobileSheet } from './MobileSheet';
 import { Cluster, Container } from './layout';
-import { usePathname } from '@/i18n/navigation';
+import { usePathname } from 'next/navigation';
 import { NAV_ITEMS, BOOK_AUDIT } from '@/lib/nav';
-import type { Locale } from '@/lib/i18n/published';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
 
@@ -36,10 +34,10 @@ function isActiveRoute(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function Header({ locale }: { locale: Locale }) {
+export function Header() {
   const [condensed, setCondensed] = useState(false);
-  // `?? '/'`: the underlying PathnameContext is `null` outside a mounted
-  // Next.js router (e.g. an isolated unit-test render) — see LangSwitch.tsx.
+  // `?? '/'`: `next/navigation`'s PathnameContext is `null` outside a mounted
+  // Next.js router, which is exactly the case in an isolated unit-test render.
   const pathname = usePathname() ?? '/';
 
   useEffect(() => {
@@ -48,8 +46,6 @@ export function Header({ locale }: { locale: Locale }) {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  const homeHref = locale === 'ta' ? '/ta' : '/';
 
   return (
     <header
@@ -70,7 +66,7 @@ export function Header({ locale }: { locale: Locale }) {
               thing swapped out once that asset lands. Coloured to match the
               intended two-tone lockup (gold "LUXE" / on-surface "AXIS") so
               it reads as the brand mark-in-waiting, not a stray label. */}
-          <Link href={homeHref} variant="standalone" className="shrink-0" aria-label="Luxe Axis — home">
+          <Link href="/" variant="standalone" className="shrink-0" aria-label="Luxe Axis — home">
             <span className="font-display text-[length:var(--typography-h3-font-size)] tracking-[var(--font-tracking-wider)]">
               <span className="text-accent">LUXE</span> <span className="text-on-surface">AXIS</span>
             </span>
@@ -93,9 +89,6 @@ export function Header({ locale }: { locale: Locale }) {
           </nav>
 
           <Cluster gap={4} align="center" className="shrink-0">
-            <div className="hidden md:block">
-              <LangSwitch locale={locale} />
-            </div>
             {/* Two real buttons, not one responsively-resized one: `md` size
                 reads right at desktop scale, but the primary CTA still has
                 to be a single one-tap control on mobile (spec "reachable in
@@ -108,7 +101,7 @@ export function Header({ locale }: { locale: Locale }) {
             <Button as="a" href={BOOK_AUDIT.href} size="sm" className="md:hidden">
               {BOOK_AUDIT.label}
             </Button>
-            <MobileSheet locale={locale} />
+            <MobileSheet />
           </Cluster>
         </div>
       </Container>

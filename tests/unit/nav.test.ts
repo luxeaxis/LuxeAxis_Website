@@ -6,11 +6,10 @@ describe('nav data', () => {
     expect(NAV_ITEMS.length).toBeLessThanOrEqual(5);
   });
 
-  it('every item has a non-empty label and an absolute, locale-less route', () => {
+  it('every item has a non-empty label and an absolute, root-relative route', () => {
     for (const item of [...NAV_ITEMS, BOOK_AUDIT]) {
       expect(item.label.length).toBeGreaterThan(0);
       expect(item.href.startsWith('/')).toBe(true);
-      expect(item.href.startsWith('/ta')).toBe(false);
       expect(item.href.startsWith('/en')).toBe(false);
     }
   });

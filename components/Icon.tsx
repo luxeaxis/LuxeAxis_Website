@@ -21,7 +21,15 @@ export type IconName =
   | 'alert-circle'
   | 'alert-triangle'
   | 'info'
-  | 'menu';
+  | 'menu'
+  // The Intelligence set (spec §3 "Custom set for the Intelligence features —
+  // Vastu compass, Space Score gauge, AR viewport"). Drawn to the same rules as
+  // every glyph above: 24 viewBox, `currentColor`, 1.5px stroke from the
+  // border-width token, rounded joins, no fills.
+  | 'compass'
+  | 'gauge'
+  | 'device'
+  | 'layers';
 
 export type IconSize = 'sm' | 'md' | 'lg';
 
@@ -70,6 +78,37 @@ const PATHS: Record<IconName, React.ReactNode> = {
   // full-screen sheet…"). Three parallel strokes, same weight/joins as every
   // other glyph in this set.
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
+  // Vastu-Tech — a compass rose: the cardinal orientation a Vastu reading is
+  // about, not a generic "AI" spark.
+  compass: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M15.5 8.5l-2 5-5 2 2-5 5-2Z" />
+    </>
+  ),
+  // Space Score — an arc gauge with its needle, matching the four-arc dial the
+  // scene itself renders (§5.4).
+  gauge: (
+    <>
+      <path d="M3.5 16a8.5 8.5 0 0 1 17 0" />
+      <path d="M12 16l4.5-4.5" />
+    </>
+  ),
+  // Space OS — the client portal on a tablet (§5.5's "floating device").
+  device: (
+    <>
+      <rect x="4.5" y="2.5" width="15" height="19" rx="2" />
+      <path d="M10 18.5h4" />
+    </>
+  ),
+  // Virtual Staging — stacked planes, a room composed in layers before anything
+  // is built.
+  layers: (
+    <>
+      <path d="M12 3.5 21 8l-9 4.5L3 8l9-4.5Z" />
+      <path d="M3 12.5 12 17l9-4.5" />
+    </>
+  ),
 };
 
 type IconBaseProps = {
