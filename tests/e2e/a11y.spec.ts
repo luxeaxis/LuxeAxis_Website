@@ -12,7 +12,14 @@ import { expect, test } from '@playwright/test';
 // most nav clicks land there — and until app/not-found.tsx shipped it was
 // Next's own fallback, with no lang, no header and no skip-link target, and
 // the only page no gate ever looked at.
-const ROUTES = ['/', '/pricing', '/style', '/this-route-does-not-exist'];
+const ROUTES = [
+  '/',
+  '/pricing',
+  '/residential',
+  '/residential/signature',
+  '/style',
+  '/this-route-does-not-exist',
+];
 
 for (const route of ROUTES) {
   test(`${route} has no serious or critical accessibility violations`, async ({ page }) => {

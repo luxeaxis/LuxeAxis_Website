@@ -12,13 +12,29 @@ import type { StatusTone } from '@/lib/status';
 import { OverlayDemo } from './OverlayDemo';
 import { FeatureCard, ProjectCard, StatCard, TierCard } from '@/components/Card';
 import { Field } from '@/components/Field';
+import { FeeCalculator } from '@/components/FeeCalculator';
 import { Icon, type IconName } from '@/components/Icon';
 import { Link } from '@/components/Link';
 import { Center, Cluster, Container, Grid, Stack } from '@/components/layout';
 import { SceneSlot } from '@/components/SceneSlot';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import type { CalculatorConfig } from '@/lib/content/types';
 
 const ROUTE = '/style';
+
+// ILLUSTRATIVE ONLY — not Luxe Axis pricing, and not a proposal.
+//
+// The Fee Calculator has no live call site: `getCalculatorConfig()` returns
+// null until the studio publishes real per-square-foot rates, so
+// `/residential` omits the section entirely. Without this specimen the
+// component would ship unreviewable, which is exactly the gap /style exists to
+// close for every other component here.
+//
+// The rates are deliberately round and obviously synthetic (1,000 sq ft at
+// Signature comes to a clean ₹20,00,000–₹30,00,000) so nobody skimming this
+// page could mistake them for a published price list — the same reasoning as
+// the "Illustrative" label on the Cards specimen's price band. The route is
+// `robots: { index: false }`, so these numbers are also not indexable.
 
 export const metadata: Metadata = {
   title: 'Style reference — Luxe Axis',
@@ -158,6 +174,16 @@ const TYPE_RAMP = [
     '₹ 18,40,000',
   ],
 ] as const;
+
+const ILLUSTRATIVE_RATES: CalculatorConfig = {
+  area: { min: 500, max: 5000, step: 50 },
+  rates: {
+    Essential: { low: 1000, high: 2000 },
+    Signature: { low: 2000, high: 3000 },
+    Elite: { low: 3000, high: 5000 },
+  },
+  roundToNearest: 1000,
+};
 
 const SPACE_STEPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
 const SPACE_WIDTH: Record<(typeof SPACE_STEPS)[number], string> = {
@@ -518,6 +544,16 @@ export default function StylePage() {
                 </Spec>
               ))}
             </Stack>
+          </Section>
+
+          <Section
+            id="calculator"
+            title="Fee Calculator"
+            lede="Shown against an ILLUSTRATIVE rate card, because the real one does not exist yet — getCalculatorConfig() returns null, so this component renders nowhere on the live site. The rates below are round numbers chosen to be obviously fake; they are not Luxe Axis pricing and must never be copied into lib/content/source.ts."
+          >
+            <div className="max-w-measure">
+              <FeeCalculator config={ILLUSTRATIVE_RATES} />
+            </div>
           </Section>
 
           <Section

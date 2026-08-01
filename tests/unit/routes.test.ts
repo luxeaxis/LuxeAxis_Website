@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { INDEXABLE_ROUTES, NOINDEX_ROUTES } from '@/lib/seo/routes';
@@ -16,26 +16,64 @@ import { INDEXABLE_ROUTES, NOINDEX_ROUTES } from '@/lib/seo/routes';
 
 const APP_DIR = join(process.cwd(), 'app');
 
-/** Walks app/ and returns the route path of every page.tsx found.
- *  Dynamic segments are skipped: a bracketed directory is not a fixed URL, so
- *  it cannot appear in a sitemap. There are none today — the [...rest] catch-all
- *  went with the locale segment — but /portfolio/[slug] is coming. */
-function routesOnDisk(dir: string = APP_DIR, prefix = ''): string[] {
+/**
+ * Walks app/ and returns the route path of every page.tsx found, EXPANDING
+ * dynamic segments through the same `generateStaticParams` Next itself calls.
+ *
+ * Expanding rather than skipping matters: `/residential/[tier]` is not a URL,
+ * but the three it produces are, and they are what the sitemap advertises. A
+ * walker that ignored bracketed directories would let the tier pages be listed
+ * for a crawler with nothing checking they still exist — precisely the drift
+ * this file is here to catch. It also means deleting a tier from
+ * lib/content/source.ts fails here, since the params come from the same source
+ * the page builds from.
+ *
+ * Catch-all segments (`[...rest]`) are still skipped: they match everything and
+ * enumerate nothing, so they are never sitemap entries. There are none today.
+ */
+async function routesOnDisk(dir: string = APP_DIR, prefix = ''): Promise<string[]> {
   const found: string[] = [];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.isFile() && entry.name === 'page.tsx') {
       found.push(prefix === '' ? '/' : prefix);
       continue;
     }
-    if (!entry.isDirectory() || entry.name.startsWith('[')) continue;
-    found.push(...routesOnDisk(join(dir, entry.name), `${prefix}/${entry.name}`));
+    if (!entry.isDirectory()) continue;
+
+    const isDynamic = entry.name.startsWith('[');
+    if (!isDynamic) {
+      found.push(...(await routesOnDisk(join(dir, entry.name), `${prefix}/${entry.name}`)));
+      continue;
+    }
+    if (entry.name.startsWith('[...') || entry.name.startsWith('[[')) continue;
+
+    const paramName = entry.name.slice(1, -1);
+    const pagePath = join(dir, entry.name, 'page.tsx');
+    // Imported by plain absolute path, not a file:// URL — pathToFileURL
+    // percent-encodes the brackets (`%5Btier%5D`) and Vite's resolver then
+    // cannot find the file.
+    const module_ = (await import(/* @vite-ignore */ pagePath.replace(/\\/g, '/'))) as {
+      generateStaticParams?: () => Promise<Array<Record<string, string>>>;
+    };
+    // A dynamic route with no generateStaticParams cannot be prerendered and so
+    // has no fixed URLs to advertise. Failing loudly beats silently dropping it.
+    if (!module_.generateStaticParams) {
+      throw new Error(`${pagePath} is a dynamic route with no generateStaticParams`);
+    }
+    for (const params of await module_.generateStaticParams()) {
+      found.push(`${prefix}/${params[paramName]}`);
+    }
   }
   return found;
 }
 
 describe('the SEO route lists match the routes that actually exist', () => {
-  const onDisk = routesOnDisk().sort();
+  let onDisk: string[] = [];
   const classified = [...INDEXABLE_ROUTES, ...NOINDEX_ROUTES].sort();
+
+  beforeAll(async () => {
+    onDisk = (await routesOnDisk()).sort();
+  });
 
   it('finds the routes it is supposed to be checking', () => {
     // Guards the guard: a walker that silently returns [] would make every
@@ -62,6 +100,14 @@ describe('the SEO route lists match the routes that actually exist', () => {
       (NOINDEX_ROUTES as readonly string[]).includes(route),
     );
     expect(overlap).toEqual([]);
+  });
+
+  it('expands a dynamic segment into its real URLs', async () => {
+    // The tier pages exist only as /residential/[tier] on disk. If this ever
+    // reports the bracketed form, the walker has stopped expanding and every
+    // assertion about dynamic routes below has gone vacuous.
+    expect(onDisk).toContain('/residential/essential');
+    expect(onDisk.some((route) => route.includes('['))).toBe(false);
   });
 
   it('does not confuse the nav list for the route list', async () => {

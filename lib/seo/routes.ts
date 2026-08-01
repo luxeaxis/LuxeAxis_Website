@@ -16,10 +16,18 @@
  * sitemap.
  */
 
-/** Real pages, meant to be found. Cross-producted with the publication gate
- *  (lib/i18n/published.ts) in app/sitemap.ts, so a route only gains its `/ta`
- *  URL once a human-reviewed translation exists. */
-export const INDEXABLE_ROUTES = ['/', '/pricing'] as const;
+/** Real pages, meant to be found. Dynamic routes are listed by their expanded
+ *  URLs (the three tiers, not `/residential/[tier]`) because that is what a
+ *  crawler is being promised — and the drift test expands the segment through
+ *  its own `generateStaticParams` to check exactly that. */
+export const INDEXABLE_ROUTES = [
+  '/',
+  '/pricing',
+  '/residential',
+  '/residential/essential',
+  '/residential/signature',
+  '/residential/elite',
+] as const;
 
 /** Real pages deliberately withheld from crawlers. `/style` sets
  *  `robots: { index: false, follow: false }` in its own metadata — it is a

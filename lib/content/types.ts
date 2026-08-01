@@ -102,3 +102,28 @@ export type Stat = {
   prefix?: string;
   suffix?: string;
 };
+
+/**
+ * The Fee Calculator's rate card (Spec §2.4 `CalculatorConfig`, §5.7).
+ *
+ * `null` from `getCalculatorConfig()` until the studio publishes real rates —
+ * and the calculator renders nothing at all while it is. That is not a
+ * degraded state to be filled with an approximation: §2's P2 "Show the work"
+ * names "the public fee calculator" as a proof of Radical Transparency, and a
+ * calculator returning invented numbers is the single most damaging thing this
+ * site could ship. A visitor budgets against it.
+ *
+ * Rates are a BAND, not a point. A studio that has not yet seen the flat cannot
+ * honestly quote a single figure, and the blueprint frames tiers as ranges
+ * throughout; a precise-looking total would imply a commitment the audit has
+ * not made yet.
+ */
+export type CalculatorConfig = {
+  /** Carpet area bounds the calculator accepts, in square feet. */
+  area: { min: number; max: number; step: number };
+  /** Per-square-foot band for each tier, in whole rupees. */
+  rates: Record<Tier['name'], { low: number; high: number }>;
+  /** Rounded to this unit so the output reads as an estimate rather than a
+   *  quote — ₹18,40,000 invites belief that ₹18,43,217 does not. */
+  roundToNearest: number;
+};

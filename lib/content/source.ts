@@ -1,4 +1,5 @@
 import type {
+  CalculatorConfig,
   IntelligenceFeature,
   Persona,
   Project,
@@ -211,4 +212,20 @@ export async function getTestimonials(): Promise<readonly Testimonial[]> {
 /** Empty until the studio publishes real figures. */
 export async function getStats(): Promise<readonly Stat[]> {
   return STATS;
+}
+
+/**
+ * `null` until the studio publishes real per-square-foot rates, and the Fee
+ * Calculator renders nothing while it is.
+ *
+ * This is the sharpest instance of the rule the rest of this file follows.
+ * Spec §2 names "the public fee calculator" as a proof of Radical Transparency,
+ * and §5.7 calls it "the published-pricing trust signal". A calculator is also
+ * the one thing on this site a visitor will act on directly — they will budget
+ * against the number it returns, and possibly commit to a purchase because of
+ * it. An invented rate does not read as a placeholder; it reads as the
+ * studio's price.
+ */
+export async function getCalculatorConfig(): Promise<CalculatorConfig | null> {
+  return null;
 }
