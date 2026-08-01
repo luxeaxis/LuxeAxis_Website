@@ -1,4 +1,5 @@
 import { SITE_ORIGIN } from './origin';
+import { STUDIO } from '@/lib/content/studio';
 
 /**
  * Structured data (Build Backlog T-20, Spec §2.5).
@@ -10,14 +11,15 @@ import { SITE_ORIGIN } from './origin';
  * the same reason the visible pages carry "To be published" markers — except
  * that structured data makes the stakes higher, not lower.
  *
- * - **`LocalBusiness` is withheld.** Its useful properties are `address`,
- *   `telephone`, `openingHours` and `geo`, and the studio has supplied none of
- *   them. A `LocalBusiness` node with an invented address is not a placeholder a
- *   reader can see through — it is a machine-readable assertion fed straight
- *   into Google's local index and Maps, where it can generate directions to a
- *   building that has nothing to do with the studio. Emitting the type with its
- *   substance missing also earns nothing: Google ignores an incomplete node at
- *   best, and flags the site at worst. It lands with the real address.
+ * - **`LocalBusiness` now ships**, since the studio supplied its Chennai
+ *   address. It was withheld until then, and the reason is worth keeping: a
+ *   `LocalBusiness` node with an invented address is not a placeholder a reader
+ *   can see through — it is a machine-readable assertion fed straight into
+ *   Google's local index and Maps, where it can generate directions to a
+ *   building that has nothing to do with the studio. With a real address it is
+ *   the single highest-value piece of markup on a local-services site.
+ *   `telephone`, `openingHours` and `geo` are still absent and still omitted
+ *   rather than guessed — an incomplete node is fine, an untrue one is not.
  * - **`Article` is withheld** because there are no articles. It belongs with
  *   the first Journal post.
  *
@@ -39,6 +41,44 @@ export function organizationJsonLd() {
     url: SITE_ORIGIN,
     description:
       'Interior design studio in Chennai. Published pricing, AI-assisted design, and designers who decide.',
+  };
+}
+
+/**
+ * The studio as a findable local business.
+ *
+ * Every property is built from `STUDIO` (lib/content/studio.ts) and each
+ * optional one is included only when it is actually known — so the node grows
+ * as facts arrive rather than shipping with placeholder values that a search
+ * engine would treat as true. `telephone` and `openingHours` are absent today;
+ * `geo` will stay absent until someone supplies real coordinates, because
+ * approximating them from a postcode puts a pin on the wrong building.
+ *
+ * `@id` anchors the node to the site's origin so the Organization and
+ * LocalBusiness nodes are understood as the same entity rather than two
+ * businesses that happen to share a name.
+ */
+export function localBusinessJsonLd() {
+  const { address, telephone, openingHours, email, name } = STUDIO;
+  if (!address) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${SITE_ORIGIN}#studio`,
+    name,
+    url: SITE_ORIGIN,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: address.street,
+      addressLocality: address.locality,
+      addressRegion: address.region,
+      postalCode: address.postalCode,
+      addressCountry: address.country,
+    },
+    ...(telephone ? { telephone: telephone.e164 } : {}),
+    ...(email ? { email: email.general } : {}),
+    ...(openingHours ? { openingHours } : {}),
   };
 }
 

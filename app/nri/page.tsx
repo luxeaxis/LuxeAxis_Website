@@ -4,6 +4,7 @@ import { Button } from '@/components/Button';
 import { FeatureCard } from '@/components/Card';
 import { SceneSlot } from '@/components/SceneSlot';
 import { ToBePublished } from '@/components/ToBePublished';
+import { STUDIO, whatsappHref } from '@/lib/content/studio';
 import { Faq, FaqJsonLd } from '@/components/Faq';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
@@ -29,10 +30,10 @@ export const metadata: Metadata = {
  * answers that specific question rather than selling the studio again.
  *
  * §10.8's CTA rule adapts the ask per path: NRI gets "Start your remote design"
- * plus WhatsApp rather than the residential "Book a free design audit". The
- * WhatsApp half cannot ship — no number has been supplied — so it is named as
- * outstanding rather than wired to a placeholder that would fail on the one
- * click this segment is most likely to make.
+ * plus WhatsApp rather than the residential "Book a free design audit". Both
+ * now ship — the WhatsApp half was held back until a real number existed, since
+ * a dead link on the page built for the segment least able to phone an office
+ * would fail on the one click that segment is most likely to make.
  *
  * The White-Glove protocol steps (§5.9: "the White-Glove remote protocol steps
  * write on along the arc") are NOT authored here. The spec names the protocol
@@ -68,18 +69,25 @@ export default async function NriPage() {
               a site. Reviews happen over video at a time that works where you are, and what is
               happening on site is visible to you as it happens.
             </p>
+            {/* §10.8 pairs the NRI CTA with WhatsApp, and this is the segment
+                that needs it most: someone eight time zones away is not going
+                to ring a Chennai office, and WhatsApp is the channel the Tamil
+                diaspora actually uses. It went in the moment a number existed. */}
             <div className="flex flex-col gap-3 sm:flex-row">
               <Button as="a" href="/book-audit" size="lg">
                 Start your remote design
               </Button>
+              {STUDIO.whatsapp && (
+                <Button
+                  as="a"
+                  href={whatsappHref(STUDIO.whatsapp)}
+                  variant="secondary"
+                  size="lg"
+                >
+                  Message us on WhatsApp
+                </Button>
+              )}
             </div>
-            {/* §10.8 pairs the NRI CTA with WhatsApp. No number has been
-                supplied (components/Footer.tsx carries the same gap), and a
-                dead WhatsApp link on the page built for the segment least able
-                to phone an office would be worse than none. */}
-            <p className="text-small">
-              <ToBePublished label="WhatsApp" />
-            </p>
           </Stack>
 
           {/* Reserved for the NRI globe scene (§5.9, T-33). Poster today. */}

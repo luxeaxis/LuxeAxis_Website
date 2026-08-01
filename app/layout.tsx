@@ -7,7 +7,7 @@ import { Footer } from '@/components/Footer';
 import { ToastProvider } from '@/components/Toast';
 import { ConsentBanner } from '@/components/ConsentBanner';
 import { JsonLd } from '@/components/JsonLd';
-import { organizationJsonLd } from '@/lib/seo/jsonLd';
+import { localBusinessJsonLd, organizationJsonLd } from '@/lib/seo/jsonLd';
 import { SITE_ORIGIN } from '@/lib/seo/origin';
 import '@/styles/globals.css';
 
@@ -66,11 +66,17 @@ const ui = Inter({
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const localBusiness = localBusinessJsonLd();
+
   return (
     <html lang="en" data-theme="dark" className={`${display.variable} ${ui.variable}`}>
       <body className="lx-grain bg-surface text-on-surface">
-        {/* One Organization node, site-wide, rather than repeated per page. */}
+        {/* Organization and LocalBusiness, site-wide rather than repeated per
+            page. LocalBusiness renders only once a real address exists — see
+            lib/seo/jsonLd.ts for why an invented one would be worse than an
+            absent node. */}
         <JsonLd data={organizationJsonLd()} />
+        {localBusiness && <JsonLd data={localBusiness} />}
         <TierProbe />
         {/* Must stay the first focusable element in the DOM — Header adds
             several more focusable controls (logo, nav, Book Audit, hamburger)

@@ -87,17 +87,25 @@ test('the banner does not trap focus or block the page', async ({ page }) => {
   expect(['BODY', 'HTML']).toContain(focused);
 });
 
-test('the organisation node ships, and no LocalBusiness node does', async ({ page }) => {
+test('the organisation and local-business nodes ship, with the real address', async ({ page }) => {
+  // This asserted the ABSENCE of a LocalBusiness node until the studio supplied
+  // an address — an invented one is fed straight into Google's local index and
+  // Maps, where it can send someone to the wrong building. With a real address
+  // it is the highest-value markup on a local-services site, so the assertion
+  // inverts and now checks the substance rather than the type name.
   await page.goto('/');
   const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
-  const types = blocks.map((block) => JSON.parse(block)['@type']);
+  const nodes = blocks.map((block) => JSON.parse(block));
+  const types = nodes.map((node) => node['@type']);
 
   expect(types).toContain('Organization');
-  // A LocalBusiness node needs an address, and none has been supplied. An
-  // invented one is fed straight into Google's local index and Maps.
-  expect(types).not.toContain('LocalBusiness');
-  for (const block of blocks) {
-    expect(block).not.toContain('streetAddress');
-    expect(block).not.toContain('telephone');
-  }
+  expect(types).toContain('LocalBusiness');
+
+  const business = nodes.find((node) => node['@type'] === 'LocalBusiness');
+  expect(business.address.postalCode).toBe('600006');
+  expect(business.address.addressCountry).toBe('IN');
+  expect(business.telephone).toBe('+918124600321');
+  // Still absent, still not guessed: coordinates approximated from a postcode
+  // put the map pin on the wrong building.
+  expect(business).not.toHaveProperty('geo');
 });

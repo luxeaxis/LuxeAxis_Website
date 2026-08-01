@@ -24,10 +24,33 @@ describe('Footer', () => {
     expect(screen.getAllByText('to be published').length).toBeGreaterThanOrEqual(2);
   });
 
-  it('marks the WhatsApp, address and Design Club slots as pending rather than inventing copy', () => {
+  it('renders the real contact details as things a visitor can act on', () => {
+    // These used to be "Number to be published" / "Address to be published".
+    // Now that the studio has supplied them, the assertion that matters is not
+    // that they appear but that they WORK: a phone number rendered as plain
+    // text on a page most people open on a phone is a number that never gets
+    // dialled, and a wa.me link with a `+` in it silently fails.
     render(<Footer />);
-    expect(screen.getByText('Number to be published.')).toBeDefined();
-    expect(screen.getByText('Address to be published.')).toBeDefined();
+
+    const phone = screen.getByRole('link', { name: '+91 81246 00321' });
+    expect(phone.getAttribute('href')).toBe('tel:+918124600321');
+
+    const whatsapp = screen.getByRole('link', { name: 'WhatsApp' });
+    expect(whatsapp.getAttribute('href')).toBe('https://wa.me/918124600321');
+
+    // A real <address> element, which is the semantic home for the contact
+    // details of the document it sits in.
+    const address = document.querySelector('address');
+    expect(address?.textContent).toContain('Nungambakkam High Rd');
+    expect(address?.textContent).toContain('600006');
+  });
+
+  it('still marks the genuinely outstanding facts as pending', () => {
+    // CIN and GST are quoted on invoices and checked against a government
+    // register — a plausible-looking one is a false company record, not a
+    // placeholder. They stay explicit gaps until supplied.
+    render(<Footer />);
+    expect(screen.getAllByText('to be published').length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText(/coming soon/i)).toBeDefined();
   });
 

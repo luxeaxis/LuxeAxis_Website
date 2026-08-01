@@ -4,6 +4,7 @@ import { isAnalyticsConfigured, stripPii } from '@/lib/analytics/client';
 import {
   breadcrumbJsonLd,
   humanise,
+  localBusinessJsonLd,
   organizationJsonLd,
   serviceJsonLd,
 } from '@/lib/seo/jsonLd';
@@ -94,14 +95,30 @@ describe('structured data', () => {
     }
   });
 
-  it('emits no LocalBusiness node at all', async () => {
-    // The type's useful properties are address, telephone, openingHours and
-    // geo, and the studio has supplied none. A LocalBusiness node with an
-    // invented address can generate Maps directions to a building that has
-    // nothing to do with the studio.
-    const module_ = await import('@/lib/seo/jsonLd');
-    expect(Object.keys(module_)).not.toContain('localBusinessJsonLd');
-    expect(JSON.stringify(organizationJsonLd())).not.toContain('LocalBusiness');
+  it('emits a LocalBusiness node built from the real address', () => {
+    // Withheld until the studio supplied an address, because an invented one is
+    // machine-readable and can generate Maps directions to a building that has
+    // nothing to do with the studio. With a real address it is the highest-value
+    // markup on a local-services site.
+    const business = localBusinessJsonLd()!;
+    expect(business['@type']).toBe('LocalBusiness');
+    expect(business.address.postalCode).toBe('600006');
+    expect(business.address.addressLocality).toBe('Chennai');
+    expect(business.address.addressCountry).toBe('IN');
+    // Anchored to the site origin so Organization and LocalBusiness read as one
+    // entity rather than two businesses sharing a name.
+    expect(business['@id']).toBe('https://luxeaxis.in#studio');
+  });
+
+  it('includes only the contact properties that are actually known', () => {
+    const business = localBusinessJsonLd()!;
+    // Supplied.
+    expect(business.telephone).toBe('+918124600321');
+    expect(business.email).toBe('info@luxeaxis.in');
+    // Not supplied. `geo` in particular stays out — approximating coordinates
+    // from a postcode puts the pin on the wrong building.
+    expect(business).not.toHaveProperty('openingHours');
+    expect(business).not.toHaveProperty('geo');
   });
 
   it('builds a service node that points back at the organisation', () => {
@@ -111,7 +128,7 @@ describe('structured data', () => {
       url: '/residential',
     });
     expect(service['@type']).toBe('Service');
-    expect(service.url).toBe('https://luxeaxis.com/residential');
+    expect(service.url).toBe('https://luxeaxis.in/residential');
     expect(service.provider.name).toBe('Luxe Axis');
     // No `offers`: that needs a price, and none is published.
     expect(service).not.toHaveProperty('offers');
@@ -125,7 +142,7 @@ describe('structured data', () => {
       'Vastu Tech',
     ]);
     expect(crumbs.itemListElement.map((item) => item.position)).toEqual([1, 2, 3]);
-    expect(crumbs.itemListElement[1]!.item).toBe('https://luxeaxis.com/intelligence');
+    expect(crumbs.itemListElement[1]!.item).toBe('https://luxeaxis.in/intelligence');
   });
 
   it('accepts a label override where a slug reads badly', () => {
@@ -141,7 +158,7 @@ describe('structured data', () => {
     // of this site's URLs is a real page.
     const crumbs = breadcrumbJsonLd('/residential/signature');
     for (const item of crumbs.itemListElement) {
-      expect(item.item.startsWith('https://luxeaxis.com')).toBe(true);
+      expect(item.item.startsWith('https://luxeaxis.in')).toBe(true);
     }
   });
 

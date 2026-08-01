@@ -4,17 +4,19 @@
  *
  * A Server Component: nothing here reads state, listens for an event, or
  * needs a handler — the whole surface is static markup, so (per the brief)
- * it stays out of the client bundle entirely, unlike Header/MobileSheet/
- * LangSwitch.
+ * it stays out of the client bundle entirely, unlike Header/MobileSheet.
  *
- * Every placeholder below (CIN, GST, WhatsApp number, studio address, the
- * Design Club opt-in) is left as an explicit "to be published" rather than
- * invented — brand policy forbids fabricated company facts, and a fake CIN/
- * GST number would be worse than an honest gap.
+ * The studio's address, phone and WhatsApp now render from
+ * `lib/content/studio.ts`; CIN, GST and the Design Club opt-in are still
+ * outstanding and stay explicit "to be published" lines rather than being
+ * invented. Brand policy forbids fabricated company facts, and a fake CIN or
+ * GST number would be worse than an honest gap — those two are quoted on
+ * invoices and checked against a government register.
  */
 
 import { Link } from './Link';
 import { Container, Grid, Stack } from './layout';
+import { STUDIO, telHref, whatsappHref } from '@/lib/content/studio';
 
 type FooterLink = { label: string; href: string };
 type FooterGroup = { heading: string; links: readonly FooterLink[] };
@@ -142,16 +144,50 @@ export function Footer() {
               <p className="text-small text-on-surface-2">Newsletter and Design Club opt-in — coming soon.</p>
             </Stack>
 
-            {/* WhatsApp slot — no number supplied yet. */}
             <Stack gap={2}>
-              <Heading>WhatsApp</Heading>
-              <p className="text-small text-on-surface-2">Number to be published.</p>
+              <Heading>Talk to us</Heading>
+              {STUDIO.telephone && (
+                // `tel:` and a wa.me link rather than plain text. On the mobile
+                // devices most of this audience uses, a tappable number is the
+                // difference between an enquiry and a copy-paste nobody
+                // finishes.
+                <p className="text-small text-on-surface-2">
+                  <Link href={telHref(STUDIO.telephone)} variant="inline" className="text-small">
+                    {STUDIO.telephone.display}
+                  </Link>
+                </p>
+              )}
+              {STUDIO.whatsapp && (
+                <p className="text-small text-on-surface-2">
+                  <Link
+                    href={whatsappHref(STUDIO.whatsapp)}
+                    variant="inline"
+                    className="text-small"
+                  >
+                    WhatsApp
+                  </Link>
+                </p>
+              )}
             </Stack>
 
-            {/* Chennai address slot — no address supplied yet. */}
             <Stack gap={2}>
               <Heading>Chennai studio</Heading>
-              <p className="text-small text-on-surface-2">Address to be published.</p>
+              {STUDIO.address ? (
+                // A real `<address>` element: it is the semantic home for the
+                // contact details of the document it sits in, which is exactly
+                // what a footer studio address is. Rendered from the supplied
+                // lines verbatim rather than reflowed — tidying an address is
+                // how a floor number quietly goes missing.
+                <address className="text-small not-italic text-on-surface-2">
+                  {STUDIO.address.lines.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </address>
+              ) : (
+                <p className="text-small text-on-surface-2">Address to be published.</p>
+              )}
             </Stack>
           </Grid>
 

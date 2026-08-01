@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
+import { Link } from '@/components/Link';
 import { ToBePublished } from '@/components/ToBePublished';
+import { STUDIO, mailtoHref, telHref, whatsappHref } from '@/lib/content/studio';
 import { Section } from '@/components/sections/Section';
 import { canonicalFor } from '@/lib/seo/hreflang';
 
@@ -16,29 +18,24 @@ export const metadata: Metadata = {
 /**
  * `/contact` (Spec §2.2).
  *
- * The awkward page, and worth being straight about why: the studio has not
- * supplied a phone number, a WhatsApp number, an email address or a street
- * address. `components/Footer.tsx` has carried the same gap since the nav
- * shipped.
+ * For most of this build the studio had supplied no phone number, no WhatsApp,
+ * no email and no address, and this page could only name each gap. All four
+ * have now landed, so it does the ordinary thing and lists them. Only opening
+ * hours are still outstanding.
  *
- * So this page leads with the one route that genuinely works — the audit form —
- * and names each missing channel rather than inventing one. A fabricated phone
- * number on a contact page is not a placeholder; it is a number that belongs to
+ * That matters more than a page filling in: until these arrived, the audit form
+ * was the ONLY route to the studio anywhere on the site, and it still refuses
+ * every submission until `LEAD_WEBHOOK_URL` is configured — so for a stretch
+ * there was genuinely no way to make contact at all. There are now four that
+ * work without any deployment configuration.
+ *
+ * The original reasoning stands for whatever is added next: a fabricated phone
+ * number on a contact page is not a placeholder, it is a number that belongs to
  * somebody, and a visitor will ring it.
- *
- * The audit form is also, right now, the ONLY working contact route on the
- * site, and it needs `LEAD_WEBHOOK_URL` set before it delivers anything. That
- * makes this page's honesty load-bearing rather than decorative: until those
- * details land, a visitor genuinely cannot reach the studio through the
- * website, and pretending otherwise would be the single most costly lie here.
  */
-const CHANNELS = [
-  'Phone',
-  'WhatsApp',
-  'Email',
-  'Studio address',
-  'Opening hours',
-] as const;
+
+/** Still outstanding — the only channel nobody has supplied. */
+const PENDING_CHANNELS = ['Opening hours'] as const;
 
 export default function ContactPage() {
   return (
@@ -67,14 +64,85 @@ export default function ContactPage() {
         id="channels"
         eyebrow="Other ways to reach us"
         title="Direct contact details"
-        lede="Being published shortly. Until then the audit form above is the reliable route."
+        lede="If you would rather just call or write, all of these reach a person."
       >
-        <Grid cols={2} gap={5}>
-          {CHANNELS.map((channel) => (
-            <p key={channel} className="text-small">
-              <ToBePublished label={channel} />
-            </p>
-          ))}
+        <Grid cols={2} gap={6}>
+          <Stack gap={5}>
+            {STUDIO.telephone && (
+              <Stack gap={1}>
+                <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
+                  Phone
+                </h3>
+                {/* A real `tel:` link. Most of this audience is on a phone, and
+                    a number they have to select and copy is a number that does
+                    not get dialled. */}
+                <p>
+                  <Link href={telHref(STUDIO.telephone)} variant="inline">
+                    {STUDIO.telephone.display}
+                  </Link>
+                </p>
+              </Stack>
+            )}
+
+            {STUDIO.whatsapp && (
+              <Stack gap={1}>
+                <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
+                  WhatsApp
+                </h3>
+                <p>
+                  <Link href={whatsappHref(STUDIO.whatsapp)} variant="inline">
+                    Message {STUDIO.whatsapp.display}
+                  </Link>
+                </p>
+              </Stack>
+            )}
+          </Stack>
+
+          <Stack gap={5}>
+            {STUDIO.email && (
+              <Stack gap={1}>
+                <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
+                  Email
+                </h3>
+                {/* Two addresses, labelled by what they are for. An existing
+                    client's problem sent to a sales inbox is how it waits three
+                    days. */}
+                <p className="text-small text-on-surface-2">
+                  New enquiries —{' '}
+                  <Link href={mailtoHref(STUDIO.email.general)} variant="inline" className="text-small">
+                    {STUDIO.email.general}
+                  </Link>
+                </p>
+                <p className="text-small text-on-surface-2">
+                  Existing projects —{' '}
+                  <Link href={mailtoHref(STUDIO.email.support)} variant="inline" className="text-small">
+                    {STUDIO.email.support}
+                  </Link>
+                </p>
+              </Stack>
+            )}
+
+            {STUDIO.address && (
+              <Stack gap={1}>
+                <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
+                  Studio
+                </h3>
+                <address className="not-italic text-on-surface-2">
+                  {STUDIO.address.lines.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </address>
+              </Stack>
+            )}
+
+            {PENDING_CHANNELS.map((channel) => (
+              <p key={channel} className="text-small">
+                <ToBePublished label={channel} />
+              </p>
+            ))}
+          </Stack>
         </Grid>
       </Section>
     </main>
