@@ -13,7 +13,7 @@
  * generic Field component can enforce structurally.
  */
 
-import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import { forwardRef, type InputHTMLAttributes, type TextareaHTMLAttributes } from 'react';
 import { Icon } from './Icon';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
@@ -100,7 +100,24 @@ const LABEL_BASE = cx(
   'peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-overline',
 );
 
-export function Field(props: FieldProps) {
+/**
+ * Ref-forwarding is load-bearing, not a nicety.
+ *
+ * Field was a plain function component, which meant any library that reaches a
+ * control through a ref could not see it. `react-hook-form`'s `register()`
+ * returns `{ name, onChange, onBlur, ref }`, and with the ref silently dropped
+ * RHF held no value for the field at all: the Book-Audit form validated a
+ * filled-in area as empty, and Zod then reported a missing string with its
+ * default "Invalid input" — which is also how the brand-voice rule got broken
+ * two ways at once. Caught by the T-19 e2e refusing to advance past step 1.
+ *
+ * The ref type is the union of both elements this component can render. A
+ * caller holding one narrows it themselves; RHF only ever calls it.
+ */
+export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, FieldProps>(function Field(
+  props,
+  ref,
+) {
   const { label, name, help, error, required, className } = props;
   // Error and success are mutually exclusive so the control never shows two
   // contradictory validation colours at once — the global states table
@@ -138,6 +155,7 @@ export function Field(props: FieldProps) {
         // space. The floor still guarantees the same ≥44px target (§5) a
         // fixed height would.
         <textarea
+          ref={ref as React.Ref<HTMLTextAreaElement>}
           id={id}
           name={name}
           rows={props.rows ?? 4}
@@ -154,6 +172,7 @@ export function Field(props: FieldProps) {
         // ever changed (the ≥44px floor from §5 has to hold, not just
         // happen to hold today).
         <input
+          ref={ref as React.Ref<HTMLInputElement>}
           id={id}
           name={name}
           type={props.type ?? 'text'}
@@ -200,4 +219,4 @@ export function Field(props: FieldProps) {
       </div>
     </div>
   );
-}
+});

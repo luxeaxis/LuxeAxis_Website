@@ -17,6 +17,7 @@ const ROUTES = [
   '/pricing',
   '/residential',
   '/residential/signature',
+  '/book-audit',
   '/style',
   '/this-route-does-not-exist',
 ];

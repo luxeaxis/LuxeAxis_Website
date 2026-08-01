@@ -27,6 +27,7 @@ export const INDEXABLE_ROUTES = [
   '/residential/essential',
   '/residential/signature',
   '/residential/elite',
+  '/book-audit',
 ] as const;
 
 /** Real pages deliberately withheld from crawlers. `/style` sets

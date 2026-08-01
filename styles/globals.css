@@ -31,6 +31,21 @@
     line-height: var(--font-leading-tight);
   }
 
+  /* Keep an anchored target clear of the sticky header.
+     Without this, every in-page jump — the skip link, the Book-Audit error
+     summary's links to each bad field, any future ToC — scrolls the target to
+     the very top of the viewport, where the sticky header (which is `position:
+     fixed` as far as the scroll is concerned) sits on top of it. The visitor
+     jumps to a field and cannot see it. Caught by Playwright reporting that the
+     header subtree "intercepts pointer events" for elements it had just
+     scrolled into view.
+     Set on `html` rather than per-element so it applies to every anchor
+     without each one remembering, and sized from the same nav-height token the
+     header itself uses, so the two cannot drift. */
+  html {
+    scroll-padding-top: calc(var(--component-nav-height) + var(--space-4));
+  }
+
   /* Never remove focus without a stronger cue. This is the floor. */
   :focus-visible {
     outline: var(--border-width-focus) solid var(--focus-ring);
