@@ -1,5 +1,9 @@
 import type {
   CalculatorConfig,
+  Faq,
+  Guarantee,
+  NriRegion,
+  ProcessStage,
   IntelligenceFeature,
   Persona,
   Project,
@@ -289,9 +293,142 @@ export async function getTestimonials(): Promise<readonly Testimonial[]> {
   return TESTIMONIALS;
 }
 
+// Spec 5.8 / Cinematic SCENE 07 name the seven stages and their order verbatim.
+// The one-line bodies are written here, and assert nothing the rest of this file
+// does not already claim (vetted partners, the Vastu-Tech check, the Space OS
+// portal, the handover guarantee). They are the only visitor-facing copy in this
+// file not lifted from a spec, so they are the first thing a copy review should
+// look at.
+const PROCESS_STAGES: readonly ProcessStage[] = [
+  {
+    id: 'discover',
+    name: 'Discover',
+    body: 'We learn how you actually live in the space, what you want changed, and what you would rather not touch.',
+  },
+  {
+    id: 'audit',
+    name: 'Audit',
+    body: 'A designer walks the space, in person or over video, and comes back with a read on it and an indicative cost.',
+  },
+  {
+    id: 'concept',
+    name: 'Concept',
+    body: 'Layouts, materials and a Vastu-Tech check, presented as options rather than a single take-it-or-leave-it design.',
+  },
+  {
+    id: 'approve',
+    name: 'Approve',
+    body: 'Drawings and the costed scope are signed off before anything is ordered. Nothing starts on an assumption.',
+  },
+  {
+    id: 'build',
+    name: 'Build',
+    body: 'Vetted execution partners work to the approved drawings, with progress and spend visible to you in Space OS.',
+  },
+  {
+    id: 'handover',
+    name: 'Handover',
+    body: 'Snagging, cleaning and the final walkthrough, which is the point the space becomes yours to use.',
+    guaranteeId: 'handover-60',
+  },
+  {
+    id: 'concierge',
+    name: 'Concierge',
+    body: 'We stay reachable afterwards for the things that only surface once you have lived in a space for a month.',
+  },
+];
+
+// Both named in Spec 10.6. Neither has published terms, and `terms: null` is how
+// that is said. See the `Guarantee` type for why inventing them would be worse
+// than inventing a statistic.
+const GUARANTEES: readonly Guarantee[] = [
+  {
+    id: 'handover-60',
+    name: '60-Day Handover Guarantee',
+    summary: 'A committed handover date, backed by a published guarantee rather than an apology.',
+    terms: null,
+  },
+  {
+    id: 'supply-chain-fee',
+    name: 'Transparent Supply-Chain Management fee',
+    summary:
+      'The fee for sourcing and managing materials is stated as its own line rather than folded invisibly into a per-square-foot rate.',
+    terms: null,
+  },
+];
+
+// Spec 2.2's sitemap lists exactly these six.
+const NRI_REGIONS: readonly NriRegion[] = [
+  { slug: 'singapore', name: 'Singapore', timeZone: 'Asia/Singapore' },
+  { slug: 'uae', name: 'UAE', timeZone: 'Asia/Dubai' },
+  { slug: 'usa', name: 'USA', timeZone: 'America/New_York' },
+  { slug: 'uk', name: 'UK', timeZone: 'Europe/London' },
+  { slug: 'canada', name: 'Canada', timeZone: 'America/Toronto' },
+  { slug: 'australia', name: 'Australia', timeZone: 'Australia/Sydney' },
+];
+
+// The questions are Landing Blueprint 3.7's own list of "the real objections".
+// Every answer is assembled from facts stated elsewhere in the specs: the
+// published tiers, the 60-day guarantee, the NRI remote capability, Vastu-Tech's
+// human review, and P4's "AI assists, humans decide". None of them invents a
+// policy, and none states a term the studio has not already committed to.
+const FAQS: readonly Faq[] = [
+  {
+    id: 'cost',
+    question: 'How much does it cost?',
+    answer:
+      'We publish our tiers rather than quoting privately, so you can find out before speaking to anyone. What a specific project costs depends on its area, condition and finish level, which the audit settles.',
+    link: { label: 'See pricing', href: '/pricing' },
+  },
+  {
+    id: 'duration',
+    question: 'How long does it take?',
+    answer:
+      'Handover is covered by our 60-Day Handover Guarantee. The full timeline depends on scope and approvals, and a designer gives you a dated plan at the audit.',
+    link: { label: 'See the process', href: '/process' },
+  },
+  {
+    id: 'abroad',
+    question: 'Can I manage this from abroad?',
+    answer:
+      'Yes. Progress, drawings and spend are visible in Space OS, and reviews happen over video at a time that works in your zone rather than ours.',
+    link: { label: 'Designing from abroad', href: '/nri' },
+  },
+  {
+    id: 'vastu',
+    question: 'Do you do Vastu?',
+    answer:
+      'Yes. Vastu-Tech checks your plan against Vastu in seconds, and a designer reviews every result before it reaches you.',
+    link: { label: 'How Vastu-Tech works', href: '/intelligence/vastu-tech' },
+  },
+  {
+    id: 'ai',
+    question: 'Is the AI designing my home?',
+    answer:
+      'No. The software narrows the question, and a designer decides. Nothing reaches you that a person has not reviewed.',
+    link: { label: 'What we have built', href: '/intelligence' },
+  },
+];
+
 /** Empty until the studio publishes real figures. */
 export async function getStats(): Promise<readonly Stat[]> {
   return STATS;
+}
+
+export async function getProcessStages(): Promise<readonly ProcessStage[]> {
+  return PROCESS_STAGES;
+}
+
+export async function getGuarantees(): Promise<readonly Guarantee[]> {
+  return GUARANTEES;
+}
+
+export async function getNriRegions(): Promise<readonly NriRegion[]> {
+  return NRI_REGIONS;
+}
+
+export async function getFaqs(): Promise<readonly Faq[]> {
+  return FAQS;
 }
 
 /** The labels the proof strip shows while `getStats()` is empty, so the section

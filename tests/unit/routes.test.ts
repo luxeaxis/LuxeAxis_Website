@@ -110,15 +110,24 @@ describe('the SEO route lists match the routes that actually exist', () => {
     expect(onDisk.some((route) => route.includes('['))).toBe(false);
   });
 
-  it('does not confuse the nav list for the route list', async () => {
-    // lib/nav.ts deliberately links to routes that do not exist yet (it says
-    // so). Sourcing the sitemap from it — an easy-looking simplification —
-    // would put ~30 dead URLs in front of a crawler.
-    const { NAV_ITEMS } = await import('@/lib/nav');
-    const unbuilt = NAV_ITEMS.filter((item) => !onDisk.includes(item.href));
-    expect(unbuilt.length).toBeGreaterThan(0);
-    for (const item of unbuilt) {
-      expect(INDEXABLE_ROUTES as readonly string[]).not.toContain(item.href);
-    }
+  it('every nav link now has a page behind it', async () => {
+    // This assertion used to be its own inverse. lib/nav.ts deliberately linked
+    // ahead of the build to routes that did not exist, so the test checked that
+    // at least one was still unbuilt and that none of those had leaked into the
+    // sitemap — the risk then being that someone would "simplify" the sitemap by
+    // sourcing it from the nav and hand a crawler thirty dead URLs.
+    //
+    // Every nav destination is now built, so the useful invariant flips: a nav
+    // item pointing at a route that does not exist is a dead link in the site
+    // chrome, which is the most visible kind. tests/e2e/pages.spec.ts walks the
+    // footer against a live server for the same reason; this catches it at unit
+    // speed, before a build.
+    //
+    // The sitemap is still NOT sourced from the nav. The two happen to coincide
+    // today; they are different lists for different jobs, and conflating them
+    // would break again the moment nav links ahead of the build once more.
+    const { NAV_ITEMS, BOOK_AUDIT } = await import('@/lib/nav');
+    const missing = [...NAV_ITEMS, BOOK_AUDIT].filter((item) => !onDisk.includes(item.href));
+    expect(missing.map((item) => item.href)).toEqual([]);
   });
 });

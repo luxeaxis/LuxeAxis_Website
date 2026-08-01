@@ -153,3 +153,52 @@ export type CalculatorConfig = {
    *  quote — ₹18,40,000 invites belief that ₹18,43,217 does not. */
   roundToNearest: number;
 };
+
+/** A stage of the client journey (Spec 5.8, Cinematic SCENE 07). */
+export type ProcessStage = {
+  id: string;
+  /** The stage names are the spec own, in its order: Discover, Audit,
+   *  Concept, Approve, Build, Handover, Concierge. */
+  name: string;
+  body: string;
+  /** The guarantee attached to this stage, where one is. */
+  guaranteeId?: string;
+};
+
+/**
+ * A published commitment (Spec 10.6: the 60-Day Handover Guarantee and the
+ * transparent Supply-Chain Management fee).
+ *
+ * `terms` is nullable because the specs NAME both guarantees and state neither
+ * set of conditions. A guarantee is a contractual promise, so inventing its
+ * terms would be drafting an obligation the studio has not agreed to and a
+ * visitor could later hold them to — a materially worse kind of invention than
+ * a placeholder statistic.
+ */
+export type Guarantee = {
+  id: string;
+  name: string;
+  summary: string;
+  terms: string | null;
+};
+
+/** An NRI region with its own landing page (Spec 2.2:
+ *  `/nri/singapore /uae /usa /uk /canada /australia`). */
+export type NriRegion = {
+  slug: string;
+  name: string;
+  /** Shown on the region page so a visitor can sanity-check the time difference
+   *  themselves. An IANA zone, not a fixed offset — offsets change twice a year
+   *  in several of these regions and a hard-coded one would be wrong half the
+   *  time. */
+  timeZone: string;
+};
+
+/** A question a visitor actually asks (Landing Blueprint 3.7). */
+export type Faq = {
+  id: string;
+  question: string;
+  answer: string;
+  /** Where to go next, per 3.7's "each answer ends with a soft CTA link". */
+  link?: { label: string; href: string };
+};

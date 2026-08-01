@@ -33,10 +33,29 @@ export const INDEXABLE_ROUTES = [
   '/intelligence/space-score',
   '/intelligence/space-os',
   '/intelligence/virtual-staging',
+  '/process',
+  '/nri',
+  '/nri/singapore',
+  '/nri/uae',
+  '/nri/usa',
+  '/nri/uk',
+  '/nri/canada',
+  '/nri/australia',
+  '/commercial',
+  '/commercial/workplace',
+  '/commercial/retail-hospitality',
+  '/commercial/healthcare',
+  '/digital',
+  '/about',
+  '/journal',
+  '/portfolio',
+  '/contact',
+  '/privacy',
+  '/accessibility',
 ] as const;
 
 /** Real pages deliberately withheld from crawlers. `/style` sets
  *  `robots: { index: false, follow: false }` in its own metadata — it is a
  *  developer reference, not a marketing surface — and is listed here so the
  *  drift test can tell "excluded on purpose" apart from "forgotten". */
-export const NOINDEX_ROUTES = ['/style'] as const;
+export const NOINDEX_ROUTES = ['/style', '/terms'] as const;
