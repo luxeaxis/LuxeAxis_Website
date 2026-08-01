@@ -169,6 +169,17 @@ const TRUST_POINTS: readonly string[] = [
   '200+ vetted vendors',
 ];
 
+// The measures Landing Blueprint §3.5 names for the stat band. The blueprint
+// states WHICH numbers the studio intends to publish and none of their values,
+// so the labels are real content and the figures are the gap — which is exactly
+// what `ToBePublished` renders against each one.
+const PENDING_STAT_LABELS: readonly string[] = [
+  'Projects delivered',
+  'On-time completion',
+  'Net Promoter Score',
+  'Referral rate',
+];
+
 // Awaiting real content — see the file comment for why these are not seeded.
 const PROJECTS: readonly Project[] = [];
 const TESTIMONIALS: readonly Testimonial[] = [];
@@ -212,6 +223,12 @@ export async function getTestimonials(): Promise<readonly Testimonial[]> {
 /** Empty until the studio publishes real figures. */
 export async function getStats(): Promise<readonly Stat[]> {
   return STATS;
+}
+
+/** The labels the proof strip shows while `getStats()` is empty, so the section
+ *  names what is coming rather than disappearing. Never paired with a value. */
+export async function getPendingStatLabels(): Promise<readonly string[]> {
+  return PENDING_STAT_LABELS;
 }
 
 /**

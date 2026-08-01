@@ -54,17 +54,22 @@ test('no tier page invents a price', async ({ page }) => {
   }
 });
 
-test('the Fee Calculator is absent until a real rate card exists', async ({ page }) => {
-  // Deliberately asserting the ABSENCE. `getCalculatorConfig()` returns null,
-  // so the section does not render — a calculator returning invented rates is
-  // the single most damaging thing this site could ship, since a visitor
-  // budgets against it.
+test('the Fee Calculator slot is named as pending, with no invented rate', async ({ page }) => {
+  // The section is present so a visitor knows the calculator is coming, but the
+  // calculator itself does not render without a real rate card. This is the one
+  // component on the site someone acts on financially — they budget against the
+  // number — so an invented rate would read as the studio's price, not as a
+  // placeholder.
   //
-  // When real rates land this test fails, which is the intended prompt: replace
-  // it with the keyboard run T-15 asks for (tab to the area field, type, arrow
-  // through the tier radios, confirm the announced <output> updates). The
-  // semantics that run would check are already covered in
+  // When real rates land, the placeholder disappears and this test fails, which
+  // is the intended prompt: replace it with the keyboard run T-15 asks for (tab
+  // to the area field, type, arrow through the tier radios, confirm the
+  // announced <output> updates). Those semantics are already covered in
   // tests/unit/fee-calculator.test.tsx.
   await page.goto('/residential');
-  await expect(page.getByRole('heading', { name: 'Estimate your project' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Estimate your project' })).toBeVisible();
+  await expect(page.getByText('The fee calculator is not live yet')).toBeVisible();
+  // No inputs, and no figure of any kind.
+  await expect(page.locator('#calculator input')).toHaveCount(0);
+  await expect(page.locator('#calculator')).not.toContainText('₹');
 });

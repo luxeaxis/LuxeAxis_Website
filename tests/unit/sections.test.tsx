@@ -91,25 +91,40 @@ describe('PersonaRouter', () => {
 });
 
 /**
- * The sections whose content the specs describe but do not supply. Rendering
- * nothing is the specified behaviour, not a placeholder state — see
- * lib/content/source.ts. These tests exist so that "shows up empty" can never
- * be quietly replaced by "shows up with invented proof".
+ * The sections whose content the specs describe but do not supply.
+ *
+ * Each shows an explicit "To be published" against the named fact rather than
+ * disappearing. The tests below hold the line that makes that honest: the
+ * placeholder names the gap and NEVER carries a plausible stand-in value. A
+ * placeholder is only truthful while it is unmistakably a placeholder.
  */
-describe('sections gated on content that does not exist yet', () => {
-  it('ProofStrip renders nothing without real statistics', () => {
-    const { container } = render(<ProofStrip stats={[]} />);
-    expect(container.innerHTML).toBe('');
+describe('sections waiting on content that does not exist yet', () => {
+  const PENDING_LABELS = ['Projects delivered', 'On-time completion'];
+
+  it('ProofStrip names the measures but publishes no figure', () => {
+    render(<ProofStrip stats={[]} pendingLabels={PENDING_LABELS} />);
+    expect(screen.getByText('Projects delivered')).toBeDefined();
+    expect(screen.getAllByText('To be published').length).toBe(2);
+    // The load-bearing assertion: no digit anywhere. An invented statistic is
+    // indistinguishable from a real one to a visitor, which is exactly why it
+    // must be impossible to ship one by accident.
+    const section = document.body.textContent ?? '';
+    expect(section).not.toMatch(/\d/);
   });
 
-  it('FeaturedProjects renders nothing without real projects', () => {
-    const { container } = render(<FeaturedProjects projects={[]} />);
-    expect(container.innerHTML).toBe('');
+  it('FeaturedProjects says case studies are pending without inventing one', () => {
+    render(<FeaturedProjects projects={[]} />);
+    expect(screen.getByText('Case studies are being prepared')).toBeDefined();
+    // No project, no neighbourhood, no photograph — a sample project would be a
+    // fabricated case study about a client who does not exist.
+    expect(document.querySelector('img')).toBeNull();
   });
 
-  it('TestimonialBand renders nothing without a real, attributed quote', () => {
-    const { container } = render(<TestimonialBand testimonials={[]} />);
-    expect(container.innerHTML).toBe('');
+  it('TestimonialBand says quotes are pending without inventing an attribution', () => {
+    render(<TestimonialBand testimonials={[]} />);
+    expect(screen.getByText(/To be published/)).toBeDefined();
+    // No blockquote: a quote with a made-up name is a fabricated review.
+    expect(document.querySelector('blockquote')).toBeNull();
   });
 
   it('but each appears as soon as content arrives, with no component change', () => {
@@ -122,9 +137,10 @@ describe('sections gated on content that does not exist yet', () => {
       },
     ];
 
-    const { container: statContainer } = render(<ProofStrip stats={stats} />);
-    expect(statContainer.innerHTML).not.toBe('');
+    render(<ProofStrip stats={stats} pendingLabels={PENDING_LABELS} />);
     expect(screen.getByText('Projects delivered')).toBeDefined();
+    // Real figures replace the placeholder entirely — never both at once.
+    expect(screen.queryByText('To be published')).toBeNull();
     // StatCounter keeps the final value in the DOM from first paint.
     expect(screen.getAllByText('120').length).toBeGreaterThan(0);
 
@@ -140,11 +156,15 @@ describe('PricingTeaser', () => {
     { id: 'essential', name: 'Essential', summary: 'A complete 2 or 3BHK.', priceFrom: null, inclusions: ['Design'] },
   ];
 
-  it('shows the tier structure without inventing a figure while prices are unpublished', () => {
+  it('names the fee band as pending rather than inventing a figure', () => {
     render(<PricingTeaser tiers={unpriced} />);
     expect(screen.getByRole('link', { name: /Essential/ })).toBeDefined();
+    expect(screen.getByText('Fee band:')).toBeDefined();
+    expect(screen.getByText('To be published')).toBeDefined();
     // No currency anywhere: the rupee sign only ever comes from PriceTag, and
-    // PriceTag is only reachable once every tier has a real amount.
+    // PriceTag is only reachable once every tier has a real amount. This is the
+    // section whose own heading claims the studio publishes its prices, so a
+    // placeholder number here would be self-refuting.
     expect(document.body.textContent).not.toMatch(/₹/);
   });
 

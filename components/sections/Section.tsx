@@ -35,7 +35,13 @@ export function Section({
     // A plain <section> rather than the `Bleed` primitive: `Bleed` models only
     // children/className/as, so it has nowhere to put `aria-labelledby`, and
     // the labelled landmark is the whole reason this wrapper exists.
-    <section aria-labelledby={headingId} className="relative w-full py-section-y">
+    // `id` on the section itself, not only woven into the heading's id. Without
+    // it no section is linkable — `/residential#calculator` from an ad or an
+    // email would land at the top of the page — and any test written against
+    // `#calculator` passes vacuously by matching nothing. The
+    // `scroll-padding-top` added in globals.css exists precisely so these
+    // anchors clear the sticky header.
+    <section id={id} aria-labelledby={headingId} className="relative w-full py-section-y">
       <Container>
         <Stack gap={8}>
           <Stack gap={3}>

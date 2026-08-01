@@ -2,6 +2,7 @@ import { Icon } from '../Icon';
 import { PriceTag } from '../PriceTag';
 import { Button } from '../Button';
 import { Stack } from '../layout';
+import { ToBePublished } from '../ToBePublished';
 import { BOOK_AUDIT } from '@/lib/nav';
 import type { Tier } from '@/lib/content/types';
 
@@ -56,12 +57,12 @@ export function TierSummary({ tier }: { tier: Tier }) {
           </Stack>
 
           {tier.priceFrom === null ? (
-            // Says what is true rather than showing a placeholder figure. The
-            // studio's proposition is that it publishes prices; a fake one here
-            // would discredit exactly that, so the honest gap is the better
-            // answer until real rates land.
-            <p className="text-small text-on-surface-muted">
-              Fee band published on the pricing page.
+            // Names the gap in the place the price will go. The studio's
+            // proposition is that it publishes its prices; a plausible figure
+            // here would discredit exactly that, so the marker stays until real
+            // rates land.
+            <p className="text-small">
+              <ToBePublished label="Fee band" />
             </p>
           ) : (
             <PriceTag amount={tier.priceFrom} period="onwards" />

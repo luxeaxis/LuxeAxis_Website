@@ -1,6 +1,8 @@
 import { Cluster, Grid } from '../layout';
 import { Button } from '../Button';
+import { EmptyState } from '../EmptyState';
 import { FeatureCard, ProjectCard, TierCard } from '../Card';
+import { ToBePublished } from '../ToBePublished';
 import { Section } from './Section';
 import type { IntelligenceFeature, Project, Tier } from '@/lib/content/types';
 
@@ -56,7 +58,29 @@ export function IntelligenceTeaser({ features }: { features: readonly Intelligen
  * a real project reads as *less* trustworthy than the photograph."
  */
 export function FeaturedProjects({ projects }: { projects: readonly Project[] }) {
-  if (projects.length === 0) return null;
+  if (projects.length === 0) {
+    return (
+      <Section id="work" eyebrow="The work" title="Recent Chennai projects">
+        {/* Named as pending rather than hidden. A studio with no visible work
+            looks like a studio with no work; saying the case studies are being
+            prepared is both true and a better answer than an empty page.
+            Deliberately shows no project, no photograph and no neighbourhood —
+            a plausible-looking sample project would be a fabricated case study
+            about a client who does not exist. */}
+        <EmptyState
+          icon="layers"
+          title="Case studies are being prepared"
+          body="Each project is published only once the client has agreed to it, with real photography rather than renders. Ask us about work like yours in the meantime."
+          headingAs="h3"
+          action={
+            <Button as="a" href="/book-audit" variant="secondary">
+              Book an audit
+            </Button>
+          }
+        />
+      </Section>
+    );
+  }
 
   return (
     <Section
@@ -134,13 +158,16 @@ export function PricingTeaser({ tiers }: { tiers: readonly Tier[] }) {
         // become real price bands with no change here.
         <Grid cols={3} gap={5}>
           {tiers.map((tier) => (
-            <FeatureCard
-              key={tier.id}
-              href="/pricing"
-              icon="check"
-              title={tier.name}
-              body={tier.summary}
-            />
+            <div key={tier.id} className="flex flex-col gap-3">
+              <FeatureCard href="/pricing" icon="check" title={tier.name} body={tier.summary} />
+              {/* The fee band named as pending, in the place the price will go.
+                  This is the one section where a placeholder number would be
+                  actively self-defeating: the heading above it says the studio
+                  publishes its prices. */}
+              <p className="px-6 text-small">
+                <ToBePublished label="Fee band" />
+              </p>
+            </div>
           ))}
         </Grid>
       )}

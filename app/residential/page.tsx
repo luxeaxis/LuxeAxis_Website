@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
 import { FeatureCard, TierCard } from '@/components/Card';
+import { Button } from '@/components/Button';
+import { EmptyState } from '@/components/EmptyState';
 import { FeeCalculator } from '@/components/FeeCalculator';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
@@ -77,22 +79,36 @@ export default async function ResidentialPage() {
         </Grid>
       </Section>
 
-      {/* Renders only when real rates exist. A calculator is the one thing on
-          this site a visitor will budget against, so an invented rate would not
-          read as a placeholder — it would read as the studio's price. See
-          lib/content/source.ts. */}
-      {calculatorConfig && (
-        <Section
-          id="calculator"
-          eyebrow="See your price"
-          title="Estimate your project"
-          lede="Two inputs, an instant band. No email gate, and no callback before you can find out what it costs."
-        >
-          <div className="max-w-measure">
+      <Section
+        id="calculator"
+        eyebrow="See your price"
+        title="Estimate your project"
+        lede="Two inputs, an instant band. No email gate, and no callback before you can find out what it costs."
+      >
+        <div className="max-w-measure">
+          {calculatorConfig ? (
             <FeeCalculator config={calculatorConfig} />
-          </div>
-        </Section>
-      )}
+          ) : (
+            // The section is named so the visitor knows it is coming, but the
+            // calculator itself does not render without real rates. This is the
+            // one component on the site a visitor acts on financially — they
+            // budget against the number it returns — so an invented rate would
+            // not read as a placeholder, it would read as the studio's price.
+            // See lib/content/source.ts.
+            <EmptyState
+              icon="gauge"
+              title="The fee calculator is not live yet"
+              body="We publish our rates rather than quoting privately, and the calculator goes up as soon as the current rate card is signed off. Ask us for an indicative figure in the meantime."
+              headingAs="h3"
+              action={
+                <Button as="a" href="/book-audit" variant="secondary">
+                  Book an audit
+                </Button>
+              }
+            />
+          )}
+        </div>
+      </Section>
 
       <CTASection />
     </main>
