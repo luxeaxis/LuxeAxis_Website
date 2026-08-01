@@ -123,22 +123,64 @@ function ToastCard({ toast, onDismiss }: { toast: ToastRecord; onDismiss: (id: s
     return () => window.clearTimeout(timerRef.current);
   }, [startTimer]);
 
-  const pause = () => {
-    window.clearTimeout(timerRef.current);
-    remainingRef.current -= Date.now() - startedAtRef.current;
-  };
-  const resume = () => {
+  // §3.5's "pausable" is driven by TWO independent signals — pointer
+  // (`onMouseEnter`/`onMouseLeave`) and keyboard (`onFocus`/`onBlur`) — which
+  // overlap freely in real use, so neither can be allowed to drive the timer
+  // on its own. Both are tracked, and the timer follows "paused while EITHER
+  // is engaged".
+  //
+  // Both bugs this replaces hurt the same person, the keyboard user, because
+  // reaching a toast's close button means hovering and focusing it:
+  //
+  // - Hover then focus fired `pause` twice with no `resume` between, and the
+  //   second subtracted the elapsed time again from a `startedAtRef` the first
+  //   had already accounted for. The toast resumed with a far shorter
+  //   remainder than it was owed and could vanish almost at once.
+  // - Moving the pointer away while the close button still HELD focus fired
+  //   `resume` and restarted the countdown underneath them — a toast timing
+  //   out while focused is the one moment auto-dismiss is least defensible.
+  //
+  // `pausedRef` is separate from the two signal flags rather than derived on
+  // the fly, because it records what the TIMER is currently doing. Without it
+  // a redundant `pause` would still clear and re-measure, and a redundant
+  // `resume` would restart a timer that was never stopped.
+  const hoveredRef = useRef(false);
+  const focusedRef = useRef(false);
+  const pausedRef = useRef(false);
+
+  const syncTimer = () => {
+    const shouldPause = hoveredRef.current || focusedRef.current;
+    if (shouldPause === pausedRef.current) return;
+    pausedRef.current = shouldPause;
+
+    if (shouldPause) {
+      window.clearTimeout(timerRef.current);
+      remainingRef.current -= Date.now() - startedAtRef.current;
+      return;
+    }
     if (remainingRef.current > 0) startTimer(remainingRef.current);
+  };
+
+  const setHovered = (value: boolean) => {
+    hoveredRef.current = value;
+    syncTimer();
+  };
+  const setFocused = (value: boolean) => {
+    focusedRef.current = value;
+    syncTimer();
   };
 
   return (
     <li
       role={ariaRoleFor(tone)}
       aria-atomic="true"
-      onMouseEnter={pause}
-      onMouseLeave={resume}
-      onFocus={pause}
-      onBlur={resume}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      // These bubble from the close button inside — React's onFocus/onBlur map
+      // to focusin/focusout, so the whole toast counts as focused whenever any
+      // control within it is.
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
       onTransitionEnd={(event) => {
         if (event.target === event.currentTarget && exiting) onDismiss(toast.id);
       }}

@@ -27,7 +27,7 @@ export function OverlayDemo() {
   return (
     <Stack gap={5}>
       <Stack gap={3}>
-        <h3 className="font-display text-xl">Chips — selectable and removable</h3>
+        <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Chips — selectable and removable</h3>
         <Cluster gap={2}>
           {filters.map((filter) => (
             <Chip
@@ -49,7 +49,7 @@ export function OverlayDemo() {
       </Stack>
 
       <Stack gap={3}>
-        <h3 className="font-display text-xl">Toast</h3>
+        <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Toast</h3>
         <p className="text-on-surface-2">
           Status tones announce politely; the error tone announces assertively. Neither is ever the
           only channel for information that matters.
@@ -73,7 +73,7 @@ export function OverlayDemo() {
       </Stack>
 
       <Stack gap={3}>
-        <h3 className="font-display text-xl">Modal</h3>
+        <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Modal</h3>
         <Cluster gap={3}>
           <Button variant="secondary" onClick={() => setModalOpen(true)}>
             Open the modal

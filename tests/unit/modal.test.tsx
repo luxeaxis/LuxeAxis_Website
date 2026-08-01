@@ -176,6 +176,66 @@ describe('Modal focus trap, when focus starts outside the panel', () => {
     outside.remove();
   });
 
+  it('leaves focus alone when the parent re-renders while it is open', () => {
+    // The regression this pins down: initial focus used to live in the same
+    // effect as the key handler, keyed `[open, onClose]`. Every call site
+    // passes an inline arrow, so each parent render produced a new `onClose`
+    // identity, re-ran the effect, and pulled focus back to the first
+    // focusable. A dialog holding a form — which is exactly what the design
+    // audit flow needs — would have thrown the user out of the field they
+    // were typing in on every keystroke that touched parent state.
+    function FormHarness() {
+      const [value, setValue] = useState('');
+      return (
+        <Modal open onClose={() => setValue('')} title="Confirm your preferred time">
+          <label htmlFor="when">When</label>
+          <input id="when" value={value} onChange={(event) => setValue(event.target.value)} />
+        </Modal>
+      );
+    }
+
+    render(<FormHarness />);
+    const input = screen.getByLabelText('When') as HTMLInputElement;
+    input.focus();
+    expect(document.activeElement).toBe(input);
+
+    // Typing lifts state to the parent, re-rendering it with a fresh `onClose`.
+    fireEvent.change(input, { target: { value: 'Tuesday' } });
+
+    expect(document.activeElement).toBe(input);
+    expect(input.value).toBe('Tuesday');
+  });
+
+  it('still closes on Esc after the parent has re-rendered', () => {
+    // The other half of the fix: `onClose` is read through a ref so it can be
+    // dropped from the effect's deps. That is only safe if the ref genuinely
+    // tracks the latest prop — a stale ref would leave Esc calling the closure
+    // captured on first open, which for a caller whose handler depends on
+    // current state is a silently wrong close.
+    function CountingHarness() {
+      const [count, setCount] = useState(0);
+      const [closedAt, setClosedAt] = useState<number | null>(null);
+      return (
+        <div>
+          <button onClick={() => setCount((n) => n + 1)}>bump</button>
+          <span data-testid="closed-at">{closedAt === null ? 'open' : String(closedAt)}</span>
+          <Modal open onClose={() => setClosedAt(count)} title="Trap">
+            <button type="button">inside</button>
+          </Modal>
+        </div>
+      );
+    }
+
+    render(<CountingHarness />);
+    fireEvent.click(screen.getByRole('button', { name: 'bump' }));
+    fireEvent.click(screen.getByRole('button', { name: 'bump' }));
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    // 2, not 0: the ref handed Esc the current handler, not the one captured
+    // when the effect first bound its listener.
+    expect(screen.getByTestId('closed-at').textContent).toBe('2');
+  });
+
   it('pulls focus back on Shift+Tab too', () => {
     const outside = document.createElement('button');
     document.body.appendChild(outside);

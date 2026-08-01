@@ -86,19 +86,47 @@ export function Modal({ open, onClose, title, children, closeLabel = 'Close', cl
     };
   }, [mounted]);
 
-  // Initial focus + Esc + Tab trap — active only while genuinely `open`.
+  // `onClose` read through a ref inside the key handler below, never as a
+  // dependency. Callers pass an inline arrow (`onClose={() => setOpen(false)}`)
+  // essentially always — it is what every call site in this repo does — which
+  // is a fresh identity on every parent render. See the initial-focus effect
+  // for what depending on that identity costs.
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  // Initial focus — keyed on `open` ALONE, and deliberately split out of the
+  // key-handler effect below rather than sharing it.
+  //
+  // The two were one effect keyed `[open, onClose]`, which meant every parent
+  // re-render with a new `onClose` identity re-ran `focusables()[0]?.focus()`
+  // and dragged focus back to the close button. Nothing in the repo triggered
+  // it — /style's demo modal holds no state that changes while it is open — so
+  // it was invisible, but it is fatal for the one thing a Modal in this system
+  // is destined to hold: the multi-step design-audit form. Every keystroke that
+  // lifted state to the parent would have thrown focus out of the input the
+  // user was typing in, mid-word, with no way to finish the form.
+  //
+  // Keyed on `open`, this fires exactly once per opening, which is the only
+  // time "move focus into the dialog" is ever the correct thing to do.
+  useEffect(() => {
+    if (!open) return;
+    panelRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)?.focus();
+  }, [open]);
+
+  // Esc + Tab trap — active only while genuinely `open`.
   useEffect(() => {
     if (!open) return;
     const panel = panelRef.current;
     if (!panel) return;
 
     const focusables = () => Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
-    focusables()[0]?.focus();
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         event.preventDefault();
-        onClose();
+        onCloseRef.current();
         return;
       }
       if (event.key !== 'Tab') return;
@@ -133,7 +161,11 @@ export function Modal({ open, onClose, title, children, closeLabel = 'Close', cl
 
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [open, onClose]);
+    // `onClose` is intentionally absent: it is read through `onCloseRef` above
+    // so a new inline-arrow identity cannot tear down and rebind this listener
+    // on every parent render. Esc still calls the LATEST `onClose`, because the
+    // ref is updated in its own effect.
+  }, [open]);
 
   if (!mounted) return null;
 

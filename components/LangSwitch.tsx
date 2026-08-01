@@ -22,18 +22,30 @@ import { usePathname } from '@/i18n/navigation';
 import { Link } from './Link';
 import { Cluster } from './layout';
 import { isPublished, normalise, type Locale } from '@/lib/i18n/published';
+import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE_SECONDS } from '@/lib/i18n/cookie';
 
-const COOKIE_NAME = 'lx-locale';
-
-/** Writes an app-owned "last chosen language" cookie — a remembered
- *  preference only. Nothing anywhere reads it yet; it is NOT next-intl's
- *  `NEXT_LOCALE` and must never be wired into an auto-redirect. With
- *  `localeDetection: false` (i18n/routing.ts), the only thing permitted to
- *  decide a locale redirect is the `isPublished` gate — cookie-driven
- *  redirection is exactly the mechanism that comment documents as having
- *  caused the infinite-loop bug this repo already fixed once. */
+/** Writes the app-owned "last chosen language" cookie, which `middleware.ts`
+ *  reads on the next unprefixed request to send a returning Tamil reader
+ *  straight to `/ta<route>` — the spec's "persists via cookie" (§2.3, §3.3).
+ *
+ *  It is NOT next-intl's `NEXT_LOCALE`, and the redirect it drives is NOT
+ *  next-intl's `localeDetection`. That distinction is the whole safety
+ *  argument: middleware only ever honours this cookie for routes where
+ *  `isPublished(route, 'ta')` is true, the exact complement of the condition
+ *  under which it redirects /ta away, so the pair cannot cycle.
+ *  `localeDetection` redirected irrespective of publication and did cycle.
+ *  Read i18n/routing.ts and middleware.ts together before changing either.
+ *
+ *  Cookie attributes: `Path=/` because the preference is site-wide, not
+ *  per-section. `SameSite=Lax` because it must survive a top-level navigation
+ *  in from a search result or a shared link — that is precisely the return
+ *  visit it exists to serve — while still being withheld from cross-site
+ *  subrequests. No `Secure`: it would drop the cookie on plain-HTTP localhost
+ *  and silently disable this path in development, and the value is a two-letter
+ *  language tag, not a credential. No `HttpOnly`, necessarily — this is written
+ *  from the browser. */
 function rememberLocale(locale: 'en' | 'ta') {
-  document.cookie = `${COOKIE_NAME}=${locale}; Max-Age=31536000; Path=/; SameSite=Lax`;
+  document.cookie = `${LOCALE_COOKIE}=${locale}; Max-Age=${LOCALE_COOKIE_MAX_AGE_SECONDS}; Path=/; SameSite=Lax`;
 }
 
 export function LangSwitch({ locale, className }: { locale: Locale; className?: string }) {

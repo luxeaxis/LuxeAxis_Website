@@ -86,7 +86,12 @@ const CONTROL_BASE = cx(
 const LABEL_BASE = cx(
   'pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-2',
   'transition-all duration-micro ease-standard motion-reduce:transition-none',
-  'text-base',
+  // Resting size is the `typography.body` token, not Tailwind's `text-base`.
+  // Same numeric value (1rem) today, but `text-base` is Tailwind's own default
+  // scale — it would keep saying 1rem if the token ever moved, silently
+  // decoupling the label from the body text it is supposed to match. Same
+  // reasoning as the floated size below and the help/error/success sizes.
+  'text-[length:var(--typography-body-font-size)]',
   // Floated size reads `text-overline` (tailwind.config.ts `fontSize.overline`
   // -> `--typography-overline-font-size`, 0.75rem) instead of Tailwind's
   // default `text-xs` (same 0.75rem value today, but not sourced from the

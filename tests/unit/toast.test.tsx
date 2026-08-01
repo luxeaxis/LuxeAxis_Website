@@ -98,6 +98,77 @@ describe('Toast', () => {
     expect(screen.queryByRole('status')).toBeNull();
   });
 
+  it('does not lose dwell time when hover and focus overlap', () => {
+    // The bug: hover and focus each called the same `pause`, so reaching the
+    // close button by keyboard (which passes through both) subtracted the
+    // elapsed time twice. The toast then resumed owing far less than it
+    // should and could vanish almost immediately — on the keyboard user the
+    // pause exists to protect.
+    vi.useFakeTimers();
+    render(
+      <ToastProvider>
+        <Trigger title="Saved" tone="success" />
+      </ToastProvider>,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Push' }));
+    const toast = screen.getByRole('status');
+
+    // 4s of the 5s dwell burnt, then hover AND focus — the double-subtract
+    // would leave roughly -3s remaining, i.e. dismiss on the next tick.
+    act(() => {
+      vi.advanceTimersByTime(4_000);
+    });
+    fireEvent.mouseEnter(toast);
+    fireEvent.focus(toast);
+
+    fireEvent.mouseLeave(toast);
+    fireEvent.blur(toast);
+
+    // Only the genuine ~1s should be left, so this is short of it.
+    act(() => {
+      vi.advanceTimersByTime(500);
+    });
+    expect(screen.queryByRole('status'), 'dismissed early — dwell was over-subtracted').not.toBeNull();
+
+    act(() => {
+      vi.advanceTimersByTime(1_000);
+    });
+    fireEvent.transitionEnd(toast);
+    expect(screen.queryByRole('status')).toBeNull();
+  });
+
+  it('stays paused while focus remains on it after the pointer leaves', () => {
+    // The mirror-image bug: pointer and keyboard were independent triggers for
+    // the same resume, so moving the mouse away restarted the countdown even
+    // though the close button still held focus. A toast timing out while
+    // focused is the least defensible moment for auto-dismiss.
+    vi.useFakeTimers();
+    render(
+      <ToastProvider>
+        <Trigger title="Saved" tone="success" />
+      </ToastProvider>,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Push' }));
+    const toast = screen.getByRole('status');
+
+    fireEvent.mouseEnter(toast);
+    fireEvent.focus(toast);
+    fireEvent.mouseLeave(toast); // pointer gone, focus stays
+
+    act(() => {
+      vi.advanceTimersByTime(30_000);
+    });
+    expect(screen.queryByRole('status'), 'timed out while still focused').not.toBeNull();
+
+    // Only once focus leaves too does the clock start again.
+    fireEvent.blur(toast);
+    act(() => {
+      vi.advanceTimersByTime(5_000);
+    });
+    fireEvent.transitionEnd(toast);
+    expect(screen.queryByRole('status')).toBeNull();
+  });
+
   it('the manual close button dismisses it immediately (once the exit transition ends), without waiting for the dwell', () => {
     render(
       <ToastProvider>

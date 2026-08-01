@@ -1,6 +1,7 @@
 import { DEFAULT_LOCALE, isPublished, normalise, type Locale } from '@/lib/i18n/published';
-
-const ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? 'https://luxeaxis.com';
+// Shared with app/sitemap.ts and app/robots.ts — see lib/seo/origin.ts for why
+// this is one constant rather than three matching literals.
+import { SITE_ORIGIN as ORIGIN } from './origin';
 
 /**
  * Builds the canonical URL and hreflang alternates for one route in one locale.

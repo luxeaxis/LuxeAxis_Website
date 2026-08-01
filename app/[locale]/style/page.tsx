@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { setRequestLocale } from 'next-intl/server';
 import { Badge, type BadgeTone } from '@/components/Badge';
 import { Button, type ButtonVariant } from '@/components/Button';
 import { Chip } from '@/components/Chip';
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <p className="font-ui text-overline uppercase tracking-[0.18em] text-on-surface-muted">
+    <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
       {children}
     </p>
   );
@@ -64,7 +65,7 @@ function Section({
     <section id={id} aria-labelledby={`${id}-heading`} className="border-t border-border-subtle pt-8">
       <Stack gap={6}>
         <Stack gap={2}>
-          <h2 id={`${id}-heading`} className="font-display text-3xl text-on-surface">
+          <h2 id={`${id}-heading`} className="font-display text-[length:var(--typography-h2-font-size)] text-on-surface">
             {title}
           </h2>
           <Center>
@@ -159,7 +160,7 @@ const TYPE_RAMP = [
     'Every animation must prove a capability, orient, guide, or give feedback.',
   ],
   ['small', 'font-ui text-small', 'Reviewed by a designer before it reaches you.'],
-  ['overline', 'font-ui text-overline uppercase tracking-[0.18em]', 'Radical Transparency'],
+  ['overline', 'font-ui text-overline uppercase tracking-[var(--font-tracking-wider)]', 'Radical Transparency'],
   [
     'price',
     'font-mono text-[length:var(--typography-price-font-size)] tabular-nums',
@@ -236,7 +237,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         <Eyebrow>{theme} theme</Eyebrow>
 
         <Stack gap={3}>
-          <h3 className="font-display text-xl">Buttons</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Buttons</h3>
           {(['lg', 'md', 'sm'] as const).map((size) => (
             <Cluster key={size} gap={3}>
               {BUTTON_VARIANTS.map((variant) => (
@@ -269,7 +270,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-xl">Links</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Links</h3>
           <p className="text-on-surface-2">
             An <Link href="/pricing">inline link</Link> keeps its underline permanently — in prose
             there is no surrounding affordance to signal it is interactive.
@@ -285,7 +286,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={4}>
-          <h3 className="font-display text-xl">Fields</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Fields</h3>
           <Field label="Full name" name={`name-${theme}`} help="As it should appear on the proposal." />
           <Field
             label="Phone"
@@ -304,7 +305,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-xl">Icons</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Icons</h3>
           <Cluster gap={4}>
             {ICON_NAMES.map((name) => (
               <Icon key={name} name={name} size="lg" decorative />
@@ -318,7 +319,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
             clearly on navy can wash out on ivory. Both are on screen at once
             precisely so that is visible rather than merely asserted. */}
         <Stack gap={3}>
-          <h3 className="font-display text-xl">Badges</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Badges</h3>
           <Cluster gap={2}>
             {BADGE_TONES.map((tone) => (
               <Badge key={tone} tone={tone}>
@@ -333,7 +334,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-xl">Inline alerts</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Inline alerts</h3>
           {STATUS_TONES.map((tone) => (
             <InlineAlert key={tone} tone={tone} title={ALERT_TITLE[tone]}>
               {ALERT_BODY[tone]}
@@ -342,7 +343,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-xl">Tooltip</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Tooltip</h3>
           <Cluster gap={3}>
             <Tooltip content="Opens on hover and on focus, and is wired via aria-describedby.">
               <Button variant="secondary">Hover or focus me</Button>
@@ -351,7 +352,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-xl">Progress</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Progress</h3>
           <Progress
             value={62}
             label="Uploading floor plan"
@@ -360,7 +361,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-xl">Skeleton</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Skeleton</h3>
           <Stack gap={3}>
             <Skeleton variant="text" lines={3} label="Loading project summary" />
             <Cluster gap={3} align="center">
@@ -371,7 +372,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-xl">Empty state</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Empty state</h3>
           <EmptyState
             icon="alert-circle"
             title="No projects match those filters"
@@ -381,7 +382,7 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={4}>
-          <h3 className="font-display text-xl">Cards</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Cards</h3>
           {/* Every figure, inclusion and project name below is an obvious
               placeholder — §3.2/the brief: "no invented copy and no
               fabricated facts… demo content on /style must be obviously
@@ -468,6 +469,10 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
 
 export default async function StylePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  // Keeps this route static even once a specimen on it needs a translation —
+  // see app/[locale]/page.tsx for why the layout's identical call does not
+  // cover a page's own render.
+  setRequestLocale(locale as Locale);
   assertPublished(ROUTE, locale as Locale);
 
   return (
