@@ -54,6 +54,42 @@
 }
 
 @layer components {
+  /* Section rise-in (Spec §9.1 S1) — the CSS half of components/Reveal.tsx.
+     Read that file first: an element only ever carries `data-reveal` once the
+     client has confirmed it can also remove it, so nothing here can leave
+     content permanently invisible if JavaScript fails.
+
+     Values are tokens, not literals: `motion.distance.rise` is the 16px S1
+     names, `duration.enter` is its `--dur-3`, `easing.entrance` is its
+     "settling" curve. */
+  [data-reveal='hidden'] {
+    opacity: 0;
+    transform: translateY(var(--motion-distance-rise));
+  }
+
+  [data-reveal='shown'] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--duration-enter) var(--easing-entrance),
+      transform var(--duration-enter) var(--easing-entrance);
+    /* Set by Stagger; absent means no delay rather than an invalid value. */
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* Belt and braces with the global reduced-motion net below, and with
+     Reveal.tsx's own matchMedia check. Three layers sounds excessive for an
+     animation; it is not, because the failure mode of the hidden state is
+     invisible content rather than a jerky transition. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal='hidden'],
+    [data-reveal='shown'] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
   /* The one decorative element in the system. A hairline of light on the
      navy void — the brand's Axis metaphor, rendered without WebGL so it
      costs nothing and survives the no-JS and reduced-motion paths intact.

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Container, Stack } from '../layout';
+import { Reveal, STAGGER_STEP_MS } from '../Reveal';
 
 /**
  * The shared frame every home-page block below the hero sits in: an eyebrow, an
@@ -44,25 +45,33 @@ export function Section({
     <section id={id} aria-labelledby={headingId} className="relative w-full py-section-y">
       <Container>
         <Stack gap={8}>
-          <Stack gap={3}>
-            {eyebrow && (
-              <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">
-                {eyebrow}
-              </p>
-            )}
-            <h2
-              id={headingId}
-              className="font-display text-[length:var(--typography-h1-font-size)] leading-snug tracking-[var(--font-tracking-tight)] text-on-surface"
-            >
-              {title}
-            </h2>
-            {lede && (
-              <p className="max-w-measure text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
-                {lede}
-              </p>
-            )}
-          </Stack>
-          {children}
+          {/* The heading block and the body rise in as two beats rather than
+              one, so the eye is led to the heading first and the content
+              settles under it — S1's "leads the eye down in reading order".
+              Staggering every child individually would be the carnival §2.3
+              warns against. */}
+          <Reveal>
+            <Stack gap={3}>
+              {eyebrow && (
+                <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">
+                  {eyebrow}
+                </p>
+              )}
+              <h2
+                id={headingId}
+                className="font-display text-[length:var(--typography-h1-font-size)] leading-snug tracking-[var(--font-tracking-tight)] text-on-surface"
+              >
+                {title}
+              </h2>
+              {lede && (
+                <p className="max-w-measure text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
+                  {lede}
+                </p>
+              )}
+            </Stack>
+          </Reveal>
+          {/* The body as the second beat, one stagger step behind the heading. */}
+          <Reveal delayMs={STAGGER_STEP_MS}>{children}</Reveal>
         </Stack>
       </Container>
     </section>
