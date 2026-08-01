@@ -5,6 +5,9 @@ import { TierProbe } from '@/components/TierProbe';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ToastProvider } from '@/components/Toast';
+import { ConsentBanner } from '@/components/ConsentBanner';
+import { JsonLd } from '@/components/JsonLd';
+import { organizationJsonLd } from '@/lib/seo/jsonLd';
 import { SITE_ORIGIN } from '@/lib/seo/origin';
 import '@/styles/globals.css';
 
@@ -20,11 +23,29 @@ import '@/styles/globals.css';
  */
 
 export const metadata: Metadata = {
-  title: 'Luxe Axis',
+  title: {
+    // Pages set their own full title; this is the fallback and the suffix for
+    // anything that does not.
+    default: 'Luxe Axis',
+    template: '%s',
+  },
   // Lets pages express OpenGraph/alternate URLs relatively and still emit
   // absolute ones. Shares lib/seo/origin.ts with the sitemap and robots.txt so
   // all three agree on the host.
   metadataBase: new URL(SITE_ORIGIN),
+  // Site-wide OpenGraph defaults. Each page's own `title`/`description` flow
+  // into these automatically, so a shared card shape is defined once.
+  //
+  // No `images`: an OG image has to be an actual asset, and the only brand
+  // asset in the repo is an unvectorised logo raster that Header and Footer are
+  // both still standing in for. A card pointing at a missing image is worse
+  // than no card — the platforms render a broken thumbnail rather than falling
+  // back cleanly.
+  openGraph: {
+    type: 'website',
+    siteName: 'Luxe Axis',
+    locale: 'en_IN',
+  },
 };
 
 // Only the weights that appear above the fold are preloaded. The Tamil families
@@ -48,6 +69,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="dark" className={`${display.variable} ${ui.variable}`}>
       <body className="lx-grain bg-surface text-on-surface">
+        {/* One Organization node, site-wide, rather than repeated per page. */}
+        <JsonLd data={organizationJsonLd()} />
         <TierProbe />
         {/* Must stay the first focusable element in the DOM — Header adds
             several more focusable controls (logo, nav, Book Audit, hamburger)
@@ -62,6 +85,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           {children}
           <Footer />
+          {/* Last in the DOM deliberately: a keyboard user reaches the page's
+              real content before the banner, which is the order of importance.
+              It is positioned at the bottom of the viewport by CSS. */}
+          <ConsentBanner />
         </ToastProvider>
       </body>
     </html>

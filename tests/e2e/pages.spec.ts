@@ -65,9 +65,16 @@ test('the FAQ works without JavaScript and is marked up for search', async ({ pa
   await first.getByRole('group').or(first.locator('summary')).first().click();
   await expect(first).toHaveAttribute('open', '');
 
-  const jsonLd = await page.locator('script[type="application/ld+json"]').first().textContent();
-  const parsed = JSON.parse(jsonLd ?? '{}');
-  expect(parsed['@type']).toBe('FAQPage');
+  // Find the FAQPage block by type rather than by position. The page carries
+  // several JSON-LD nodes (Organization ships site-wide from the layout), and
+  // `.first()` silently started returning the wrong one the moment a second was
+  // added — which is exactly the kind of test that passes for years and then
+  // asserts nothing.
+  const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const parsed = blocks
+    .map((block) => JSON.parse(block))
+    .find((node) => node['@type'] === 'FAQPage');
+  expect(parsed, 'no FAQPage node on /pricing').toBeDefined();
   // Structured data that disagrees with the visible page is a spam signal, so
   // it is generated from the same list the accordion renders.
   const visible = await page.locator('#faq summary').allTextContents();
