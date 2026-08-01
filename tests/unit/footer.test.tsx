@@ -17,11 +17,17 @@ describe('Footer', () => {
     expect(within(nav).getByRole('link', { name: 'Privacy' }).getAttribute('href')).toBe('/privacy');
   });
 
-  it('never fabricates CIN/GST — the trust row is an explicit "to be published" placeholder', () => {
+  it('publishes the registered CIN and GST exactly as issued', () => {
+    // This asserted a "to be published" placeholder until the studio supplied
+    // them. Now that both are real, the thing worth pinning is that they render
+    // CHARACTER FOR CHARACTER — these two go on every invoice the studio
+    // raises and are checked against a government register, so a truncation or
+    // a stray space is a compliance problem, not a display bug.
     render(<Footer />);
     expect(screen.getByText('CIN')).toBeDefined();
     expect(screen.getByText('GST')).toBeDefined();
-    expect(screen.getAllByText('to be published').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText('U74102TN2026PTC194776')).toBeDefined();
+    expect(screen.getByText('33AAGCL9614E1ZM')).toBeDefined();
   });
 
   it('renders the real contact details as things a visitor can act on', () => {
@@ -46,11 +52,11 @@ describe('Footer', () => {
   });
 
   it('still marks the genuinely outstanding facts as pending', () => {
-    // CIN and GST are quoted on invoices and checked against a government
-    // register — a plausible-looking one is a false company record, not a
-    // placeholder. They stay explicit gaps until supplied.
+    // The DPDPA privacy statement and the Design Club opt-in are the two things
+    // left in the footer that nobody has supplied. They stay explicit gaps
+    // rather than quietly disappearing.
     render(<Footer />);
-    expect(screen.getAllByText('to be published').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText(/privacy statement to be published/i)).toBeDefined();
     expect(screen.getByText(/coming soon/i)).toBeDefined();
   });
 

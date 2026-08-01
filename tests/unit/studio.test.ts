@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { STUDIO, addressOneLine, mailtoHref, telHref, whatsappHref } from '@/lib/content/studio';
+import {
+  CIN_PATTERN,
+  GSTIN_PATTERN,
+  STUDIO,
+  addressOneLine,
+  mailtoHref,
+  telHref,
+  whatsappHref,
+} from '@/lib/content/studio';
 
 /**
  * The studio's own facts.
@@ -83,14 +91,50 @@ describe('the address', () => {
   });
 });
 
-describe('what is still outstanding', () => {
-  it('publishes no CIN or GST it has not been given', () => {
-    // Both are quoted on invoices and checked against a government register. A
-    // plausible-looking one is not a placeholder, it is a false company record.
-    expect(STUDIO.cin).toBeNull();
-    expect(STUDIO.gst).toBeNull();
+describe('the statutory identifiers', () => {
+  it('matches the CIN structure the MCA register issues', () => {
+    // Not a checksum — the MCA number has none. This catches the realistic
+    // failure: a character transposed or dropped while copying from a
+    // certificate. Both numbers go on every invoice the studio raises, so a
+    // typo is a compliance problem rather than a display bug.
+    expect(STUDIO.cin).toMatch(CIN_PATTERN);
   });
 
+  it('matches the GSTIN structure', () => {
+    expect(STUDIO.gst).toMatch(GSTIN_PATTERN);
+  });
+
+  it('agrees with itself about the state', () => {
+    // GST state code 33 is Tamil Nadu; the CIN carries TN in the same role.
+    // Two independently transcribed numbers disagreeing is the single most
+    // likely sign one of them was mistyped.
+    expect(STUDIO.gst?.slice(0, 2)).toBe('33');
+    expect(STUDIO.cin?.slice(6, 8)).toBe('TN');
+  });
+
+  it('agrees with itself about the entity type', () => {
+    // The CIN says PTC (private limited company). The PAN embedded in the
+    // GSTIN — characters 2..12 — carries the entity code in its 4th position,
+    // and C there also means company. A mismatch would mean one of the two
+    // numbers belongs to a different entity.
+    //
+    // CIN layout: U | 74102 | TN | 2026 | PTC | 194776
+    //             0 | 1-5   | 6-7| 8-11 |12-14| 15-20
+    expect(STUDIO.cin?.slice(12, 15)).toBe('PTC');
+    expect(STUDIO.gst?.slice(2, 12).charAt(3)).toBe('C');
+  });
+
+  it('rejects a malformed identifier, so the patterns are not vacuous', () => {
+    // Guards the guard: a pattern that matched anything would make every
+    // assertion above pass regardless of what was configured.
+    expect('U74102TN2026PTC19477').not.toMatch(CIN_PATTERN); // one digit short
+    expect('X74102TN2026PTC194776').not.toMatch(CIN_PATTERN); // bad listing flag
+    expect('33AAGCL9614E1ZMX').not.toMatch(GSTIN_PATTERN); // one character over
+    expect('33AAGCL9614E1YM').not.toMatch(GSTIN_PATTERN); // Z is fixed
+  });
+});
+
+describe('what is still outstanding', () => {
   it('publishes no opening hours', () => {
     expect(STUDIO.openingHours).toBeNull();
   });

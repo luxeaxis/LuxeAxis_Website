@@ -90,8 +90,17 @@ export const STUDIO: Studio = {
   whatsapp: { e164: '+918124600321', display: '+91 81246 00321' },
   email: { general: 'info@luxeaxis.in', support: 'support@luxeaxis.in' },
   openingHours: null,
-  cin: null,
-  gst: null,
+  // Corporate Identification Number, from the MCA register. The structure is
+  // load-bearing rather than decorative: U (unlisted) | 74102 (industry) | TN
+  // (state) | 2026 (incorporation year) | PTC (private limited company) |
+  // 194776 (registration number). tests/unit/studio.test.ts checks that shape,
+  // and that its state and entity type agree with the GST number below —
+  // a transposed character here appears on every invoice the studio raises.
+  cin: 'U74102TN2026PTC194776',
+  // GSTIN: 33 (Tamil Nadu) | AAGCL9614E (PAN) | 1 (entity number) | Z | M
+  // (checksum character). The embedded PAN's fourth character, C, marks a
+  // company, which matches the CIN's PTC.
+  gst: '33AAGCL9614E1ZM',
 };
 
 /** `tel:` href. Strips nothing — `e164` is already dial-safe. */
@@ -110,6 +119,19 @@ export function telHref(phone: Phone): string {
 export function whatsappHref(phone: Phone): string {
   return `https://wa.me/${phone.e164.replace(/\D/g, '')}`;
 }
+
+/**
+ * Structural checks for the two statutory identifiers.
+ *
+ * Not a checksum — the GSTIN check digit needs a modulus routine this site has
+ * no business carrying, and the MCA number has none at all. What this catches
+ * is the realistic failure: a character transposed or dropped while copying
+ * from a certificate into a config file. Both numbers appear on invoices and
+ * are checked against a government register, so a typo is a compliance problem
+ * rather than a display bug.
+ */
+export const CIN_PATTERN = /^[LU]\d{5}[A-Z]{2}\d{4}[A-Z]{3}\d{6}$/;
+export const GSTIN_PATTERN = /^\d{2}[A-Z]{5}\d{4}[A-Z]\d[Z][A-Z\d]$/;
 
 /** `mailto:` href. */
 export function mailtoHref(address: string): string {

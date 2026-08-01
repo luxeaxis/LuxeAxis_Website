@@ -59,7 +59,7 @@ export function organizationJsonLd() {
  * businesses that happen to share a name.
  */
 export function localBusinessJsonLd() {
-  const { address, telephone, openingHours, email, name } = STUDIO;
+  const { address, telephone, openingHours, email, gst, name } = STUDIO;
   if (!address) return null;
 
   return {
@@ -78,6 +78,10 @@ export function localBusinessJsonLd() {
     },
     ...(telephone ? { telephone: telephone.e164 } : {}),
     ...(email ? { email: email.general } : {}),
+    // schema.org's `taxID` is the right home for a GSTIN. It is public
+    // information printed on every invoice, and stating it is a trust signal
+    // for a studio asking people to commit six figures.
+    ...(gst ? { taxID: gst } : {}),
     ...(openingHours ? { openingHours } : {}),
   };
 }

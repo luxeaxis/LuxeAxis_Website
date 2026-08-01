@@ -191,21 +191,27 @@ export function Footer() {
             </Stack>
           </Grid>
 
-          {/* Trust row — CIN/GST/DPDPA (spec §3.3, §9.2). Never a fabricated
-              number: each is an explicit "to be published" until the real
-              value is supplied. */}
+          {/* Trust row — CIN/GST/DPDPA (spec §3.3, §9.2). Each entry is either
+              the real registered value or an explicit "to be published"; never
+              a fabricated one. CIN and GST are quoted on invoices and checked
+              against a government register, so a plausible-looking placeholder
+              would be a false company record rather than a visible gap.
+              `font-mono` on the values: both are transcribed by people into
+              forms, and a proportional font makes 0/O and 1/l ambiguous. */}
           <Stack gap={3} className="border-t-hairline border-border-subtle pt-6">
             <dl className="flex flex-wrap gap-x-6 gap-y-1 text-small text-on-surface-muted">
               <div className="flex gap-1">
                 <dt>CIN</dt>
-                <dd>to be published</dd>
+                <dd className="font-mono">{STUDIO.cin ?? 'to be published'}</dd>
               </div>
               <div className="flex gap-1">
                 <dt>GST</dt>
-                <dd>to be published</dd>
+                <dd className="font-mono">{STUDIO.gst ?? 'to be published'}</dd>
               </div>
               <div className="flex gap-1">
                 <dt>DPDPA</dt>
+                {/* Still outstanding: /privacy describes what the site
+                    collects, but the formal statement is not written. */}
                 <dd>privacy statement to be published</dd>
               </div>
             </dl>
