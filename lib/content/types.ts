@@ -1,4 +1,5 @@
 import type { IconName } from '@/components/Icon';
+import type { SceneId } from '@/three/registry';
 
 /**
  * The content model (Build Backlog T-12, Spec §2.4).
@@ -51,6 +52,31 @@ export type IntelligenceFeature = {
   claim: string;
   href: string;
   icon: IconName;
+  /** The scene reserved for this feature (Spec §5.3–5.5), so the page holds
+   *  its slot for T-32 and upgrades poster → live with no layout change.
+   *  Optional: Virtual Staging appears in the sitemap with no scene of its own. */
+  sceneId?: SceneId;
+  /** A paragraph on what the capability actually is. */
+  summary: string;
+  /** The commercial argument the spec attaches to it — its "moat". Kept
+   *  separate from `claim` because they answer different questions: the claim
+   *  is what it does for the visitor, this is why it is defensible. */
+  proof?: string;
+  /** Sub-capabilities, where the spec enumerates them. */
+  highlights?: readonly string[];
+  /**
+   * How it works, in words.
+   *
+   * T-17 requires "diagrams have text-equivalent steppers", and this is that
+   * equivalent — authored first rather than derived from a diagram later, so
+   * the accessible version can never be the afterthought that lags behind the
+   * picture. It is also §5.3's own reduced-motion fallback: "a 'See how it
+   * works' text stepper replaces the scan."
+   */
+  steps?: readonly { title: string; body: string }[];
+  /** Spec P4, "AI assists, humans decide" — §5.3 calls for a visible
+   *  "reviewed by a human" chip on Vastu specifically. */
+  humanInTheLoop?: string;
 };
 
 /** A service tier (Spec §2.2 `/residential/*`, Design System §3.2 tier card). */

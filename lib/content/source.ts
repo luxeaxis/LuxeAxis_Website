@@ -99,6 +99,38 @@ const INTELLIGENCE: readonly IntelligenceFeature[] = [
     claim: 'We check your plan against Vastu in seconds — then a human designer confirms it.',
     href: '/intelligence/vastu-tech',
     icon: 'compass',
+    sceneId: 'vastu',
+    summary:
+      'A Vastu grid and compass are laid over your floor plan and the whole layout is scanned for compatibility. Favourable zones are marked in gold, zones worth reviewing in teal, each with a plain-language note on what it means and what could change.',
+    // Spec §5.3's own "Proves:" line. This is the studio's market claim, not
+    // the developer's — but it is a factual assertion about the Indian market
+    // rather than a description of the product, so it is worth confirming
+    // before launch; it is the one line here that invites challenge.
+    proof: 'India’s first AI Vastu compatibility checker.',
+    // Spec P4, and §5.3's visible "reviewed by human" chip. Stated as copy
+    // rather than left to the scene, because the scene does not exist yet and
+    // this is the reassurance that makes the feature credible rather than
+    // alarming.
+    humanInTheLoop:
+      'A designer reviews every result before it reaches you. The AI narrows the question; a person answers it.',
+    steps: [
+      {
+        title: 'Share the plan',
+        body: 'Send the floor plan you already have — a builder drawing or a sketch is enough to start.',
+      },
+      {
+        title: 'The grid reads the room',
+        body: 'A Vastu grid and compass are aligned to the plan, and each zone is checked against its orientation.',
+      },
+      {
+        title: 'Zones are marked',
+        body: 'Favourable zones are marked in gold and zones worth a second look in teal, each with a plain-language note.',
+      },
+      {
+        title: 'A designer confirms it',
+        body: 'Nothing reaches you unreviewed. A designer checks the reading and tells you which changes are worth making.',
+      },
+    ],
   },
   {
     id: 'space-score',
@@ -106,6 +138,28 @@ const INTELLIGENCE: readonly IntelligenceFeature[] = [
     claim: 'A rating for any space across wellness, function, aesthetics and sustainability.',
     href: '/intelligence/space-score',
     icon: 'gauge',
+    sceneId: 'space-score',
+    summary:
+      'Four measures, scored independently and read together, so "is this a good room?" becomes a question with an answer you can compare, argue with and improve.',
+    proof: 'A proprietary metric the studio owns, rather than a rating borrowed from someone else.',
+    // The four arcs, from Spec §5.4 and the sitemap's own description of the
+    // route. Named here rather than in the page so the scene and the DOM
+    // cannot disagree about what the gauge measures.
+    highlights: ['Wellness', 'Function', 'Aesthetics', 'Sustainability'],
+    steps: [
+      {
+        title: 'Measure the four',
+        body: 'Each of wellness, function, aesthetics and sustainability is scored on its own terms.',
+      },
+      {
+        title: 'Read them together',
+        body: 'The four arcs fill to their measured values, so a room strong in one and weak in another is visible at a glance rather than averaged away.',
+      },
+      {
+        title: 'Design against the gaps',
+        body: 'The weakest arc is usually where the design effort belongs — the score is a brief, not a verdict.',
+      },
+    ],
   },
   {
     id: 'space-os',
@@ -113,6 +167,13 @@ const INTELLIGENCE: readonly IntelligenceFeature[] = [
     claim: 'Your project live in one place — moodboard, build progress and the budget, visible.',
     href: '/intelligence/space-os',
     icon: 'device',
+    sceneId: 'space-os',
+    summary:
+      'The client portal. Everything the studio knows about your project, in the same view you do — including what it is costing, as it changes.',
+    proof:
+      'Radical Transparency made structural: the budget is visible to you by default, not on request.',
+    // Spec §5.5 enumerates exactly these four.
+    highlights: ['Moodboard', '3D progress tracker', 'Budget dashboard', 'AR preview'],
   },
   {
     id: 'virtual-staging',
@@ -120,6 +181,14 @@ const INTELLIGENCE: readonly IntelligenceFeature[] = [
     claim: 'See a room furnished and finished before anything is bought or built.',
     href: '/intelligence/virtual-staging',
     icon: 'layers',
+    // No scene: Virtual Staging appears in the sitemap without one of its own
+    // (Spec §5 stops at Space OS), so this page reserves no slot.
+    summary:
+      'Staging for real estate — an empty or unfinished room presented furnished, so a buyer can see what it becomes rather than being asked to imagine it.',
+    // Deliberately no `steps` and no `proof`. The sitemap describes this route
+    // in five words ("Real-estate B2B staging") and no spec section expands on
+    // it, so inventing a process would be writing product detail rather than
+    // rendering it. The page shows a "To be published" marker instead.
   },
 ];
 

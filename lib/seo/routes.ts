@@ -28,6 +28,11 @@ export const INDEXABLE_ROUTES = [
   '/residential/signature',
   '/residential/elite',
   '/book-audit',
+  '/intelligence',
+  '/intelligence/vastu-tech',
+  '/intelligence/space-score',
+  '/intelligence/space-os',
+  '/intelligence/virtual-staging',
 ] as const;
 
 /** Real pages deliberately withheld from crawlers. `/style` sets

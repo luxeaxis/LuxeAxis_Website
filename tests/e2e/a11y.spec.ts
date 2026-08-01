@@ -18,6 +18,8 @@ const ROUTES = [
   '/residential',
   '/residential/signature',
   '/book-audit',
+  '/intelligence',
+  '/intelligence/vastu-tech',
   '/style',
   '/this-route-does-not-exist',
 ];

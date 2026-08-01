@@ -191,6 +191,7 @@ describe('IntelligenceTeaser', () => {
             claim: 'We check your plan against Vastu in seconds, then a human confirms it.',
             href: '/intelligence/vastu-tech',
             icon: 'compass',
+            summary: 'A Vastu grid is laid over your floor plan and scanned.',
           },
         ]}
       />,
