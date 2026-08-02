@@ -35,22 +35,29 @@ attribution.
 The payload shape is defined in `lib/lead/schema.ts` and includes
 `receivedAt` and `firstTouchDueAt`, both computed server-side.
 
-### 1.2 Privacy statement (DPDPA)
+### 1.2 Privacy statement and Terms of Service — **supplied, with four gaps**
 
-**Needs a lawyer. Deliberately not drafted.**
+Both documents are live. They render from `docs/Pages/LuxeAxis_PrivacyPolicy.md`
+and `docs/Pages/LuxeAxis_TermsOfService.md`, which stay the source of truth — a
+revision from your lawyer reaches the page by editing the markdown, with no
+transcription step. A test asserts every line of the source reaches the page, so
+a clause cannot go missing silently.
 
-`/privacy` currently states, accurately, what the site collects and where it
-goes — that part is knowable from the code. The formal statement is a legal
-instrument: lawful basis, retention, transfers, data-principal rights, grievance
-officer. A regulator and a data principal are both entitled to rely on every
-word.
+The registered-office address, CIN and GSTIN were bracketed in the drafts and
+are now filled from `lib/content/studio.ts`, so the policy cannot state a
+different CIN from the footer.
 
-The Book-Audit consent checkbox and the cookie banner both link here. The form
-should not collect personal data in production until this exists.
+Four things still need you, and two of them are blockers:
 
-### 1.3 Terms of use
+| Item | Where | What is needed |
+|---|---|---|
+| **Grievance Officer's name** | Privacy §13, Terms §19 | **Blocker.** A named individual. Renders as an explicit gap today. The DPDP Act and the IT Act rules both require a working grievance channel, and this is the section that tells a Data Principal who to complain to. |
+| **Cookie Policy** | Privacy §7, §4; Terms §1, §12 | **Blocker.** Both documents link to `/cookies` four times over and no such page exists. The privacy policy makes cookie consent conditional on it, so the gap is in the disclosure itself. The site renders the words without the link rather than shipping a 404 from a legal document; that is a stopgap, not a fix. |
+| **The Tamil version** | Privacy §15, Terms §21 | Both documents state they are "published in English and Tamil" and give the English version precedence in a conflict. There is no Tamil version — the Tamil locale was removed from this build at your request. As written, each document asserts the existence of a translation that does not exist. Either commission the translation or have your lawyer strike the clause. |
+| **Three email addresses** | Privacy §2, §13; Terms §22 | The documents publish `privacy@luxeaxis.in`, `grievance@luxeaxis.in` and `hello@luxeaxis.in`. You have only confirmed `info@` and `support@` to me. A grievance address that bounces is worse than none — please confirm all three receive mail. |
+| Revision date | Both, front matter | Both say "[Insert publication date]". Shows as a gap, deliberately: which version binds a reader is the first thing they need, and a build date is not a revision date. The effective date (1 May 2026) is published as given. |
 
-**Needs a lawyer.** `/terms` is a stub saying so, and is `noindex`.
+Note also that the effective date of 1 May 2026 is already in the past.
 
 ---
 

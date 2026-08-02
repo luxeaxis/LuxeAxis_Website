@@ -198,6 +198,39 @@ test('about states positions and names the company facts as outstanding', async 
   await expect(page.getByText(/We publish the price/)).toBeVisible();
 });
 
+test('the legal documents render in full, with their gaps visible', async ({ page }) => {
+  // These replaced two pages that each said, in effect, "this is not the real
+  // document". They are the only pages on the site whose exact wording is a
+  // legal instrument, so this checks the clauses that would be worst to lose.
+  await page.goto('/privacy');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Privacy Policy');
+  await expect(page.getByRole('heading', { name: /Your rights as a Data Principal/ })).toBeVisible();
+  await expect(page.getByText('Data Protection Board of India').first()).toBeVisible();
+
+  // The statutory identifiers come from lib/content/studio.ts, so the policy
+  // cannot drift from the footer.
+  // Scoped to main: it also appears in the footer, which is the point — one
+  // source, so a policy naming a different CIN from the footer cannot happen.
+  await expect(page.locator('main').getByText('U74102TN2026PTC194776')).toBeVisible();
+
+  // The grievance officer is a named individual nobody has supplied. It shows
+  // as an explicit gap rather than a plausible name.
+  await expect(page.getByText(/Name of Grievance Officer: To be published/)).toBeVisible();
+
+  // Deep-linkable clauses: people cite these pages by section.
+  await page.goto('/terms#warranties-and-post-handover-service');
+  await expect(page.locator('#warranties-and-post-handover-service')).toBeVisible();
+  await expect(page.getByText(/Snags reported within 7 days/)).toBeVisible();
+
+  // Both documents link to a Cookie Policy that does not exist. The words stay;
+  // the anchor does not, so nothing here navigates to a 404.
+  const hrefs = await page
+    .locator('main a')
+    .evaluateAll((links) => links.map((link) => link.getAttribute('href') ?? ''));
+  expect(hrefs).not.toContain('/cookies');
+  await expect(page.getByText(/Cookie Policy \(To be published\)/).first()).toBeVisible();
+});
+
 test('the journal is honestly empty rather than absent', async ({ page }) => {
   await page.goto('/journal');
   await expect(page.getByText('Nothing published yet')).toBeVisible();
