@@ -95,7 +95,7 @@ rests on.
 
 | Item | File | What is needed |
 |---|---|---|
-| Opening hours | `lib/content/studio.ts:92` | e.g. `'Mo-Sa 10:00-19:00'`. Also feeds the `LocalBusiness` schema. |
+| ~~Opening hours~~ | — | **Settled: none published.** The studio works from a serviced floor and takes no drop-ins, so `openingHours` would assert to Google that the premises are open to the public — "Open now" above a door that will not open. The site publishes a response window instead (7am to 10pm, every day) plus "visits by appointment". |
 | Founding date, team, credentials | `app/about/page.tsx:104` | The company facts an About page is made of. |
 | Map coordinates | not yet modelled | Latitude and longitude. `geo` is omitted from `LocalBusiness` because coordinates guessed from a postcode put the map pin on the wrong building. |
 

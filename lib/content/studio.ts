@@ -60,9 +60,32 @@ export type Studio = {
   telephone: Phone | null;
   whatsapp: Phone | null;
   email: StudioEmails | null;
+  /**
+   * Premises hours, in schema.org's sense: when a member of the public may
+   * turn up at the address and be let in. Deliberately null and expected to
+   * stay that way — the studio works from a serviced floor and does not take
+   * drop-ins, so any value here would put "Open now" on a Google listing above
+   * a door that will not open. See `responseWindow` for the thing people
+   * actually want to know.
+   */
   openingHours: string | null;
+  /**
+   * When a message gets an answer. This is not the same claim as being open,
+   * which is exactly why it is a separate field and never reaches the
+   * LocalBusiness markup.
+   */
+  responseWindow: ResponseWindow | null;
   cin: string | null;
   gst: string | null;
+};
+
+/** A daily window, in 24-hour local time. `days` describes which days it
+ *  covers, in words, because "daily" and "Mon-Fri" are read by a person here
+ *  rather than parsed by anything. */
+export type ResponseWindow = {
+  start: string;
+  end: string;
+  days: string;
 };
 
 export const STUDIO: Studio = {
@@ -90,6 +113,10 @@ export const STUDIO: Studio = {
   whatsapp: { e164: '+918124600321', display: '+91 81246 00321' },
   email: { general: 'info@luxeaxis.in', support: 'support@luxeaxis.in' },
   openingHours: null,
+  // Every day, including weekends — an NRI client in a US time zone is the
+  // reason this starts at 07:00 and runs to 22:00 rather than tracking an
+  // office day. Published as a response commitment, not as opening hours.
+  responseWindow: { start: '07:00', end: '22:00', days: 'every day' },
   // Corporate Identification Number, from the MCA register. The structure is
   // load-bearing rather than decorative: U (unlisted) | 74102 (industry) | TN
   // (state) | 2026 (incorporation year) | PTC (private limited company) |
@@ -102,6 +129,24 @@ export const STUDIO: Studio = {
   // company, which matches the CIN's PTC.
   gst: '33AAGCL9614E1ZM',
 };
+
+/**
+ * The response window in prose: "7am to 10pm, every day".
+ *
+ * Twelve-hour time with am/pm, because the audience reads it that way and this
+ * is a sentence rather than a machine-readable field. The one place a
+ * 24-hour string would be correct is schema.org `openingHours`, which this
+ * value must never be used for — see `Studio.openingHours`.
+ */
+export function formatWindow(window: ResponseWindow): string {
+  const twelveHour = (time: string) => {
+    const [hours, minutes] = time.split(':').map(Number);
+    const suffix = hours! < 12 ? 'am' : 'pm';
+    const hour = hours! % 12 === 0 ? 12 : hours! % 12;
+    return minutes ? `${hour}.${String(minutes).padStart(2, '0')}${suffix}` : `${hour}${suffix}`;
+  };
+  return `${twelveHour(window.start)} to ${twelveHour(window.end)}, ${window.days}`;
+}
 
 /** `tel:` href. Strips nothing — `e164` is already dial-safe. */
 export function telHref(phone: Phone): string {

@@ -4,10 +4,12 @@ import {
   GSTIN_PATTERN,
   STUDIO,
   addressOneLine,
+  formatWindow,
   mailtoHref,
   telHref,
   whatsappHref,
 } from '@/lib/content/studio';
+import { localBusinessJsonLd } from '@/lib/seo/jsonLd';
 
 /**
  * The studio's own facts.
@@ -134,8 +136,31 @@ describe('the statutory identifiers', () => {
   });
 });
 
-describe('what is still outstanding', () => {
-  it('publishes no opening hours', () => {
+describe('the response window', () => {
+  it('publishes when a message gets answered', () => {
+    expect(STUDIO.responseWindow).toEqual({ start: '07:00', end: '22:00', days: 'every day' });
+  });
+
+  it('reads as a sentence rather than a timetable', () => {
+    expect(formatWindow(STUDIO.responseWindow!)).toBe('7am to 10pm, every day');
+    // Midnight and noon are where a naive modulo produces "0am" and "0pm".
+    expect(formatWindow({ start: '00:00', end: '12:30', days: 'weekdays' })).toBe(
+      '12am to 12.30pm, weekdays',
+    );
+  });
+
+  it('is never published as opening hours', () => {
+    // The distinction is the whole point of the field existing separately.
+    // schema.org `openingHours` asserts that a member of the public can arrive
+    // at the address and be admitted; this studio is a serviced floor that
+    // takes no drop-ins. Copying the window across would put "Open now" on a
+    // Google listing above a reception that has never heard of the visitor —
+    // and it is a one-line change that would look like tidying up.
     expect(STUDIO.openingHours).toBeNull();
+
+    const business = localBusinessJsonLd();
+    expect(business).not.toHaveProperty('openingHours');
+    expect(business).not.toHaveProperty('openingHoursSpecification');
+    expect(JSON.stringify(business)).not.toContain('07:00');
   });
 });

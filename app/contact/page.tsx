@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
 import { Link } from '@/components/Link';
-import { ToBePublished } from '@/components/ToBePublished';
-import { STUDIO, mailtoHref, telHref, whatsappHref } from '@/lib/content/studio';
+import { STUDIO, formatWindow, mailtoHref, telHref, whatsappHref } from '@/lib/content/studio';
 import { Section } from '@/components/sections/Section';
 import { canonicalFor } from '@/lib/seo/hreflang';
 
@@ -35,8 +34,6 @@ export const metadata: Metadata = {
  */
 
 /** Still outstanding — the only channel nobody has supplied. */
-const PENDING_CHANNELS = ['Opening hours'] as const;
-
 export default function ContactPage() {
   return (
     <main id="main" tabIndex={-1}>
@@ -122,6 +119,25 @@ export default function ContactPage() {
               </Stack>
             )}
 
+            {STUDIO.responseWindow && (
+              <Stack gap={1}>
+                <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
+                  When we reply
+                </h3>
+                {/* A response window, not opening hours. The studio has no
+                    public counter, so "we are open 9 to 6" would answer a
+                    question nobody asked and invite a visit that cannot
+                    happen. What someone actually wants before they send a
+                    message at 9pm is whether anyone will read it. */}
+                <p className="text-on-surface-2">
+                  {formatWindow(STUDIO.responseWindow)}
+                </p>
+                <p className="text-small text-on-surface-muted">
+                  Outside that, we pick up the next morning.
+                </p>
+              </Stack>
+            )}
+
             {STUDIO.address && (
               <Stack gap={1}>
                 <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
@@ -134,14 +150,15 @@ export default function ContactPage() {
                     </span>
                   ))}
                 </address>
+                {/* Stated plainly rather than left to be discovered on the
+                    pavement. It is a serviced floor with a reception that does
+                    not know you are coming. */}
+                <p className="text-small text-on-surface-muted">
+                  Visits by appointment — please arrange one before coming.
+                </p>
               </Stack>
             )}
 
-            {PENDING_CHANNELS.map((channel) => (
-              <p key={channel} className="text-small">
-                <ToBePublished label={channel} />
-              </p>
-            ))}
           </Stack>
         </Grid>
       </Section>
