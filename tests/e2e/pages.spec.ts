@@ -68,13 +68,25 @@ test('the calculator answers with both the project cost and the fee inside it', 
   await expect(output).toContainText('Essential or Signature');
 });
 
-test('guarantee terms are named as outstanding, never drafted', async ({ page }) => {
-  // A guarantee is a contractual promise and its conditions are the part that
-  // binds. Inventing them would commit the studio to an obligation a visitor
-  // could later hold them to — a worse class of invention than a placeholder
-  // statistic, and worth its own assertion.
+test('guarantee terms are published, and differ by tier where they do', async ({ page }) => {
+  // This asserted the terms were named as OUTSTANDING, which was right while
+  // none were written. Now that they are, the assertion that matters is that
+  // the per-tier commitments are stated rather than flattened into one figure:
+  // the timeline is 45 days on Essential, 60 on Signature and milestone-based
+  // on Elite, so a single headline would overstate one and misdescribe another.
   await page.goto('/pricing');
-  await expect(page.getByText('60-Day Handover Guarantee').first()).toBeVisible();
+  const guarantees = page.locator('#guarantees');
+  await expect(guarantees).toContainText('45-day handover');
+  await expect(guarantees).toContainText('60-day handover');
+  await expect(guarantees).toContainText('Milestone-based');
+  // The warranty states response times rather than promising to look into it.
+  await expect(guarantees).toContainText('same day');
+});
+
+test('a genuinely unwritten term still shows as a gap', async ({ page }) => {
+  // The supply-chain fee's conditions have not been published. It renders as an
+  // explicit gap rather than disappearing or acquiring drafted terms.
+  await page.goto('/pricing');
   await expect(page.getByText('Full terms:').first()).toBeVisible();
 });
 
@@ -123,7 +135,7 @@ test('the handover guarantee is attached to its own stage', async ({ page }) => 
   // means more where it applies than in a block at the bottom of the page.
   await page.goto('/process');
   const handover = page.locator('#stages ol > li').filter({ hasText: 'Handover' }).first();
-  await expect(handover.getByText('60-Day Handover Guarantee')).toBeVisible();
+  await expect(handover.getByText('Timeline guarantee')).toBeVisible();
 });
 
 test('an NRI region page computes both clocks at request time', async ({ page }) => {

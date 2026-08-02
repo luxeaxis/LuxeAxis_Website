@@ -3,6 +3,7 @@ import {
   getFeaturedProjects,
   getIntelligenceFeatures,
   getPersonas,
+  getGuarantees,
   getStats,
   getTestimonials,
   getTiers,
@@ -113,13 +114,62 @@ describe('tiers', () => {
 });
 
 describe('trust points', () => {
-  it('carries the blueprint trust strip verbatim', async () => {
-    expect(await getTrustPoints()).toEqual([
+  it('states a handover guarantee without naming a figure the tiers contradict', async () => {
+    // The blueprint's strip read "60-day handover guarantee", and this test
+    // asserted it verbatim. The studio's own tier data then showed 60 days is
+    // SIGNATURE's commitment — Essential is 45 and Elite is milestone-based —
+    // so the flat claim overstated one tier and misdescribed another, on the
+    // one strip whose whole job is to be trusted at a glance.
+    //
+    // Generalised rather than dropped: the guarantee is real, only the single
+    // number was wrong. The specific figures are published against each tier on
+    // /pricing and /process.
+    const points = await getTrustPoints();
+    expect(points).toEqual([
       'Transparent pricing',
       'Vastu-smart AI',
-      '60-day handover guarantee',
+      'A guaranteed handover date',
       '200+ vetted vendors',
     ]);
+    expect(points.join(' ')).not.toContain('60-day');
+  });
+});
+
+describe('guarantees', () => {
+  it('publishes the timeline commitment per tier, since all three differ', async () => {
+    const timeline = (await getGuarantees()).find((g) => g.id === 'timeline')!;
+    expect(timeline.byTier).toEqual({
+      Essential: '45-day handover',
+      Signature: '60-day handover',
+      Elite: 'Milestone-based, agreed up front',
+    });
+  });
+
+  it('names only real tiers in a per-tier commitment', async () => {
+    // A typo'd key would silently render nothing for that tier rather than
+    // erroring, so the page would quietly under-promise.
+    const names = (await getTiers()).map((tier) => tier.name);
+    for (const guarantee of await getGuarantees()) {
+      for (const key of Object.keys(guarantee.byTier ?? {})) {
+        expect(names, `${guarantee.id} names an unknown tier`).toContain(key);
+      }
+    }
+  });
+
+  it('states the warranty response times rather than promising to look into it', async () => {
+    const warranty = (await getGuarantees()).find((g) => g.id === 'warranty')!;
+    expect(warranty.terms).toContain('same day');
+    // The exclusions matter as much as the cover — a warranty that does not say
+    // what it excludes is one a client discovers the limits of during a dispute.
+    expect(warranty.terms).toContain('excluded');
+  });
+
+  it('leaves a genuinely unwritten term null rather than drafting one', async () => {
+    // The supply-chain fee's conditions have not been published. `null` renders
+    // as an explicit gap; inventing terms would commit the studio to an
+    // obligation a visitor could later hold it to.
+    const fee = (await getGuarantees()).find((g) => g.id === 'supply-chain-fee')!;
+    expect(fee.terms).toBeNull();
   });
 });
 

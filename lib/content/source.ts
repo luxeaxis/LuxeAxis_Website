@@ -249,7 +249,13 @@ const TIERS: readonly Tier[] = [
 const TRUST_POINTS: readonly string[] = [
   'Transparent pricing',
   'Vastu-smart AI',
-  '60-day handover guarantee',
+  // The blueprint's strip said "60-day handover guarantee" and the studio's own
+  // tier data contradicts it: 60 days is Signature's commitment, Essential is
+  // 45 and Elite is milestone-based. A flat claim overstates one tier and
+  // misdescribes another, on the strip whose entire job is to be trusted at a
+  // glance. Generalised to what is true of all three; the specific figure is
+  // published against each tier on /pricing and /process.
+  'A guaranteed handover date',
   '200+ vetted vendors',
 ];
 
@@ -428,7 +434,7 @@ const PROCESS_STAGES: readonly ProcessStage[] = [
     id: 'handover',
     name: 'Handover',
     body: 'Snagging, cleaning and the final walkthrough, which is the point the space becomes yours to use.',
-    guaranteeId: 'handover-60',
+    guaranteeId: 'timeline',
   },
   {
     id: 'concierge',
@@ -437,24 +443,60 @@ const PROCESS_STAGES: readonly ProcessStage[] = [
   },
 ];
 
-// Both named in Spec 10.6. Neither has published terms, and `terms: null` is how
-// that is said. See the `Guarantee` type for why inventing them would be worse
-// than inventing a statistic.
+// The published commitments. `terms: null` now means genuinely unwritten, not
+// "not supplied yet" — the studio has published warranty and timeline terms, so
+// anything still null here is a real gap that renders as one.
 const GUARANTEES: readonly Guarantee[] = [
   {
-    id: 'handover-60',
-    name: '60-Day Handover Guarantee',
-    summary: 'A committed handover date, backed by a published guarantee rather than an apology.',
-    terms: null,
+    id: 'timeline',
+    name: 'Timeline guarantee',
+    summary:
+      'A committed handover date, backed by a published guarantee rather than an apology.',
+    // Per tier, and this is why the site no longer states a flat "60-day
+    // handover guarantee" anywhere: 60 days is SIGNATURE's commitment. Quoting
+    // it site-wide overstated it for Essential and misdescribed Elite, whose
+    // commitment is milestone-based rather than a single date.
+    byTier: {
+      Essential: '45-day handover',
+      Signature: '60-day handover',
+      Elite: 'Milestone-based, agreed up front',
+    },
+    terms: 'Every snag must be closed before handover — the date is not met until the list is empty.',
+  },
+  {
+    id: 'warranty',
+    name: 'Post-handover warranty',
+    summary: 'Cover after you move in, with a response time attached rather than a promise to look into it.',
+    byTier: {
+      Essential: '30 days, snags',
+      Signature: '90 days, snags',
+      Elite: '6 months, full',
+    },
+    terms:
+      'Response times by severity: same day for anything that stops you using the space, within 5 days for a significant defect, within 14 days for everything else. In the first 7 days after handover we cover the full cost. From 30 to 180 days we cover workmanship and material defects. Beyond 180 days, Concierge covers it. Acts of nature and damage from misuse are excluded.',
   },
   {
     id: 'supply-chain-fee',
     name: 'Transparent Supply-Chain Management fee',
     summary:
       'The fee for sourcing and managing materials is stated as its own line rather than folded invisibly into a per-square-foot rate.',
+    // Still genuinely unwritten. Renders as an explicit gap.
     terms: null,
   },
+  {
+    id: 'quote-validity',
+    name: 'How long a quote holds',
+    summary: 'A quote is good for a stated period, so you are not deciding against a number that moves.',
+    byTier: {
+      Essential: '14 days',
+      Signature: '14 days',
+      Elite: '30 days for NRI Elite',
+    },
+    terms:
+      'Residential quotes hold for 14 days and commercial quotes for 21. NRI Elite quotes hold for 30, since a decision across time zones takes longer. If material costs rise by more than 8% between quote and order, the difference is passed through at cost and shown to you — we do not absorb it silently, and we do not mark it up.',
+  },
 ];
+
 
 // Spec 2.2's sitemap lists exactly these six.
 const NRI_REGIONS: readonly NriRegion[] = [

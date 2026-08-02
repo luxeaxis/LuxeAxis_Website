@@ -10,7 +10,14 @@ import { InclusionList } from '@/components/sections/TierSummary';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { canonicalFor } from '@/lib/seo/hreflang';
-import { getCalculatorConfig, getFaqs, getGuarantees, getTiers } from '@/lib/content/source';
+import {
+  getCalculatorConfig,
+  getFaqs,
+  getGuarantees,
+  getSubscriptions,
+  getTiers,
+} from '@/lib/content/source';
+import { formatRupees } from '@/lib/pricing/estimate';
 
 const ROUTE = '/pricing';
 
@@ -37,10 +44,11 @@ export const metadata: Metadata = {
  * no scene slot here at all: not a poster, not a reserved box.
  */
 export default async function PricingPage() {
-  const [tiers, calculatorConfig, guarantees, faqs] = await Promise.all([
+  const [tiers, calculatorConfig, guarantees, subscriptions, faqs] = await Promise.all([
     getTiers(),
     getCalculatorConfig(),
     getGuarantees(),
+    getSubscriptions(),
     getFaqs(),
   ]);
   const allPriced = tiers.every((tier) => tier.priceFrom !== null);
@@ -150,7 +158,7 @@ export default async function PricingPage() {
         id="guarantees"
         eyebrow="What we commit to"
         title="Guarantees, stated plainly"
-        lede="A guarantee is only worth the terms attached to it, so both of ours are published rather than merely mentioned."
+        lede="A guarantee is only worth the terms attached to it, so ours are published in full rather than merely mentioned. Several differ by tier."
       >
         <Grid cols={2} gap={5}>
           {guarantees.map((guarantee) => (
@@ -163,14 +171,63 @@ export default async function PricingPage() {
                   {guarantee.name}
                 </h3>
                 <p className="text-on-surface-2">{guarantee.summary}</p>
-                {/* A guarantee is a contractual promise, and its conditions are
-                    the part that matters. No spec states them, so the terms are
-                    named as outstanding rather than drafted here — plausible
-                    terms would commit the studio to an obligation a visitor
-                    could later hold them to. */}
-                <p className="text-small">
+                {/* Several of these differ by tier — the timeline is 45 days on
+                    Essential, 60 on Signature and milestone-based on Elite — so
+                    a single headline figure would overstate one and misdescribe
+                    another. Published per tier instead. */}
+                {guarantee.byTier && (
+                  <dl className="flex flex-col gap-1 border-l-regular border-accent pl-4 text-small">
+                    {tiers.map((tier) =>
+                      guarantee.byTier?.[tier.name] ? (
+                        <div key={tier.id} className="flex gap-2">
+                          <dt className="text-on-surface-muted">{tier.name}</dt>
+                          <dd className="text-on-surface">{guarantee.byTier[tier.name]}</dd>
+                        </div>
+                      ) : null,
+                    )}
+                  </dl>
+                )}
+                {/* A guarantee is a contractual promise and its conditions are
+                    the part that binds. Where they are not written, the gap is
+                    named rather than drafted — plausible terms would commit the
+                    studio to an obligation a visitor could later hold it to. */}
+                <p className="text-small text-on-surface-2">
                   {guarantee.terms ?? <ToBePublished label="Full terms" />}
                 </p>
+              </Stack>
+            </div>
+          ))}
+        </Grid>
+      </Section>
+
+      <Section
+        id="concierge"
+        eyebrow="After you move in"
+        title="Concierge, by subscription"
+        lede="A finished home keeps needing things. These are published monthly rates rather than a call-us-and-we-will-see."
+      >
+        <Grid cols={3} gap={5}>
+          {subscriptions.map((subscription) => (
+            <div
+              key={subscription.id}
+              className="rounded-lg border border-border-subtle bg-surface-raised p-6"
+            >
+              <Stack gap={3}>
+                <h3 className="font-display text-[length:var(--typography-h3-font-size)] text-on-surface">
+                  {subscription.name}
+                </h3>
+                <p className="font-mono text-[length:var(--typography-h3-font-size)] tabular-nums text-on-surface">
+                  {formatRupees(subscription.monthly)}
+                  <span className="font-ui text-small text-on-surface-2"> / month</span>
+                </p>
+                {/* Only where an annual rate is actually published. Twelve times
+                    the monthly would invent a discount that may not exist. */}
+                {subscription.yearly !== null && (
+                  <p className="text-small text-on-surface-muted">
+                    or {formatRupees(subscription.yearly)} a year
+                  </p>
+                )}
+                <p className="text-small text-on-surface-2">{subscription.summary}</p>
               </Stack>
             </div>
           ))}
