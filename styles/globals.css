@@ -90,29 +90,6 @@
     }
   }
 
-  /* The one decorative element in the system. A hairline of light on the
-     navy void — the brand's Axis metaphor, rendered without WebGL so it
-     costs nothing and survives the no-JS and reduced-motion paths intact.
-     Offset off-centre (38%) rather than halved: a centred line reads as a
-     divider, an offset one reads as a spine content hangs from. */
-  .lx-axis {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 38%;
-    width: 1px;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      var(--color-brand-gold-champagne) 12%,
-      var(--color-brand-gold) 50%,
-      var(--color-brand-gold-deep) 88%,
-      transparent 100%
-    );
-    opacity: 0.55;
-    pointer-events: none;
-  }
-
   /* The grain is what keeps a flat navy from reading as a cheap gradient —
      it suggests a specified material rather than a screen colour. */
   .lx-grain::after {

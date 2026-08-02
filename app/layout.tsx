@@ -83,8 +83,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ahead of `#main`, which is exactly what the skip link exists to let
             a keyboard user bypass. */}
         <SkipLink />
-        {/* Decorative: the meaning lives in the DOM beside it, never in it. */}
-        <div className="lx-axis" aria-hidden="true" />
         {/* Mounted once, site-wide, so any feature can call `useToast()`
             without also remembering to wire a provider (design system §3.5). */}
         <ToastProvider>
