@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
 import { FeatureCard } from '@/components/Card';
+import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { serviceJsonLd } from '@/lib/seo/jsonLd';
 import { COMMERCIAL_VERTICALS } from '@/lib/content/commercial';
 
 const ROUTE = '/commercial';
@@ -34,6 +36,15 @@ export const metadata: Metadata = {
 export default function CommercialPage() {
   return (
     <main id="main" tabIndex={-1}>
+      <JsonLd
+        data={serviceJsonLd({
+          name: 'Commercial interior design',
+          description:
+            'Workplace, retail and hospitality, and healthcare interiors in Chennai, designed against how the space performs.',
+          url: '/commercial',
+        })}
+      />
+
       <Container className="py-section-y">
         <Stack gap={4} className="max-w-measure">
           <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">

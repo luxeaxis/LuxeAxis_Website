@@ -143,3 +143,71 @@ test('the journal is honestly empty rather than absent', async ({ page }) => {
   await page.goto('/journal');
   await expect(page.getByText('Nothing published yet')).toBeVisible();
 });
+
+test('nested pages carry breadcrumbs whose markup matches what is on screen', async ({ page }) => {
+  // Generated from one derived list, never two hand-kept copies — Google treats
+  // structured data that disagrees with the visible page as a spam signal, and a
+  // parallel list is exactly how that disagreement arrives.
+  await page.goto('/intelligence/vastu-tech');
+
+  const nav = page.getByRole('navigation', { name: 'Breadcrumb' });
+  await expect(nav).toBeVisible();
+  // Home is deliberately not rendered: it repeats the header logo and is one
+  // more thing to tab past. It stays in the JSON-LD at position 1.
+  await expect(nav.getByRole('link', { name: 'Intelligence' })).toHaveAttribute(
+    'href',
+    '/intelligence',
+  );
+  await expect(nav.locator('[aria-current="page"]')).toHaveText('Vastu-Tech');
+
+  const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const crumbs = blocks
+    .map((block) => JSON.parse(block))
+    .find((node) => node['@type'] === 'BreadcrumbList');
+  expect(crumbs, 'no BreadcrumbList on a nested page').toBeDefined();
+  expect(crumbs.itemListElement.map((item: { name: string }) => item.name)).toEqual([
+    'Home',
+    'Intelligence',
+    'Vastu-Tech',
+  ]);
+});
+
+test('every breadcrumb link resolves', async ({ page, request }) => {
+  // A BreadcrumbList naming a URL that 404s is worse than none at all. Safe to
+  // derive from the path only because every intermediate segment of this site's
+  // URLs is a real page, which tests/unit/routes.test.ts enforces — this checks
+  // the promise rather than trusting it.
+  for (const path of [
+    '/residential/signature',
+    '/intelligence/space-os',
+    '/commercial/healthcare',
+    '/nri/singapore',
+  ]) {
+    await page.goto(path);
+    const hrefs = await page
+      .getByRole('navigation', { name: 'Breadcrumb' })
+      .getByRole('link')
+      .evaluateAll((links) => links.map((link) => link.getAttribute('href') ?? ''));
+    expect(hrefs.length, `${path} has no breadcrumb links`).toBeGreaterThan(0);
+    for (const href of hrefs) {
+      expect((await request.get(href)).status(), `${path} -> ${href}`).toBe(200);
+    }
+  }
+});
+
+test('service pages describe themselves as a Service, without inventing an offer', async ({
+  page,
+}) => {
+  await page.goto('/residential/signature');
+  const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const service = blocks
+    .map((block) => JSON.parse(block))
+    .find((node) => node['@type'] === 'Service');
+
+  expect(service, 'no Service node').toBeDefined();
+  expect(service.provider.name).toBe('Luxe Axis');
+  expect(service.areaServed.name).toBe('Chennai');
+  // `offers` needs a price, and none is published. A Service node claiming one
+  // would put an invented figure into a search index.
+  expect(service).not.toHaveProperty('offers');
+});

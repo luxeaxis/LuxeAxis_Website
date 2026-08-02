@@ -4,9 +4,12 @@ import { Container, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
 import { Icon } from '@/components/Icon';
 import { ToBePublished } from '@/components/ToBePublished';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { serviceJsonLd } from '@/lib/seo/jsonLd';
 import { COMMERCIAL_VERTICALS } from '@/lib/content/commercial';
 
 /**
@@ -55,8 +58,20 @@ export default async function CommercialVerticalPage({
 
   return (
     <main id="main" tabIndex={-1}>
+      <JsonLd
+        data={serviceJsonLd({
+          name: `${vertical.name} interior design`,
+          description: vertical.summary,
+          url: `/commercial/${vertical.slug}`,
+        })}
+      />
+
       <Container className="py-section-y">
         <Stack gap={5} className="max-w-measure">
+          <Breadcrumbs
+            path={`/commercial/${vertical.slug}`}
+            labels={{ [vertical.slug]: vertical.name }}
+          />
           <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">
             Commercial
           </p>

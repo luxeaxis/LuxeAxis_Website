@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Grid } from '@/components/layout';
+import { Container, Grid } from '@/components/layout';
 import { Badge } from '@/components/Badge';
 import { FeatureCard } from '@/components/Card';
 import {
@@ -9,6 +9,7 @@ import {
   PendingDetail,
   Stepper,
 } from '@/components/sections/FeatureHero';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { canonicalFor } from '@/lib/seo/hreflang';
@@ -71,6 +72,10 @@ export default async function IntelligenceFeaturePage({
 
   return (
     <main id="main" tabIndex={-1}>
+      <Container className="pt-section-y">
+        <Breadcrumbs path={feature.href} labels={{ [feature.id]: feature.name }} />
+      </Container>
+
       <FeatureHero feature={feature} />
 
       <Section id="what-it-is" eyebrow="What it is" title={`${feature.name}, in one paragraph`}>

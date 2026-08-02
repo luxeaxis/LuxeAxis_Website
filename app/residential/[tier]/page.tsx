@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Container, Grid, Stack } from '@/components/layout';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { JsonLd } from '@/components/JsonLd';
 import { InclusionList, TierSummary } from '@/components/sections/TierSummary';
 import { CTASection } from '@/components/sections/CTASection';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { serviceJsonLd } from '@/lib/seo/jsonLd';
 import { getTiers } from '@/lib/content/source';
 
 /**
@@ -49,8 +52,19 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
 
   return (
     <main id="main" tabIndex={-1}>
+      {/* A tier IS a service the studio offers, which is what this node
+          says. No `offers` on it — that needs a price, and none is published. */}
+      <JsonLd
+        data={serviceJsonLd({
+          name: `${tier.name} residential interior design`,
+          description: tier.summary,
+          url: `/residential/${tier.id}`,
+        })}
+      />
+
       <Container className="py-section-y">
         <Stack gap={8}>
+          <Breadcrumbs path={`/residential/${tier.id}`} />
           <Stack gap={4} className="max-w-measure">
             <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">
               Residential

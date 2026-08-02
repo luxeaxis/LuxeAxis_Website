@@ -4,6 +4,7 @@ import { Container, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
 import { InlineAlert } from '@/components/InlineAlert';
 import { ToBePublished } from '@/components/ToBePublished';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { canonicalFor } from '@/lib/seo/hreflang';
@@ -75,6 +76,7 @@ export default async function NriRegionPage({ params }: { params: Promise<{ regi
     <main id="main" tabIndex={-1}>
       <Container className="py-section-y">
         <Stack gap={6} className="max-w-measure">
+          <Breadcrumbs path={`/nri/${region.slug}`} labels={{ [region.slug]: region.name }} />
           <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">
             {region.name}
           </p>

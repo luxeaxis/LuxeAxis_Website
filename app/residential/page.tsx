@@ -4,9 +4,11 @@ import { FeatureCard, TierCard } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { EmptyState } from '@/components/EmptyState';
 import { FeeCalculator } from '@/components/FeeCalculator';
+import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { serviceJsonLd } from '@/lib/seo/jsonLd';
 import { getCalculatorConfig, getTiers } from '@/lib/content/source';
 
 const ROUTE = '/residential';
@@ -35,6 +37,15 @@ export default async function ResidentialPage() {
 
   return (
     <main id="main" tabIndex={-1}>
+      <JsonLd
+        data={serviceJsonLd({
+          name: 'Residential interior design',
+          description:
+            'Three tiers of residential interior design in Chennai, stated openly with what each one includes.',
+          url: '/residential',
+        })}
+      />
+
       <Container className="py-section-y">
         <Stack gap={4} className="max-w-measure">
           <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">
