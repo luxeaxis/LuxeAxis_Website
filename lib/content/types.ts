@@ -130,34 +130,68 @@ export type Stat = {
 };
 
 /**
- * The Fee Calculator's rate card (Spec §2.4 `CalculatorConfig`, §5.7).
+ * One row of the published price list (Spec §2.4 `CalculatorConfig`, §5.7).
  *
- * `null` from `getCalculatorConfig()` until the studio publishes real rates —
- * and the calculator renders nothing at all while it is. That is not a
- * degraded state to be filled with an approximation: §2's P2 "Show the work"
- * names "the public fee calculator" as a proof of Radical Transparency, and a
- * calculator returning invented numbers is the single most damaging thing this
- * site could ship. A visitor budgets against it.
+ * ## Why property type and not a per-square-foot rate
  *
- * Rates are a BAND, not a point. A studio that has not yet seen the flat cannot
- * honestly quote a single figure, and the blueprint frames tiers as ranges
- * throughout; a precise-looking total would imply a commitment the audit has
- * not made yet.
+ * The first version of this modelled a rate band multiplied by carpet area,
+ * which is the obvious shape for a fee calculator and is not how the studio
+ * actually prices. The published list bands TOTAL project cost by property
+ * type, with the design fee as a separate figure.
+ *
+ * Deriving a per-square-foot rate from those bands means dividing a range by a
+ * range, and the answer is uselessly wide — a 1BHK works out anywhere between
+ * ~₹540 and ~₹1,500 per square foot depending which ends you pick. Shipping
+ * that would have invented precision the studio never gave, in the one place a
+ * visitor makes a financial decision. Area is kept as guidance for choosing the
+ * right row, not as a multiplier.
+ *
+ * Two figures, because they answer different questions. `projectCost` is what
+ * the whole job comes to; `designFee` is what the studio charges for the design
+ * within it. Publishing only the first is what makes a visitor suspect the
+ * second is hidden inside it.
+ */
+export type PropertyBracket = {
+  id: string;
+  /** As the studio lists it — "2BHK", "Villa". */
+  label: string;
+  /** Typical carpet area, for orientation. `null` upper bound means open-ended
+   *  ("2,000+ sq ft"), which is exactly how the villa row is published. */
+  area: { min: number; max: number | null } | null;
+  /** Which tiers this property type is served by. Several rows span two. */
+  tiers: readonly Tier['name'][];
+  /** Whole rupees. */
+  projectCost: { low: number; high: number };
+  designFee: { low: number; high: number };
+};
+
+/**
+ * The Fee Calculator's published price list.
+ *
+ * `null` from `getCalculatorConfig()` would mean no list has been published and
+ * the calculator does not render at all — a calculator returning invented
+ * numbers is the single most damaging thing this site could ship, because a
+ * visitor budgets against it.
  */
 export type CalculatorConfig = {
-  /** Carpet area bounds the calculator accepts, in square feet. */
-  area: { min: number; max: number; step: number };
-  /** Per-square-foot band for each tier, in whole rupees. */
-  rates: Record<Tier['name'], { low: number; high: number }>;
-  /** Rounded to this unit so the output reads as an estimate rather than a
-   *  quote — ₹18,40,000 invites belief that ₹18,43,217 does not. */
-  roundToNearest: number;
+  brackets: readonly PropertyBracket[];
+};
+
+/** A recurring service with a published price (concierge subscriptions). */
+export type Subscription = {
+  id: string;
+  name: string;
+  summary: string;
+  /** Whole rupees per month. */
+  monthly: number;
+  /** Whole rupees per year, where an annual rate is published. */
+  yearly: number | null;
 };
 
 /** A stage of the client journey (Spec 5.8, Cinematic SCENE 07). */
 export type ProcessStage = {
   id: string;
-  /** The stage names are the spec own, in its order: Discover, Audit,
+  /** The stage names are the spec's own, in its order: Discover, Audit,
    *  Concept, Approve, Build, Handover, Concierge. */
   name: string;
   body: string;
@@ -166,31 +200,32 @@ export type ProcessStage = {
 };
 
 /**
- * A published commitment (Spec 10.6: the 60-Day Handover Guarantee and the
- * transparent Supply-Chain Management fee).
+ * A published commitment (Spec 10.6).
  *
- * `terms` is nullable because the specs NAME both guarantees and state neither
- * set of conditions. A guarantee is a contractual promise, so inventing its
- * terms would be drafting an obligation the studio has not agreed to and a
- * visitor could later hold them to — a materially worse kind of invention than
- * a placeholder statistic.
+ * `terms` was nullable because the specs named both guarantees and stated
+ * neither set of conditions. The studio has since published them, so a
+ * guarantee that still carries `null` is one whose conditions genuinely are not
+ * written — and it renders as an explicit gap rather than a silent omission,
+ * because a guarantee is a contractual promise and its conditions are the part
+ * that binds.
  */
 export type Guarantee = {
   id: string;
   name: string;
   summary: string;
   terms: string | null;
+  /** Where the commitment differs by tier — the timeline guarantee is 45 days
+   *  on Essential, 60 on Signature and milestone-based on Elite, so a single
+   *  headline figure would misstate two of the three. */
+  byTier?: Partial<Record<Tier['name'], string>>;
 };
 
-/** An NRI region with its own landing page (Spec 2.2:
- *  `/nri/singapore /uae /usa /uk /canada /australia`). */
+/** An NRI region with its own landing page (Spec 2.2). */
 export type NriRegion = {
   slug: string;
   name: string;
-  /** Shown on the region page so a visitor can sanity-check the time difference
-   *  themselves. An IANA zone, not a fixed offset — offsets change twice a year
-   *  in several of these regions and a hard-coded one would be wrong half the
-   *  time. */
+  /** An IANA zone, not a fixed offset — offsets change twice a year in several
+   *  of these regions and a hard-coded one would be wrong half the time. */
   timeZone: string;
 };
 

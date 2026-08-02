@@ -39,10 +39,33 @@ test('pricing leads with the calculator, then the tiers', async ({ page }) => {
   expect(headings.indexOf('Estimate your project')).toBeLessThan(headings.indexOf('Three tiers'));
 });
 
-test('pricing publishes no figure it has not been given', async ({ page }) => {
+test('pricing publishes the real price list', async ({ page }) => {
+  // This asserted the ABSENCE of any figure until the studio published its
+  // list — a placeholder price would have discredited the "we publish ours"
+  // claim this page's own heading makes. Now that real numbers exist, the
+  // useful assertion is that they are the published ones, and that the page no
+  // longer says a fee band is pending.
   await page.goto('/pricing');
-  await expect(page.locator('main')).not.toContainText('₹');
-  await expect(page.getByText('Fee band:').first()).toBeVisible();
+  await expect(page.locator('main')).toContainText('₹3.5L');
+  await expect(page.getByText('Fee band:')).toHaveCount(0);
+});
+
+test('the calculator answers with both the project cost and the fee inside it', async ({
+  page,
+}) => {
+  // Showing only the total makes a visitor suspect the design fee is buried in
+  // it; showing only the fee hides the number they need to budget. §5.7 calls
+  // this the published-pricing trust signal, and the trust is in showing both.
+  await page.goto('/pricing');
+  await page
+    .getByRole('radio', { name: /2BHK/ })
+    .locator('..')
+    .click();
+
+  const output = page.locator('#calculator output');
+  await expect(output).toContainText('₹7L to ₹15L');
+  await expect(output).toContainText('₹75,000 to ₹1.8L');
+  await expect(output).toContainText('Essential or Signature');
 });
 
 test('guarantee terms are named as outstanding, never drafted', async ({ page }) => {

@@ -1,125 +1,145 @@
 import { describe, expect, it } from 'vitest';
-import { estimate, formatEstimate, formatRupees } from '@/lib/pricing/estimate';
-import { getCalculatorConfig } from '@/lib/content/source';
+import { estimate, formatArea, formatBand, formatRupees } from '@/lib/pricing/estimate';
+import { getCalculatorConfig, getTiers } from '@/lib/content/source';
 import type { CalculatorConfig } from '@/lib/content/types';
 
 /**
- * The Fee Calculator's arithmetic, tested against a FIXTURE rate card.
+ * The Fee Calculator's lookup and formatting.
  *
- * The fixture is not a proposed price list and must never be copied into
- * `lib/content/source.ts`. Round numbers are chosen precisely so they could not
- * be mistaken for real rates and so the expected totals are checkable by hand:
- * 1,000 sq ft at ₹2,000–3,000 is ₹20,00,000–₹30,00,000, which either reads
- * right or does not.
- *
- * This is the one part of the site a visitor will act on financially, so the
- * arithmetic is pinned independently of any UI.
+ * Unlike most tests here, these run against the REAL published price list
+ * rather than a fixture. The list is now real content, and the thing worth
+ * guarding is that what the site displays matches what the studio published —
+ * a fixture would prove the code works while saying nothing about the numbers
+ * a visitor actually sees.
  */
+
 const FIXTURE: CalculatorConfig = {
-  area: { min: 500, max: 5000, step: 50 },
-  rates: {
-    Essential: { low: 1000, high: 2000 },
-    Signature: { low: 2000, high: 3000 },
-    Elite: { low: 3000, high: 5000 },
-  },
-  roundToNearest: 1000,
+  brackets: [
+    {
+      id: 'test',
+      label: 'Test',
+      area: { min: 100, max: 200 },
+      tiers: ['Essential'],
+      projectCost: { low: 100_000, high: 200_000 },
+      designFee: { low: 10_000, high: 20_000 },
+    },
+  ],
 };
 
 describe('estimate', () => {
-  it('multiplies area by the tier band', () => {
-    const result = estimate(FIXTURE, { areaSqFt: 1000, tier: 'Signature' });
-    expect(result).toMatchObject({ low: 2_000_000, high: 3_000_000, areaUsed: 1000, clamped: false });
+  it('returns the published row, unmodified', async () => {
+    const config = (await getCalculatorConfig())!;
+    const result = estimate(config, '2bhk')!;
+    expect(result.projectCost).toEqual({ low: 700_000, high: 1_500_000 });
+    expect(result.designFee).toEqual({ low: 75_000, high: 180_000 });
   });
 
-  it('prices each tier from its own rates', () => {
-    const area = 1000;
-    expect(estimate(FIXTURE, { areaSqFt: area, tier: 'Essential' })?.low).toBe(1_000_000);
-    expect(estimate(FIXTURE, { areaSqFt: area, tier: 'Elite' })?.high).toBe(5_000_000);
+  it('refuses an unknown row rather than guessing the nearest', () => {
+    // A visitor shown the wrong band has no way to tell.
+    expect(estimate(FIXTURE, 'nope')).toBeNull();
   });
 
-  it('always returns a band, never a single figure', () => {
+  it('always returns a band, never a single figure', async () => {
     // The studio cannot honestly quote a point estimate before seeing the
-    // space. A config whose low and high converged would be a data error, but
-    // the shape of the return value is what stops the UI ever showing one
-    // number as though it were the price.
-    const result = estimate(FIXTURE, { areaSqFt: 1200, tier: 'Signature' });
-    expect(result!.high).toBeGreaterThan(result!.low);
+    // space, so there is no code path that produces one.
+    const config = (await getCalculatorConfig())!;
+    for (const bracket of config.brackets) {
+      const result = estimate(config, bracket.id)!;
+      expect(result.projectCost.high, bracket.id).toBeGreaterThan(result.projectCost.low);
+      expect(result.designFee.high, bracket.id).toBeGreaterThan(result.designFee.low);
+    }
+  });
+});
+
+describe('the published price list', () => {
+  it('matches what the studio published, row for row', async () => {
+    const config = (await getCalculatorConfig())!;
+    const rows = config.brackets.map((b) => [
+      b.label,
+      b.projectCost.low,
+      b.projectCost.high,
+      b.designFee.low,
+      b.designFee.high,
+    ]);
+    expect(rows).toEqual([
+      ['1BHK', 350_000, 600_000, 50_000, 75_000],
+      ['2BHK', 700_000, 1_500_000, 75_000, 180_000],
+      ['3BHK', 1_200_000, 2_500_000, 150_000, 350_000],
+      ['Villa', 2_500_000, 8_000_000, 300_000, 1_200_000],
+      ['Penthouse', 6_000_000, 20_000_000, 800_000, 2_500_000],
+    ]);
   });
 
-  it('rounds to the configured unit so it reads as an estimate', () => {
-    // 733 x 2000 = 1,466,000 and x 3000 = 2,199,000 — both already land on
-    // 1000, so pick a rate-crossing area that does not.
-    const result = estimate({ ...FIXTURE, roundToNearest: 100_000 }, {
-      areaSqFt: 733,
-      tier: 'Signature',
+  it('keeps the design fee inside the project cost', () => {
+    // The fee is charged WITHIN the total, not on top. A row where the fee
+    // exceeded the project cost would be a transcription error, and the page
+    // presents them as nested.
+    return getCalculatorConfig().then((config) => {
+      for (const bracket of config!.brackets) {
+        expect(bracket.designFee.high, bracket.label).toBeLessThan(bracket.projectCost.high);
+      }
     });
-    expect(result!.low % 100_000).toBe(0);
-    expect(result!.high % 100_000).toBe(0);
   });
 
-  it('clamps an area above the range and says so', () => {
-    // Someone typing 50,000 into a residential calculator has not made an error
-    // worth an error message — they are outside what the tool covers. Pricing
-    // the top of the range and flagging it is the honest answer.
-    const result = estimate(FIXTURE, { areaSqFt: 50_000, tier: 'Essential' });
-    expect(result).toMatchObject({ areaUsed: 5000, clamped: true });
-    expect(result!.low).toBe(5_000_000);
-  });
-
-  it('clamps an area below the range and says so', () => {
-    const result = estimate(FIXTURE, { areaSqFt: 100, tier: 'Essential' });
-    expect(result).toMatchObject({ areaUsed: 500, clamped: true });
-  });
-
-  it('does not flag an area exactly on a boundary as clamped', () => {
-    expect(estimate(FIXTURE, { areaSqFt: 500, tier: 'Elite' })?.clamped).toBe(false);
-    expect(estimate(FIXTURE, { areaSqFt: 5000, tier: 'Elite' })?.clamped).toBe(false);
-  });
-
-  it('refuses input that cannot mean anything rather than pricing it at zero', () => {
-    // The failure mode this guards: a cleared field yielding NaN, coerced to 0,
-    // rendered as "₹0" and read by a visitor as a real quote.
-    for (const areaSqFt of [Number.NaN, 0, -250, Number.POSITIVE_INFINITY]) {
-      expect(estimate(FIXTURE, { areaSqFt, tier: 'Signature' }), String(areaSqFt)).toBeNull();
+  it('gives every row at least one tier, and only real tier names', async () => {
+    const names = (await getTiers()).map((tier) => tier.name);
+    const config = (await getCalculatorConfig())!;
+    for (const bracket of config.brackets) {
+      expect(bracket.tiers.length, bracket.label).toBeGreaterThan(0);
+      for (const tier of bracket.tiers) expect(names).toContain(tier);
     }
   });
 
-  it('scales linearly with area', () => {
-    const single = estimate(FIXTURE, { areaSqFt: 1000, tier: 'Signature' })!;
-    const double = estimate(FIXTURE, { areaSqFt: 2000, tier: 'Signature' })!;
-    expect(double.low).toBe(single.low * 2);
-    expect(double.high).toBe(single.high * 2);
+  it('agrees with each tier’s published floor', async () => {
+    // `Tier.priceFrom` and the price list are two statements of the same fact.
+    // The cheapest row a tier appears on must not be below that tier's floor,
+    // or the tier cards and the calculator would contradict each other on the
+    // same page.
+    const config = (await getCalculatorConfig())!;
+    for (const tier of await getTiers()) {
+      const rows = config.brackets.filter((b) => b.tiers.includes(tier.name));
+      const cheapest = Math.min(...rows.map((b) => b.projectCost.low));
+      expect(tier.priceFrom, tier.name).toBe(cheapest);
+    }
   });
 });
 
 describe('formatting', () => {
-  it('uses Indian digit grouping, matching PriceTag', () => {
-    // ₹18,40,000 — not ₹1,840,000. Getting this wrong would make the
-    // calculator and the tier cards disagree about what a number looks like.
-    expect(formatRupees(1_840_000)).toContain('18,40,000');
+  it('reads the way Indian pricing is written', () => {
+    expect(formatRupees(350_000)).toBe('₹3.5L');
+    expect(formatRupees(600_000)).toBe('₹6L');
+    expect(formatRupees(20_000_000)).toBe('₹2Cr');
   });
 
-  it('shows no paise', () => {
-    expect(formatRupees(1_840_000)).not.toContain('.');
+  it('drops a trailing .0 rather than printing ₹6.0L', () => {
+    expect(formatRupees(2_500_000)).toBe('₹25L');
   });
 
-  it('reads sensibly aloud, since it is the announced result', () => {
-    // The estimate lands in an <output>, which is announced politely. An en
-    // dash between two rupee figures is read inconsistently across screen
-    // readers; the word "to" is not.
-    const formatted = formatEstimate(estimate(FIXTURE, { areaSqFt: 1000, tier: 'Signature' })!);
-    expect(formatted).toContain(' to ');
-    expect(formatted).not.toMatch(/[–—]/);
+  it('falls back to grouped rupees below a lakh, for subscription prices', () => {
+    // "₹0.02L" would be absurd for a monthly fee.
+    expect(formatRupees(2_499)).toContain('2,499');
+    expect(formatRupees(2_499)).not.toContain('L');
   });
-});
 
-describe('the shipped configuration', () => {
-  it('publishes no rate card until the studio supplies real rates', async () => {
-    // Spec §2 names the public fee calculator as a proof of Radical
-    // Transparency. It is also the one thing here a visitor will budget
-    // against, so an invented rate would not read as a placeholder — it would
-    // read as the studio's price. Delete this test when real rates land; do
-    // not "fix" it by inventing one.
-    expect(await getCalculatorConfig()).toBeNull();
+  it('spells out "to", since the band is read aloud', () => {
+    // An en dash between two figures is announced inconsistently across screen
+    // readers; the word is not.
+    const band = formatBand({ low: 350_000, high: 600_000 });
+    expect(band).toBe('₹3.5L to ₹6L');
+    expect(band).not.toMatch(/[–—]/);
+  });
+
+  it('shows an open-ended area as "2,000+ sq ft"', async () => {
+    const config = (await getCalculatorConfig())!;
+    const villa = config.brackets.find((b) => b.id === 'villa')!;
+    expect(formatArea(villa)).toBe('2,000+ sq ft');
+  });
+
+  it('shows no area for a row that publishes none', async () => {
+    // The penthouse row has no area — it is not a size category, which is part
+    // of why this calculator asks for property type rather than square feet.
+    const config = (await getCalculatorConfig())!;
+    const penthouse = config.brackets.find((b) => b.id === 'penthouse')!;
+    expect(formatArea(penthouse)).toBeNull();
   });
 });

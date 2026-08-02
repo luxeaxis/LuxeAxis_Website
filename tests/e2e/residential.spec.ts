@@ -43,33 +43,37 @@ test('a tier outside the published set is a 404, not a blank page', async ({ req
   expect(response.status()).toBe(404);
 });
 
-test('no tier page invents a price', async ({ page }) => {
-  // The studio's differentiator is that it publishes prices. Until real ones
-  // exist, the honest statement is that they are published elsewhere — never a
-  // placeholder figure. This fails the day someone seeds one without also
-  // seeding the real rate card.
-  for (const tier of ['essential', 'signature', 'elite']) {
+test('every tier page publishes its floor', async ({ page }) => {
+  // The inverse of what this asserted before the price list existed, when the
+  // only honest statement was that prices were published elsewhere. Each floor
+  // is checked by value rather than merely for a rupee sign, so a tier picking
+  // up the wrong figure fails here.
+  const floors: Record<string, string> = {
+    essential: '₹3.5L',
+    signature: '₹7L',
+    elite: '₹25L',
+  };
+  for (const [tier, floor] of Object.entries(floors)) {
     await page.goto(`/residential/${tier}`);
-    await expect(page.locator('main')).not.toContainText('₹');
+    await expect(page.locator('main'), tier).toContainText(floor);
+    await expect(page.getByText('Fee band:'), tier).toHaveCount(0);
   }
 });
 
-test('the Fee Calculator slot is named as pending, with no invented rate', async ({ page }) => {
-  // The section is present so a visitor knows the calculator is coming, but the
-  // calculator itself does not render without a real rate card. This is the one
-  // component on the site someone acts on financially — they budget against the
-  // number — so an invented rate would read as the studio's price, not as a
-  // placeholder.
-  //
-  // When real rates land, the placeholder disappears and this test fails, which
-  // is the intended prompt: replace it with the keyboard run T-15 asks for (tab
-  // to the area field, type, arrow through the tier radios, confirm the
-  // announced <output> updates). Those semantics are already covered in
-  // tests/unit/fee-calculator.test.tsx.
+test('the Fee Calculator renders the published list', async ({ page }) => {
+  // The rates landed, so this is now the keyboard run T-15 asks for. Driven by
+  // focus and Space rather than a click: the radios are sr-only so the card
+  // around them can be styled, and keyboard-completeness is the binding
+  // requirement.
   await page.goto('/residential');
   await expect(page.getByRole('heading', { name: 'Estimate your project' })).toBeVisible();
-  await expect(page.getByText('The fee calculator is not live yet')).toBeVisible();
-  // No inputs, and no figure of any kind.
-  await expect(page.locator('#calculator input')).toHaveCount(0);
-  await expect(page.locator('#calculator')).not.toContainText('₹');
+
+  const villa = page.getByRole('radio', { name: /Villa/ });
+  await villa.focus();
+  await page.keyboard.press('Space');
+  await expect(villa).toBeChecked();
+
+  const output = page.locator('#calculator output');
+  await expect(output).toContainText('₹25L to ₹80L');
+  await expect(output).toContainText('Signature or Elite');
 });

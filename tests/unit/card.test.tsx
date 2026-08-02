@@ -110,6 +110,6 @@ describe('TierCard — inclusions and price render as real content', () => {
 
   it('renders the formatted price', () => {
     render(<TierCard {...tierProps} />);
-    expect(screen.getByText('₹10,00,000')).toBeDefined();
+    expect(screen.getByText('₹10L')).toBeDefined();
   });
 });

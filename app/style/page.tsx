@@ -24,15 +24,13 @@ const ROUTE = '/style';
 
 // ILLUSTRATIVE ONLY — not Luxe Axis pricing, and not a proposal.
 //
-// The Fee Calculator has no live call site: `getCalculatorConfig()` returns
-// null until the studio publishes real per-square-foot rates, so
-// `/residential` omits the section entirely. Without this specimen the
-// component would ship unreviewable, which is exactly the gap /style exists to
-// close for every other component here.
+// The real price list now exists and the calculator renders it on /pricing and
+// /residential. This specimen stays because /style's job is to show every
+// component in isolation, and pointing it at live pricing would mean the
+// reference page silently changing whenever commercial terms do.
 //
-// The rates are deliberately round and obviously synthetic (1,000 sq ft at
-// Signature comes to a clean ₹20,00,000–₹30,00,000) so nobody skimming this
-// page could mistake them for a published price list — the same reasoning as
+// The rows are named "Demo" and the figures are obviously synthetic, so nobody
+// skimming could mistake them for the published list — the same reasoning as
 // the "Illustrative" label on the Cards specimen's price band. The route is
 // `robots: { index: false }`, so these numbers are also not indexable.
 
@@ -176,13 +174,24 @@ const TYPE_RAMP = [
 ] as const;
 
 const ILLUSTRATIVE_RATES: CalculatorConfig = {
-  area: { min: 500, max: 5000, step: 50 },
-  rates: {
-    Essential: { low: 1000, high: 2000 },
-    Signature: { low: 2000, high: 3000 },
-    Elite: { low: 3000, high: 5000 },
-  },
-  roundToNearest: 1000,
+  brackets: [
+    {
+      id: 'demo-flat',
+      label: 'Demo flat',
+      area: { min: 100, max: 200 },
+      tiers: ['Essential'],
+      projectCost: { low: 100_000, high: 200_000 },
+      designFee: { low: 10_000, high: 20_000 },
+    },
+    {
+      id: 'demo-house',
+      label: 'Demo house',
+      area: { min: 300, max: null },
+      tiers: ['Signature', 'Elite'],
+      projectCost: { low: 300_000, high: 900_000 },
+      designFee: { low: 30_000, high: 90_000 },
+    },
+  ],
 };
 
 const SPACE_STEPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;

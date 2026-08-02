@@ -90,15 +90,25 @@ describe('tiers', () => {
     }
   });
 
-  it('publishes no price it has not been given', async () => {
-    // The studio's stated differentiator is "most Chennai studios hide the
-    // price, we publish it" (Landing Blueprint §3.6). A placeholder figure is
-    // the one lie that would discredit exactly that claim, so the absence is
-    // asserted rather than left to reviewer discipline. Delete this test when
-    // real prices land — do not "fix" it by inventing one.
+  it('publishes a real floor for every tier', async () => {
+    // This asserted the OPPOSITE until the studio published its price list —
+    // that no tier carried a figure, because a placeholder would have
+    // discredited the "we publish our prices" claim the whole site rests on.
+    // Now that real numbers exist the useful invariant flips: every tier must
+    // carry one, or a tier card silently falls back to "Fee band: To be
+    // published" while its neighbours show prices.
     for (const tier of await getTiers()) {
-      expect(tier.priceFrom, `${tier.name} has a price that no spec supplies`).toBeNull();
+      expect(tier.priceFrom, `${tier.name} has no published floor`).toBeGreaterThan(0);
     }
+  });
+
+  it('orders the tier floors Essential < Signature < Elite', async () => {
+    // Three numbers transcribed from a price list. If they ever came out of
+    // order the tier cards would present a cheaper Elite than Signature, which
+    // is the kind of thing nobody notices until a customer does.
+    const [essential, signature, elite] = await getTiers();
+    expect(essential!.priceFrom!).toBeLessThan(signature!.priceFrom!);
+    expect(signature!.priceFrom!).toBeLessThan(elite!.priceFrom!);
   });
 });
 

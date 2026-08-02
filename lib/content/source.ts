@@ -1,5 +1,6 @@
 import type {
   CalculatorConfig,
+  Subscription,
   Faq,
   Guarantee,
   NriRegion,
@@ -203,15 +204,23 @@ const TIERS: readonly Tier[] = [
   {
     id: 'essential',
     name: 'Essential',
-    summary: 'A complete, well-made 2 or 3BHK, delivered to a published price.',
-    priceFrom: null,
+    summary: 'A complete, well-made 1 or 2BHK, delivered to a published price.',
+    // The floor of the published list: a 1BHK is served by Essential and starts
+    // at 3.5L for the whole project. `priceFrom` is TOTAL project cost, which is
+    // the figure a visitor is deciding against — the design fee within it is
+    // published separately on /pricing rather than folded in here.
+    priceFrom: 350_000,
     inclusions: ['Full design and drawings', 'Vastu-Tech check', 'Vetted execution partners'],
   },
   {
     id: 'signature',
     name: 'Signature',
     summary: 'Bespoke detailing and materials, with the studio running delivery.',
-    priceFrom: null,
+    // The lowest published row Signature appears on is the 2BHK (7L-15L,
+    // Essential/Signature). Taken as the floor rather than the 3BHK's 12L,
+    // because a 2BHK genuinely can be specified as Signature — quoting the
+    // higher number would overstate the entry point.
+    priceFrom: 700_000,
     inclusions: [
       'Everything in Essential',
       'Bespoke joinery and material palette',
@@ -222,8 +231,10 @@ const TIERS: readonly Tier[] = [
   {
     id: 'elite',
     name: 'Elite',
-    summary: 'Villas and landmark homes, designed and delivered end to end.',
-    priceFrom: null,
+    summary: 'Villas, penthouses and landmark homes, designed and delivered end to end.',
+    // Same reasoning: the lowest row Elite appears on is the villa
+    // (25L-80L, Signature/Elite), not the penthouse's 60L.
+    priceFrom: 2_500_000,
     inclusions: [
       'Everything in Signature',
       'Full architectural collaboration',
@@ -251,6 +262,94 @@ const PENDING_STAT_LABELS: readonly string[] = [
   'On-time completion',
   'Net Promoter Score',
   'Referral rate',
+];
+
+
+// The residential price list, exactly as the studio publishes it. Total project
+// cost and design fee are separate figures because they answer different
+// questions, and publishing only the first is what makes a visitor suspect the
+// second is hidden inside it.
+//
+// Areas are the typical carpet area for each property type, for orientation
+// when choosing a row. They are NOT multiplied by anything — see the
+// `PropertyBracket` comment in types.ts for why a per-square-foot rate cannot
+// honestly be derived from these bands.
+const CALCULATOR: CalculatorConfig = {
+  brackets: [
+    {
+      id: '1bhk',
+      label: '1BHK',
+      area: { min: 400, max: 650 },
+      tiers: ['Essential'],
+      projectCost: { low: 350_000, high: 600_000 },
+      designFee: { low: 50_000, high: 75_000 },
+    },
+    {
+      id: '2bhk',
+      label: '2BHK',
+      area: { min: 800, max: 1_200 },
+      tiers: ['Essential', 'Signature'],
+      projectCost: { low: 700_000, high: 1_500_000 },
+      designFee: { low: 75_000, high: 180_000 },
+    },
+    {
+      id: '3bhk',
+      label: '3BHK',
+      area: { min: 1_200, max: 1_800 },
+      tiers: ['Signature'],
+      projectCost: { low: 1_200_000, high: 2_500_000 },
+      designFee: { low: 150_000, high: 350_000 },
+    },
+    {
+      id: 'villa',
+      label: 'Villa',
+      // Published as "2,000+ sq ft" — open-ended, and modelled as such rather
+      // than given an invented ceiling.
+      area: { min: 2_000, max: null },
+      tiers: ['Signature', 'Elite'],
+      projectCost: { low: 2_500_000, high: 8_000_000 },
+      designFee: { low: 300_000, high: 1_200_000 },
+    },
+    {
+      id: 'penthouse',
+      label: 'Penthouse',
+      // No area published for this row, and it is not a size category — a
+      // penthouse overlaps the villa band on area and is priced differently.
+      // `null` rather than a guessed range, which is also why this calculator
+      // asks for property TYPE rather than deriving it from square feet.
+      area: null,
+      tiers: ['Elite'],
+      projectCost: { low: 6_000_000, high: 20_000_000 },
+      designFee: { low: 800_000, high: 2_500_000 },
+    },
+  ],
+};
+
+// Published recurring services. Annual rates are listed only where the studio
+// publishes one — Elite Concierge has no annual price, and inventing one by
+// multiplying by twelve would misstate a discount that may not exist.
+const SUBSCRIPTIONS: readonly Subscription[] = [
+  {
+    id: 'home-concierge',
+    name: 'Home Concierge',
+    summary: 'Ongoing care for a finished home — the things that surface after you have lived in it.',
+    monthly: 2_499,
+    yearly: 24_999,
+  },
+  {
+    id: 'elite-concierge',
+    name: 'Elite Concierge',
+    summary: 'Priority care for villas and landmark homes.',
+    monthly: 4_999,
+    yearly: null,
+  },
+  {
+    id: 'business-concierge',
+    name: 'Business Concierge',
+    summary: 'For commercial spaces that keep changing after handover.',
+    monthly: 15_000,
+    yearly: 150_000,
+  },
 ];
 
 // Awaiting real content — see the file comment for why these are not seeded.
@@ -437,18 +536,12 @@ export async function getPendingStatLabels(): Promise<readonly string[]> {
   return PENDING_STAT_LABELS;
 }
 
-/**
- * `null` until the studio publishes real per-square-foot rates, and the Fee
- * Calculator renders nothing while it is.
- *
- * This is the sharpest instance of the rule the rest of this file follows.
- * Spec §2 names "the public fee calculator" as a proof of Radical Transparency,
- * and §5.7 calls it "the published-pricing trust signal". A calculator is also
- * the one thing on this site a visitor will act on directly — they will budget
- * against the number it returns, and possibly commit to a purchase because of
- * it. An invented rate does not read as a placeholder; it reads as the
- * studio's price.
- */
+/** The published residential price list. */
 export async function getCalculatorConfig(): Promise<CalculatorConfig | null> {
-  return null;
+  return CALCULATOR;
+}
+
+/** Published recurring services. */
+export async function getSubscriptions(): Promise<readonly Subscription[]> {
+  return SUBSCRIPTIONS;
 }

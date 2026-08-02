@@ -10,6 +10,8 @@
  * it, per the brief's "no fabricated prices" rule.
  */
 
+import { formatRupees } from '@/lib/pricing/estimate';
+
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
 
 export type PriceTagProps = {
@@ -23,14 +25,12 @@ export type PriceTagProps = {
 };
 
 export function PriceTag({ amount, period, className }: PriceTagProps) {
-  // `Intl.NumberFormat` (not a hand-rolled grouping regex) both places the
-  // Indian digit-grouping commas (₹18,40,000, not ₹1,840,000) and emits the
-  // rupee sign — no literal "₹" character or grouping logic invented here.
-  const formatted = new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    maximumFractionDigits: 0,
-  }).format(amount);
+  // Shared with the Fee Calculator via `formatRupees`, deliberately. This used
+  // to call `Intl.NumberFormat` directly, which grouped correctly (₹3,50,000,
+  // not ₹350,000) but read differently from the calculator's lakh notation —
+  // so /pricing showed the same tier as "₹3,50,000" on its card and "₹3.5L" in
+  // the calculator, a few hundred pixels apart. One formatter, one reading.
+  const formatted = formatRupees(amount);
 
   return (
     <p className={cx('flex items-baseline gap-2', className)}>
