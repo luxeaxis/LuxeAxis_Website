@@ -18,6 +18,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from './Button';
 import { Link } from './Link';
+import { Logo } from './Logo';
 import { MobileSheet } from './MobileSheet';
 import { Cluster, Container } from './layout';
 import { usePathname } from 'next/navigation';
@@ -60,15 +61,20 @@ export function Header() {
     >
       <Container className="h-full">
         <div className="flex h-full items-center justify-between gap-4">
-          {/* Logo slot — text wordmark placeholder. The real mark
-              (logo-horizontal.svg, spec §3.6) is blocked on vectorising the
-              supplied raster; this stands in for it and should be the first
-              thing swapped out once that asset lands. Coloured to match the
-              intended two-tone lockup (gold "LUXE" / on-surface "AXIS") so
-              it reads as the brand mark-in-waiting, not a stray label. */}
+          {/* The real mark at last (spec §3.6), from the studio's Illustrator
+              master. The monogram is SVG; the wordmark stays HTML text so it
+              remains selectable, searchable and translatable, and so it uses
+              the display font the rest of the site does rather than the master's
+              JavaneseText, which no visitor has. `aria-hidden` on the mark: the
+              link's own label already says the brand name, and announcing it
+              twice is noise. */}
           <Link href="/" variant="standalone" className="shrink-0" aria-label="Luxe Axis — home">
-            <span className="font-display text-[length:var(--typography-h3-font-size)] tracking-[var(--font-tracking-wider)]">
-              <span className="text-accent">LUXE</span> <span className="text-on-surface">AXIS</span>
+            <span className="flex items-center gap-3">
+              <Logo className="h-icon-lg w-auto text-accent" />
+              <span className="font-display text-[length:var(--typography-h3-font-size)] tracking-[var(--font-tracking-wider)]">
+                <span className="text-accent">LUXE</span>{' '}
+                <span className="text-on-surface">AXIS</span>
+              </span>
             </span>
           </Link>
 

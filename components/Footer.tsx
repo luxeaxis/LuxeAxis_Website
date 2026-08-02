@@ -15,6 +15,7 @@
  */
 
 import { Link } from './Link';
+import { Logo } from './Logo';
 import { Container, Grid, Stack } from './layout';
 import { STUDIO, telHref, whatsappHref } from '@/lib/content/studio';
 
@@ -105,11 +106,16 @@ export function Footer() {
       <Container className="py-section-y">
         <Stack gap={9}>
           {/* Logo-primary slot (spec §3.6 Placement: "Footer: logo-primary
-              with tagline"). Text stand-in — see Header.tsx's logo comment;
-              same blocker (vectorising the supplied raster). */}
-          <Stack gap={2}>
-            <span className="font-display text-[length:var(--typography-h2-font-size)] tracking-[var(--font-tracking-wider)]">
-              <span className="text-accent">LUXE</span> <span className="text-on-surface">AXIS</span>
+              with tagline"). Larger than the header lockup, with the tagline
+              the master carries beneath it — see components/Logo.tsx for why
+              the mark is SVG and the words are not. */}
+          <Stack gap={3}>
+            <span className="flex items-center gap-4">
+              <Logo className="h-12 w-auto text-accent" />
+              <span className="font-display text-[length:var(--typography-h2-font-size)] tracking-[var(--font-tracking-wider)]">
+                <span className="text-accent">LUXE</span>{' '}
+                <span className="text-on-surface">AXIS</span>
+              </span>
             </span>
             <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
               Designing Dreams
