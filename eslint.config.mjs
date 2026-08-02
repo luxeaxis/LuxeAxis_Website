@@ -32,7 +32,13 @@ const SEAM = {
     // occurs, not on how the specifier got there, so `@/three/x` and
     // `../../three/x` both match `**/three/**`.
     '**/three/**',
+    // The two seam modules. Both are permitted from outside three/ because
+    // neither statically references `three` or `@react-three/*`: registry.ts is
+    // pure data (poster metadata, scene ids, types) and stage.tsx contains only
+    // a build-time-guarded dynamic import. Everything that actually touches
+    // WebGL sits behind them.
     '!**/three/registry',
+    '!**/three/stage',
     // The bare npm package (`import 'three'`) and any subpath import from it
     // (`three/examples/...`), which would bypass the registry's budget/tier
     // gating just as surely as reaching into our own three/ directory does.
@@ -68,7 +74,7 @@ const SEAM = {
 // probe cases in tests/unit/eslint-seam.test.ts rather than by construction —
 // there is no library that understands both selector syntax.
 const SEAM_DYNAMIC_IMPORT_SELECTOR =
-  'ImportExpression[source.value=/^three$|(^|\\/)three\\/(?!registry(?:$|\\/))|^@react-three\\//]';
+  'ImportExpression[source.value=/^three$|(^|\\/)three\\/(?!(registry|stage)(?:$|\\/))|^@react-three\\//]';
 
 export default [
   {

@@ -6,6 +6,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ToastProvider } from '@/components/Toast';
 import { ConsentBanner } from '@/components/ConsentBanner';
+import { SceneStage } from '@/three/stage';
 import { JsonLd } from '@/components/JsonLd';
 import { localBusinessJsonLd, organizationJsonLd } from '@/lib/seo/jsonLd';
 import { SITE_ORIGIN } from '@/lib/seo/origin';
@@ -78,6 +79,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={organizationJsonLd()} />
         {localBusiness && <JsonLd data={localBusiness} />}
         <TierProbe />
+        {/* The WebGL layer, behind all DOM content. Renders null unless the
+            three_v1 flag is on, the device is T2+, motion is not reduced and a
+            scene is active — so null everywhere today. With the flag off the
+            bundler drops three entirely; see three/stage.tsx. */}
+        <SceneStage />
         {/* Must stay the first focusable element in the DOM — Header adds
             several more focusable controls (logo, nav, Book Audit, hamburger)
             ahead of `#main`, which is exactly what the skip link exists to let
