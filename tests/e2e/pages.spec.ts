@@ -165,6 +165,30 @@ test('commercial asks for a consult, not a home audit', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Request a consult' }).first()).toBeVisible();
 });
 
+test('commercial publishes its rates, margin included', async ({ page }) => {
+  // The studio's whole position is that it states the price. On commercial that
+  // means three things a buyer would otherwise only learn in a meeting: the
+  // per-square-foot band, the execution margin on top of it, and the studio's
+  // own design fee. A page showing the first and quietly omitting the second is
+  // the practice this site is arguing against.
+  await page.goto('/commercial/workplace#rates');
+
+  const table = page.getByRole('table', { name: /Workplace rates/ });
+  await expect(table).toBeVisible();
+
+  const midOffice = table.getByRole('row', { name: /Mid office/ });
+  await expect(midOffice).toContainText('₹120–200 / sq ft');
+  await expect(midOffice).toContainText('15% execution');
+  await expect(midOffice).toContainText('₹3L to ₹20L');
+
+  // Retail carries a concept fee and no margin; offices are the other way
+  // round. Rendering one segment's shape onto the other invents a charge.
+  await page.goto('/commercial/retail-hospitality#rates');
+  const retail = page.getByRole('row', { name: /^Retail/ });
+  await expect(retail).toContainText('₹2L concept');
+  await expect(retail).not.toContainText('execution');
+});
+
 test('about states positions and names the company facts as outstanding', async ({ page }) => {
   // An invented founding year or team size is a fabricated company record — the
   // kind of detail a journalist or a procurement form relies on.

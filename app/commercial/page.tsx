@@ -7,7 +7,8 @@ import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
-import { COMMERCIAL_VERTICALS } from '@/lib/content/commercial';
+import { COMMERCIAL_VERTICALS, ratesFor } from '@/lib/content/commercial';
+import { formatRupees } from '@/lib/pricing/estimate';
 
 const ROUTE = '/commercial';
 
@@ -82,6 +83,47 @@ export default function CommercialPage() {
               body={vertical.summary}
             />
           ))}
+        </Grid>
+      </Section>
+
+      <Section
+        id="rates"
+        eyebrow="What it costs"
+        title="Rates, published"
+        lede="The same transparency as our residential pricing, applied to commercial. Each vertical page carries the full band by segment, including the execution margin and any concept fee."
+      >
+        <Grid cols={3} gap={5}>
+          {COMMERCIAL_VERTICALS.map((vertical) => {
+            const rates = ratesFor(vertical.slug);
+            if (rates.length === 0) return null;
+            // The entry point into the vertical, not an average — a visitor
+            // scanning three cards is asking "can I afford to start here",
+            // and the lowest published rate is the honest answer to that.
+            const from = Math.min(...rates.map((rate) => rate.perSqFt.low));
+            const feeFrom = Math.min(...rates.map((rate) => rate.designFee.low));
+            return (
+              <div
+                key={vertical.slug}
+                className="rounded-lg border border-border-subtle bg-surface-raised p-6"
+              >
+                <Stack gap={3}>
+                  <h3 className="font-display text-[length:var(--typography-h3-font-size)] text-on-surface">
+                    {vertical.name}
+                  </h3>
+                  <p className="font-mono text-[length:var(--typography-h3-font-size)] tabular-nums text-on-surface">
+                    ₹{from}
+                    <span className="font-ui text-small text-on-surface-2"> / sq ft onwards</span>
+                  </p>
+                  <p className="text-small text-on-surface-2">
+                    Design fee from {formatRupees(feeFrom)}.
+                  </p>
+                  <Button as="a" href={`/commercial/${vertical.slug}#rates`} variant="secondary">
+                    See the full band
+                  </Button>
+                </Stack>
+              </div>
+            );
+          })}
         </Grid>
       </Section>
 
