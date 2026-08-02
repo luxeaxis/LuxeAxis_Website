@@ -44,6 +44,7 @@ import { InlineAlert } from './InlineAlert';
 import { ConsentCheckbox } from './ConsentCheckbox';
 import { Stack } from './layout';
 import { leadSchema, type Lead } from '@/lib/lead/schema';
+import { auditEmailHref, auditWhatsappHref } from '@/lib/lead/fallback';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
 
@@ -220,6 +221,13 @@ export function BookAuditForm() {
 
   const values = watch();
 
+  // Composed only once a submission has actually failed. Building them on every
+  // keystroke would mean encoding the whole form into two URLs for the large
+  // majority of visitors who never see this branch.
+  const failed = submitState.status === 'error';
+  const emailHref = failed ? auditEmailHref(values) : null;
+  const whatsappLink = failed ? auditWhatsappHref(values) : null;
+
   return (
     <form onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate>
       <Stack gap={6}>
@@ -381,9 +389,32 @@ export function BookAuditForm() {
                     : 'We could not send that just now'
                 }
               >
-                {submitState.reason === 'not_configured'
-                  ? 'This form is not connected to the studio yet, so your request would not reach anyone. Nothing you typed has been sent. Please use the contact details in the footer instead.'
-                  : 'Your details have not been sent. Please try once more — if it still fails, use the contact details in the footer.'}
+                <Stack gap={4}>
+                  <p>
+                    {submitState.reason === 'not_configured'
+                      ? 'This form is not connected to the studio yet, so your request would not reach anyone. Nothing you typed has been sent.'
+                      : 'Your details have not been sent. You can try again, or send them a different way.'}
+                  </p>
+                  {/* The enquiry, ready to go through a channel that works.
+                      These are links: the visitor's own mail client or WhatsApp
+                      opens with the text prepared and THEY press send. The site
+                      never posts their details anywhere — quietly forwarding a
+                      failed submission elsewhere would move personal data to a
+                      destination they did not choose, on the one path where we
+                      have just told them delivery failed. */}
+                  <div className="flex flex-wrap gap-3">
+                    {emailHref && (
+                      <Button as="a" href={emailHref} variant="secondary" size="sm">
+                        Send it by email instead
+                      </Button>
+                    )}
+                    {whatsappLink && (
+                      <Button as="a" href={whatsappLink} variant="secondary" size="sm">
+                        Send it on WhatsApp
+                      </Button>
+                    )}
+                  </div>
+                </Stack>
               </InlineAlert>
             )}
 

@@ -165,6 +165,39 @@ test('says so honestly when the lead endpoint is not configured', async ({ page 
   await expect(page.getByText('Your audit request is in')).toHaveCount(0);
 });
 
+test('a failed submission offers channels that actually work, carrying what was typed', async ({
+  page,
+}) => {
+  // While LEAD_WEBHOOK_URL is unset every submission fails, which makes this
+  // the ONLY route by which a Book-Audit enquiry reaches the studio at all.
+  // Telling someone "try later" here throws away a lead for no reason.
+  await page.goto('/book-audit');
+  await fillStepOne(page);
+  await page.getByRole('button', { name: 'Next' }).click();
+
+  await page.getByRole('textbox', { name: /^Your name/ }).fill('A Visitor');
+  await page.getByRole('textbox', { name: /^Email/ }).fill('visitor@example.com');
+  await page.getByRole('textbox', { name: /^Phone/ }).fill('+91 98400 00000');
+  await page.getByRole('checkbox').check();
+  await page.getByRole('button', { name: 'Request my audit' }).click();
+
+  const email = page.getByRole('link', { name: 'Send it by email instead' });
+  const whatsapp = page.getByRole('link', { name: 'Send it on WhatsApp' });
+  await expect(email).toBeVisible();
+  await expect(whatsapp).toBeVisible();
+
+  // The enquiry travels with the link, so the visitor retypes nothing.
+  const mailto = decodeURIComponent((await email.getAttribute('href')) ?? '');
+  expect(mailto.startsWith('mailto:info@luxeaxis.in')).toBe(true);
+  expect(mailto).toContain('A Visitor');
+  expect(mailto).toContain('visitor@example.com');
+  expect(mailto).toContain('Chennai');
+
+  const wa = (await whatsapp.getAttribute('href')) ?? '';
+  expect(wa.startsWith('https://wa.me/918124600321?text=')).toBe(true);
+  expect(decodeURIComponent(wa)).toContain('A Visitor');
+});
+
 test('the lead endpoint refuses a GET', async ({ request }) => {
   expect((await request.get('/api/lead')).status()).toBe(405);
 });
