@@ -6,14 +6,14 @@ import { ToBePublished } from '@/components/ToBePublished';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { canonicalFor } from '@/lib/seo/hreflang';
-import { getGuarantees, getProcessStages } from '@/lib/content/source';
+import { getGuarantees, getProcessStages, getTiers } from '@/lib/content/source';
 
 const ROUTE = '/process';
 
 export const metadata: Metadata = {
   title: 'How we work — Luxe Axis',
   description:
-    'Seven stages from first conversation to concierge care, with the 60-Day Handover Guarantee attached where it belongs.',
+    'Seven stages from first conversation to concierge care, with each guarantee attached to the stage where it applies.',
   alternates: canonicalFor(ROUTE),
 };
 
@@ -33,7 +33,11 @@ export const metadata: Metadata = {
  * the entire content of this page.
  */
 export default async function ProcessPage() {
-  const [stages, guarantees] = await Promise.all([getProcessStages(), getGuarantees()]);
+  const [stages, guarantees, tiers] = await Promise.all([
+    getProcessStages(),
+    getGuarantees(),
+    getTiers(),
+  ]);
   const guaranteeById = new Map(guarantees.map((guarantee) => [guarantee.id, guarantee]));
 
   return (
@@ -67,7 +71,9 @@ export default async function ProcessPage() {
       >
         <ol className="flex max-w-measure flex-col gap-8">
           {stages.map((stage, index) => {
-            const guarantee = stage.guaranteeId ? guaranteeById.get(stage.guaranteeId) : undefined;
+            const attached = (stage.guaranteeIds ?? [])
+              .map((id) => guaranteeById.get(id))
+              .filter((guarantee) => guarantee !== undefined);
             return (
               <li key={stage.id} className="flex gap-5">
                 <span
@@ -81,15 +87,19 @@ export default async function ProcessPage() {
                     {stage.name}
                   </h3>
                   <p className="text-on-surface-2">{stage.body}</p>
-                  {guarantee && (
+                  {attached.length > 0 && (
                     // §5.8: "each node … with the relevant guarantee attached".
                     // Attached to its stage rather than listed separately,
                     // because a guarantee means more where it applies than in a
-                    // block of guarantees at the bottom of the page.
-                    <div className="mt-1">
-                      <Badge tone="accent" icon="check">
-                        {guarantee.name}
-                      </Badge>
+                    // block of guarantees at the bottom of the page. Handover
+                    // shows two — the timeline commitment is discharged there
+                    // and the warranty starts there.
+                    <div className="mt-1 flex flex-wrap gap-2">
+                      {attached.map((guarantee) => (
+                        <Badge key={guarantee.id} tone="accent" icon="check">
+                          {guarantee.name}
+                        </Badge>
+                      ))}
                     </div>
                   )}
                 </Stack>
@@ -115,7 +125,24 @@ export default async function ProcessPage() {
                   {guarantee.name}
                 </h3>
                 <p className="text-on-surface-2">{guarantee.summary}</p>
-                <p className="text-small">
+                {/* The per-tier commitments, same as /pricing. Without them this
+                    page names the guarantees but not what any of them actually
+                    promises you — and the response times inside the warranty
+                    terms are what a client reaches for at handover, which is the
+                    stage this page is about. */}
+                {guarantee.byTier && (
+                  <dl className="flex flex-col gap-1 border-l-regular border-accent pl-4 text-small">
+                    {tiers.map((tier) =>
+                      guarantee.byTier?.[tier.name] ? (
+                        <div key={tier.id} className="flex gap-2">
+                          <dt className="text-on-surface-muted">{tier.name}</dt>
+                          <dd className="text-on-surface">{guarantee.byTier[tier.name]}</dd>
+                        </div>
+                      ) : null,
+                    )}
+                  </dl>
+                )}
+                <p className="text-small text-on-surface-2">
                   {guarantee.terms ?? <ToBePublished label="Full terms" />}
                 </p>
               </Stack>

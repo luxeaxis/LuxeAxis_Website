@@ -434,7 +434,7 @@ const PROCESS_STAGES: readonly ProcessStage[] = [
     id: 'handover',
     name: 'Handover',
     body: 'Snagging, cleaning and the final walkthrough, which is the point the space becomes yours to use.',
-    guaranteeId: 'timeline',
+    guaranteeIds: ['timeline', 'warranty'],
   },
   {
     id: 'concierge',
@@ -525,7 +525,7 @@ const FAQS: readonly Faq[] = [
     id: 'duration',
     question: 'How long does it take?',
     answer:
-      'Handover is covered by our 60-Day Handover Guarantee. The full timeline depends on scope and approvals, and a designer gives you a dated plan at the audit.',
+      'Every tier commits to a handover date: 45 days on Essential, 60 on Signature, and agreed milestones on Elite. The full timeline depends on scope and approvals, and a designer gives you a dated plan at the audit.',
     link: { label: 'See the process', href: '/process' },
   },
   {

@@ -195,8 +195,11 @@ export type ProcessStage = {
    *  Concept, Approve, Build, Handover, Concierge. */
   name: string;
   body: string;
-  /** The guarantee attached to this stage, where one is. */
-  guaranteeId?: string;
+  /** The guarantees attached to this stage. Handover carries two: the timeline
+   *  commitment is discharged there and the warranty period starts there, and
+   *  showing only one of them is how a client comes to believe cover ended at
+   *  the walkthrough. */
+  guaranteeIds?: readonly string[];
 };
 
 /**

@@ -135,6 +135,47 @@ describe('trust points', () => {
   });
 });
 
+describe('the 60-day claim', () => {
+  it('appears nowhere in the source tree except against the Signature tier', async () => {
+    // Fixing the trust strip was not enough — the same flat claim was also in
+    // the home hero (visible copy AND its meta description), the /process meta
+    // description, and an FAQ answer that ships inside FAQPage structured data.
+    // A guarantee overstated in schema.org markup is a claim made to Google as
+    // well as to the reader.
+    //
+    // So this is a whole-tree guard rather than another per-file assertion:
+    // "60-day" is only ever legitimate as Signature's commitment, and every
+    // other appearance is the overstatement coming back.
+    const { readFileSync } = await import('node:fs');
+    const { execSync } = await import('node:child_process');
+
+    // Directory pathspecs, not `app/**/*.tsx` — that glob requires at least one
+    // intermediate directory, so it silently skips `app/page.tsx`, which is
+    // where the worst instance of this claim actually was. A guard that misses
+    // the home page is worse than no guard.
+    const tracked = execSync('git ls-files app lib', { encoding: 'utf8' })
+      .split('\n')
+      .filter((file) => /\.tsx?$/.test(file));
+    expect(tracked, 'nothing scanned — the pathspec is wrong').toContain('app/page.tsx');
+
+    const offenders = tracked.flatMap((file) =>
+      readFileSync(file, 'utf8')
+        .split('\n')
+        .map((line, index) => ({ file, line: index + 1, text: line }))
+        .filter(({ text }) => /60[-\s]day/i.test(text))
+        // The published per-tier value and the comments explaining why the flat
+        // version was removed are the only legitimate mentions.
+        .filter(({ text }) => !text.includes("Signature: '60-day handover'"))
+        .filter(({ text }) => !/^\s*(\/\/|\*|\/\*)/.test(text)),
+    );
+
+    expect(
+      offenders.map(({ file, line, text }) => `${file}:${line} ${text.trim()}`),
+      'the flat 60-day guarantee is back',
+    ).toEqual([]);
+  });
+});
+
 describe('guarantees', () => {
   it('publishes the timeline commitment per tier, since all three differ', async () => {
     const timeline = (await getGuarantees()).find((g) => g.id === 'timeline')!;

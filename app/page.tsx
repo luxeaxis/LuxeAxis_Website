@@ -23,7 +23,7 @@ import {
 export const metadata: Metadata = {
   title: 'Luxe Axis — premium Chennai interiors, transparently priced',
   description:
-    'AI-assisted design, Vastu-smart, delivered on a 60-day handover guarantee. Real designers, honest pricing.',
+    'AI-assisted design, Vastu-smart, delivered on a guaranteed handover date. Real designers, honest pricing.',
   alternates: canonicalFor('/'),
 };
 
@@ -75,7 +75,7 @@ export default async function HomePage() {
       <Hero
         // Landing Blueprint §3.1's H1b and its sub, verbatim.
         headline="Your Chennai home, thoughtfully designed. Transparently priced."
-        sub="AI-assisted design, Vastu-smart, delivered on a 60-day handover guarantee. Real designers, honest pricing."
+        sub="AI-assisted design, Vastu-smart, delivered on a guaranteed handover date. Real designers, honest pricing."
         trustPoints={trustPoints}
       />
       <PersonaRouter personas={personas} />
