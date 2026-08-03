@@ -193,9 +193,24 @@ test('about states positions and names the company facts as outstanding', async 
   // An invented founding year or team size is a fabricated company record — the
   // kind of detail a journalist or a procurement form relies on.
   await page.goto('/about');
+
+  // Records nobody has supplied. An invented founding year or team size is a
+  // fabricated company fact, not a placeholder.
   await expect(page.getByText('Founded:')).toBeVisible();
   await expect(page.getByText('The team:')).toBeVisible();
-  await expect(page.getByText(/We publish the price/)).toBeVisible();
+
+  // Positions the studio supplied, so these are published as written.
+  await expect(page.getByRole('heading', { name: 'Technology Humility' })).toBeVisible();
+  await expect(page.getByText(/Radical Transparency/).first()).toBeVisible();
+
+  // Inverted: the address and statutory identifiers WERE listed here as
+  // outstanding while the footer printed them on the same screen. Both now come
+  // from lib/content/studio.ts, so the assertion is that they are stated — and
+  // that neither is still masquerading as a gap.
+  await expect(page.locator('main').getByText('U74102TN2026PTC194776')).toBeVisible();
+  await expect(page.locator('main').getByText('33AAGCL9614E1ZM')).toBeVisible();
+  await expect(page.getByText('Studio address:')).toHaveCount(0);
+  await expect(page.getByText('Registration details')).toHaveCount(0);
 });
 
 test('the legal documents render in full, with their gaps visible', async ({ page }) => {
