@@ -5,8 +5,7 @@
 
 /* Bridge next/font's generated families into the token variables, so
    components keep consuming `--font-family-*` and never reference a font
-   directly. Tamil overrides bind to [lang] rather than a class, so the
-   correct family follows the locale automatically. */
+   directly. */
 :root {
   --font-family-display: var(--font-display), Georgia, serif;
   --font-family-ui: var(--font-ui), system-ui, sans-serif;

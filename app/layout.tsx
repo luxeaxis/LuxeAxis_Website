@@ -6,6 +6,8 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ToastProvider } from '@/components/Toast';
 import { ConsentBanner } from '@/components/ConsentBanner';
+import { SmoothScrollProvider } from '@/components/SmoothScrollProvider';
+import { GoldAxisRail } from '@/components/GoldAxisRail';
 import { SceneStage } from '@/three/stage';
 import { JsonLd } from '@/components/JsonLd';
 import { localBusinessJsonLd, organizationJsonLd } from '@/lib/seo/jsonLd';
@@ -49,9 +51,9 @@ export const metadata: Metadata = {
   },
 };
 
-// Only the weights that appear above the fold are preloaded. The Tamil families
-// (Noto Serif/Sans Tamil) that used to sit alongside these are gone with the
-// locale routing — nothing renders Tamil any more, so shipping a Tamil face
+// Only the weights that appear above the fold are preloaded. The site is
+// English-only, so there is one display family and one UI family — shipping a
+// second script's face
 // would be pure weight.
 const display = Playfair_Display({
   subsets: ['latin'],
@@ -92,13 +94,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Mounted once, site-wide, so any feature can call `useToast()`
             without also remembering to wire a provider (design system §3.5). */}
         <ToastProvider>
-          <Header />
-          {children}
-          <Footer />
-          {/* Last in the DOM deliberately: a keyboard user reaches the page's
-              real content before the banner, which is the order of importance.
-              It is positioned at the bottom of the viewport by CSS. */}
-          <ConsentBanner />
+          <SmoothScrollProvider>
+            <GoldAxisRail />
+            <Header />
+            {children}
+            <Footer />
+            {/* Last in the DOM deliberately: a keyboard user reaches the page's
+                real content before the banner, which is the order of importance.
+                It is positioned at the bottom of the viewport by CSS. */}
+            <ConsentBanner />
+          </SmoothScrollProvider>
         </ToastProvider>
       </body>
     </html>

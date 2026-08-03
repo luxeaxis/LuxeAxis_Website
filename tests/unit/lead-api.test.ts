@@ -59,7 +59,7 @@ describe('the lead schema', () => {
   });
 
   it('accepts international phone numbers, for the NRI persona', () => {
-    // Spec §2.1 makes the Tamil diaspora a primary audience. A ten-digit
+    // Spec §2.1 makes the overseas diaspora a primary audience. A ten-digit
     // Indian-mobile rule would reject exactly the highest-value visitor, and a
     // lead lost to a false negative is invisible.
     for (const phone of ['+44 7700 900123', '+1 (415) 555-0123', '+65 8123 4567', '9840000000']) {

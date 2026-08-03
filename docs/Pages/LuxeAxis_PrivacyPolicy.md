@@ -186,10 +186,4 @@ We may update this Policy from time to time to reflect changes in our practices,
 
 ---
 
-## 15. Language
-
-This Policy is published in English and Tamil for the convenience of our clients. In the event of any conflict or inconsistency between the two versions, the **English version shall prevail**.
-
----
-
 *© Luxe Axis Private Limited. All rights reserved.*

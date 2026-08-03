@@ -112,8 +112,6 @@
       "$type": "fontFamily",
       "display": { "$value": ["Playfair Display", "Georgia", "serif"], "$description": "Headlines / editorial voice." },
       "ui":      { "$value": ["Inter", "system-ui", "sans-serif"], "$description": "Body / UI." },
-      "display-ta": { "$value": ["Noto Serif Tamil", "serif"] },
-      "ui-ta":      { "$value": ["Noto Sans Tamil", "sans-serif"] },
       "mono":    { "$value": ["ui-monospace", "SFMono-Regular", "monospace"], "$description": "Prices, calculators." }
     },
     "weight": {

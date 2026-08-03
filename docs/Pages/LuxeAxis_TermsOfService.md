@@ -215,13 +215,7 @@ This grievance mechanism is provided in accordance with the Information Technolo
 
 ---
 
-## 21. Language
-
-These Terms are published in English and Tamil for the convenience of our clients. In the event of any conflict or inconsistency between the two versions, the **English version shall prevail**.
-
----
-
-## 22. Contact
+## 21. Contact
 
 **Luxe Axis Private Limited**
 [Registered office address], Chennai, Tamil Nadu, [PIN], India

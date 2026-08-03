@@ -16,7 +16,7 @@ const ROUTE = '/nri';
 export const metadata: Metadata = {
   title: 'Design your Chennai home from anywhere — Luxe Axis',
   description:
-    'Remote design for the Tamil diaspora: reviews over video in your time zone, progress and spend visible in Space OS, and a designer on the ground in Chennai.',
+    'Remote design for the Indian diaspora: reviews over video in your time zone, progress and spend visible in Space OS, and a designer on the ground in Chennai.',
   alternates: canonicalFor(ROUTE),
 };
 
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
  * `/nri` (Build Backlog T-18, Spec §5.9) — "Design Chennai from anywhere".
  *
  * The highest-value segment in the strategy: §1.3 sets NRI landing pages a
- * conversion target of ≥5% against ≥3.5% site-wide, and §2.1 names the Tamil
+ * conversion target of ≥5% against ≥3.5% site-wide, and §2.1 names the
  * diaspora a primary persona. It is also the segment whose objection is the
  * most concrete — "can I run a Chennai project from abroad?" — so the page
  * answers that specific question rather than selling the studio again.
@@ -71,7 +71,7 @@ export default async function NriPage() {
             </p>
             {/* §10.8 pairs the NRI CTA with WhatsApp, and this is the segment
                 that needs it most: someone eight time zones away is not going
-                to ring a Chennai office, and WhatsApp is the channel the Tamil
+                to ring a Chennai office, and WhatsApp is the channel the
                 diaspora actually uses. It went in the moment a number existed. */}
             <div className="flex flex-col gap-3 sm:flex-row">
               <Button as="a" href="/book-audit" size="lg">
@@ -92,7 +92,7 @@ export default async function NriPage() {
 
           {/* Reserved for the NRI globe scene (§5.9, T-33). Poster today. */}
           <SceneSlot id="nri-globe">
-            <span className="sr-only">An arc from the Tamil diaspora to Chennai</span>
+            <span className="sr-only">An arc from the Indian diaspora to Chennai</span>
           </SceneSlot>
         </Stack>
       </Container>
