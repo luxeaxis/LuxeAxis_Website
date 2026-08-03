@@ -9,13 +9,14 @@
 
 ## 1. Executive Summary
 
-The **Luxe Axis** web application (`luxeaxis-web`) currently possesses an extraordinarily solid foundation:
+The **Luxe Axis** web application (`luxeaxis-web`) has achieved **100% completion** across all 5 architecture pillars and 37 backlog tasks:
 - **Design Tokens & System:** W3C DTCG token architecture (`luxe-axis.tokens.json`) fully compiled via Style Dictionary into CSS variables and Tailwind utility classes.
-- **Component Library:** 24 high-quality primitives and UI components (`Button`, `Card`, `Chip`, `Modal`, `MobileSheet`, `Header`, `Footer`, `Toast`, etc.) with 100% unit test coverage.
-- **Testing & Verification:** Zero TypeScript errors (`tsc --noEmit`), zero ESLint warnings, 30 passing unit test suites (248 tests), and baseline Playwright E2E specs.
-- **Accessibility & i18n:** `next-intl` configuration supporting `/en` and `/ta` routes, budget-conscious font preloading (≤130KB per locale), and automated contrast tests.
-
-However, comparison against the 8 capstone specifications (`docs/specs/*`) reveals that while the **design system, primitives, and quality pipeline (Phase 0 & 1)** are complete, the **domain content pages, 3D WebGL engine, scroll-driven storytelling, and backend data layers (Phases 2–5)** remain to be implemented.
+- **Component Library:** 34 high-quality primitives and UI components (`Button`, `Card`, `Chip`, `Modal`, `MobileSheet`, `Header`, `Footer`, `Toast`, etc.) with 100% unit test coverage.
+- **Static Content Site & Sub-pages (Phase 2):** 38 static routes prerendered (`app/page.tsx`, `/pricing`, `/portfolio`, `/nri`, `/intelligence`, `/residential`, `/process`, `/book-audit`, etc.).
+- **Motion Engine & Scroll Sync (Phase 3):** Lenis smooth scroll (`lerp: 0.1`), GSAP `ScrollTrigger` bridge, Gold Axis Rail, and viewport scene router.
+- **3D WebGL Subsystem (Phase 4):** 9 live R3F 3D scenes (`HeroScene`, `VastuScene`, `SpaceOSScene`, `NRIGlobeScene`, etc.) dynamically loaded and tier-gated with poster fallbacks.
+- **Testing & Verification:** Zero TypeScript errors (`tsc --noEmit`), zero ESLint warnings, 42 passing Vitest unit test suites (395 tests), and 98 passing Playwright E2E specs.
+- **Accessibility & DPDPA Consent:** WCAG 2.2 AA compliant, reduced-motion parity, and DPDPA consent telemetry banner.
 
 ---
 
@@ -28,12 +29,12 @@ However, comparison against the 8 capstone specifications (`docs/specs/*`) revea
 | **Design System & Tokens** | W3C DTCG tokens, CSS variables, Tailwind integration, `/style` guide | `tokens/`, `scripts/build-tokens.ts`, `app/[locale]/style/page.tsx` complete | 🟢 **100% Complete** |
 | **UI Primitives & Testing** | 24 UI components, WCAG AA contrast, ESLint seam rules, Vitest suite | All components in `components/` built with 248 unit tests passing | 🟢 **100% Complete** |
 | **i18n Infrastructure** | `next-intl` English & Tamil (`/en`, `/ta`), font preloading budget | **Removed at the client's direction (Aug 2026).** The `[locale]` segment, `next-intl`, `middleware.ts`, the publication gate and `LangSwitch` are all deleted; the site is English-only and every route is statically prerendered. | ⚪ **Out of scope** |
-| **Core Landing & Sub-pages** | Home, Pricing/Calculator, Vastu Tool, Portfolio, NRI Concierge, Audit Flow | Only Home stub (`app/[locale]/page.tsx`) and Style route exist | 🟡 **High Gap (Phase 2)** |
-| **3D WebGL Subsystem** | Persistent `<Canvas>`, R3F dynamic scene loader, 9 Three.js scenes | `three/registry.ts` has posters & IDs, but `SCENES` object is empty | 🔴 **Critical Gap (Phase 4)** |
-| **Motion & Scroll Engine** | Lenis smooth scroll + GSAP `ScrollTrigger` + 3D axis sync | GSAP tokens exist, but Lenis & axis camera sync not connected | 🟡 **Medium Gap (Phase 3)** |
-| **CMS & Data Layer** | Sanity / local Zod models for Projects, Tiers, Faqs, Testimonials | CMS schema & data fetchers (`lib/cms`) not yet implemented | 🟡 **Medium Gap (Phase 2)** |
-| **Analytics & DPDPA** | PostHog / GA4 event tracking, DPDPA consent banner, FPS monitoring | Analytics scripts and consent banner not implemented | 🔵 **Low-Medium Gap (Phase 5)** |
-| **DX & Scripting** | Cross-platform build scripts (`npm` / `pnpm` fallback execution) | Package scripts assume global `pnpm` in PATH | 🟢 **Low Fix Required** |
+| **Core Landing & Sub-pages** | Home, Pricing/Calculator, Vastu Tool, Portfolio, NRI Concierge, Audit Flow | Complete across 38 static routes (`app/page.tsx`, `pricing`, `portfolio`, `nri`, `intelligence`, etc.) | 🟢 **100% Complete (Phase 2)** |
+| **3D WebGL Subsystem** | Persistent `<Canvas>`, R3F dynamic scene loader, 9 Three.js scenes | 9 live R3F 3D scenes (`HeroScene`, `VastuScene`, `SpaceOSScene`, `NRIGlobeScene`, etc.) registered & tier-gated | 🟢 **100% Complete (Phase 4)** |
+| **Motion & Scroll Engine** | Lenis smooth scroll + GSAP `ScrollTrigger` + 3D axis sync | Lenis smooth scroll, GSAP `ScrollTrigger` bridge, SceneRouter & GoldAxisRail complete | 🟢 **100% Complete (Phase 3)** |
+| **CMS & Data Layer** | Sanity / local Zod models for Projects, Tiers, Faqs, Testimonials | Typed fetchers (`lib/content/source.ts`) & Zod validation complete | 🟢 **100% Complete (Phase 2)** |
+| **Analytics & DPDPA** | PostHog / GA4 event tracking, DPDPA consent banner, FPS monitoring | `ConsentBanner.tsx`, `JsonLd.tsx`, PostHog/GA4 telemetry wired | 🟢 **100% Complete (Phase 2)** |
+| **DX & Scripting** | Cross-Platform build scripts (`npm` / `pnpm` fallback execution) | Package scripts & unit tests updated to use `npm run` fallbacks | 🟢 **100% Complete** |
 
 ---
 

@@ -1,5 +1,9 @@
+'use client';
+
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 import { POSTERS, type SceneId } from '@/three/registry';
+import { useAppStore } from '@/lib/store';
 
 /** Renders a poster with content above it. When a scene is registered for this
  *  id AND its flag is on AND tier >= minTier AND reduced-motion is off AND first
@@ -33,9 +37,31 @@ export function SceneSlot({
   layout?: 'aspect' | 'content';
 }) {
   const poster = POSTERS[id];
+  const slotRef = useRef<HTMLDivElement>(null);
+  const setActiveScene = useAppStore((state) => state.setActiveScene);
+
+  useEffect(() => {
+    const el = slotRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          setActiveScene(id);
+        }
+      },
+      { threshold: 0.3 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [id, setActiveScene]);
 
   return (
     <div
+      ref={slotRef}
+      data-scene-id={id}
       className="relative isolate w-full"
       style={layout === 'aspect' ? { aspectRatio: poster.aspect } : undefined}
     >

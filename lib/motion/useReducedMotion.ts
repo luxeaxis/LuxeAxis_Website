@@ -33,6 +33,9 @@ export function useReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return;
+    }
     const query = window.matchMedia(QUERY);
     setReduced(query.matches);
     const onChange = () => setReduced(query.matches);

@@ -95,7 +95,15 @@ export const POSTERS: Record<SceneId, ScenePoster> = {
   },
 };
 
-/** Partial by design: the type system encodes that live 3D is optional, so no
- *  page can be written that depends on a scene existing. Populated per scene in
- *  a later phase, each behind its own flag. */
-export const SCENES: Partial<Record<SceneId, () => Promise<SceneModule>>> = {};
+/** Registered live 3D scenes loaded dynamically per scene ID. */
+export const SCENES: Partial<Record<SceneId, () => Promise<SceneModule>>> = {
+  hero: () => import('./scenes/HeroScene').then((m) => m.default),
+  vastu: () => import('./scenes/VastuScene').then((m) => m.default),
+  'space-os': () => import('./scenes/SpaceOSScene').then((m) => m.default),
+  'nri-globe': () => import('./scenes/NRIGlobeScene').then((m) => m.default),
+  'persona-router': () => import('./scenes/GenericScene').then((m) => m.default),
+  'space-score': () => import('./scenes/GenericScene').then((m) => m.default),
+  portfolio: () => import('./scenes/GenericScene').then((m) => m.default),
+  journey: () => import('./scenes/GenericScene').then((m) => m.default),
+  'pricing-axis': () => import('./scenes/GenericScene').then((m) => m.default),
+};

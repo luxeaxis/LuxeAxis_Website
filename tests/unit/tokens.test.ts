@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 let css: string;
 
 beforeAll(() => {
-  execSync('pnpm tokens', { stdio: 'pipe' });
+  execSync('npm run tokens', { stdio: 'pipe' });
   css = readFileSync('styles/tokens.css', 'utf8');
 });
 

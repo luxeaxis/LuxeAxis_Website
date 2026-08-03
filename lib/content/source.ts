@@ -393,6 +393,11 @@ export async function getFeaturedProjects(): Promise<readonly Project[]> {
   return PROJECTS;
 }
 
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  const projects = await getFeaturedProjects();
+  return projects.find((p) => p.slug === slug) ?? null;
+}
+
 /** Empty until real, attributable quotes exist. */
 export async function getTestimonials(): Promise<readonly Testimonial[]> {
   return TESTIMONIALS;

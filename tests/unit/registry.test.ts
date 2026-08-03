@@ -26,8 +26,8 @@ describe('scene registry parity', () => {
     expect(prioritised).toEqual(['hero']);
   });
 
-  it('registers no live scenes yet — posters are the whole contract at this stage', () => {
-    expect(Object.keys(SCENES)).toHaveLength(0);
+  it('registers live 3D scenes for all 9 scene IDs', () => {
+    expect(Object.keys(SCENES)).toHaveLength(9);
   });
 });
 
