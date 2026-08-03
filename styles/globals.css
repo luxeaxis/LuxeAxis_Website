@@ -144,3 +144,57 @@
     }
   }
 }
+
+@layer components {
+  /* The mark's line-art draw-on (Interaction Framework §6, L1).
+     
+     The monogram paths are filled, not stroked, so the draw is staged: the fill
+     is dropped, the outline is stroked in with a dash sweep, and the fill
+     returns underneath once the outline has closed. Doing it with two
+     animations on one element rather than duplicating the paths keeps the DOM
+     identical whether or not the loader is animating.
+     
+     `pathLength="100"` is set on the paths themselves so the dash maths is
+     exact rather than a guessed length that clips or stalls on a complex glyph.
+     The timings are the `signature` (brand choreography) and `ui` duration
+     tokens rather than literals — \§6 puts the draw at ≤1200ms, which is what
+     `--duration-signature` already is. */
+  @keyframes lx-draw {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes lx-draw-fill {
+    to {
+      fill: currentColor;
+    }
+  }
+
+  .lx-draw-on path {
+    fill: transparent;
+    stroke: currentColor;
+    /* Deliberately hairline: the mark is drawn at icon size here, and a heavier
+       stroke closes the counters of the A before the sweep finishes. */
+    stroke-width: 1.5;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation:
+      lx-draw var(--duration-signature) var(--easing-entrance) forwards,
+      lx-draw-fill var(--duration-ui) var(--easing-standard) forwards
+        var(--duration-signature);
+  }
+
+  /* §6: reduced motion gets the finished mark, not a frozen half-drawn one —
+     the point of the loader is the brand, and a partially traced logo reads as
+     a rendering failure. */
+  @media (prefers-reduced-motion: reduce) {
+    .lx-draw-on path {
+      fill: currentColor;
+      stroke: none;
+      animation: none;
+    }
+  }
+}

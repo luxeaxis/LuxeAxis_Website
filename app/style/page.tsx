@@ -5,6 +5,7 @@ import { Button, type ButtonVariant } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { EmptyState } from '@/components/EmptyState';
 import { InlineAlert } from '@/components/InlineAlert';
+import { BrandLoader } from '@/components/BrandLoader';
 import { Progress } from '@/components/Progress';
 import { Skeleton } from '@/components/Skeleton';
 import { Tooltip } from '@/components/Tooltip';
@@ -384,6 +385,18 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
             label="Uploading floor plan"
             helpText="Honest percentages only — never a bar that moves to look busy."
           />
+        </Stack>
+
+        <Stack gap={3}>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">BrandLoader</h3>
+          <p className="text-small text-on-surface-2">
+            For the 3D scene layer, never for the page. Every route here is
+            prerendered, so gating the document behind this would add the
+            anti-flash guard as a delay to markup that had already painted.
+          </p>
+          <div className="rounded-lg border border-border-subtle bg-surface-raised">
+            <BrandLoader value={62} label="Loading the scene" />
+          </div>
         </Stack>
 
         <Stack gap={3}>
