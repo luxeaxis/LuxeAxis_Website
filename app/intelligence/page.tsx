@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -19,13 +21,28 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function IntelligencePage() {
+export default async function IntelligencePage() {
   const highlights = [
-    { title: 'Vastu-Tech AI Grid', desc: 'Solar Orientation & Magnetic Compass Alignment' },
-    { title: 'Space Score™ Index', desc: '4-Pillar Wellness, Function & Eco Rating' },
-    { title: 'Space OS Portal', desc: 'Real-time Budget, BOQ & 3D Progress Tracker' },
-    { title: 'Virtual Staging', desc: 'Photorealistic Real-Estate B2B 8K Renders' },
-    { title: 'Human Architect Verified', desc: 'Every AI Output Reviewed by Licensed Designers' },
+    {
+      title: 'Vastu-Tech AI Grid',
+      desc: 'Solar Orientation & Magnetic Compass Alignment',
+    },
+    {
+      title: 'Space Score™ Index',
+      desc: '4-Pillar Wellness, Function & Eco Rating',
+    },
+    {
+      title: 'Space OS Portal',
+      desc: 'Real-time Budget, BOQ & 3D Progress Tracker',
+    },
+    {
+      title: 'Virtual Staging',
+      desc: 'Photorealistic Real-Estate B2B 8K Renders',
+    },
+    {
+      title: 'Human Architect Verified',
+      desc: 'Every AI Output Reviewed by Licensed Designers',
+    },
   ];
 
   const capabilities = [
@@ -33,7 +50,8 @@ export default function IntelligencePage() {
       id: 'vastu-tech',
       name: 'Vastu-Tech AI Engine',
       tag: 'Patent-Pending',
-      claim: 'We check your plan against Vastu in seconds — then a human designer confirms it.',
+      claim:
+        'We check your plan against Vastu in seconds — then a human designer confirms it.',
       desc: 'A Vastu grid and compass are laid over your CAD floor plan. Favourable zones are marked in gold, review zones in teal, each with plain-language guidance.',
       features: [
         'India’s 1st AI Vastu compatibility checker',
@@ -48,7 +66,8 @@ export default function IntelligencePage() {
       id: 'space-score',
       name: 'Space Score™ Index',
       tag: 'Proprietary Metric',
-      claim: 'A rating for any space across wellness, function, aesthetics, and sustainability.',
+      claim:
+        'A rating for any space across wellness, function, aesthetics, and sustainability.',
       desc: 'Four measures scored independently and read together, so "is this a good room?" becomes a quantifiable answer you can compare, test, and optimize.',
       features: [
         'Evaluates Wellness, Function, Aesthetics & Sustainability',
@@ -63,7 +82,8 @@ export default function IntelligencePage() {
       id: 'space-os',
       name: 'Space OS Client Portal',
       tag: 'Live Dashboard',
-      claim: 'Your project live in one place — moodboard, build progress, and budget visible.',
+      claim:
+        'Your project live in one place — moodboard, build progress, and budget visible.',
       desc: 'The client operating system. Everything the studio knows about your project in the same view you have — including live BOQ budget tracking.',
       features: [
         'Real-time BOQ cost calculator & budget dashboard',
@@ -78,7 +98,8 @@ export default function IntelligencePage() {
       id: 'virtual-staging',
       name: 'Virtual Real-Estate Staging',
       tag: 'Real-Estate B2B',
-      claim: 'See a room furnished and finished before anything is bought or built.',
+      claim:
+        'See a room furnished and finished before anything is bought or built.',
       desc: 'B2B spatial staging for property developers and homeowners — transform empty or bare shell rooms into photorealistic 8K virtual residences.',
       features: [
         'Photorealistic 8K V-Ray rendering quality',
@@ -115,32 +136,25 @@ export default function IntelligencePage() {
   ];
 
   const comparison = [
-    { traditional: 'Manual Vastu compass guesswork', luxe: 'AI Vastu-Tech solar orientation grid scan' },
-    { traditional: 'Subjective opinion on lighting & acoustics', luxe: 'Space Score™ 4-pillar quantified index' },
-    { traditional: 'Surprise bills & hidden cost escalations', luxe: 'Space OS real-time BOQ budget dashboard' },
-    { traditional: 'Static 2D paper floor plans', luxe: 'Interactive 4K VR simulation & AR mobile preview' },
+    {
+      traditional: 'Manual Vastu compass guesswork',
+      luxe: 'AI Vastu-Tech solar orientation grid scan',
+    },
+    {
+      traditional: 'Subjective opinion on lighting & acoustics',
+      luxe: 'Space Score™ 4-pillar quantified index',
+    },
+    {
+      traditional: 'Surprise bills & hidden cost escalations',
+      luxe: 'Space OS real-time BOQ budget dashboard',
+    },
+    {
+      traditional: 'Static 2D paper floor plans',
+      luxe: 'Interactive 4K VR simulation & AR mobile preview',
+    },
   ];
 
-  const testimonials = [
-    {
-      name: 'Dr. Ananthakrishnan',
-      location: 'Adyar, Chennai',
-      quote:
-        'The Vastu-Tech scan identified north-east orientation adjustments in our 4BHK floor plan that saved us from major civil changes. Exceptional technology.',
-    },
-    {
-      name: 'Rajesh & Malini Iyer',
-      location: 'Nungambakkam, Chennai',
-      quote:
-        'Space OS kept us updated every single day while we were in Dubai. Watching our villa 3D progress and budget in real-time gave us complete peace of mind.',
-    },
-    {
-      name: 'Suresh Kumar',
-      location: 'OMR, Chennai',
-      quote:
-        'The Space Score evaluation transformed how we planned acoustics and lighting in our IT executive suite. A truly data-driven studio.',
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -203,7 +217,9 @@ export default function IntelligencePage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Vastu-Tech, Space Score™, Space OS, and Virtual Staging. Four proprietary capabilities that eliminate spatial guesswork, predict room performance, and track your project budget in real-time.
+              Vastu-Tech, Space Score™, Space OS, and Virtual Staging. Four
+              proprietary capabilities that eliminate spatial guesswork, predict
+              room performance, and track your project budget in real-time.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -218,24 +234,44 @@ export default function IntelligencePage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Proprietary Techs</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Proprietary Techs
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">100%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">AI Compass Precision</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  100%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  AI Compass Precision
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4K VR</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">3D Walkthroughs</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4K VR
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  3D Walkthroughs
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Real-time</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">BOQ Tracking</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Real-time
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  BOQ Tracking
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
             </div>
           </Stack>
@@ -251,7 +287,9 @@ export default function IntelligencePage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -267,17 +305,32 @@ export default function IntelligencePage() {
       >
         <Grid cols={2} gap={6}>
           {capabilities.map((cap) => (
-            <div key={cap.id} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={cap.id}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <div className="relative rounded-xl overflow-hidden aspect-[16/10] mb-4 border border-border-subtle/60">
-                  <Image src={cap.image} alt={cap.name} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                  <Image
+                    src={cap.image}
+                    alt={cap.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
                   <span className="absolute top-2 left-2 px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                     {cap.tag}
                   </span>
                 </div>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-1">{cap.name}</h3>
-                <p className="text-small text-accent font-semibold mb-2">&ldquo;{cap.claim}&rdquo;</p>
-                <p className="text-small text-on-surface-2 leading-relaxed mb-4">{cap.desc}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-1">
+                  {cap.name}
+                </h3>
+                <p className="text-small text-accent font-semibold mb-2">
+                  &ldquo;{cap.claim}&rdquo;
+                </p>
+                <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                  {cap.desc}
+                </p>
                 <ul className="space-y-1.5 text-small text-on-surface-2 border-t border-border-subtle/40 pt-3 mb-6">
                   {cap.features.map((f) => (
                     <li key={f} className="flex items-center gap-2">
@@ -287,7 +340,12 @@ export default function IntelligencePage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={cap.href} variant="secondary" className="w-full justify-center">
+              <Button
+                as="a"
+                href={cap.href}
+                variant="secondary"
+                className="w-full justify-center"
+              >
                 Explore {cap.name} →
               </Button>
             </div>
@@ -304,11 +362,20 @@ export default function IntelligencePage() {
       >
         <Grid cols={2} gap={6}>
           {whyIntelligence.map((item) => (
-            <div key={item.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{item.num}</span>
+            <div
+              key={item.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {item.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{item.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{item.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {item.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -346,14 +413,25 @@ export default function IntelligencePage() {
         <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 max-w-4xl mx-auto">
           <div className="space-y-4">
             {comparison.map((item) => (
-              <div key={item.traditional} className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-border-subtle/40 last:border-0 last:pb-0">
+              <div
+                key={item.traditional}
+                className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-border-subtle/40 last:border-0 last:pb-0"
+              >
                 <div className="p-3 rounded-lg bg-surface-deep/50 border border-border-subtle/50">
-                  <span className="text-[10px] uppercase tracking-wider text-on-surface-muted font-bold block mb-1">Traditional Method</span>
-                  <p className="text-small text-on-surface-2">{item.traditional}</p>
+                  <span className="text-[10px] uppercase tracking-wider text-on-surface-muted font-bold block mb-1">
+                    Traditional Method
+                  </span>
+                  <p className="text-small text-on-surface-2">
+                    {item.traditional}
+                  </p>
                 </div>
                 <div className="p-3 rounded-lg bg-accent/10 border border-accent/30">
-                  <span className="text-[10px] uppercase tracking-wider text-accent font-bold block mb-1">Luxe Axis Intelligence</span>
-                  <p className="text-small text-on-surface font-medium">{item.luxe}</p>
+                  <span className="text-[10px] uppercase tracking-wider text-accent font-bold block mb-1">
+                    Luxe Axis Intelligence
+                  </span>
+                  <p className="text-small text-on-surface font-medium">
+                    {item.luxe}
+                  </p>
                 </div>
               </div>
             ))}
@@ -365,29 +443,7 @@ export default function IntelligencePage() {
       <ProcessSteps />
 
       {/* 8. Verified Client Reviews */}
-      <Section
-        id="testimonials"
-        eyebrow="Verified Feedback"
-        title="What Clients Say About Our Technology"
-        lede="Real feedback from homeowners and business clients using Luxe Axis Intelligence."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">★★★★★</div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 9. FAQ Accordion */}
       <Section
@@ -398,10 +454,15 @@ export default function IntelligencePage() {
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

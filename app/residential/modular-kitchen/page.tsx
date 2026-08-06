@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -21,13 +23,28 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function ModularKitchenPage() {
+export default async function ModularKitchenPage() {
   const highlights = [
-    { title: 'Hettich Hardware', desc: 'German Soft-Close Hinges & Full-Extension Drawer Systems' },
-    { title: 'BWR Marine Ply', desc: '100% Boiling Water Resistant Carcass for Coastal Humidity' },
-    { title: '45-Day Guarantee', desc: 'Contractually Locked Timeline with Written Delay Compensation' },
-    { title: 'Flat 10-Year Warranty', desc: 'Comprehensive Coverage Across Materials, Shutters & Hardware' },
-    { title: 'Fixed Price Quote', desc: 'Itemized Transparent Pricing with Zero Scope Creep' },
+    {
+      title: 'Hettich Hardware',
+      desc: 'German Soft-Close Hinges & Full-Extension Drawer Systems',
+    },
+    {
+      title: 'BWR Marine Ply',
+      desc: '100% Boiling Water Resistant Carcass for Coastal Humidity',
+    },
+    {
+      title: '45-Day Guarantee',
+      desc: 'Contractually Locked Timeline with Written Delay Compensation',
+    },
+    {
+      title: 'Flat 10-Year Warranty',
+      desc: 'Comprehensive Coverage Across Materials, Shutters & Hardware',
+    },
+    {
+      title: 'Fixed Price Quote',
+      desc: 'Itemized Transparent Pricing with Zero Scope Creep',
+    },
   ];
 
   const modularVsCarpenter = [
@@ -202,29 +219,7 @@ export default function ModularKitchenPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Senthil Kumar',
-      location: 'Adyar, Chennai',
-      quote:
-        'Excellent and professional execution. The Luxe Axis architects explained the pros and cons of every layout clearly, making decision-making seamless. Highly recommended!',
-      stars: 5,
-    },
-    {
-      name: 'Arun Kumar',
-      location: 'T. Nagar, Chennai',
-      quote:
-        'Guided us perfectly at the T. Nagar showroom. From 3D VR design to 45-day delivery, always responsive and helpful. Superb quality and finish.',
-      stars: 5,
-    },
-    {
-      name: 'Manoj Kumar',
-      location: 'T. Nagar, Chennai',
-      quote:
-        'Great experience and prompt delivery. They handled every customization with utmost patience. The Hettich hardware and quartz counter look stunning!',
-      stars: 5,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -293,7 +288,9 @@ export default function ModularKitchenPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              German hardware. Marine-grade plywood. Engineered for heavy Indian cooking. 2,000+ modular kitchens delivered across Chennai with 45-day installation and flat 10-year warranty.
+              German hardware. Marine-grade plywood. Engineered for heavy Indian
+              cooking. 2,000+ modular kitchens delivered across Chennai with
+              45-day installation and flat 10-year warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -308,24 +305,44 @@ export default function ModularKitchenPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">2,000+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Kitchens Built</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  2,000+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Kitchens Built
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Move-In Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Move-In Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">3+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  3+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Chennai Studios
+                </span>
               </div>
             </div>
           </Stack>
@@ -341,7 +358,9 @@ export default function ModularKitchenPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -357,9 +376,16 @@ export default function ModularKitchenPage() {
       >
         <Grid cols={2} gap={6}>
           {modularVsCarpenter.map((feat) => (
-            <div key={feat.title} className="lx-liquid-glass rounded-xl p-5 border border-accent/30">
-              <h3 className="font-display text-h4 font-bold text-on-surface mb-2">{feat.title}</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed">{feat.desc}</p>
+            <div
+              key={feat.title}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30"
+            >
+              <h3 className="font-display text-h4 font-bold text-on-surface mb-2">
+                {feat.title}
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed">
+                {feat.desc}
+              </p>
             </div>
           ))}
         </Grid>
@@ -374,20 +400,37 @@ export default function ModularKitchenPage() {
       >
         <Grid cols={2} gap={6}>
           {layouts.map((l) => (
-            <div key={l.title} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={l.title}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <div className="relative rounded-xl overflow-hidden aspect-[16/10] mb-4 border border-border-subtle/60">
-                  <Image src={l.image} alt={l.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                  <Image
+                    src={l.image}
+                    alt={l.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
                   <span className="absolute top-2 left-2 px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                     {l.badge}
                   </span>
                 </div>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">{l.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed mb-3">{l.desc}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                  {l.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed mb-3">
+                  {l.desc}
+                </p>
               </div>
               <div className="pt-3 border-t border-border-subtle/40 flex items-center justify-between">
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">Recommended Size</span>
-                <span className="text-small font-bold text-on-surface">{l.sqft}</span>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  Recommended Size
+                </span>
+                <span className="text-small font-bold text-on-surface">
+                  {l.sqft}
+                </span>
               </div>
             </div>
           ))}
@@ -406,16 +449,29 @@ export default function ModularKitchenPage() {
       >
         <Grid cols={3} gap={6}>
           {finishes.map((f) => (
-            <div key={f.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={f.name}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <div className="relative rounded-xl overflow-hidden aspect-[16/10] mb-4 border border-border-subtle/60">
-                  <Image src={f.image} alt={f.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
+                  <Image
+                    src={f.image}
+                    alt={f.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover"
+                  />
                   <span className="absolute top-2 left-2 px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                     {f.tag}
                   </span>
                 </div>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">{f.name}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed mb-4">{f.desc}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                  {f.name}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                  {f.desc}
+                </p>
                 <ul className="space-y-1.5 text-small text-on-surface-2 mb-4 border-t border-border-subtle/40 pt-3">
                   {f.points.map((p) => (
                     <li key={p} className="flex items-center gap-2">
@@ -455,8 +511,12 @@ export default function ModularKitchenPage() {
                 <span className="px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                   {p.tag}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">{p.title}</h3>
-                <p className="text-small text-accent font-medium mt-1">📍 {p.location}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-accent font-medium mt-1">
+                  📍 {p.location}
+                </p>
               </div>
             </div>
           ))}
@@ -508,11 +568,19 @@ export default function ModularKitchenPage() {
                 </span>
               )}
               <div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{tier.tag}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{tier.name}</h3>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {tier.tag}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">
+                  {tier.name}
+                </h3>
                 <div className="my-4 flex items-baseline gap-1">
-                  <span className="font-display text-[36px] font-bold text-accent">{tier.price}</span>
-                  <span className="text-small text-on-surface-muted">{tier.unit}</span>
+                  <span className="font-display text-[36px] font-bold text-accent">
+                    {tier.price}
+                  </span>
+                  <span className="text-small text-on-surface-muted">
+                    {tier.unit}
+                  </span>
                 </div>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {tier.desc}
@@ -526,7 +594,12 @@ export default function ModularKitchenPage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={tier.href} variant={tier.featured ? 'primary' : 'secondary'} className="w-full justify-center">
+              <Button
+                as="a"
+                href={tier.href}
+                variant={tier.featured ? 'primary' : 'secondary'}
+                className="w-full justify-center"
+              >
                 {tier.cta} →
               </Button>
             </div>
@@ -538,31 +611,7 @@ export default function ModularKitchenPage() {
       <ProcessSteps />
 
       {/* 11. Client Stories */}
-      <Section
-        id="testimonials"
-        eyebrow="Kitchen Client Stories"
-        title="What Chennai Homeowners Say About Their Kitchens"
-        lede="Verified client reviews from modular kitchen installations across Chennai."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">
-                  {'★'.repeat(t.stars)}
-                </div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 12. FAQ Accordion */}
       <Section
@@ -573,10 +622,15 @@ export default function ModularKitchenPage() {
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

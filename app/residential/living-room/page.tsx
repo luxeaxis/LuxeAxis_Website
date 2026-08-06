@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -20,13 +22,28 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function LivingRoomPage() {
+export default async function LivingRoomPage() {
   const highlights = [
-    { title: '600+ Living Rooms', desc: 'Designed & Delivered Across All Major Chennai Neighborhoods' },
-    { title: 'Statement Feature Walls', desc: 'Sintered Stone Slabs, Fluted Louvers & Venetian Plaster Panels' },
-    { title: 'TV Unit + Ceiling System', desc: 'Integrated Entertainment Wall & Gyproc False Ceiling Architecture' },
-    { title: 'Flat 10-Year Warranty', desc: 'Comprehensive Coverage Across Every Material, Hardware & Finish' },
-    { title: '45-Day Move-In Guarantee', desc: 'Contractually Locked Timeline with Written Delay Compensation' },
+    {
+      title: '600+ Living Rooms',
+      desc: 'Designed & Delivered Across All Major Chennai Neighborhoods',
+    },
+    {
+      title: 'Statement Feature Walls',
+      desc: 'Sintered Stone Slabs, Fluted Louvers & Venetian Plaster Panels',
+    },
+    {
+      title: 'TV Unit + Ceiling System',
+      desc: 'Integrated Entertainment Wall & Gyproc False Ceiling Architecture',
+    },
+    {
+      title: 'Flat 10-Year Warranty',
+      desc: 'Comprehensive Coverage Across Every Material, Hardware & Finish',
+    },
+    {
+      title: '45-Day Move-In Guarantee',
+      desc: 'Contractually Locked Timeline with Written Delay Compensation',
+    },
   ];
 
   const focalElements = [
@@ -191,29 +208,7 @@ export default function LivingRoomPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Aadhithya B. Kailash',
-      location: 'Adyar, Chennai',
-      quote:
-        'My living room and 3BHK interiors were completed even before the promised handover date. Luxe Axis managed every detail professionally. Outstanding execution!',
-      stars: 5,
-    },
-    {
-      name: 'Senthil Kumar',
-      location: 'Adyar, Chennai',
-      quote:
-        'Excellent feature wall and ceiling lighting execution. The architects explained the pros and cons of stone vs veneer clearly, making decisions effortless.',
-      stars: 5,
-    },
-    {
-      name: 'Venkat Ramanan',
-      location: 'T. Nagar, Chennai',
-      quote:
-        'Superior customization options and top-tier joinery quality. The team gave detailed walkthroughs on every material. Delivered ahead of expected schedule!',
-      stars: 5,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -266,7 +261,10 @@ export default function LivingRoomPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/residential/living-room" labels={{ 'living-room': "Living Room Interiors" }} />
+          <Breadcrumbs
+            path="/residential/living-room"
+            labels={{ 'living-room': 'Living Room Interiors' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -282,7 +280,10 @@ export default function LivingRoomPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Your living room is the first thing every guest sees. Luxe Axis designs it with feature walls, false ceilings, and layered magnetic lighting, delivered in 45 days with a flat 10-year warranty.
+              Your living room is the first thing every guest sees. Luxe Axis
+              designs it with feature walls, false ceilings, and layered
+              magnetic lighting, delivered in 45 days with a flat 10-year
+              warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -297,24 +298,44 @@ export default function LivingRoomPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">600+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Living Rooms</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  600+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Living Rooms
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Move-In Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Move-In Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">50+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Architects</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  50+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Architects
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
             </div>
           </Stack>
@@ -330,7 +351,9 @@ export default function LivingRoomPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -346,11 +369,20 @@ export default function LivingRoomPage() {
       >
         <Grid cols={3} gap={6}>
           {focalElements.map((elem) => (
-            <div key={elem.num} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 relative flex flex-col justify-between">
+            <div
+              key={elem.num}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 relative flex flex-col justify-between"
+            >
               <div>
-                <span className="font-display text-[32px] font-bold text-accent block mb-2">{elem.num}</span>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-2">{elem.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{elem.desc}</p>
+                <span className="font-display text-[32px] font-bold text-accent block mb-2">
+                  {elem.num}
+                </span>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-2">
+                  {elem.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {elem.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -366,11 +398,20 @@ export default function LivingRoomPage() {
       >
         <Grid cols={2} gap={6}>
           {spatialZones.map((zone) => (
-            <div key={zone.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{zone.num}</span>
+            <div
+              key={zone.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {zone.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{zone.name}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{zone.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {zone.name}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {zone.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -402,8 +443,12 @@ export default function LivingRoomPage() {
                 <span className="px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                   {p.tag}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">{p.title}</h3>
-                <p className="text-small text-accent font-medium mt-1">📍 {p.location}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-accent font-medium mt-1">
+                  📍 {p.location}
+                </p>
               </div>
             </div>
           ))}
@@ -419,11 +464,20 @@ export default function LivingRoomPage() {
       >
         <div className="space-y-4 max-w-4xl mx-auto">
           {whyChooseUs.map((w) => (
-            <div key={w.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{w.num}</span>
+            <div
+              key={w.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {w.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{w.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{w.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {w.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {w.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -475,11 +529,19 @@ export default function LivingRoomPage() {
                 </span>
               )}
               <div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{tier.tag}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{tier.name}</h3>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {tier.tag}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">
+                  {tier.name}
+                </h3>
                 <div className="my-4 flex items-baseline gap-1">
-                  <span className="font-display text-[36px] font-bold text-accent">{tier.price}</span>
-                  <span className="text-small text-on-surface-muted">{tier.unit}</span>
+                  <span className="font-display text-[36px] font-bold text-accent">
+                    {tier.price}
+                  </span>
+                  <span className="text-small text-on-surface-muted">
+                    {tier.unit}
+                  </span>
                 </div>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {tier.desc}
@@ -493,7 +555,12 @@ export default function LivingRoomPage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={tier.href} variant={tier.featured ? 'primary' : 'secondary'} className="w-full justify-center">
+              <Button
+                as="a"
+                href={tier.href}
+                variant={tier.featured ? 'primary' : 'secondary'}
+                className="w-full justify-center"
+              >
                 {tier.cta} →
               </Button>
             </div>
@@ -505,31 +572,7 @@ export default function LivingRoomPage() {
       <ProcessSteps />
 
       {/* 10. Client Stories */}
-      <Section
-        id="testimonials"
-        eyebrow="Client Stories"
-        title="What Living Room Clients Say About Luxe Axis"
-        lede="Verified client reviews from living room transformations across Chennai."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">
-                  {'★'.repeat(t.stars)}
-                </div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 11. FAQ Accordion */}
       <Section
@@ -540,10 +583,15 @@ export default function LivingRoomPage() {
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -21,13 +23,28 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function TvUnitPage() {
+export default async function TvUnitPage() {
   const highlights = [
-    { title: 'BWR Marine Ply', desc: '100% Humidity-Proof Carcass for Coastal Air' },
-    { title: 'Backlit LED Ready', desc: 'Integrated Cove, Halo & Accent Profile Lighting' },
-    { title: 'Factory Precision', desc: '0.1mm CNC-Cut Panels for Flawless Alignment' },
-    { title: 'Flat 10-Year Warranty', desc: 'Comprehensive Coverage Across Carcass, Panels & Hardware' },
-    { title: '45-Day Build Guarantee', desc: 'Contractually Locked Delivery with Delay Compensation' },
+    {
+      title: 'BWR Marine Ply',
+      desc: '100% Humidity-Proof Carcass for Coastal Air',
+    },
+    {
+      title: 'Backlit LED Ready',
+      desc: 'Integrated Cove, Halo & Accent Profile Lighting',
+    },
+    {
+      title: 'Factory Precision',
+      desc: '0.1mm CNC-Cut Panels for Flawless Alignment',
+    },
+    {
+      title: 'Flat 10-Year Warranty',
+      desc: 'Comprehensive Coverage Across Carcass, Panels & Hardware',
+    },
+    {
+      title: '45-Day Build Guarantee',
+      desc: 'Contractually Locked Delivery with Delay Compensation',
+    },
   ];
 
   const fourPillars = [
@@ -227,29 +244,7 @@ export default function TvUnitPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Sashwath Kumar',
-      location: 'T. Nagar, Chennai',
-      quote:
-        'Very good product and neat installation. Gokul and the team were sincere and thorough in completing every part of the TV unit job. Excellent service!',
-      stars: 5,
-    },
-    {
-      name: 'Venkat Ramanan',
-      location: 'T. Nagar, Chennai',
-      quote:
-        'Good customization options and excellent quality. The Luxe Axis designers gave detailed explanations on every LED option and panel material.',
-      stars: 5,
-    },
-    {
-      name: 'Manoj Kumar',
-      location: 'T. Nagar, Chennai',
-      quote:
-        'Great experience and prompt delivery from Luxe Axis. The backlit TV wall transformed our entire living room look!',
-      stars: 5,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -294,7 +289,10 @@ export default function TvUnitPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/residential/tv-unit" labels={{ 'tv-unit': "TV Unit Design" }} />
+          <Breadcrumbs
+            path="/residential/tv-unit"
+            labels={{ 'tv-unit': 'TV Unit Design' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -310,7 +308,10 @@ export default function TvUnitPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Every room revolves around it. Custom floating panels, backlit media walls and floor-to-ceiling modular TV units built for Chennai homes. 8,000+ units delivered. 45-day guarantee, flat 10-year warranty.
+              Every room revolves around it. Custom floating panels, backlit
+              media walls and floor-to-ceiling modular TV units built for
+              Chennai homes. 8,000+ units delivered. 45-day guarantee, flat
+              10-year warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -325,24 +326,44 @@ export default function TvUnitPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">8,000+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">TV Units Built</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  8,000+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  TV Units Built
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Build Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Build Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">3+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  3+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Chennai Studios
+                </span>
               </div>
             </div>
           </Stack>
@@ -358,7 +379,9 @@ export default function TvUnitPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -374,11 +397,20 @@ export default function TvUnitPage() {
       >
         <Grid cols={2} gap={6}>
           {fourPillars.map((p) => (
-            <div key={p.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{p.num}</span>
+            <div
+              key={p.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {p.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{p.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{p.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {p.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {p.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -394,17 +426,32 @@ export default function TvUnitPage() {
       >
         <Grid cols={2} gap={6}>
           {designStyles.map((style) => (
-            <div key={style.tag} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={style.tag}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <div className="relative rounded-xl overflow-hidden aspect-[16/10] mb-4 border border-border-subtle/60">
-                  <Image src={style.image} alt={style.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                  <Image
+                    src={style.image}
+                    alt={style.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
                   <span className="absolute top-2 left-2 px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                     {style.tag}
                   </span>
                 </div>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-1">{style.title}</h3>
-                <p className="text-overline text-accent uppercase font-bold tracking-wider mb-2">{style.subtitle}</p>
-                <p className="text-small text-on-surface-2 leading-relaxed mb-4">{style.desc}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-1">
+                  {style.title}
+                </h3>
+                <p className="text-overline text-accent uppercase font-bold tracking-wider mb-2">
+                  {style.subtitle}
+                </p>
+                <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                  {style.desc}
+                </p>
                 <ul className="space-y-1.5 text-small text-on-surface-2 mb-4 border-t border-border-subtle/40 pt-3">
                   {style.features.map((f) => (
                     <li key={f} className="flex items-center gap-2">
@@ -428,16 +475,27 @@ export default function TvUnitPage() {
       >
         <Grid cols={3} gap={6}>
           {sizingGuide.map((g) => (
-            <div key={g.homeType} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={g.homeType}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <span className="px-2.5 py-1 rounded bg-accent/20 border border-accent/40 text-accent font-ui text-[10px] font-bold uppercase tracking-wider">
                   {g.homeType}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-3">{g.title}</h3>
-                <p className="text-overline text-on-surface-muted uppercase tracking-wider mb-4">{g.sub}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-3">
+                  {g.title}
+                </h3>
+                <p className="text-overline text-on-surface-muted uppercase tracking-wider mb-4">
+                  {g.sub}
+                </p>
                 <div className="mb-4 pb-4 border-b border-border-subtle/40">
-                  <span className="text-overline text-accent uppercase font-bold tracking-wider block">Recommended Wall Width</span>
-                  <span className="font-display text-h2 font-bold text-accent">{g.wallWidth}</span>
+                  <span className="text-overline text-accent uppercase font-bold tracking-wider block">
+                    Recommended Wall Width
+                  </span>
+                  <span className="font-display text-h2 font-bold text-accent">
+                    {g.wallWidth}
+                  </span>
                 </div>
                 <ul className="space-y-2 text-small text-on-surface-2 mb-4">
                   <li className="flex justify-between">
@@ -453,7 +511,9 @@ export default function TvUnitPage() {
                     <strong className="text-accent">{g.bestStyle}</strong>
                   </li>
                   <li className="flex justify-between">
-                    <span className="text-on-surface-muted">Starting Cost:</span>
+                    <span className="text-on-surface-muted">
+                      Starting Cost:
+                    </span>
                     <strong className="text-on-surface">{g.cost}</strong>
                   </li>
                 </ul>
@@ -491,8 +551,12 @@ export default function TvUnitPage() {
                 <span className="px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                   {p.tag}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">{p.title}</h3>
-                <p className="text-small text-accent font-medium mt-1">📍 {p.location}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-accent font-medium mt-1">
+                  📍 {p.location}
+                </p>
               </div>
             </div>
           ))}
@@ -544,11 +608,19 @@ export default function TvUnitPage() {
                 </span>
               )}
               <div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{tier.tag}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{tier.name}</h3>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {tier.tag}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">
+                  {tier.name}
+                </h3>
                 <div className="my-4 flex items-baseline gap-1">
-                  <span className="font-display text-[36px] font-bold text-accent">{tier.price}</span>
-                  <span className="text-small text-on-surface-muted">{tier.unit}</span>
+                  <span className="font-display text-[36px] font-bold text-accent">
+                    {tier.price}
+                  </span>
+                  <span className="text-small text-on-surface-muted">
+                    {tier.unit}
+                  </span>
                 </div>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {tier.desc}
@@ -562,7 +634,12 @@ export default function TvUnitPage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={tier.href} variant={tier.featured ? 'primary' : 'secondary'} className="w-full justify-center">
+              <Button
+                as="a"
+                href={tier.href}
+                variant={tier.featured ? 'primary' : 'secondary'}
+                className="w-full justify-center"
+              >
                 {tier.cta} →
               </Button>
             </div>
@@ -574,31 +651,7 @@ export default function TvUnitPage() {
       <ProcessSteps />
 
       {/* 11. Client Stories */}
-      <Section
-        id="testimonials"
-        eyebrow="TV Unit Client Stories"
-        title="What Chennai Homeowners Say About Their Media Walls"
-        lede="Verified client reviews from TV unit projects across Chennai."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">
-                  {'★'.repeat(t.stars)}
-                </div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 12. FAQ Accordion */}
       <Section
@@ -609,10 +662,15 @@ export default function TvUnitPage() {
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

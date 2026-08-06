@@ -135,8 +135,8 @@ describe('trust points', () => {
   });
 });
 
-describe('the 60-day claim', () => {
-  it('appears nowhere in the source tree except against the Signature tier', async () => {
+describe('the handover claim', () => {
+  it('is never stated flat — only against the tier that owns it', async () => {
     // Fixing the trust strip was not enough — the same flat claim was also in
     // the home hero (visible copy AND its meta description), the /process meta
     // description, and an FAQ answer that ships inside FAQPage structured data.
@@ -153,25 +153,67 @@ describe('the 60-day claim', () => {
     // intermediate directory, so it silently skips `app/page.tsx`, which is
     // where the worst instance of this claim actually was. A guard that misses
     // the home page is worse than no guard.
-    const tracked = execSync('git ls-files app lib', { encoding: 'utf8' })
+    //
+    // `components` is in the list because leaving it out is how the claim came
+    // back: TrustMarquee renders on every route from the root layout and read
+    // "60-Day Handover Guarantee", and this guard could not see the file. A
+    // site-wide strip is the single worst place for an unqualified number and
+    // was the only place the guard was not looking.
+    const tracked = execSync('git ls-files app lib components', { encoding: 'utf8' })
       .split('\n')
       .filter((file) => /\.tsx?$/.test(file));
     expect(tracked, 'nothing scanned — the pathspec is wrong').toContain('app/page.tsx');
+    expect(tracked, 'components/ is not being scanned').toContain('components/TrustMarquee.tsx');
 
-    const offenders = tracked.flatMap((file) =>
-      readFileSync(file, 'utf8')
-        .split('\n')
-        .map((line, index) => ({ file, line: index + 1, text: line }))
-        .filter(({ text }) => /60[-\s]day/i.test(text))
-        // The published per-tier value and the comments explaining why the flat
-        // version was removed are the only legitimate mentions.
-        .filter(({ text }) => !text.includes("Signature: '60-day handover'"))
-        .filter(({ text }) => !/^\s*(\/\/|\*|\/\*)/.test(text)),
-    );
+    // Only 60 is enforced here, and only for now. The rule that matters is
+    // wider — a handover figure means nothing without the tier attached — but
+    // the site currently carries ~130 flat "45-day" claims across the
+    // residential service and commercial pages, and those cannot be resolved
+    // by a test: `lib/content/commercial.ts` publishes no timeline guarantee
+    // at all, so there is no correct figure to check them against. Widening
+    // FIGURE to /\b(45|60)[-\s]day/ is the one-character change that turns
+    // this into the full guard, and it should happen the moment the studio
+    // states a commercial and per-service commitment.
+    const FIGURE = /\b60[-\s]day/i;
+
+    // A claim is fine if the tier it belongs to is attached. "Attached" is
+    // deliberately not "on the same line": a stat block puts the figure in a
+    // <strong> and its qualifier in the <span> underneath, and AboutSplit puts
+    // the title on one line and "for Signature projects" on the next. Both
+    // read correctly and neither would survive a line-local check. So the
+    // window is the line plus its four neighbours — and the file path counts
+    // too, since every figure on /pricing/signature is Signature's by
+    // construction.
+    //
+    // Four rather than one or two because prettier breaks a stat block across
+    // six lines: the figure lands inside a <strong> on its own line and its
+    // qualifying <span> four lines below. A window narrower than the formatter's
+    // output measures the formatter, not the copy. It is a loose heuristic in
+    // exchange for one that stays green while still catching a bare figure
+    // sitting on its own — which is the shape the regression actually took.
+    const TIER = /\b(essential|signature|elite|by tier|per tier)\b/i;
+    const CONTEXT = 4;
+
+    const offenders = tracked.flatMap((file) => {
+      const lines = readFileSync(file, 'utf8').split('\n');
+      if (TIER.test(file)) return [];
+
+      return lines
+        .map((text, index) => ({ file, line: index + 1, text, index }))
+        .filter(({ text }) => FIGURE.test(text))
+        // Comments, including the ones explaining why a flat version was
+        // removed — they are not shipped copy.
+        .filter(({ text }) => !/^\s*(\/\/|\*|\/\*)/.test(text))
+        .filter(({ index }) => {
+          const window = lines.slice(Math.max(0, index - CONTEXT), index + CONTEXT + 1).join(' ');
+          return !TIER.test(window);
+        })
+        .map(({ file: f, line, text }) => ({ file: f, line, text }));
+    });
 
     expect(
       offenders.map(({ file, line, text }) => `${file}:${line} ${text.trim()}`),
-      'the flat 60-day guarantee is back',
+      'a handover figure is stated without the tier it belongs to',
     ).toEqual([]);
   });
 });

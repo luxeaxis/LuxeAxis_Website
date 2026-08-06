@@ -36,17 +36,25 @@ export const metadata: Metadata = {
  * The Home Page (Build Backlog T-14 & HomeOne Layout Alignment).
  */
 export default async function HomePage() {
-  const [personas, stats, pendingStatLabels, features, projects, tiers, testimonials, trustPoints] =
-    await Promise.all([
-      getPersonas(),
-      getStats(),
-      getPendingStatLabels(),
-      getIntelligenceFeatures(),
-      getFeaturedProjects(),
-      getTiers(),
-      getTestimonials(),
-      getTrustPoints(),
-    ]);
+  const [
+    personas,
+    stats,
+    pendingStatLabels,
+    features,
+    projects,
+    tiers,
+    testimonials,
+    trustPoints,
+  ] = await Promise.all([
+    getPersonas(),
+    getStats(),
+    getPendingStatLabels(),
+    getIntelligenceFeatures(),
+    getFeaturedProjects(),
+    getTiers(),
+    getTestimonials(),
+    getTrustPoints(),
+  ]);
 
   return (
     <main id="main" tabIndex={-1}>

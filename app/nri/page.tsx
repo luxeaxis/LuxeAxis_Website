@@ -1,3 +1,4 @@
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
@@ -10,7 +11,7 @@ import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { canonicalFor } from '@/lib/seo/hreflang';
-import { getFaqs, getNriRegions } from '@/lib/content/source';
+import { getFaqs, getNriRegions, getTestimonials } from '@/lib/content/source';
 
 const ROUTE = '/nri';
 
@@ -88,26 +89,7 @@ export default async function NriPage() {
     },
   ];
 
-  const clientStories = [
-    {
-      name: 'Anand & Lakshmi Narayanan',
-      location: 'San Jose, USA (PST)',
-      quote:
-        'Designing our 4BHK villa in Adyar while working in Silicon Valley was seamless. Weekly 3D reviews at 8 PM PST and Space OS live feeds gave us complete confidence.',
-    },
-    {
-      name: 'Karthik & Sangeetha',
-      location: 'Singapore (SGT)',
-      quote:
-        'We never had to fly to Chennai once during construction. Luxe Axis handed over our Nungambakkam penthouse clean, decorated, and ready for move-in.',
-    },
-    {
-      name: 'Dr. Rahul Varma',
-      location: 'London, UK (GMT)',
-      quote:
-        'The milestone escrow structure and transparent BOQ eliminated all financial worry. Handover was completed exactly on schedule.',
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   return (
     <main id="main" tabIndex={-1}>
@@ -283,29 +265,7 @@ export default async function NriPage() {
       <ProcessSteps />
 
       {/* 8. Diaspora Client Stories */}
-      <Section
-        id="testimonials"
-        eyebrow="Diaspora Feedback"
-        title="What Overseas Homeowners Say"
-        lede="Verified client feedback from NRI home projects in Chennai."
-      >
-        <Grid cols={3} gap={6}>
-          {clientStories.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">★★★★★</div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 9. FAQ Accordion */}
       <Section id="faq" eyebrow="Before you ask" title="NRI Remote Design FAQ">

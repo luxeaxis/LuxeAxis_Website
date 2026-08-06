@@ -1,3 +1,4 @@
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
@@ -11,7 +12,7 @@ import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { STUDIO, addressOneLine } from '@/lib/content/studio';
-import { getFaqs } from '@/lib/content/source';
+import { getFaqs, getTestimonials } from '@/lib/content/source';
 
 const ROUTE = '/about';
 
@@ -66,7 +67,9 @@ const INTENT = [
 
 export default async function AboutPage() {
   const faqs = await getFaqs();
-  const aboutFaqs = [...faqs].filter((f) => f.id === 'contractors' || f.id === 'materials' || f.id === 'abroad');
+  const aboutFaqs = [...faqs].filter(
+    (f) => f.id === 'contractors' || f.id === 'materials' || f.id === 'abroad',
+  );
 
   const highlights = [
     { title: 'Chennai Born', desc: 'Designed for South Indian Living' },
@@ -76,20 +79,7 @@ export default async function AboutPage() {
     { title: 'Flat 10-Yr Warranty', desc: 'Written Structural Guarantee' },
   ];
 
-  const testimonials = [
-    {
-      name: 'Kamakshi & Sundaram',
-      location: 'Nungambakkam, Chennai',
-      quote:
-        'Luxe Axis brings a level of professionalism that was missing in Chennai’s interior design landscape. Their transparent BOQ saved us from unexpected cost escalations.',
-    },
-    {
-      name: 'Dr. Arvind Swaminathan',
-      location: 'Adyar, Chennai',
-      quote:
-        'The team understood our family requirements perfectly. They respected traditional Vastu principles while giving our villa a sleek, modern architectural aesthetic.',
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   return (
     <main id="main" tabIndex={-1}>
@@ -98,7 +88,8 @@ export default async function AboutPage() {
           '@context': 'https://schema.org',
           '@type': 'AboutPage',
           name: 'About Luxe Axis | Chennai’s Intelligent Interior Design Studio',
-          description: 'Luxe Axis is a technology-native interior design studio in Chennai.',
+          description:
+            'Luxe Axis is a technology-native interior design studio in Chennai.',
           url: ROUTE,
         }}
       />
@@ -108,7 +99,7 @@ export default async function AboutPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/about" labels={{ 'about': "About Us" }} />
+          <Breadcrumbs path="/about" labels={{ about: 'About Us' }} />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -124,7 +115,9 @@ export default async function AboutPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Designing spaces with spatial intelligence, radical honesty, and South Indian cultural care. Powered by AI precision and executed with boutique craftsmanship in Chennai.
+              Designing spaces with spatial intelligence, radical honesty, and
+              South Indian cultural care. Powered by AI precision and executed
+              with boutique craftsmanship in Chennai.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -139,24 +132,44 @@ export default async function AboutPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Chennai Born</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">South India Native</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Chennai Born
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  South India Native
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">0%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Hidden Costs</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  0%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Hidden Costs
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Space OS</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">4K CCTV Feeds</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Space OS
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  4K CCTV Feeds
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
             </div>
           </Stack>
@@ -172,7 +185,9 @@ export default async function AboutPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -180,35 +195,65 @@ export default async function AboutPage() {
       </section>
 
       {/* 3. Our Story */}
-      <Section id="story" eyebrow="Our Origins" title="A Design Company Built for How India Lives Now">
+      <Section
+        id="story"
+        eyebrow="Our Origins"
+        title="A Design Company Built for How India Lives Now"
+      >
         <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/30 max-w-4xl">
-          <Stack gap={4} className="text-on-surface-2 leading-relaxed text-body">
+          <Stack
+            gap={4}
+            className="text-on-surface-2 leading-relaxed text-body"
+          >
             <p>
-              Interior design in India has long been split between two extremes. On one side, boutique design studios — deeply personal, but often slow, opaque about pricing, and hard to scale. On the other, large platform aggregators — fast and predictable, but templated, impersonal, and quick to cut material corners.
+              Interior design in India has long been split between two extremes.
+              On one side, boutique design studios — deeply personal, but often
+              slow, opaque about pricing, and hard to scale. On the other, large
+              platform aggregators — fast and predictable, but templated,
+              impersonal, and quick to cut material corners.
             </p>
             <p>
-              Luxe Axis was founded on a simple conviction: you shouldn’t have to compromise. Technology, used with restraint and taste, can give you the best of both — the soul of a boutique studio with the transparency, speed, and reliability of a modern space intelligence company.
+              Luxe Axis was founded on a simple conviction: you shouldn’t have
+              to compromise. Technology, used with restraint and taste, can give
+              you the best of both — the soul of a boutique studio with the
+              transparency, speed, and reliability of a modern space
+              intelligence company.
             </p>
             <p>
-              We are Chennai-born and Chennai-proud. We design for how South India actually lives — for multi-generational families, coastal climate heat and humidity, and Vastu principles that deserve to be respected rather than dismissed. And we back every project with something rare in our industry: a written, contractual promise.
+              We are Chennai-born and Chennai-proud. We design for how South
+              India actually lives — for multi-generational families, coastal
+              climate heat and humidity, and Vastu principles that deserve to be
+              respected rather than dismissed. And we back every project with
+              something rare in our industry: a written, contractual promise.
             </p>
           </Stack>
         </div>
       </Section>
 
       {/* 4. Intent: Mission, Vision, Purpose */}
-      <Section id="intent" eyebrow="Why We Exist" title="Mission, Vision, Purpose & Promise">
+      <Section
+        id="intent"
+        eyebrow="Why We Exist"
+        title="Mission, Vision, Purpose & Promise"
+      >
         <Grid cols={2} gap={6}>
           {INTENT.map((item) => (
-            <div key={item.label} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={item.label}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <Stack gap={3}>
                 <div className="flex items-center justify-between">
                   <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                     {item.label}
                   </span>
-                  <Badge tone="accent" icon="check">Core Mandate</Badge>
+                  <Badge tone="accent" icon="check">
+                    Core Mandate
+                  </Badge>
                 </div>
-                <p className="text-body text-on-surface-2 leading-relaxed">{item.body}</p>
+                <p className="text-body text-on-surface-2 leading-relaxed">
+                  {item.body}
+                </p>
               </Stack>
             </div>
           ))}
@@ -232,7 +277,9 @@ export default async function AboutPage() {
                 <h3 className="font-display text-h3 font-bold text-on-surface">
                   {value.title}
                 </h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{value.body}</p>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {value.body}
+                </p>
               </Stack>
             </div>
           ))}
@@ -248,20 +295,36 @@ export default async function AboutPage() {
       >
         <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/30">
           <p className="max-w-3xl text-body text-on-surface-2 leading-relaxed mb-6">
-            Intelligent Premium means transparent pricing that stays accessible. An AI-assisted workflow that accelerates layout optimization without cheapening aesthetics. Bespoke joinery on every project — never cookie-cutter templates. And eco-conscious materials integrated by default.
+            Intelligent Premium means transparent pricing that stays accessible.
+            An AI-assisted workflow that accelerates layout optimization without
+            cheapening aesthetics. Bespoke joinery on every project — never
+            cookie-cutter templates. And eco-conscious materials integrated by
+            default.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-border-subtle/40">
             <div>
-              <strong className="block font-display text-h4 text-accent font-bold mb-1">AI-Precision</strong>
-              <span className="text-small text-on-surface-muted">Vastu-Tech CAD spatial optimization</span>
+              <strong className="block font-display text-h4 text-accent font-bold mb-1">
+                AI-Precision
+              </strong>
+              <span className="text-small text-on-surface-muted">
+                Vastu-Tech CAD spatial optimization
+              </span>
             </div>
             <div>
-              <strong className="block font-display text-h4 text-accent font-bold mb-1">Boutique Taste</strong>
-              <span className="text-small text-on-surface-muted">Senior architect design oversight</span>
+              <strong className="block font-display text-h4 text-accent font-bold mb-1">
+                Boutique Taste
+              </strong>
+              <span className="text-small text-on-surface-muted">
+                Senior architect design oversight
+              </span>
             </div>
             <div>
-              <strong className="block font-display text-h4 text-accent font-bold mb-1">Factory Reliability</strong>
-              <span className="text-small text-on-surface-muted">German precision joinery manufacturing</span>
+              <strong className="block font-display text-h4 text-accent font-bold mb-1">
+                Factory Reliability
+              </strong>
+              <span className="text-small text-on-surface-muted">
+                German precision joinery manufacturing
+              </span>
             </div>
           </div>
         </div>
@@ -278,24 +341,38 @@ export default async function AboutPage() {
           <Stack gap={4}>
             {STUDIO.address && (
               <p className="text-body text-on-surface-2">
-                <strong className="text-accent font-bold">Flagship Studio: </strong>
+                <strong className="text-accent font-bold">
+                  Flagship Studio:{' '}
+                </strong>
                 {addressOneLine(STUDIO.address)}
               </p>
             )}
             {STUDIO.cin && (
               <p className="text-small text-on-surface-2">
-                <span className="text-on-surface-muted">Corporate Identity Number (CIN): </span>
-                <span className="font-mono font-bold text-on-surface">{STUDIO.cin}</span>
+                <span className="text-on-surface-muted">
+                  Corporate Identity Number (CIN):{' '}
+                </span>
+                <span className="font-mono font-bold text-on-surface">
+                  {STUDIO.cin}
+                </span>
               </p>
             )}
             {STUDIO.gst && (
               <p className="text-small text-on-surface-2">
-                <span className="text-on-surface-muted">GSTIN Registration: </span>
-                <span className="font-mono font-bold text-on-surface">{STUDIO.gst}</span>
+                <span className="text-on-surface-muted">
+                  GSTIN Registration:{' '}
+                </span>
+                <span className="font-mono font-bold text-on-surface">
+                  {STUDIO.gst}
+                </span>
               </p>
             )}
 
-            {['Founded & Legacy', 'Senior Architectural Team', 'Industry Memberships & Certifications'].map((fact) => (
+            {[
+              'Founded & Legacy',
+              'Senior Architectural Team',
+              'Industry Memberships & Certifications',
+            ].map((fact) => (
               <p key={fact} className="text-small">
                 <ToBePublished label={fact} />
               </p>
@@ -322,36 +399,20 @@ export default async function AboutPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell residence before interior fit-out' }}
-            afterImage={{ src: '/posters/hero.avif', alt: 'Completed luxury residential interior in Chennai' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Bare shell residence before interior fit-out',
+            }}
+            afterImage={{
+              src: '/posters/hero.avif',
+              alt: 'Completed luxury residential interior in Chennai',
+            }}
           />
         </div>
       </Section>
 
       {/* 9. Testimonials */}
-      <Section
-        id="testimonials"
-        eyebrow="Client Trust"
-        title="What Homeowners Say About Luxe Axis"
-        lede="Verified client feedback from projects completed in Chennai."
-      >
-        <Grid cols={2} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">★★★★★</div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 10. FAQ Accordion */}
       <Section id="faq" eyebrow="Questions Answered" title="About Studio FAQ">

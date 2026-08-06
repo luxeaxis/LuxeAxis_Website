@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -20,13 +22,28 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function PoojaRoomPage() {
+export default async function PoojaRoomPage() {
   const highlights = [
-    { title: 'Sacred Spaces', desc: 'Compact Wall Units to Immersive Walk-In Temple Mandirs' },
-    { title: 'Premium Materials', desc: 'White Makrana Marble, Seasoned Teak, Brass Inlays & Onyx Slabs' },
-    { title: 'Backlit Devotional Lighting', desc: 'Warm Ambient Coves & Recessed LED Icon Profile Backlighting' },
-    { title: 'Flat 10-Year Warranty', desc: 'Comprehensive Coverage Across Materials, Carvings & Finishes' },
-    { title: '45-Day Move-In Guarantee', desc: 'Contractually Locked Timeline with Written Delay Compensation' },
+    {
+      title: 'Sacred Spaces',
+      desc: 'Compact Wall Units to Immersive Walk-In Temple Mandirs',
+    },
+    {
+      title: 'Premium Materials',
+      desc: 'White Makrana Marble, Seasoned Teak, Brass Inlays & Onyx Slabs',
+    },
+    {
+      title: 'Backlit Devotional Lighting',
+      desc: 'Warm Ambient Coves & Recessed LED Icon Profile Backlighting',
+    },
+    {
+      title: 'Flat 10-Year Warranty',
+      desc: 'Comprehensive Coverage Across Materials, Carvings & Finishes',
+    },
+    {
+      title: '45-Day Move-In Guarantee',
+      desc: 'Contractually Locked Timeline with Written Delay Compensation',
+    },
   ];
 
   const sacredForms = [
@@ -205,29 +222,7 @@ export default function PoojaRoomPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'S. Sindhuja Sivagami',
-      location: 'Adyar, Chennai',
-      quote:
-        'Service is excellent. The Luxe Axis architects helped with the customization of our pooja unit and delivered it on time. Very happy with the sacred quality and finish!',
-      stars: 5,
-    },
-    {
-      name: 'Aadhithya B. Kailash',
-      location: 'Adyar, Chennai',
-      quote:
-        'My 3BHK interiors and dedicated pooja room were completed even before the promised handover date. Managed every detail professionally with great reverence.',
-      stars: 5,
-    },
-    {
-      name: 'Muthuraman Sethuramalingam',
-      location: 'Adyar, Chennai',
-      quote:
-        'The team showed exceptional flexibility when timelines were tight. They stepped in with additional manpower and delivered our mandir magnificently. Heartfelt thanks!',
-      stars: 5,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -280,7 +275,10 @@ export default function PoojaRoomPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/residential/pooja-room" labels={{ 'pooja-room': "Pooja Room Design" }} />
+          <Breadcrumbs
+            path="/residential/pooja-room"
+            labels={{ 'pooja-room': 'Pooja Room Design' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -296,7 +294,9 @@ export default function PoojaRoomPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Where reverence meets craft. Luxe Axis designs sacred spaces that honour tradition and endure for generations, with a flat 10-year warranty on every element.
+              Where reverence meets craft. Luxe Axis designs sacred spaces that
+              honour tradition and endure for generations, with a flat 10-year
+              warranty on every element.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -311,24 +311,44 @@ export default function PoojaRoomPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10,000+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Sacred Spaces</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10,000+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Sacred Spaces
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Move-In Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Move-In Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">3</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  3
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Chennai Studios
+                </span>
               </div>
             </div>
           </Stack>
@@ -344,7 +364,9 @@ export default function PoojaRoomPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -360,16 +382,29 @@ export default function PoojaRoomPage() {
       >
         <Grid cols={3} gap={6}>
           {sacredForms.map((form) => (
-            <div key={form.tag} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={form.tag}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <div className="relative rounded-xl overflow-hidden aspect-[16/10] mb-4 border border-border-subtle/60">
-                  <Image src={form.image} alt={form.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
+                  <Image
+                    src={form.image}
+                    alt={form.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover"
+                  />
                   <span className="absolute top-2 left-2 px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                     {form.tag}
                   </span>
                 </div>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">{form.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed mb-4">{form.desc}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                  {form.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                  {form.desc}
+                </p>
                 <ul className="space-y-1.5 text-small text-on-surface-2 mb-4 border-t border-border-subtle/40 pt-3">
                   {form.specs.map((spec) => (
                     <li key={spec} className="flex items-center gap-2">
@@ -393,10 +428,19 @@ export default function PoojaRoomPage() {
       >
         <Grid cols={2} gap={6}>
           {sacredMaterials.map((mat) => (
-            <div key={mat.name} className="lx-liquid-glass rounded-xl p-5 border border-accent/30">
-              <span className="text-overline text-accent uppercase font-bold tracking-wider block mb-1">{mat.origin}</span>
-              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">{mat.name}</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed">{mat.desc}</p>
+            <div
+              key={mat.name}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30"
+            >
+              <span className="text-overline text-accent uppercase font-bold tracking-wider block mb-1">
+                {mat.origin}
+              </span>
+              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                {mat.name}
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed">
+                {mat.desc}
+              </p>
             </div>
           ))}
         </Grid>
@@ -427,8 +471,12 @@ export default function PoojaRoomPage() {
                 <span className="px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                   {p.tag}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">{p.title}</h3>
-                <p className="text-small text-accent font-medium mt-1">📍 {p.location}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-accent font-medium mt-1">
+                  📍 {p.location}
+                </p>
               </div>
             </div>
           ))}
@@ -444,11 +492,20 @@ export default function PoojaRoomPage() {
       >
         <div className="space-y-4 max-w-4xl mx-auto">
           {whyChooseUs.map((w) => (
-            <div key={w.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{w.num}</span>
+            <div
+              key={w.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {w.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{w.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{w.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {w.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {w.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -500,11 +557,19 @@ export default function PoojaRoomPage() {
                 </span>
               )}
               <div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{tier.tag}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{tier.name}</h3>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {tier.tag}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">
+                  {tier.name}
+                </h3>
                 <div className="my-4 flex items-baseline gap-1">
-                  <span className="font-display text-[36px] font-bold text-accent">{tier.price}</span>
-                  <span className="text-small text-on-surface-muted">{tier.unit}</span>
+                  <span className="font-display text-[36px] font-bold text-accent">
+                    {tier.price}
+                  </span>
+                  <span className="text-small text-on-surface-muted">
+                    {tier.unit}
+                  </span>
                 </div>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {tier.desc}
@@ -518,7 +583,12 @@ export default function PoojaRoomPage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={tier.href} variant={tier.featured ? 'primary' : 'secondary'} className="w-full justify-center">
+              <Button
+                as="a"
+                href={tier.href}
+                variant={tier.featured ? 'primary' : 'secondary'}
+                className="w-full justify-center"
+              >
                 {tier.cta} →
               </Button>
             </div>
@@ -530,31 +600,7 @@ export default function PoojaRoomPage() {
       <ProcessSteps />
 
       {/* 10. Client Stories */}
-      <Section
-        id="testimonials"
-        eyebrow="Client Stories"
-        title="What Chennai Clients Say About Our Pooja Rooms"
-        lede="Verified client reviews from pooja room installations across Chennai."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">
-                  {'★'.repeat(t.stars)}
-                </div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 11. FAQ Accordion */}
       <Section
@@ -565,10 +611,15 @@ export default function PoojaRoomPage() {
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

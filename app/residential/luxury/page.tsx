@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -20,13 +22,28 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function LuxuryPage() {
+export default async function LuxuryPage() {
   const highlights = [
-    { title: 'Bespoke Commission', desc: 'Designed Once, Exclusively for Your Home' },
-    { title: 'Verified Provenance', desc: 'Authentic Calacatta Marble & Italian Veneers' },
-    { title: '45-Day Guarantee', desc: 'Contractual Delivery with Delay Compensation' },
-    { title: 'Flat 10-Year Warranty', desc: 'Zero Fine Print, Zero Exclusions, Zero Service Fees' },
-    { title: '3D VR Approval', desc: 'Full 3D Visual Sign-Off Before Work Begins' },
+    {
+      title: 'Bespoke Commission',
+      desc: 'Designed Once, Exclusively for Your Home',
+    },
+    {
+      title: 'Verified Provenance',
+      desc: 'Authentic Calacatta Marble & Italian Veneers',
+    },
+    {
+      title: '45-Day Guarantee',
+      desc: 'Contractual Delivery with Delay Compensation',
+    },
+    {
+      title: 'Flat 10-Year Warranty',
+      desc: 'Zero Fine Print, Zero Exclusions, Zero Service Fees',
+    },
+    {
+      title: '3D VR Approval',
+      desc: 'Full 3D Visual Sign-Off Before Work Begins',
+    },
   ];
 
   const philosophyPillars = [
@@ -168,29 +185,7 @@ export default function LuxuryPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Muthuraman Sethuramalingam',
-      location: 'Adyar, Chennai',
-      quote:
-        'The Luxe Axis team showed exceptional flexibility when timelines were tight. They stepped in with additional manpower and saw our villa interior through beautifully.',
-      stars: 5,
-    },
-    {
-      name: 'Senthil Kumar',
-      location: 'Adyar, Chennai',
-      quote:
-        'Excellent and professional execution. The designers explained the pros and cons of every marble slab and veneer finish clearly.',
-      stars: 5,
-    },
-    {
-      name: 'Aadhithya B.Kailash',
-      location: 'Adyar, Chennai',
-      quote:
-        'My luxury 3BHK interiors were completed even before the promised handover date. Mr. SriBalaji managed every detail professionally.',
-      stars: 5,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -243,7 +238,10 @@ export default function LuxuryPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/residential/luxury" labels={{ 'luxury': "Luxury Interiors" }} />
+          <Breadcrumbs
+            path="/residential/luxury"
+            labels={{ luxury: 'Luxury Interiors' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -259,7 +257,9 @@ export default function LuxuryPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Calacatta marble. Italian veneer. Solid brass hardware. Every Luxe Axis luxury project is a singular commission, designed once for you, and delivered in 45 days with a flat 10-year warranty.
+              Calacatta marble. Italian veneer. Solid brass hardware. Every Luxe
+              Axis luxury project is a singular commission, designed once for
+              you, and delivered in 45 days with a flat 10-year warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -274,24 +274,44 @@ export default function LuxuryPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">200+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Luxury Projects</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  200+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Luxury Projects
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Delivery Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Delivery Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">3+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  3+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Chennai Studios
+                </span>
               </div>
             </div>
           </Stack>
@@ -307,7 +327,9 @@ export default function LuxuryPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -323,11 +345,20 @@ export default function LuxuryPage() {
       >
         <Grid cols={3} gap={6}>
           {philosophyPillars.map((p) => (
-            <div key={p.num} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={p.num}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
-                <span className="font-display text-h2 font-bold text-accent">{p.num}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2 mb-2">{p.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{p.desc}</p>
+                <span className="font-display text-h2 font-bold text-accent">
+                  {p.num}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2 mb-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {p.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -343,14 +374,23 @@ export default function LuxuryPage() {
       >
         <Grid cols={3} gap={6}>
           {materialsProvenance.map((mat) => (
-            <div key={mat.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={mat.name}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <span className="px-2.5 py-1 rounded bg-accent/20 border border-accent/40 text-accent font-ui text-[10px] font-bold uppercase tracking-wider">
                   {mat.tag}
                 </span>
-                <p className="text-overline text-on-surface-muted uppercase tracking-wider mt-3">{mat.origin}</p>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">{mat.name}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed mb-4">{mat.desc}</p>
+                <p className="text-overline text-on-surface-muted uppercase tracking-wider mt-3">
+                  {mat.origin}
+                </p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                  {mat.name}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                  {mat.desc}
+                </p>
                 <ul className="space-y-1.5 text-small text-on-surface-2 border-t border-border-subtle/40 pt-3">
                   {mat.specs.map((s) => (
                     <li key={s} className="flex items-center gap-2">
@@ -390,8 +430,12 @@ export default function LuxuryPage() {
                 <span className="px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                   {p.tag}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">{p.title}</h3>
-                <p className="text-small text-accent font-medium mt-1">📍 {p.location}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-accent font-medium mt-1">
+                  📍 {p.location}
+                </p>
               </div>
             </div>
           ))}
@@ -407,11 +451,20 @@ export default function LuxuryPage() {
       >
         <Grid cols={2} gap={6}>
           {whyChooseLuxury.map((item) => (
-            <div key={item.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{item.num}</span>
+            <div
+              key={item.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {item.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{item.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{item.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {item.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -438,9 +491,13 @@ export default function LuxuryPage() {
             <span className="px-3 py-1 rounded bg-accent text-surface-deep font-ui text-[11px] font-bold uppercase tracking-wider">
               Villa Interior • 6,200 sqft
             </span>
-            <h3 className="font-display text-h2 font-bold text-on-surface mt-2 mb-2">The Adyar Residence</h3>
+            <h3 className="font-display text-h2 font-bold text-on-surface mt-2 mb-2">
+              The Adyar Residence
+            </h3>
             <p className="text-small text-on-surface-2 leading-relaxed mb-4">
-              Calacatta marble throughout, Italian veneer joinery, bespoke brass hardware. Designed in 3D, delivered in 45 days with a flat 10-year warranty.
+              Calacatta marble throughout, Italian veneer joinery, bespoke brass
+              hardware. Designed in 3D, delivered in 45 days with a flat 10-year
+              warranty.
             </p>
             <Button as="a" href="/book-audit">
               Request Villa Proposal →
@@ -494,11 +551,22 @@ export default function LuxuryPage() {
                 </span>
               )}
               <div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{tier.scope}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2 mb-3">{tier.name}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed mb-6">{tier.desc}</p>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {tier.scope}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2 mb-3">
+                  {tier.name}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed mb-6">
+                  {tier.desc}
+                </p>
               </div>
-              <Button as="a" href={tier.href} variant={tier.featured ? 'primary' : 'secondary'} className="w-full justify-center">
+              <Button
+                as="a"
+                href={tier.href}
+                variant={tier.featured ? 'primary' : 'secondary'}
+                className="w-full justify-center"
+              >
                 {tier.linkText} →
               </Button>
             </div>
@@ -510,31 +578,7 @@ export default function LuxuryPage() {
       <ProcessSteps />
 
       {/* 11. Client Stories */}
-      <Section
-        id="testimonials"
-        eyebrow="Luxury Client Stories"
-        title="What Chennai’s Villa and Penthouse Owners Say"
-        lede="Verified client reviews from luxury commissions across Chennai."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">
-                  {'★'.repeat(t.stars)}
-                </div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 12. FAQ Accordion */}
       <Section
@@ -545,10 +589,15 @@ export default function LuxuryPage() {
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

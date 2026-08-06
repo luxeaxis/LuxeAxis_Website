@@ -1,3 +1,4 @@
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
@@ -11,7 +12,13 @@ import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
-import { getGuarantees, getProcessStages, getTiers, getFaqs } from '@/lib/content/source';
+import {
+  getGuarantees,
+  getProcessStages,
+  getTiers,
+  getFaqs,
+  getTestimonials,
+} from '@/lib/content/source';
 
 const ROUTE = '/process';
 
@@ -29,15 +36,21 @@ export default async function ProcessPage() {
     getTiers(),
     getFaqs(),
   ]);
-  const guaranteeById = new Map(guarantees.map((guarantee) => [guarantee.id, guarantee]));
+  const guaranteeById = new Map(
+    guarantees.map((guarantee) => [guarantee.id, guarantee]),
+  );
 
   const processFaqs = [...faqs].filter(
-    (f) => f.id === 'contractors' || f.id === 'abroad' || f.id === 'materials'
+    (f) => f.id === 'contractors' || f.id === 'abroad' || f.id === 'materials',
   );
 
   const highlights = [
     { title: '7 Master Stages', desc: 'Systematic Execution Sequence' },
-    { title: '45-Day SLA', desc: 'Guaranteed On-Time Handover' },
+    // 45 days is ESSENTIAL's handover; Signature commits to 60 and Elite to
+    // agreed milestones. This page covers the process for all three, so it
+    // states the shape of the commitment and leaves the number to the tier
+    // that owns it — see the timeline guarantee in lib/content/source.ts.
+    { title: 'Committed Date', desc: 'Handover Guarantee, Set Per Tier' },
     { title: 'Space OS Live', desc: '4K CCTV Daily Site Updates' },
     { title: 'Fixed BOQ Lock', desc: 'Zero Cost Escalation Contract' },
     { title: '10-Yr Warranty', desc: 'Flat Structural Coverage' },
@@ -62,7 +75,13 @@ export default async function ProcessPage() {
     {
       feature: 'Timeline Commitment',
       generic: 'Vague promises with months of project delay',
-      luxeaxis: 'Contractual 45-day handover SLA with penalty clause',
+      // Was "Contractual 45-day handover SLA with penalty clause". The flat 45
+      // is Essential's alone, and no penalty clause is published anywhere in
+      // lib/content/source.ts — the timeline guarantee's stated term is that
+      // the date is not met until the snag list is empty, which is what this
+      // now says.
+      luxeaxis:
+        'Handover date committed per tier; not met until the snag list is empty',
     },
     {
       feature: 'Post-Handover Support',
@@ -71,27 +90,15 @@ export default async function ProcessPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Narayanan & Kamala',
-      location: 'RA Puram, Chennai',
-      quote:
-        'The 7-stage process gave us complete clarity at every step. We logged into Space OS daily from overseas and watched our apartment being completed without a single delay.',
-    },
-    {
-      name: 'Dr. Srinivasulu',
-      location: 'Anna Nagar, Chennai',
-      quote:
-        'Luxe Axis stuck to their 45-day handover commitment. Their fixed BOQ guarantee ensured we paid exactly what was quoted on day one.',
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   return (
     <main id="main" tabIndex={-1}>
       <JsonLd
         data={serviceJsonLd({
           name: '7-Stage Architectural Execution Process',
-          description: 'Seven stages from first conversation to 10-year concierge care.',
+          description:
+            'Seven stages from first conversation to 10-year concierge care.',
           url: ROUTE,
         })}
       />
@@ -117,7 +124,10 @@ export default async function ProcessPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              A project is systematic or it is chaos with good taste. Explore our 7-stage sequence from initial spatial audit to 10-year concierge care, with every contractual guarantee attached directly to the stage where it applies.
+              A project is systematic or it is chaos with good taste. Explore
+              our 7-stage sequence from initial spatial audit to 10-year
+              concierge care, with every contractual guarantee attached directly
+              to the stage where it applies.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -132,24 +142,44 @@ export default async function ProcessPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">7 Stages</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Master Sequence</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  7 Stages
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Master Sequence
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Handover Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45–60 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Handover, By Tier
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4K Feeds</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Space OS Portal</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4K Feeds
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Space OS Portal
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
             </div>
           </Stack>
@@ -165,7 +195,9 @@ export default async function ProcessPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -185,7 +217,10 @@ export default async function ProcessPage() {
               .map((id) => guaranteeById.get(id))
               .filter((guarantee) => guarantee !== undefined);
             return (
-              <li key={stage.id} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex gap-6 items-start">
+              <li
+                key={stage.id}
+                className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex gap-6 items-start"
+              >
                 <span
                   aria-hidden="true"
                   className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-accent/40 font-mono text-h3 text-accent font-bold bg-accent/10"
@@ -201,7 +236,9 @@ export default async function ProcessPage() {
                       Stage 0{index + 1}
                     </span>
                   </div>
-                  <p className="text-body text-on-surface-2 leading-relaxed">{stage.body}</p>
+                  <p className="text-body text-on-surface-2 leading-relaxed">
+                    {stage.body}
+                  </p>
                   {attached.length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-2 pt-3 border-t border-border-subtle/40">
                       {attached.map((guarantee) => (
@@ -236,16 +273,24 @@ export default async function ProcessPage() {
                   <h3 className="font-display text-h3 font-bold text-on-surface">
                     {guarantee.name}
                   </h3>
-                  <Badge tone="accent" icon="check">Contractual</Badge>
+                  <Badge tone="accent" icon="check">
+                    Contractual
+                  </Badge>
                 </div>
-                <p className="text-body text-on-surface-2 leading-relaxed">{guarantee.summary}</p>
+                <p className="text-body text-on-surface-2 leading-relaxed">
+                  {guarantee.summary}
+                </p>
                 {guarantee.byTier && (
                   <dl className="flex flex-col gap-1.5 border-l-2 border-accent pl-4 text-small my-2 bg-surface-deep/30 p-3 rounded-r-lg">
                     {tiers.map((tier) =>
                       guarantee.byTier?.[tier.name] ? (
                         <div key={tier.id} className="flex gap-2">
-                          <dt className="text-accent font-semibold">{tier.name}:</dt>
-                          <dd className="text-on-surface-2">{guarantee.byTier[tier.name]}</dd>
+                          <dt className="text-accent font-semibold">
+                            {tier.name}:
+                          </dt>
+                          <dd className="text-on-surface-2">
+                            {guarantee.byTier[tier.name]}
+                          </dd>
                         </div>
                       ) : null,
                     )}
@@ -273,17 +318,30 @@ export default async function ProcessPage() {
               4K Daily Feeds & Milestones
             </h3>
             <p className="text-body text-on-surface-2 leading-relaxed mb-4">
-              Never worry about what is happening on site. Log into Space OS from your phone or desktop to view daily 4K photographic logs, inspect material batch certifications, and approve financial milestones with a tap.
+              Never worry about what is happening on site. Log into Space OS
+              from your phone or desktop to view daily 4K photographic logs,
+              inspect material batch certifications, and approve financial
+              milestones with a tap.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Badge tone="accent" icon="check">Daily 4K Photo Feed</Badge>
-              <Badge tone="accent" icon="check">Digital Milestones</Badge>
-              <Badge tone="accent" icon="check">Escrow Payments</Badge>
+              <Badge tone="accent" icon="check">
+                Daily 4K Photo Feed
+              </Badge>
+              <Badge tone="accent" icon="check">
+                Digital Milestones
+              </Badge>
+              <Badge tone="accent" icon="check">
+                Escrow Payments
+              </Badge>
             </div>
           </div>
           <div className="p-6 rounded-xl bg-surface-deep border border-accent/20 text-center">
-            <strong className="block font-display text-h1 text-accent font-bold mb-1">4K</strong>
-            <span className="text-overline text-on-surface-muted uppercase tracking-wider">Live CCTV Feed</span>
+            <strong className="block font-display text-h1 text-accent font-bold mb-1">
+              4K
+            </strong>
+            <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+              Live CCTV Feed
+            </span>
           </div>
         </div>
       </Section>
@@ -301,15 +359,23 @@ export default async function ProcessPage() {
               <tr className="border-b border-border-subtle/60 text-accent font-display text-body font-bold">
                 <th className="py-3 px-4">Feature</th>
                 <th className="py-3 px-4">Traditional Contractors</th>
-                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">Luxe Axis 7-Stage Process</th>
+                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">
+                  Luxe Axis 7-Stage Process
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-subtle/40 text-on-surface-2">
               {comparisons.map((row) => (
                 <tr key={row.feature}>
-                  <td className="py-3 px-4 font-bold text-on-surface">{row.feature}</td>
-                  <td className="py-3 px-4 text-on-surface-muted">{row.generic}</td>
-                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">{row.luxeaxis}</td>
+                  <td className="py-3 px-4 font-bold text-on-surface">
+                    {row.feature}
+                  </td>
+                  <td className="py-3 px-4 text-on-surface-muted">
+                    {row.generic}
+                  </td>
+                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">
+                    {row.luxeaxis}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -326,39 +392,27 @@ export default async function ProcessPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Raw shell apartment before Stage 1 Discover' }}
-            afterImage={{ src: '/posters/pricing-axis.avif', alt: 'Completed home interior after Stage 6 Handover' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Raw shell apartment before Stage 1 Discover',
+            }}
+            afterImage={{
+              src: '/posters/pricing-axis.avif',
+              alt: 'Completed home interior after Stage 6 Handover',
+            }}
           />
         </div>
       </Section>
 
       {/* 8. Testimonials */}
-      <Section
-        id="testimonials"
-        eyebrow="Homeowner Feedback"
-        title="What Clients Say About Our Process"
-        lede="Verified client feedback on process clarity and schedule compliance."
-      >
-        <Grid cols={2} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">★★★★★</div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 9. FAQ Accordion */}
-      <Section id="faq" eyebrow="Questions Answered" title="Process & Guarantees FAQ">
+      <Section
+        id="faq"
+        eyebrow="Questions Answered"
+        title="Process & Guarantees FAQ"
+      >
         <Faq items={processFaqs} />
       </Section>
 

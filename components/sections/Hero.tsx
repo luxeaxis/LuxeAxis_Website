@@ -65,9 +65,17 @@ const HERO_SLIDES: readonly HeroSlide[] = [
 const SLIDE_DURATION_MS = 10000;
 
 /**
- * Gensler Flagship Hero Video Slider (Landing Blueprint §1, §3.1)
- * Features full-bleed architectural video background, auto-advancing slide timer,
- * slide progress indicators, play/pause controls, and poster image fallbacks.
+ * The flagship hero video slider (Landing Blueprint §1, §3.1).
+ *
+ * Full-bleed architectural video over a poster fallback, advancing on a timer.
+ *
+ * The name of a large international architecture practice was used throughout
+ * this file as shorthand for the visual reference — including inside the
+ * section's `aria-label`, where it was the accessible name a screen-reader
+ * user heard on the studio's own home page. A competitor's trade name is not
+ * ours to put in our markup, and least of all in the one place that reads as
+ * self-description. Referencing someone's work is a design conversation; their
+ * name belongs in that conversation, not in the DOM.
  */
 export function Hero({
   headline,
@@ -100,7 +108,7 @@ export function Hero({
 
   return (
     <SceneSlot id="hero" layout="content">
-      <section aria-label="Gensler Architectural Hero Showcase" className="relative w-full overflow-hidden isolate min-h-[85vh] flex flex-col justify-between">
+      <section aria-label="Featured project showcase" className="relative w-full overflow-hidden isolate min-h-[85vh] flex flex-col justify-between">
         
         {/* Full-Bleed Video & Poster Background Stage */}
         <div className="absolute inset-0 -z-10 overflow-hidden bg-surface-deep">
@@ -187,10 +195,10 @@ export function Hero({
               </ul>
             </div>
 
-            {/* Right Column: Gensler Video Showcase Spotlight Card */}
+            {/* Right column: the active slide, as a spotlight card. */}
             <div className="flex flex-col gap-4 sm:gap-5 lg:col-span-5 w-full">
               
-              {/* Gensler Active Slide Spotlight Card */}
+              {/* Active slide spotlight card */}
               <div className="relative isolate overflow-hidden rounded-xl bg-surface-deep/95 border border-accent/20 p-4 shadow-2xl backdrop-blur-md group">
                 <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg bg-surface-raised">
                   <Image

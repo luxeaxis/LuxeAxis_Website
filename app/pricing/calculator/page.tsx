@@ -62,7 +62,12 @@ export default async function CalculatorPricingPage() {
     },
     {
       q: 'Can I lock in my calculator estimate for later execution?',
-      a: 'Yes. Once you save your calculator summary or book a design audit, your rate card is locked for 60 days against material price inflation.',
+      // Was "locked for 60 days against material price inflation", which
+      // contradicted the published quote-validity guarantee twice over: it is
+      // 14 days for residential, not 60, and material rises above 8% are
+      // passed through at cost rather than absorbed. An estimate is also not a
+      // quote, so it cannot hold at all until one is issued.
+      a: 'A calculator estimate is an indication, not a quote — the quote comes out of the design audit. Once issued, a residential quote holds for 14 days, a commercial one for 21, and an NRI Elite one for 30. If material costs rise more than 8% between quote and order, the difference is passed through at cost and shown to you.',
     },
   ];
 
@@ -73,7 +78,8 @@ export default async function CalculatorPricingPage() {
           '@context': 'https://schema.org',
           '@type': 'WebApplication',
           name: 'Interactive Fee Calculator & BOQ Budget Estimator',
-          description: 'Calculate your exact interior design cost in Chennai based on carpet area and tier.',
+          description:
+            'Calculate your exact interior design cost in Chennai based on carpet area and tier.',
           url: ROUTE,
         }}
       />
@@ -83,7 +89,10 @@ export default async function CalculatorPricingPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/pricing/calculator" labels={{ 'calculator': "Fee Calculator" }} />
+          <Breadcrumbs
+            path="/pricing/calculator"
+            labels={{ calculator: 'Fee Calculator' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -99,25 +108,43 @@ export default async function CalculatorPricingPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Most Chennai studios hide their prices behind sales calls. We publish our pricing algorithm directly so you can estimate your exact project budget instantly.
+              Most Chennai studios hide their prices behind sales calls. We
+              publish our pricing algorithm directly so you can estimate your
+              exact project budget instantly.
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Instant</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Calculation</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Instant
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Calculation
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">±5%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Estimate Precision</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  ±5%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Estimate Precision
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">0%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Email Gate</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  0%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Email Gate
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
             </div>
           </Stack>
@@ -133,7 +160,9 @@ export default async function CalculatorPricingPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -152,7 +181,8 @@ export default async function CalculatorPricingPage() {
             <FeeCalculator config={calculatorConfig} />
           ) : (
             <p className="text-body text-on-surface-2 text-center py-8">
-              Fee calculator rate card is being updated. Please book a design audit below for an instant quote.
+              Fee calculator rate card is being updated. Please book a design
+              audit below for an instant quote.
             </p>
           )}
         </div>
@@ -167,11 +197,20 @@ export default async function CalculatorPricingPage() {
       >
         <Grid cols={2} gap={6}>
           {calculatorFeatures.map((f) => (
-            <div key={f.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{f.num}</span>
+            <div
+              key={f.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {f.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{f.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{f.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {f.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {f.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -182,10 +221,15 @@ export default async function CalculatorPricingPage() {
       <Section id="faq" eyebrow="Questions Answered" title="Fee Calculator FAQ">
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

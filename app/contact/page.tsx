@@ -1,9 +1,17 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
 import { Link } from '@/components/Link';
-import { STUDIO, formatWindow, mailtoHref, telHref, whatsappHref } from '@/lib/content/studio';
+import {
+  STUDIO,
+  formatWindow,
+  mailtoHref,
+  telHref,
+  whatsappHref,
+} from '@/lib/content/studio';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
@@ -19,9 +27,12 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
   const highlights = [
-    { title: 'Direct Phone', desc: STUDIO.telephone ? STUDIO.telephone.display : 'Available 9am–6pm' },
+    {
+      title: 'Direct Phone',
+      desc: STUDIO.telephone ? STUDIO.telephone.display : 'Available 9am–6pm',
+    },
     { title: 'WhatsApp Instant', desc: 'Quick Architectural Inquiry' },
     { title: 'Dedicated Emails', desc: 'Enquiries & Support Inboxes' },
     { title: 'Experience Studio', desc: 'Nungambakkam, Chennai' },
@@ -75,20 +86,7 @@ export default function ContactPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Siddharth & Meera',
-      location: 'Nungambakkam, Chennai',
-      quote:
-        'Visiting the Luxe Axis studio in Nungambakkam made selecting our Italian marble and kitchen finishes effortless. Super professional team.',
-    },
-    {
-      name: 'Gautam Ramachandran',
-      location: 'Adyar, Chennai',
-      quote:
-        'I messaged them on WhatsApp and had a designer scheduled to audit our site the very next morning. Quick, honest, and zero fluff.',
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -116,7 +114,8 @@ export default function ContactPage() {
           '@context': 'https://schema.org',
           '@type': 'ContactPage',
           name: 'Contact & Design Experience Studio | Luxe Axis Chennai',
-          description: 'Talk to a senior interior designer in Chennai. Book a free design audit or message our team.',
+          description:
+            'Talk to a senior interior designer in Chennai. Book a free design audit or message our team.',
           url: ROUTE,
         }}
       />
@@ -142,7 +141,9 @@ export default function ContactPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Talk directly to a senior interior designer. Book a free 60-minute site audit, visit our Flagship Experience Studio in Nungambakkam, or message our principal team on WhatsApp.
+              Talk directly to a senior interior designer. Book a free 60-minute
+              site audit, visit our Flagship Experience Studio in Nungambakkam,
+              or message our principal team on WhatsApp.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -164,24 +165,44 @@ export default function ContactPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">100% Free</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Design Audit</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  100% Free
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Design Audit
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">2 Hours</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Max Response Time</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  2 Hours
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Max Response Time
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">3 Locations</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  3 Locations
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Chennai Studios
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Direct</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">WhatsApp Access</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Direct
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  WhatsApp Access
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
             </div>
           </Stack>
@@ -197,7 +218,9 @@ export default function ContactPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -213,19 +236,33 @@ export default function ContactPage() {
       >
         <Grid cols={3} gap={6}>
           {studios.map((st) => (
-            <div key={st.title} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={st.title}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <span className="px-2.5 py-1 rounded bg-accent/15 text-accent font-ui text-[10px] font-bold uppercase tracking-wider mb-3 inline-block">
                   📍 {st.location}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">{st.title}</h3>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                  {st.title}
+                </h3>
                 <address className="not-italic text-small text-on-surface-2 mb-3 leading-relaxed">
                   {st.address}
                 </address>
-                <p className="text-[12px] text-accent font-medium mb-3">🕒 {st.hours}</p>
-                <p className="text-small text-on-surface-muted leading-relaxed mb-4">{st.desc}</p>
+                <p className="text-[12px] text-accent font-medium mb-3">
+                  🕒 {st.hours}
+                </p>
+                <p className="text-small text-on-surface-muted leading-relaxed mb-4">
+                  {st.desc}
+                </p>
               </div>
-              <Button as="a" href="/book-audit" variant="secondary" className="w-full justify-center">
+              <Button
+                as="a"
+                href="/book-audit"
+                variant="secondary"
+                className="w-full justify-center"
+              >
                 Schedule Studio Visit →
               </Button>
             </div>
@@ -252,7 +289,9 @@ export default function ContactPage() {
                     {STUDIO.telephone.display}
                   </Link>
                 </p>
-                <span className="text-small text-on-surface-muted">Mon – Sat, 9:00 AM – 6:00 PM IST</span>
+                <span className="text-small text-on-surface-muted">
+                  Mon – Sat, 9:00 AM – 6:00 PM IST
+                </span>
               </div>
             )}
 
@@ -266,7 +305,9 @@ export default function ContactPage() {
                     Message {STUDIO.whatsapp.display}
                   </Link>
                 </p>
-                <span className="text-small text-on-surface-muted">Instant response during business hours</span>
+                <span className="text-small text-on-surface-muted">
+                  Instant response during business hours
+                </span>
               </div>
             )}
 
@@ -278,7 +319,9 @@ export default function ContactPage() {
                 <p className="text-body font-medium text-on-surface">
                   {formatWindow(STUDIO.responseWindow)}
                 </p>
-                <span className="text-small text-on-surface-muted">Enquiries after 6 PM are answered next morning</span>
+                <span className="text-small text-on-surface-muted">
+                  Enquiries after 6 PM are answered next morning
+                </span>
               </div>
             )}
           </div>
@@ -291,14 +334,24 @@ export default function ContactPage() {
                 </h3>
                 <div className="space-y-2">
                   <p className="text-small text-on-surface-2">
-                    <strong className="text-on-surface">New Project Enquiries:</strong>{' '}
-                    <Link href={mailtoHref(STUDIO.email.general)} variant="inline">
+                    <strong className="text-on-surface">
+                      New Project Enquiries:
+                    </strong>{' '}
+                    <Link
+                      href={mailtoHref(STUDIO.email.general)}
+                      variant="inline"
+                    >
                       {STUDIO.email.general}
                     </Link>
                   </p>
                   <p className="text-small text-on-surface-2">
-                    <strong className="text-on-surface">Existing Client Support:</strong>{' '}
-                    <Link href={mailtoHref(STUDIO.email.support)} variant="inline">
+                    <strong className="text-on-surface">
+                      Existing Client Support:
+                    </strong>{' '}
+                    <Link
+                      href={mailtoHref(STUDIO.email.support)}
+                      variant="inline"
+                    >
                       {STUDIO.email.support}
                     </Link>
                   </p>
@@ -336,11 +389,20 @@ export default function ContactPage() {
       >
         <Grid cols={2} gap={6}>
           {whyContact.map((item) => (
-            <div key={item.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{item.num}</span>
+            <div
+              key={item.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {item.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{item.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{item.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {item.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -351,38 +413,25 @@ export default function ContactPage() {
       <ProcessSteps />
 
       {/* 7. Testimonials */}
-      <Section
-        id="testimonials"
-        eyebrow="Client Experiences"
-        title="What Clients Say About Working With Us"
-        lede="Verified client feedback on studio visits and response times."
-      >
-        <Grid cols={2} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">★★★★★</div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 8. FAQ Accordion */}
-      <Section id="faq" eyebrow="Questions Answered" title="Contact & Studio FAQ">
+      <Section
+        id="faq"
+        eyebrow="Questions Answered"
+        title="Contact & Studio FAQ"
+      >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

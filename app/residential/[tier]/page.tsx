@@ -1,3 +1,4 @@
+import { TestimonialBand } from '@/components/sections/CTASection';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Container, Grid, Stack } from '@/components/layout';
@@ -12,7 +13,7 @@ import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
-import { getFaqs, getTiers } from '@/lib/content/source';
+import { getFaqs, getTiers, getTestimonials } from '@/lib/content/source';
 
 export const dynamicParams = false;
 
@@ -36,7 +37,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function TierPage({ params }: { params: Promise<{ tier: string }> }) {
+export default async function TierPage({
+  params,
+}: {
+  params: Promise<{ tier: string }>;
+}) {
   const { tier: tierId } = await params;
   const [allTiers, faqs] = await Promise.all([getTiers(), getFaqs()]);
   const tier = allTiers.find((candidate) => candidate.id === tierId);
@@ -79,28 +84,45 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
   const highlights = tierHighlights[tier.id] ?? defaultHighlights;
 
   const comparisons = [
-    { feature: 'Price per Sq.Ft', essential: '₹1,800 / sq.ft', signature: '₹2,800 / sq.ft', elite: 'Custom Quote' },
-    { feature: 'Core Material', essential: 'Marine BWP Plywood', signature: 'High-Density HDMR & Teak', elite: 'Imported Solid Hardwood' },
-    { feature: 'Kitchen Finish', essential: 'High-Gloss Acrylic / Laminate', signature: 'Italian PU Lacquer / Tinted Glass', elite: 'Calacatta Marble & Metal' },
-    { feature: 'Hardware', essential: 'Blum Soft-Close Standard', signature: 'Hafele / Hettich Premium', elite: 'Custom Italian Brass Joinery' },
-    { feature: 'Delivery Timeline', essential: '45 Days Guaranteed', signature: 'Signature Timeline', elite: 'Milestone Guaranteed' },
-    { feature: 'Warranty', essential: 'Flat 10-Year Warranty', signature: 'Flat 10-Year Warranty', elite: 'Flat 10-Year Warranty' },
+    {
+      feature: 'Price per Sq.Ft',
+      essential: '₹1,800 / sq.ft',
+      signature: '₹2,800 / sq.ft',
+      elite: 'Custom Quote',
+    },
+    {
+      feature: 'Core Material',
+      essential: 'Marine BWP Plywood',
+      signature: 'High-Density HDMR & Teak',
+      elite: 'Imported Solid Hardwood',
+    },
+    {
+      feature: 'Kitchen Finish',
+      essential: 'High-Gloss Acrylic / Laminate',
+      signature: 'Italian PU Lacquer / Tinted Glass',
+      elite: 'Calacatta Marble & Metal',
+    },
+    {
+      feature: 'Hardware',
+      essential: 'Blum Soft-Close Standard',
+      signature: 'Hafele / Hettich Premium',
+      elite: 'Custom Italian Brass Joinery',
+    },
+    {
+      feature: 'Delivery Timeline',
+      essential: '45 Days Guaranteed',
+      signature: 'Signature Timeline',
+      elite: 'Milestone Guaranteed',
+    },
+    {
+      feature: 'Warranty',
+      essential: 'Flat 10-Year Warranty',
+      signature: 'Flat 10-Year Warranty',
+      elite: 'Flat 10-Year Warranty',
+    },
   ];
 
-  const testimonials = [
-    {
-      name: 'Venkatesh & Priya',
-      location: 'T. Nagar, Chennai',
-      quote:
-        `Our home interior under the ${tier.name} was completed on schedule. The finish quality of cabinetry and lighting is outstanding.`,
-    },
-    {
-      name: 'Dr. Vikramaditya',
-      location: 'Adyar, Chennai',
-      quote:
-        `Luxe Axis delivered our residence with total financial transparency. Zero hidden cost escalations under the ${tier.name} BOQ.`,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   return (
     <main id="main" tabIndex={-1}>
@@ -135,14 +157,20 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              {tier.summary} Backed by our 10-year flat structural warranty, factory-direct manufacturing, and contractual delivery guarantees.
+              {tier.summary} Backed by our 10-year flat structural warranty,
+              factory-direct manufacturing, and contractual delivery guarantees.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
               <Button as="a" href="/book-audit" size="lg">
                 Book {tier.name} Audit
               </Button>
-              <Button as="a" href="/pricing/calculator" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/pricing/calculator"
+                variant="secondary"
+                size="lg"
+              >
                 Calculate Exact Budget →
               </Button>
             </div>
@@ -151,7 +179,11 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">
-                  {tier.id === 'essential' ? '₹1,800' : tier.id === 'signature' ? '₹2,800' : 'Bespoke'}
+                  {tier.id === 'essential'
+                    ? '₹1,800'
+                    : tier.id === 'signature'
+                      ? '₹2,800'
+                      : 'Bespoke'}
                 </strong>
                 <span className="text-overline text-on-surface-muted uppercase tracking-wider">
                   {tier.id === 'elite' ? 'Itemized BOQ' : 'Per Carpet Sq.Ft'}
@@ -159,17 +191,31 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">
-                  {tier.id === 'essential' ? '45 Days' : tier.id === 'signature' ? 'Signature' : 'Milestone'}
+                  {tier.id === 'essential'
+                    ? '45 Days'
+                    : tier.id === 'signature'
+                      ? 'Signature'
+                      : 'Milestone'}
                 </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Handover Guarantee</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Handover Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">0%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Cost Escalation</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  0%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Cost Escalation
+                </span>
               </div>
             </div>
           </Stack>
@@ -185,7 +231,9 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -200,7 +248,10 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
         lede="Comprehensive breakdown of material grades, hardware, and studio deliverables."
       >
         <Grid cols={2} gap={8} className="lg:grid-cols-[2fr_1fr]">
-          <section aria-labelledby="included-heading" className="lx-liquid-glass rounded-2xl p-6 border border-accent/30">
+          <section
+            aria-labelledby="included-heading"
+            className="lx-liquid-glass rounded-2xl p-6 border border-accent/30"
+          >
             <Stack gap={5}>
               <h2
                 id="included-heading"
@@ -227,18 +278,44 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
             <thead>
               <tr className="border-b border-border-subtle/60 text-accent font-display text-body font-bold">
                 <th className="py-3 px-4">Specification</th>
-                <th className={`py-3 px-4 ${tier.id === 'essential' ? 'text-accent bg-accent/10 rounded-t-lg' : ''}`}>Essential Tier</th>
-                <th className={`py-3 px-4 ${tier.id === 'signature' ? 'text-accent bg-accent/10 rounded-t-lg' : ''}`}>Signature Tier</th>
-                <th className={`py-3 px-4 ${tier.id === 'elite' ? 'text-accent bg-accent/10 rounded-t-lg' : ''}`}>Elite Commission</th>
+                <th
+                  className={`py-3 px-4 ${tier.id === 'essential' ? 'text-accent bg-accent/10 rounded-t-lg' : ''}`}
+                >
+                  Essential Tier
+                </th>
+                <th
+                  className={`py-3 px-4 ${tier.id === 'signature' ? 'text-accent bg-accent/10 rounded-t-lg' : ''}`}
+                >
+                  Signature Tier
+                </th>
+                <th
+                  className={`py-3 px-4 ${tier.id === 'elite' ? 'text-accent bg-accent/10 rounded-t-lg' : ''}`}
+                >
+                  Elite Commission
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-subtle/40 text-on-surface-2">
               {comparisons.map((row) => (
                 <tr key={row.feature}>
-                  <td className="py-3 px-4 font-bold text-on-surface">{row.feature}</td>
-                  <td className={`py-3 px-4 ${tier.id === 'essential' ? 'font-semibold text-accent bg-accent/5' : ''}`}>{row.essential}</td>
-                  <td className={`py-3 px-4 ${tier.id === 'signature' ? 'font-semibold text-accent bg-accent/5' : ''}`}>{row.signature}</td>
-                  <td className={`py-3 px-4 ${tier.id === 'elite' ? 'font-semibold text-accent bg-accent/5' : ''}`}>{row.elite}</td>
+                  <td className="py-3 px-4 font-bold text-on-surface">
+                    {row.feature}
+                  </td>
+                  <td
+                    className={`py-3 px-4 ${tier.id === 'essential' ? 'font-semibold text-accent bg-accent/5' : ''}`}
+                  >
+                    {row.essential}
+                  </td>
+                  <td
+                    className={`py-3 px-4 ${tier.id === 'signature' ? 'font-semibold text-accent bg-accent/5' : ''}`}
+                  >
+                    {row.signature}
+                  </td>
+                  <td
+                    className={`py-3 px-4 ${tier.id === 'elite' ? 'font-semibold text-accent bg-accent/5' : ''}`}
+                  >
+                    {row.elite}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -255,8 +332,14 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: `Bare shell residence before ${tier.name} fit-out` }}
-            afterImage={{ src: '/posters/hero.avif', alt: `Completed ${tier.name} interior in Chennai` }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: `Bare shell residence before ${tier.name} fit-out`,
+            }}
+            afterImage={{
+              src: '/posters/hero.avif',
+              alt: `Completed ${tier.name} interior in Chennai`,
+            }}
           />
         </div>
       </Section>
@@ -265,29 +348,7 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
       <ProcessSteps />
 
       {/* 7. Testimonials */}
-      <Section
-        id="testimonials"
-        eyebrow="Client Experiences"
-        title={`What ${tier.name} Homeowners Say`}
-        lede="Verified client feedback from projects completed in Chennai."
-      >
-        <Grid cols={2} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">★★★★★</div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 8. Compare Other Tiers Grid */}
       <Section
@@ -298,12 +359,24 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
       >
         <Grid cols={2} gap={6}>
           {otherTiers.map((ot) => (
-            <div key={ot.id} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={ot.id}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">{ot.name}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed mb-4">{ot.summary}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                  {ot.name}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                  {ot.summary}
+                </p>
               </div>
-              <Button as="a" href={`/residential/${ot.id}`} variant="secondary" className="w-full justify-center">
+              <Button
+                as="a"
+                href={`/residential/${ot.id}`}
+                variant="secondary"
+                className="w-full justify-center"
+              >
                 View {ot.name} →
               </Button>
             </div>

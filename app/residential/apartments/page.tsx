@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -20,13 +22,28 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function ApartmentsPage() {
+export default async function ApartmentsPage() {
   const highlights = [
-    { title: 'All Apartment Types', desc: 'Customized Solutions for 2BHK, 3BHK, and 4BHK Flats' },
-    { title: 'Space Optimised', desc: 'Every Square Foot Engineered for Ergonomic Function' },
-    { title: 'Fixed Transparent Price', desc: 'Zero Cost Escalation or Hidden Charges After Signing' },
-    { title: '45-Day Delivery', desc: 'Contractually Guaranteed Move-In Timeline' },
-    { title: 'Flat 10-Year Warranty', desc: 'Complete Coverage Across All Cabinets & Finishes' },
+    {
+      title: 'All Apartment Types',
+      desc: 'Customized Solutions for 2BHK, 3BHK, and 4BHK Flats',
+    },
+    {
+      title: 'Space Optimised',
+      desc: 'Every Square Foot Engineered for Ergonomic Function',
+    },
+    {
+      title: 'Fixed Transparent Price',
+      desc: 'Zero Cost Escalation or Hidden Charges After Signing',
+    },
+    {
+      title: '45-Day Delivery',
+      desc: 'Contractually Guaranteed Move-In Timeline',
+    },
+    {
+      title: 'Flat 10-Year Warranty',
+      desc: 'Complete Coverage Across All Cabinets & Finishes',
+    },
   ];
 
   const apartmentSizes = [
@@ -179,29 +196,7 @@ export default function ApartmentsPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Arun Kumar',
-      location: 'T. Nagar, Chennai',
-      quote:
-        'Luxe Axis guided us perfectly. From billing to delivery, always responsive and helpful. Good collection of finishes and prompt 45-day delivery for our 2BHK flat.',
-      stars: 5,
-    },
-    {
-      name: 'Aadhithya B. Kailash',
-      location: 'Adyar, Chennai',
-      quote:
-        'My 3BHK apartment interiors were completed even before the promised handover date. Mr. SriBalaji managed every detail professionally. Excellent execution!',
-      stars: 5,
-    },
-    {
-      name: 'Venkat Ramanan',
-      location: 'Velachery, Chennai',
-      quote:
-        'Good custom options and excellent quality. They gave detailed explanations on every product and delivered ahead of the expected date with zero cost escalation.',
-      stars: 5,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -210,7 +205,7 @@ export default function ApartmentsPage() {
     },
     {
       q: 'How long does a complete apartment interior take?',
-      a: 'A 2BHK takes 25 to 35 days. A 3BHK takes 35 to 45 days. All are covered under Luxe Axis\'s 45-day delivery guarantee. If we are late, compensation is contractually paid.',
+      a: "A 2BHK takes 25 to 35 days. A 3BHK takes 35 to 45 days. All are covered under Luxe Axis's 45-day delivery guarantee. If we are late, compensation is contractually paid.",
     },
     {
       q: 'Does Luxe Axis handle apartment society permissions for renovation work?',
@@ -246,7 +241,10 @@ export default function ApartmentsPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/residential/apartments" labels={{ 'apartments': "Apartment Interiors" }} />
+          <Breadcrumbs
+            path="/residential/apartments"
+            labels={{ apartments: 'Apartment Interiors' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -262,7 +260,9 @@ export default function ApartmentsPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Space-optimised apartment interiors from 2BHK to 4BHK. Fixed price, 45-day move-in guarantee, and a flat 10-year warranty on every cabinet, ceiling, and finish.
+              Space-optimised apartment interiors from 2BHK to 4BHK. Fixed
+              price, 45-day move-in guarantee, and a flat 10-year warranty on
+              every cabinet, ceiling, and finish.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -277,24 +277,44 @@ export default function ApartmentsPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">5,000+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flats Designed</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  5,000+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flats Designed
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Move-In Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Move-In Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">200+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Society Permits</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  200+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Society Permits
+                </span>
               </div>
             </div>
           </Stack>
@@ -310,7 +330,9 @@ export default function ApartmentsPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -338,9 +360,15 @@ export default function ApartmentsPage() {
                 </span>
               )}
               <div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{pkg.size}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{pkg.title}</h3>
-                <p className="text-small text-accent font-semibold my-2">{pkg.price}</p>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {pkg.size}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">
+                  {pkg.title}
+                </h3>
+                <p className="text-small text-accent font-semibold my-2">
+                  {pkg.price}
+                </p>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {pkg.desc}
                 </p>
@@ -353,7 +381,12 @@ export default function ApartmentsPage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={pkg.href} variant={pkg.featured ? 'primary' : 'secondary'} className="w-full justify-center">
+              <Button
+                as="a"
+                href={pkg.href}
+                variant={pkg.featured ? 'primary' : 'secondary'}
+                className="w-full justify-center"
+              >
                 {pkg.cta} →
               </Button>
             </div>
@@ -371,9 +404,16 @@ export default function ApartmentsPage() {
         <Grid cols={2} gap={8} className="items-center">
           <div className="space-y-4">
             {constraints.map((c) => (
-              <div key={c.title} className="p-4 rounded-xl lx-liquid-glass border border-accent/25">
-                <h3 className="font-display text-h4 font-bold text-accent mb-1">{c.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{c.desc}</p>
+              <div
+                key={c.title}
+                className="p-4 rounded-xl lx-liquid-glass border border-accent/25"
+              >
+                <h3 className="font-display text-h4 font-bold text-accent mb-1">
+                  {c.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {c.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -388,8 +428,12 @@ export default function ApartmentsPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-surface-deep via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4 right-4 lx-liquid-glass p-4 rounded-xl border border-accent/30">
-              <strong className="block text-h4 text-on-surface font-bold">200+ Society Approvals</strong>
-              <span className="text-small text-on-surface-2">Zero friction work permits across Chennai gated communities</span>
+              <strong className="block text-h4 text-on-surface font-bold">
+                200+ Society Approvals
+              </strong>
+              <span className="text-small text-on-surface-2">
+                Zero friction work permits across Chennai gated communities
+              </span>
             </div>
           </div>
         </Grid>
@@ -420,8 +464,12 @@ export default function ApartmentsPage() {
                 <span className="px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                   {p.tag}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">{p.title}</h3>
-                <p className="text-small text-accent font-medium mt-1">📍 {p.location}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-accent font-medium mt-1">
+                  📍 {p.location}
+                </p>
               </div>
             </div>
           ))}
@@ -473,11 +521,19 @@ export default function ApartmentsPage() {
                 </span>
               )}
               <div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{tier.tag}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{tier.name}</h3>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {tier.tag}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">
+                  {tier.name}
+                </h3>
                 <div className="my-4 flex items-baseline gap-1">
-                  <span className="font-display text-[36px] font-bold text-accent">{tier.price}</span>
-                  <span className="text-small text-on-surface-muted">{tier.unit}</span>
+                  <span className="font-display text-[36px] font-bold text-accent">
+                    {tier.price}
+                  </span>
+                  <span className="text-small text-on-surface-muted">
+                    {tier.unit}
+                  </span>
                 </div>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {tier.desc}
@@ -491,7 +547,12 @@ export default function ApartmentsPage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={tier.href} variant={tier.featured ? 'primary' : 'secondary'} className="w-full justify-center">
+              <Button
+                as="a"
+                href={tier.href}
+                variant={tier.featured ? 'primary' : 'secondary'}
+                className="w-full justify-center"
+              >
                 {tier.cta} →
               </Button>
             </div>
@@ -503,31 +564,7 @@ export default function ApartmentsPage() {
       <ProcessSteps />
 
       {/* 9. Client Stories */}
-      <Section
-        id="testimonials"
-        eyebrow="Client Stories"
-        title="What Chennai Flat Owners Say"
-        lede="Verified feedback from apartment owners across Chennai."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">
-                  {'★'.repeat(t.stars)}
-                </div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 10. FAQ Accordion */}
       <Section
@@ -538,10 +575,15 @@ export default function ApartmentsPage() {
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

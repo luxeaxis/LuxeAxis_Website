@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -20,13 +22,28 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function RenovationPage() {
+export default async function RenovationPage() {
   const highlights = [
-    { title: 'Old to New Transformation', desc: 'Structural Civil & Interior Renovation Managed Under One Contract' },
-    { title: 'Fixed Transparent Price', desc: 'Zero Cost Escalation or Hidden Supplementary Charges After Signing' },
-    { title: 'Live-In Renovation', desc: 'Dust-Barrier Isolation & Sequencing — No Need to Move Out' },
-    { title: '45-Day Delivery Guarantee', desc: 'Contractually Backed Timeline with Delay Compensation Clause' },
-    { title: 'Flat 10-Year Warranty', desc: 'Comprehensive Coverage Across All Renovation Works & Materials' },
+    {
+      title: 'Old to New Transformation',
+      desc: 'Structural Civil & Interior Renovation Managed Under One Contract',
+    },
+    {
+      title: 'Fixed Transparent Price',
+      desc: 'Zero Cost Escalation or Hidden Supplementary Charges After Signing',
+    },
+    {
+      title: 'Live-In Renovation',
+      desc: 'Dust-Barrier Isolation & Sequencing — No Need to Move Out',
+    },
+    {
+      title: '45-Day Delivery Guarantee',
+      desc: 'Contractually Backed Timeline with Delay Compensation Clause',
+    },
+    {
+      title: 'Flat 10-Year Warranty',
+      desc: 'Comprehensive Coverage Across All Renovation Works & Materials',
+    },
   ];
 
   const transformations = [
@@ -54,12 +71,36 @@ export default function RenovationPage() {
   ];
 
   const timelinePhases = [
-    { num: '01', title: 'Assessment', desc: 'Site inspection, structural audit & 3D design creation. Damp, wiring, and plumbing issues identified before work begins.' },
-    { num: '02', title: 'Protection', desc: 'Furniture shifted and covered. Heavy dust barriers erected between work zones and living zones. Floor protection laid.' },
-    { num: '03', title: 'Demolition', desc: 'Controlled demolition of existing fixtures, flooring, and woodwork. Debris cleared daily with minimal noise during rest hours.' },
-    { num: '04', title: 'Installation', desc: 'New flooring, false ceiling, modular kitchen, wardrobes, and all woodwork installed room by room in a planned sequence.' },
-    { num: '05', title: 'Finishing', desc: 'Painting, ambient lighting coves, hardware, and all finishing touches completed. Thorough site cleanup carried out before inspection.' },
-    { num: '06', title: 'Handover', desc: 'Full walkthrough with client. Punch-list items resolved. Warranty documentation issued and after-care coordinator assigned.' },
+    {
+      num: '01',
+      title: 'Assessment',
+      desc: 'Site inspection, structural audit & 3D design creation. Damp, wiring, and plumbing issues identified before work begins.',
+    },
+    {
+      num: '02',
+      title: 'Protection',
+      desc: 'Furniture shifted and covered. Heavy dust barriers erected between work zones and living zones. Floor protection laid.',
+    },
+    {
+      num: '03',
+      title: 'Demolition',
+      desc: 'Controlled demolition of existing fixtures, flooring, and woodwork. Debris cleared daily with minimal noise during rest hours.',
+    },
+    {
+      num: '04',
+      title: 'Installation',
+      desc: 'New flooring, false ceiling, modular kitchen, wardrobes, and all woodwork installed room by room in a planned sequence.',
+    },
+    {
+      num: '05',
+      title: 'Finishing',
+      desc: 'Painting, ambient lighting coves, hardware, and all finishing touches completed. Thorough site cleanup carried out before inspection.',
+    },
+    {
+      num: '06',
+      title: 'Handover',
+      desc: 'Full walkthrough with client. Punch-list items resolved. Warranty documentation issued and after-care coordinator assigned.',
+    },
   ];
 
   const galleryProjects = [
@@ -173,29 +214,7 @@ export default function RenovationPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Senthil Kumar',
-      location: 'Adyar, Chennai',
-      quote:
-        'Excellent and professional execution. The Luxe Axis architects explained the pros and cons of structural modifications clearly, making every decision easy. Strongly recommend!',
-      stars: 5,
-    },
-    {
-      name: 'Muthuraman Sethuramalingam',
-      location: 'Adyar, Chennai',
-      quote:
-        'The Luxe Axis team showed exceptional flexibility when our move-in timelines were tight. They stepped in with additional manpower and delivered our 3BHK makeover on time.',
-      stars: 5,
-    },
-    {
-      name: 'Arun Kumar',
-      location: 'T. Nagar, Chennai',
-      quote:
-        'Guided us perfectly through the renovation process. From demolition to final polishing, always responsive and helpful. Zero cost escalation after signing!',
-      stars: 5,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -240,7 +259,10 @@ export default function RenovationPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/residential/renovation" labels={{ 'renovation': "Home Renovation" }} />
+          <Breadcrumbs
+            path="/residential/renovation"
+            labels={{ renovation: 'Home Renovation' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -256,7 +278,9 @@ export default function RenovationPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Transform your existing home without moving out. Fixed price, zero disruption, 45-day delivery guarantee, and a flat 10-year warranty on every element of the renovation.
+              Transform your existing home without moving out. Fixed price, zero
+              disruption, 45-day delivery guarantee, and a flat 10-year warranty
+              on every element of the renovation.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -271,24 +295,44 @@ export default function RenovationPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10,000+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Homes Renewed</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10,000+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Homes Renewed
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Max Timeline</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Max Timeline
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">3</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  3
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Chennai Studios
+                </span>
               </div>
             </div>
           </Stack>
@@ -304,7 +348,9 @@ export default function RenovationPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -327,17 +373,39 @@ export default function RenovationPage() {
               <div>
                 <div className="grid grid-cols-2 gap-2 mb-4">
                   <div className="relative rounded-lg overflow-hidden aspect-square border border-border-subtle/60">
-                    <Image src={item.beforeImg} alt="Before renovation" fill sizes="200px" className="object-cover" />
-                    <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-surface-deep/90 text-on-surface text-[9px] font-bold uppercase">Before</span>
+                    <Image
+                      src={item.beforeImg}
+                      alt="Before renovation"
+                      fill
+                      sizes="200px"
+                      className="object-cover"
+                    />
+                    <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-surface-deep/90 text-on-surface text-[9px] font-bold uppercase">
+                      Before
+                    </span>
                   </div>
                   <div className="relative rounded-lg overflow-hidden aspect-square border border-accent/40">
-                    <Image src={item.afterImg} alt="After renovation" fill sizes="200px" className="object-cover" />
-                    <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-accent text-surface-deep text-[9px] font-bold uppercase">After</span>
+                    <Image
+                      src={item.afterImg}
+                      alt="After renovation"
+                      fill
+                      sizes="200px"
+                      className="object-cover"
+                    />
+                    <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-accent text-surface-deep text-[9px] font-bold uppercase">
+                      After
+                    </span>
                   </div>
                 </div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{item.tag}</span>
-                <h3 className="font-display text-h4 font-bold text-on-surface my-1.5">{item.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{item.desc}</p>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {item.tag}
+                </span>
+                <h3 className="font-display text-h4 font-bold text-on-surface my-1.5">
+                  {item.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -353,10 +421,19 @@ export default function RenovationPage() {
       >
         <Grid cols={3} gap={6}>
           {timelinePhases.map((phase) => (
-            <div key={phase.num} className="lx-liquid-glass rounded-2xl p-5 border border-accent/30 relative">
-              <span className="font-display text-[32px] font-bold text-accent block mb-2">{phase.num}</span>
-              <h3 className="font-display text-h4 font-bold text-on-surface mb-2">{phase.title}</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed">{phase.desc}</p>
+            <div
+              key={phase.num}
+              className="lx-liquid-glass rounded-2xl p-5 border border-accent/30 relative"
+            >
+              <span className="font-display text-[32px] font-bold text-accent block mb-2">
+                {phase.num}
+              </span>
+              <h3 className="font-display text-h4 font-bold text-on-surface mb-2">
+                {phase.title}
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed">
+                {phase.desc}
+              </p>
             </div>
           ))}
         </Grid>
@@ -387,8 +464,12 @@ export default function RenovationPage() {
                 <span className="px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                   {p.tag}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">{p.title}</h3>
-                <p className="text-small text-accent font-medium mt-1">📍 {p.location}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-accent font-medium mt-1">
+                  📍 {p.location}
+                </p>
               </div>
             </div>
           ))}
@@ -404,11 +485,20 @@ export default function RenovationPage() {
       >
         <div className="space-y-4 max-w-4xl mx-auto">
           {whyChooseUs.map((w) => (
-            <div key={w.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{w.num}</span>
+            <div
+              key={w.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {w.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{w.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{w.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {w.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {w.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -460,11 +550,19 @@ export default function RenovationPage() {
                 </span>
               )}
               <div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{tier.tag}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{tier.name}</h3>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {tier.tag}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">
+                  {tier.name}
+                </h3>
                 <div className="my-4 flex items-baseline gap-1">
-                  <span className="font-display text-[36px] font-bold text-accent">{tier.price}</span>
-                  <span className="text-small text-on-surface-muted">{tier.unit}</span>
+                  <span className="font-display text-[36px] font-bold text-accent">
+                    {tier.price}
+                  </span>
+                  <span className="text-small text-on-surface-muted">
+                    {tier.unit}
+                  </span>
                 </div>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {tier.desc}
@@ -478,7 +576,12 @@ export default function RenovationPage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={tier.href} variant={tier.featured ? 'primary' : 'secondary'} className="w-full justify-center">
+              <Button
+                as="a"
+                href={tier.href}
+                variant={tier.featured ? 'primary' : 'secondary'}
+                className="w-full justify-center"
+              >
                 {tier.cta} →
               </Button>
             </div>
@@ -490,31 +593,7 @@ export default function RenovationPage() {
       <ProcessSteps />
 
       {/* 10. Client Stories */}
-      <Section
-        id="testimonials"
-        eyebrow="Client Stories"
-        title="What Chennai Families Say About Our Renovations"
-        lede="Verified client reviews from renovated homes across Chennai."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">
-                  {'★'.repeat(t.stars)}
-                </div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 11. FAQ Accordion */}
       <Section
@@ -525,10 +604,15 @@ export default function RenovationPage() {
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

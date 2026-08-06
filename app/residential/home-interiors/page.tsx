@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -21,13 +23,28 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function HomeInteriorsPage() {
+export default async function HomeInteriorsPage() {
   const highlights = [
-    { title: 'Full-Home Scope', desc: 'Every Room Covered Under One Unified Design Blueprint' },
-    { title: '10-Year Warranty', desc: 'Flat Warranty Across All Materials & Custom Joinery' },
-    { title: '45-Day Move-In', desc: 'Contractually Backed Delivery Timeline with Zero Delay' },
-    { title: '3D Spatial OS', desc: '4K Raytraced VR Preview of Every Room Before Execution' },
-    { title: 'Fixed Transparent Price', desc: 'Locked Itemized BOQ Quote — Zero Hidden Cost Escalation' },
+    {
+      title: 'Full-Home Scope',
+      desc: 'Every Room Covered Under One Unified Design Blueprint',
+    },
+    {
+      title: '10-Year Warranty',
+      desc: 'Flat Warranty Across All Materials & Custom Joinery',
+    },
+    {
+      title: '45-Day Move-In',
+      desc: 'Contractually Backed Delivery Timeline with Zero Delay',
+    },
+    {
+      title: '3D Spatial OS',
+      desc: '4K Raytraced VR Preview of Every Room Before Execution',
+    },
+    {
+      title: 'Fixed Transparent Price',
+      desc: 'Locked Itemized BOQ Quote — Zero Hidden Cost Escalation',
+    },
   ];
 
   const roomCategories = [
@@ -213,29 +230,7 @@ export default function HomeInteriorsPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Senthil Kumar',
-      location: 'Adyar, Chennai',
-      quote:
-        'Excellent and professional execution. The Luxe Axis team explained the pros and cons of every material choice clearly, completing our 3BHK within 45 days. Highly recommended!',
-      stars: 5,
-    },
-    {
-      name: 'Aadhithya B. Kailash',
-      location: 'OMR, Chennai',
-      quote:
-        'My 3BHK penthouse interiors were completed even before the promised handover date. The 3D VR simulation let us preview every room before site work began.',
-      stars: 5,
-    },
-    {
-      name: 'Priya & Rajesh Raman',
-      location: 'Anna Nagar, Chennai',
-      quote:
-        'Single studio responsibility for everything — from false ceiling to kitchen cabinets. Zero cost escalation and pristine finish throughout.',
-      stars: 5,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   return (
     <main id="main" tabIndex={-1}>
@@ -251,7 +246,7 @@ export default function HomeInteriorsPage() {
       {/* 1. Hero Section */}
       <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
-        
+
         <Container>
           <Breadcrumbs path="/residential/home-interiors" />
 
@@ -269,7 +264,10 @@ export default function HomeInteriorsPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Every room designed as one unified home. Living room, modular kitchens, bedrooms, false ceilings, and bespoke wardrobes. 10,000+ complete homes delivered across Chennai with 45-day move-in and flat 10-year warranty.
+              Every room designed as one unified home. Living room, modular
+              kitchens, bedrooms, false ceilings, and bespoke wardrobes. 10,000+
+              complete homes delivered across Chennai with 45-day move-in and
+              flat 10-year warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -284,24 +282,44 @@ export default function HomeInteriorsPage() {
             {/* Hero Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10,000+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Homes Delivered</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10,000+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Homes Delivered
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Move-In Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Move-In Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">50+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Master Architects</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  50+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Master Architects
+                </span>
               </div>
             </div>
           </Stack>
@@ -317,7 +335,9 @@ export default function HomeInteriorsPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -334,7 +354,11 @@ export default function HomeInteriorsPage() {
         <Grid cols={2} gap={8} className="items-center">
           <Stack gap={5}>
             <p className="text-body text-on-surface-2">
-              No coordination gaps between carpentering contractors, ceiling technicians, and electrician teams. From the grand entryway to your sacred pooja mandap, our architects handle civil alterations, MEP conduit routing, custom millwork, and lighting coves under one contract.
+              No coordination gaps between carpentering contractors, ceiling
+              technicians, and electrician teams. From the grand entryway to
+              your sacred pooja mandap, our architects handle civil alterations,
+              MEP conduit routing, custom millwork, and lighting coves under one
+              contract.
             </p>
             <div className="flex flex-wrap gap-2">
               <span className="px-3 py-1.5 rounded-full bg-accent/15 border border-accent/30 text-accent text-small font-semibold">
@@ -365,8 +389,12 @@ export default function HomeInteriorsPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-surface-deep via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4 right-4 lx-liquid-glass p-4 rounded-xl border border-accent/30 flex items-center justify-between">
               <div>
-                <strong className="block text-h4 text-on-surface font-bold">50+ Master Architects</strong>
-                <span className="text-small text-on-surface-2">Dedicated turnkey execution teams across Chennai</span>
+                <strong className="block text-h4 text-on-surface font-bold">
+                  50+ Master Architects
+                </strong>
+                <span className="text-small text-on-surface-2">
+                  Dedicated turnkey execution teams across Chennai
+                </span>
               </div>
             </div>
           </div>
@@ -399,7 +427,9 @@ export default function HomeInteriorsPage() {
                     {room.tag}
                   </span>
                 </div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-3">{room.title}</h3>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-3">
+                  {room.title}
+                </h3>
                 <ul className="space-y-1.5 mb-5 text-small text-on-surface-2">
                   {room.specs.map((spec) => (
                     <li key={spec} className="flex items-start gap-2">
@@ -409,7 +439,13 @@ export default function HomeInteriorsPage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={room.href} variant="secondary" size="sm" className="w-full justify-center">
+              <Button
+                as="a"
+                href={room.href}
+                variant="secondary"
+                size="sm"
+                className="w-full justify-center"
+              >
                 Explore {room.tag} →
               </Button>
             </div>
@@ -428,9 +464,14 @@ export default function HomeInteriorsPage() {
           <Stack gap={4}>
             <ul className="space-y-3">
               {vrFeatures.map((feat) => (
-                <li key={feat} className="flex items-start gap-3 p-3 rounded-xl bg-surface-raised/50 border border-border-subtle/50">
+                <li
+                  key={feat}
+                  className="flex items-start gap-3 p-3 rounded-xl bg-surface-raised/50 border border-border-subtle/50"
+                >
                   <span className="text-accent text-body">✦</span>
-                  <span className="text-body text-on-surface-2 font-medium">{feat}</span>
+                  <span className="text-body text-on-surface-2 font-medium">
+                    {feat}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -446,7 +487,10 @@ export default function HomeInteriorsPage() {
 
           <div className="grid grid-cols-2 gap-4 relative">
             {roomCategories.slice(0, 4).map((r) => (
-              <div key={r.title + '3d'} className="relative aspect-[4/3] rounded-xl overflow-hidden border border-accent/30 group">
+              <div
+                key={r.title + '3d'}
+                className="relative aspect-[4/3] rounded-xl overflow-hidden border border-accent/30 group"
+              >
                 <Image
                   src={r.image}
                   alt={r.title + ' 3D preview'}
@@ -461,8 +505,12 @@ export default function HomeInteriorsPage() {
               </div>
             ))}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lx-liquid-glass p-3 rounded-xl border border-accent/50 text-center shadow-2xl">
-              <strong className="block font-display text-h3 text-accent font-bold">45</strong>
-              <span className="text-[10px] text-on-surface-2 uppercase tracking-wider">Days to Move-In</span>
+              <strong className="block font-display text-h3 text-accent font-bold">
+                45
+              </strong>
+              <span className="text-[10px] text-on-surface-2 uppercase tracking-wider">
+                Days to Move-In
+              </span>
             </div>
           </div>
         </Grid>
@@ -486,12 +534,22 @@ export default function HomeInteriorsPage() {
             >
               <div>
                 <div className="flex items-baseline gap-1 text-accent mb-2">
-                  <span className="font-display text-[48px] font-bold leading-none">{g.num}</span>
-                  <span className="font-ui text-h4 font-semibold uppercase">{g.unit}</span>
+                  <span className="font-display text-[48px] font-bold leading-none">
+                    {g.num}
+                  </span>
+                  <span className="font-ui text-h4 font-semibold uppercase">
+                    {g.unit}
+                  </span>
                 </div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider block mb-2">{g.subtitle}</span>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-3">{g.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{g.desc}</p>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider block mb-2">
+                  {g.subtitle}
+                </span>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-3">
+                  {g.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {g.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -523,8 +581,12 @@ export default function HomeInteriorsPage() {
                 <span className="px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                   {p.tag}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">{p.title}</h3>
-                <p className="text-small text-accent font-medium mt-1">📍 {p.location}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-accent font-medium mt-1">
+                  📍 {p.location}
+                </p>
               </div>
             </div>
           ))}
@@ -576,11 +638,19 @@ export default function HomeInteriorsPage() {
                 </span>
               )}
               <div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{tier.tag}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{tier.name}</h3>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {tier.tag}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">
+                  {tier.name}
+                </h3>
                 <div className="my-4 flex items-baseline gap-1">
-                  <span className="font-display text-[36px] font-bold text-accent">{tier.price}</span>
-                  <span className="text-small text-on-surface-muted">{tier.unit}</span>
+                  <span className="font-display text-[36px] font-bold text-accent">
+                    {tier.price}
+                  </span>
+                  <span className="text-small text-on-surface-muted">
+                    {tier.unit}
+                  </span>
                 </div>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {tier.desc}
@@ -594,7 +664,12 @@ export default function HomeInteriorsPage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={tier.href} variant={tier.featured ? 'primary' : 'secondary'} className="w-full justify-center">
+              <Button
+                as="a"
+                href={tier.href}
+                variant={tier.featured ? 'primary' : 'secondary'}
+                className="w-full justify-center"
+              >
                 {tier.cta} →
               </Button>
             </div>
@@ -606,31 +681,7 @@ export default function HomeInteriorsPage() {
       <ProcessSteps />
 
       {/* 12. Homeowner Testimonials */}
-      <Section
-        id="testimonials"
-        eyebrow="Homeowner Stories"
-        title="What Families Say About Their Complete Homes"
-        lede="Verified client reviews from completed projects across Chennai."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">
-                  {'★'.repeat(t.stars)}
-                </div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 13. Conversion CTA Section */}
       <CTASection />

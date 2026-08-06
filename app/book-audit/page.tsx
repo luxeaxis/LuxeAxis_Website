@@ -1,3 +1,4 @@
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import { BookAuditForm } from '@/components/BookAuditForm';
@@ -10,7 +11,7 @@ import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq } from '@/components/Faq';
 import { JsonLd } from '@/components/JsonLd';
 import { canonicalFor } from '@/lib/seo/hreflang';
-import { getFaqs, getTrustPoints } from '@/lib/content/source';
+import { getFaqs, getTrustPoints, getTestimonials } from '@/lib/content/source';
 
 const ROUTE = '/book-audit';
 
@@ -22,12 +23,11 @@ export const metadata: Metadata = {
 };
 
 export default async function BookAuditPage() {
-  const [trustPoints, faqs] = await Promise.all([
-    getTrustPoints(),
-    getFaqs(),
-  ]);
+  const [trustPoints, faqs] = await Promise.all([getTrustPoints(), getFaqs()]);
 
-  const auditFaqs = [...faqs].filter((f) => f.id === 'abroad' || f.id === 'contractors' || f.id === 'materials');
+  const auditFaqs = [...faqs].filter(
+    (f) => f.id === 'abroad' || f.id === 'contractors' || f.id === 'materials',
+  );
 
   const highlights = [
     { title: '60-Min Session', desc: 'In-Person or Virtual Video Audit' },
@@ -83,20 +83,7 @@ export default async function BookAuditPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Deepak & Ananya',
-      location: 'Nungambakkam, Chennai',
-      quote:
-        'Booking the 60-minute design audit was the best decision we made. The architect identified two dead corners in our layout that saved us ₹2 Lakhs in unnecessary millwork.',
-    },
-    {
-      name: 'Vaidyanathan Iyer',
-      location: 'Adyar, Chennai',
-      quote:
-        'The Vastu-Tech compass scan during our audit gave us total peace of mind. Transparent pricing and zero pressure to sign on the spot.',
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   return (
     <main id="main" tabIndex={-1}>
@@ -105,7 +92,8 @@ export default async function BookAuditPage() {
           '@context': 'https://schema.org',
           '@type': 'ReserveAction',
           name: 'Book a Free Design Audit | Luxe Axis Chennai',
-          description: 'A free 60-minute spatial design audit with a senior interior architect.',
+          description:
+            'A free 60-minute spatial design audit with a senior interior architect.',
           url: ROUTE,
         }}
       />
@@ -131,30 +119,52 @@ export default async function BookAuditPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              A free 60-minute audit with a senior interior architect. Tell us about your home or commercial space, and we will agree on a convenient time. No obligation, no hard sell, and zero spam.
+              A free 60-minute audit with a senior interior architect. Tell us
+              about your home or commercial space, and we will agree on a
+              convenient time. No obligation, no hard sell, and zero spam.
             </p>
 
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">100% Free</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">No Obligation</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  100% Free
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  No Obligation
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">60 Mins</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Audit Duration</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  60 Mins
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Audit Duration
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">CAD & 3D</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Layout Assessment</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  CAD & 3D
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Layout Assessment
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Vastu Scan</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Solar Orientation</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Vastu Scan
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Solar Orientation
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
             </div>
           </Stack>
@@ -170,7 +180,9 @@ export default async function BookAuditPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -178,13 +190,20 @@ export default async function BookAuditPage() {
       </section>
 
       {/* 3. Primary Interactive Audit Form Section */}
-      <Section id="audit-form" eyebrow="Reserve Your Slot" title="Select Your Consultation Details">
+      <Section
+        id="audit-form"
+        eyebrow="Reserve Your Slot"
+        title="Select Your Consultation Details"
+      >
         <Grid cols={2} gap={8} className="lg:grid-cols-[3fr_2fr]">
           <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30">
             <BookAuditForm />
           </div>
 
-          <aside aria-labelledby="what-happens-heading" className="lx-liquid-glass rounded-2xl p-6 border border-accent/30">
+          <aside
+            aria-labelledby="what-happens-heading"
+            className="lx-liquid-glass rounded-2xl p-6 border border-accent/30"
+          >
             <Stack gap={5}>
               <h2
                 id="what-happens-heading"
@@ -198,7 +217,10 @@ export default async function BookAuditPage() {
                   'The audit is 60 minutes, conducted in-person at our studio/site or virtually over video call.',
                   'You receive an optimized 2D layout, Vastu-Tech scan, and an itemized BOQ quote with zero financial commitment.',
                 ].map((item, index) => (
-                  <li key={item} className="flex gap-3 text-small text-on-surface-2">
+                  <li
+                    key={item}
+                    className="flex gap-3 text-small text-on-surface-2"
+                  >
                     <span
                       aria-hidden="true"
                       className="flex h-icon-lg w-icon-lg shrink-0 items-center justify-center rounded-round border border-accent/40 font-mono text-overline text-accent font-bold"
@@ -212,8 +234,16 @@ export default async function BookAuditPage() {
 
               <ul className="flex flex-col gap-2.5 border-t border-border-subtle/50 pt-5">
                 {trustPoints.map((point) => (
-                  <li key={point} className="flex items-center gap-2 text-small text-on-surface-2">
-                    <Icon name="check" size="sm" decorative className="shrink-0 text-accent" />
+                  <li
+                    key={point}
+                    className="flex items-center gap-2 text-small text-on-surface-2"
+                  >
+                    <Icon
+                      name="check"
+                      size="sm"
+                      decorative
+                      className="shrink-0 text-accent"
+                    />
                     <span>{point}</span>
                   </li>
                 ))}
@@ -221,7 +251,8 @@ export default async function BookAuditPage() {
 
               <div className="p-3 rounded-xl bg-accent/10 border border-accent/20">
                 <p className="text-small text-accent font-medium">
-                  🔒 You will speak directly to a senior interior architect, not a bot or sales agent.
+                  🔒 You will speak directly to a senior interior architect, not
+                  a bot or sales agent.
                 </p>
               </div>
             </Stack>
@@ -238,11 +269,20 @@ export default async function BookAuditPage() {
       >
         <Grid cols={2} gap={6}>
           {deliverables.map((d) => (
-            <div key={d.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{d.num}</span>
+            <div
+              key={d.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {d.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{d.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{d.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {d.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {d.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -262,15 +302,23 @@ export default async function BookAuditPage() {
               <tr className="border-b border-border-subtle/60 text-accent font-display text-body font-bold">
                 <th className="py-3 px-4">Feature</th>
                 <th className="py-3 px-4">Generic Interior Sales Calls</th>
-                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">Luxe Axis 60-Min Audit</th>
+                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">
+                  Luxe Axis 60-Min Audit
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-subtle/40 text-on-surface-2">
               {comparisons.map((row) => (
                 <tr key={row.feature}>
-                  <td className="py-3 px-4 font-bold text-on-surface">{row.feature}</td>
-                  <td className="py-3 px-4 text-on-surface-muted">{row.traditional}</td>
-                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">{row.luxeaxis}</td>
+                  <td className="py-3 px-4 font-bold text-on-surface">
+                    {row.feature}
+                  </td>
+                  <td className="py-3 px-4 text-on-surface-muted">
+                    {row.traditional}
+                  </td>
+                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">
+                    {row.luxeaxis}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -287,8 +335,14 @@ export default async function BookAuditPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell flat before design audit' }}
-            afterImage={{ src: '/posters/pricing-axis.avif', alt: 'Completed 3BHK home after Luxe Axis audit' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Bare shell flat before design audit',
+            }}
+            afterImage={{
+              src: '/posters/pricing-axis.avif',
+              alt: 'Completed 3BHK home after Luxe Axis audit',
+            }}
           />
         </div>
       </Section>
@@ -297,29 +351,7 @@ export default async function BookAuditPage() {
       <ProcessSteps />
 
       {/* 8. Testimonials */}
-      <Section
-        id="testimonials"
-        eyebrow="Homeowner Experiences"
-        title="What Clients Say About the Audit"
-        lede="Verified client feedback from homeowners in Chennai."
-      >
-        <Grid cols={2} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">★★★★★</div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 9. FAQ Accordion */}
       <Section id="faq" eyebrow="Questions Answered" title="Audit FAQ">

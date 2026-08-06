@@ -1,3 +1,4 @@
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -10,7 +11,7 @@ import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
-import { getFaqs } from '@/lib/content/source';
+import { getFaqs, getTestimonials } from '@/lib/content/source';
 
 const ROUTE = '/journal';
 
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default async function JournalPage() {
+  const testimonials = await getTestimonials();
   const faqs = await getFaqs();
   const journalFaqs = [...faqs].filter((f) => f.id === 'materials' || f.id === 'contractors' || f.id === 'abroad');
 
@@ -327,42 +329,7 @@ export default async function JournalPage() {
       </Section>
 
       {/* 7. Testimonials */}
-      <Section
-        id="testimonials"
-        eyebrow="Reader Feedback"
-        title="What Homeowners Say About Our Journal"
-        lede="Feedback from homeowners who used our guides during their interior planning."
-      >
-        <Grid cols={2} gap={6}>
-          {[
-            {
-              name: 'Senthil & Ramya',
-              location: 'OMR, Chennai',
-              quote:
-                'Reading the BWP Marine Plywood guide helped us avoid cheap commercial ply that our previous contractor recommended. The technical depth of Luxe Axis articles is unmatched.',
-            },
-            {
-              name: 'Meenakshi Sundaram',
-              location: 'Anna Nagar, Chennai',
-              quote:
-                'The Vastu-Tech spatial guide gave us clear answers on north-east water zones. We booked a design audit immediately after reading.',
-            },
-          ].map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">★★★★★</div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 8. FAQ Accordion */}
       <Section id="faq" eyebrow="Questions Answered" title="Journal & Insights FAQ">

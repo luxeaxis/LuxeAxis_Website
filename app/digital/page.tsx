@@ -1,3 +1,4 @@
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
@@ -9,7 +10,7 @@ import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
-import { getFaqs } from '@/lib/content/source';
+import { getFaqs, getTestimonials } from '@/lib/content/source';
 
 const ROUTE = '/digital';
 
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
 };
 
 export default async function DigitalPage() {
+  const testimonials = await getTestimonials();
   const faqs = await getFaqs();
   const digitalFaqs = [...faqs].filter((f) => f.id === 'abroad' || f.id === 'materials' || f.id === 'contractors');
 
@@ -336,42 +338,7 @@ export default async function DigitalPage() {
       </Section>
 
       {/* 7. Testimonials */}
-      <Section
-        id="testimonials"
-        eyebrow="Client Reviews"
-        title="What Digital Clients Say"
-        lede="Verified feedback from homeowners who used our remote design packages."
-      >
-        <Grid cols={2} gap={6}>
-          {[
-            {
-              name: 'Dr. Suresh & Anita',
-              location: 'Singapore (Flat in OMR, Chennai)',
-              quote:
-                'The Pro Digital package gave our contractor in Chennai exact working CAD drawings. The 4K 3D renders matched the final result 100%.',
-            },
-            {
-              name: 'Pradeep Chandran',
-              location: 'London, UK (Villa in Adyar)',
-              quote:
-                'We opted for the Premium VIP package. The physical material sample box shipped to London made choosing marbles and veneers effortless.',
-            },
-          ].map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">★★★★★</div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 8. FAQ Accordion */}
       <Section id="faq" eyebrow="Questions Answered" title="Digital & Design Club FAQ">

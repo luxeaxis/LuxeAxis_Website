@@ -1,3 +1,4 @@
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
@@ -13,7 +14,12 @@ import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
-import { getCalculatorConfig, getFaqs, getTiers } from '@/lib/content/source';
+import {
+  getCalculatorConfig,
+  getFaqs,
+  getTiers,
+  getTestimonials,
+} from '@/lib/content/source';
 
 const ROUTE = '/residential';
 
@@ -68,20 +74,7 @@ export default async function ResidentialPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Raghavan & Sudha',
-      location: 'Adyar, Chennai',
-      quote:
-        'Luxe Axis designed our 3BHK flat within 45 days exactly as promised. The modular kitchen and walk-in wardrobe finishes are flawless.',
-    },
-    {
-      name: 'Karthik Subramanian',
-      location: 'Nungambakkam, Chennai',
-      quote:
-        'The Vastu-Tech layout review opened up our living room space completely. Zero cost escalation over our initial BOQ estimate.',
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   return (
     <main id="main" tabIndex={-1}>
@@ -115,7 +108,11 @@ export default async function ResidentialPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Three structured investment tiers and 13 specialized service disciplines for complete home interiors, modular kitchens, wardrobes, and luxury villas. Stated openly with transparent itemized pricing, factory-direct manufacturing, and a 10-year flat structural warranty.
+              Three structured investment tiers and 13 specialized service
+              disciplines for complete home interiors, modular kitchens,
+              wardrobes, and luxury villas. Stated openly with transparent
+              itemized pricing, factory-direct manufacturing, and a 10-year flat
+              structural warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -130,24 +127,44 @@ export default async function ResidentialPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">₹1,800</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Per Sq.Ft Base Rate</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  ₹1,800
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Per Sq.Ft Base Rate
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Handover Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Handover Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">13</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Specializations</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  13
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Specializations
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
             </div>
           </Stack>
@@ -163,7 +180,9 @@ export default async function ResidentialPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -185,7 +204,10 @@ export default async function ResidentialPage() {
                 name={tier.name}
                 price={{ amount: tier.priceFrom, period: 'onwards' }}
                 inclusions={tier.inclusions}
-                cta={{ label: 'See ' + tier.name, href: `/residential/${tier.id}` }}
+                cta={{
+                  label: 'See ' + tier.name,
+                  href: `/residential/${tier.id}`,
+                }}
                 recommended={tier.recommended}
               />
             ) : (
@@ -324,15 +346,23 @@ export default async function ResidentialPage() {
               <tr className="border-b border-border-subtle/60 text-accent font-display text-body font-bold">
                 <th className="py-3 px-4">Feature</th>
                 <th className="py-3 px-4">Generic Local Contractors</th>
-                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">Luxe Axis Residential Studio</th>
+                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">
+                  Luxe Axis Residential Studio
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-subtle/40 text-on-surface-2">
               {comparisons.map((row) => (
                 <tr key={row.feature}>
-                  <td className="py-3 px-4 font-bold text-on-surface">{row.feature}</td>
-                  <td className="py-3 px-4 text-on-surface-muted">{row.generic}</td>
-                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">{row.luxeaxis}</td>
+                  <td className="py-3 px-4 font-bold text-on-surface">
+                    {row.feature}
+                  </td>
+                  <td className="py-3 px-4 text-on-surface-muted">
+                    {row.generic}
+                  </td>
+                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">
+                    {row.luxeaxis}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -349,8 +379,14 @@ export default async function ResidentialPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell 3BHK flat before interior fit-out' }}
-            afterImage={{ src: '/posters/portfolio.avif', alt: 'Completed luxury 3BHK residential interior in Chennai' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Bare shell 3BHK flat before interior fit-out',
+            }}
+            afterImage={{
+              src: '/posters/portfolio.avif',
+              alt: 'Completed luxury 3BHK residential interior in Chennai',
+            }}
           />
         </div>
       </Section>
@@ -359,32 +395,14 @@ export default async function ResidentialPage() {
       <ProcessSteps />
 
       {/* 9. Verified Homeowner Testimonials */}
-      <Section
-        id="testimonials"
-        eyebrow="Client Experiences"
-        title="What Homeowners Say About Luxe Axis"
-        lede="Verified reviews from residential interior projects completed in Chennai."
-      >
-        <Grid cols={2} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">★★★★★</div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 10. FAQ Accordion */}
-      <Section id="faq" eyebrow="Questions Answered" title="Residential Interior FAQ">
+      <Section
+        id="faq"
+        eyebrow="Questions Answered"
+        title="Residential Interior FAQ"
+      >
         <Faq items={faqs} />
       </Section>
 

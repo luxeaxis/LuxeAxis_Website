@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -21,13 +23,25 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function FalseCeilingPage() {
+export default async function FalseCeilingPage() {
   const highlights = [
-    { title: 'Gypsum and POP', desc: 'Saint-Gobain Moisture-Resistant Gyproc Boards' },
+    {
+      title: 'Gypsum and POP',
+      desc: 'Saint-Gobain Moisture-Resistant Gyproc Boards',
+    },
     { title: 'LED Cove Ready', desc: 'Tunable White 2700K–6500K Integration' },
-    { title: '45-Day Guarantee', desc: 'Contractually Locked Installation Timeline' },
-    { title: 'Flat 10-Year Warranty', desc: 'Zero Crack, Sag, or Delamination Guarantee' },
-    { title: '3D Design Visualization', desc: 'Photorealistic 3D Ceiling Renders Before Work Begins' },
+    {
+      title: '45-Day Guarantee',
+      desc: 'Contractually Locked Installation Timeline',
+    },
+    {
+      title: 'Flat 10-Year Warranty',
+      desc: 'Zero Crack, Sag, or Delamination Guarantee',
+    },
+    {
+      title: '3D Design Visualization',
+      desc: 'Photorealistic 3D Ceiling Renders Before Work Begins',
+    },
   ];
 
   const ceilingTypes = [
@@ -226,29 +240,7 @@ export default function FalseCeilingPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Muthuraman Sethuramalingam',
-      location: 'Adyar, Chennai',
-      quote:
-        'The Luxe Axis team showed exceptional flexibility when timelines were tight. They completed our living room cove false ceiling beautifully. Heartfelt thank you!',
-      stars: 5,
-    },
-    {
-      name: 'Aadhithya B.Kailash',
-      location: 'Adyar, Chennai',
-      quote:
-        'My 3BHK false ceiling interiors were completed even before the promised handover date. Mr. SriBalaji managed every detail professionally.',
-      stars: 5,
-    },
-    {
-      name: 'Sashwath Kumar',
-      location: 'T. Nagar, Chennai',
-      quote:
-        'Very good product and neat installation. The LED cove lighting completely transformed the mood of our living room!',
-      stars: 5,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -293,7 +285,10 @@ export default function FalseCeilingPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/residential/false-ceiling" labels={{ 'false-ceiling': "False Ceiling Design" }} />
+          <Breadcrumbs
+            path="/residential/false-ceiling"
+            labels={{ 'false-ceiling': 'False Ceiling Design' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -309,7 +304,10 @@ export default function FalseCeilingPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              The ceiling is the fifth wall. Cove, coffered, tray, and stretch ceiling systems with integrated LED lighting. 5,000+ false ceilings delivered across Chennai. 45-day guarantee, flat 10-year warranty.
+              The ceiling is the fifth wall. Cove, coffered, tray, and stretch
+              ceiling systems with integrated LED lighting. 5,000+ false
+              ceilings delivered across Chennai. 45-day guarantee, flat 10-year
+              warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -324,24 +322,44 @@ export default function FalseCeilingPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">5,000+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Ceilings Done</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  5,000+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Ceilings Done
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Install Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Install Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Google Rating
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">3+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  3+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Chennai Studios
+                </span>
               </div>
             </div>
           </Stack>
@@ -357,7 +375,9 @@ export default function FalseCeilingPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -373,17 +393,32 @@ export default function FalseCeilingPage() {
       >
         <Grid cols={2} gap={6}>
           {ceilingTypes.map((type) => (
-            <div key={type.tag} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={type.tag}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <div className="relative rounded-xl overflow-hidden aspect-[16/10] mb-4 border border-border-subtle/60">
-                  <Image src={type.image} alt={type.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                  <Image
+                    src={type.image}
+                    alt={type.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
                   <span className="absolute top-2 left-2 px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                     {type.tag}
                   </span>
                 </div>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-1">{type.title}</h3>
-                <p className="text-overline text-accent uppercase font-bold tracking-wider mb-2">{type.subtitle}</p>
-                <p className="text-small text-on-surface-2 leading-relaxed mb-4">{type.desc}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-1">
+                  {type.title}
+                </h3>
+                <p className="text-overline text-accent uppercase font-bold tracking-wider mb-2">
+                  {type.subtitle}
+                </p>
+                <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                  {type.desc}
+                </p>
                 <ul className="space-y-1.5 text-small text-on-surface-2 mb-4 border-t border-border-subtle/40 pt-3">
                   {type.features.map((f) => (
                     <li key={f} className="flex items-center gap-2">
@@ -407,11 +442,20 @@ export default function FalseCeilingPage() {
       >
         <Grid cols={2} gap={6}>
           {ledSpecs.map((spec) => (
-            <div key={spec.title} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h3 text-accent shrink-0">💡</span>
+            <div
+              key={spec.title}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h3 text-accent shrink-0">
+                💡
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{spec.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{spec.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {spec.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {spec.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -427,13 +471,20 @@ export default function FalseCeilingPage() {
       >
         <Grid cols={3} gap={6}>
           {roomGuide.map((rg) => (
-            <div key={rg.room} className="lx-liquid-glass rounded-2xl p-5 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={rg.room}
+              className="lx-liquid-glass rounded-2xl p-5 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <span className="px-2.5 py-1 rounded bg-accent/20 border border-accent/40 text-accent font-ui text-[10px] font-bold uppercase tracking-wider">
                   {rg.room}
                 </span>
-                <h3 className="font-display text-h4 font-bold text-on-surface mt-3">{rg.design}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed mt-2">{rg.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mt-3">
+                  {rg.design}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed mt-2">
+                  {rg.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -468,8 +519,12 @@ export default function FalseCeilingPage() {
                 <span className="px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                   {p.tag}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">{p.title}</h3>
-                <p className="text-small text-accent font-medium mt-1">📍 {p.location}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-accent font-medium mt-1">
+                  📍 {p.location}
+                </p>
               </div>
             </div>
           ))}
@@ -521,11 +576,19 @@ export default function FalseCeilingPage() {
                 </span>
               )}
               <div>
-                <span className="text-overline text-accent uppercase font-bold tracking-wider">{tier.tag}</span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{tier.name}</h3>
+                <span className="text-overline text-accent uppercase font-bold tracking-wider">
+                  {tier.tag}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-1">
+                  {tier.name}
+                </h3>
                 <div className="my-4 flex items-baseline gap-1">
-                  <span className="font-display text-[36px] font-bold text-accent">{tier.price}</span>
-                  <span className="text-small text-on-surface-muted">{tier.unit}</span>
+                  <span className="font-display text-[36px] font-bold text-accent">
+                    {tier.price}
+                  </span>
+                  <span className="text-small text-on-surface-muted">
+                    {tier.unit}
+                  </span>
                 </div>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {tier.desc}
@@ -539,7 +602,12 @@ export default function FalseCeilingPage() {
                   ))}
                 </ul>
               </div>
-              <Button as="a" href={tier.href} variant={tier.featured ? 'primary' : 'secondary'} className="w-full justify-center">
+              <Button
+                as="a"
+                href={tier.href}
+                variant={tier.featured ? 'primary' : 'secondary'}
+                className="w-full justify-center"
+              >
                 {tier.cta} →
               </Button>
             </div>
@@ -551,31 +619,7 @@ export default function FalseCeilingPage() {
       <ProcessSteps />
 
       {/* 11. Client Stories */}
-      <Section
-        id="testimonials"
-        eyebrow="Ceiling Client Stories"
-        title="What Chennai Homeowners Say About Their Ceilings"
-        lede="Verified client reviews from false ceiling projects across Chennai."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">
-                  {'★'.repeat(t.stars)}
-                </div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 12. FAQ Accordion */}
       <Section
@@ -586,10 +630,15 @@ export default function FalseCeilingPage() {
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

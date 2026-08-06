@@ -12,7 +12,11 @@ describe('TrustMarquee', () => {
     const bar = screen.getByLabelText('Studio trust commitments');
     expect(bar).toBeDefined();
     expect(screen.getAllByText('Flat Post-Handover Warranty')[0]).toBeDefined();
-    expect(screen.getAllByText('60-Day Handover Guarantee')[0]).toBeDefined();
+    // Not a figure. The strip renders on every route from the root layout, so
+    // it has no tier context to qualify one with — 60 days is Signature's
+    // commitment, Essential's is 45 and Elite's is milestone-based.
+    expect(screen.getAllByText('Committed Handover Date, Per Tier')[0]).toBeDefined();
+    expect(screen.queryByText(/\d+-Day Handover Guarantee/)).toBeNull();
     expect(screen.getByRole('button', { name: 'Close top announcement bar' })).toBeDefined();
   });
 

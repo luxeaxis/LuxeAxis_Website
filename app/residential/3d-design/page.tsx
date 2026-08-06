@@ -1,3 +1,5 @@
+import { getTestimonials } from '@/lib/content/source';
+import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -19,13 +21,28 @@ export const metadata: Metadata = {
   alternates: canonicalFor(ROUTE),
 };
 
-export default function ThreeDDesignPage() {
+export default async function ThreeDDesignPage() {
   const highlights = [
-    { title: 'Photorealistic Renders', desc: 'V-Ray Ray-Traced Renders Indistinguishable from Real Photos' },
-    { title: 'VR Walkthrough', desc: 'Immersive Oculus VR Session at Our Flagship Studio' },
-    { title: 'Completely Free', desc: '100% Complimentary Step Included in Every Project' },
-    { title: 'Unlimited Revisions', desc: 'Modify Layouts, Colors & Finishes Until Fully Satisfied' },
-    { title: 'Approval First Guarantee', desc: 'Zero On-Site Work Starts Without Your Written Sign-Off' },
+    {
+      title: 'Photorealistic Renders',
+      desc: 'V-Ray Ray-Traced Renders Indistinguishable from Real Photos',
+    },
+    {
+      title: 'VR Walkthrough',
+      desc: 'Immersive Oculus VR Session at Our Flagship Studio',
+    },
+    {
+      title: 'Completely Free',
+      desc: '100% Complimentary Step Included in Every Project',
+    },
+    {
+      title: 'Unlimited Revisions',
+      desc: 'Modify Layouts, Colors & Finishes Until Fully Satisfied',
+    },
+    {
+      title: 'Approval First Guarantee',
+      desc: 'Zero On-Site Work Starts Without Your Written Sign-Off',
+    },
   ];
 
   const processSteps3D = [
@@ -134,29 +151,7 @@ export default function ThreeDDesignPage() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Aadhithya B.Kailash',
-      location: 'Adyar, Chennai',
-      quote:
-        'My 3BHK interiors were completed even before the promised handover date. Seeing the 3D render first gave us 100% confidence in the team’s execution!',
-      stars: 5,
-    },
-    {
-      name: 'Venkat Ramanan',
-      location: 'T. Nagar, Chennai',
-      quote:
-        'Good customization options and excellent quality. The 3D visualization allowed us to test three different kitchen colors before locking the final pick.',
-      stars: 5,
-    },
-    {
-      name: 'Muthuraman Sethuramalingam',
-      location: 'Adyar, Chennai',
-      quote:
-        'The Luxe Axis team showed exceptional flexibility during the 3D design stage. The finished living room matched the 3D render perfectly.',
-      stars: 5,
-    },
-  ];
+  const testimonials = await getTestimonials();
 
   const faqs = [
     {
@@ -205,7 +200,10 @@ export default function ThreeDDesignPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/residential/3d-design" labels={{ '3d-design': "3D Interior Design" }} />
+          <Breadcrumbs
+            path="/residential/3d-design"
+            labels={{ '3d-design': '3D Interior Design' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -221,7 +219,9 @@ export default function ThreeDDesignPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Walk through your new home in photorealistic 3D before any work begins. Approve every room, material, and fitting. Free with every Luxe Axis project. 45-day delivery guarantee.
+              Walk through your new home in photorealistic 3D before any work
+              begins. Approve every room, material, and fitting. Free with every
+              Luxe Axis project. 45-day delivery guarantee.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -236,24 +236,44 @@ export default function ThreeDDesignPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10K+</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">3D Designs Delivered</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10K+
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  3D Designs Delivered
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Free</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Included in Every Project</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Free
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Included in Every Project
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">5 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">First Renders</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  5 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  First Renders
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Delivery Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Delivery Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">3</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  3
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Chennai Studios
+                </span>
               </div>
             </div>
           </Stack>
@@ -269,7 +289,9 @@ export default function ThreeDDesignPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -285,16 +307,29 @@ export default function ThreeDDesignPage() {
       >
         <Grid cols={2} gap={6}>
           {processSteps3D.map((step) => (
-            <div key={step.num} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={step.num}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <div className="relative rounded-xl overflow-hidden aspect-[16/9] mb-4 border border-border-subtle/60">
-                  <Image src={step.image} alt={step.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                  <Image
+                    src={step.image}
+                    alt={step.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
                   <span className="absolute top-2 left-2 px-2.5 py-1 rounded bg-accent text-surface-deep font-display text-h4 font-bold">
                     {step.num}
                   </span>
                 </div>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">{step.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{step.desc}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {step.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -364,8 +399,12 @@ export default function ThreeDDesignPage() {
                 <span className="px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                   {p.tag}
                 </span>
-                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">{p.title}</h3>
-                <p className="text-small text-accent font-medium mt-1">📍 {p.location}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mt-2">
+                  {p.title}
+                </h3>
+                <p className="text-small text-accent font-medium mt-1">
+                  📍 {p.location}
+                </p>
               </div>
             </div>
           ))}
@@ -381,11 +420,20 @@ export default function ThreeDDesignPage() {
       >
         <Grid cols={2} gap={6}>
           {whyChoose3D.map((item) => (
-            <div key={item.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{item.num}</span>
+            <div
+              key={item.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {item.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{item.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{item.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {item.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -396,31 +444,7 @@ export default function ThreeDDesignPage() {
       <ProcessSteps />
 
       {/* 8. Client Stories */}
-      <Section
-        id="testimonials"
-        eyebrow="Client Stories"
-        title="What Chennai Clients Say About Our 3D Design"
-        lede="Verified client reviews on our 3D design and VR visualization experience."
-      >
-        <Grid cols={3} gap={6}>
-          {testimonials.map((t) => (
-            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
-              <div>
-                <div className="flex text-accent text-small mb-3">
-                  {'★'.repeat(t.stars)}
-                </div>
-                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-border-subtle/50">
-                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
-                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
-              </div>
-            </div>
-          ))}
-        </Grid>
-      </Section>
+      <TestimonialBand testimonials={testimonials} />
 
       {/* 9. FAQ Accordion */}
       <Section
@@ -431,10 +455,15 @@ export default function ThreeDDesignPage() {
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

@@ -14,7 +14,13 @@ export function TrustMarquee() {
 
   const items: Array<{ icon: IconName; text: string }> = [
     { icon: 'check', text: 'Flat Post-Handover Warranty' },
-    { icon: 'check', text: '60-Day Handover Guarantee' },
+    // Not "60-Day Handover Guarantee". 60 days is SIGNATURE's commitment;
+    // Essential's is 45 and Elite's is milestone-based, so a flat figure on a
+    // bar that renders on every route overstates it for one tier and
+    // misdescribes another. `lib/content/source.ts` states the guarantee per
+    // tier for exactly this reason, and a strip with no tier context is the
+    // one place a number like this cannot be qualified.
+    { icon: 'check', text: 'Committed Handover Date, Per Tier' },
     { icon: 'info', text: 'Fixed Price Guarantee — No Hidden Fees' },
     { icon: 'compass', text: 'Vastu-Tech Automated Layout Verification' },
     { icon: 'layers', text: 'Space OS Live Client Progress Portal' },
