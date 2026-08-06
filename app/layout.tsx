@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import { SkipLink } from '@/components/SkipLink';
 import { TierProbe } from '@/components/TierProbe';
+import { TrustMarquee } from '@/components/TrustMarquee';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ToastProvider } from '@/components/Toast';
 import { ConsentBanner } from '@/components/ConsentBanner';
-import { SmoothScrollProvider } from '@/components/SmoothScrollProvider';
-import { GoldAxisRail } from '@/components/GoldAxisRail';
+import { SmoothScrollGate } from '@/components/SmoothScrollGate';
 import { SceneStage } from '@/three/stage';
 import { JsonLd } from '@/components/JsonLd';
 import { localBusinessJsonLd, organizationJsonLd } from '@/lib/seo/jsonLd';
@@ -48,6 +48,14 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'Luxe Axis',
     locale: 'en_IN',
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon', type: 'image/png' },
+    ],
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
   },
 };
 
@@ -94,16 +102,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Mounted once, site-wide, so any feature can call `useToast()`
             without also remembering to wire a provider (design system §3.5). */}
         <ToastProvider>
-          <SmoothScrollProvider>
-            <GoldAxisRail />
+          {/* Renders nothing itself and no longer wraps the tree — it drives
+              Lenis and publishes scroll progress, gated so that Lenis and GSAP
+              leave the bundle entirely when the flag is off. */}
+          <SmoothScrollGate />
+          <div className="sticky top-0 z-header w-full">
+            <TrustMarquee />
             <Header />
-            {children}
-            <Footer />
-            {/* Last in the DOM deliberately: a keyboard user reaches the page's
-                real content before the banner, which is the order of importance.
-                It is positioned at the bottom of the viewport by CSS. */}
-            <ConsentBanner />
-          </SmoothScrollProvider>
+          </div>
+          {children}
+          <Footer />
+          {/* Last in the DOM deliberately: a keyboard user reaches the page's
+              real content before the banner, which is the order of importance.
+              It is positioned at the bottom of the viewport by CSS. */}
+          <ConsentBanner />
         </ToastProvider>
       </body>
     </html>

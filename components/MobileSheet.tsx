@@ -24,6 +24,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button } from './Button';
 import { Link } from './Link';
+import { Logo } from './Logo';
 import { Stack } from './layout';
 import { usePathname } from 'next/navigation';
 import { NAV_ITEMS, BOOK_AUDIT } from '@/lib/nav';
@@ -151,28 +152,81 @@ export function MobileSheet() {
           )}
         >
           <div className="flex items-center justify-between border-b-hairline border-border-subtle p-4">
-            <h2
-              id={titleId}
-              className="font-display text-[length:var(--typography-h3-font-size)] text-on-surface"
-            >
-              Menu
-            </h2>
+            <div className="flex items-center gap-3">
+              <Logo className="h-icon-md w-auto text-accent" />
+              <h2
+                id={titleId}
+                className="font-display text-[length:var(--typography-h3-font-size)] font-bold text-accent tracking-[var(--font-tracking-wider)]"
+              >
+                LUXE AXIS
+              </h2>
+            </div>
             <Button variant="icon" icon="close" aria-label="Close menu" onClick={closeSheet} />
           </div>
 
           <nav aria-label="Primary" className="flex-1 overflow-y-auto p-4">
             <Stack as="ul" gap={1} className="list-none">
               {NAV_ITEMS.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    variant="standalone"
-                    aria-current={isActiveRoute(pathname, item.href) ? 'page' : undefined}
-                    className="block py-3 text-[length:var(--typography-h3-font-size)]"
-                    onClick={closeSheet}
-                  >
-                    {item.label}
-                  </Link>
+                <li key={item.href} className="border-b border-border-subtle/40 pb-2">
+                  <div className="flex items-center justify-between">
+                    <Link
+                      href={item.href}
+                      variant="standalone"
+                      aria-current={isActiveRoute(pathname, item.href) ? 'page' : undefined}
+                      className="block py-3 text-[length:var(--typography-h3-font-size)] font-semibold"
+                      onClick={closeSheet}
+                    >
+                      {item.label}
+                    </Link>
+                  </div>
+
+                  {item.megaMenu ? (
+                    <div className="pl-3 pb-3 space-y-3">
+                      {item.megaMenu.groups.map((group) => (
+                        <div key={group.title} className="space-y-1">
+                          <p className="text-[10px] font-ui uppercase font-bold tracking-widest text-accent/80 pt-1">
+                            {group.title}
+                          </p>
+                          <ul className="list-none space-y-1">
+                            {group.items.map((sub) => (
+                              <li key={sub.href + sub.label}>
+                                <Link
+                                  href={sub.href}
+                                  variant="standalone"
+                                  aria-current={isActiveRoute(pathname, sub.href) ? 'page' : undefined}
+                                  className="flex items-center justify-between py-1 text-small text-on-surface-2 hover:text-accent"
+                                  onClick={closeSheet}
+                                >
+                                  <span>{sub.label}</span>
+                                  {sub.badge && (
+                                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 bg-accent/20 text-accent rounded border border-accent/30">
+                                      {sub.badge}
+                                    </span>
+                                  )}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  ) : item.subItems ? (
+                    <ul className="pl-4 pb-2 list-none grid grid-cols-1 gap-1">
+                      {item.subItems.map((sub) => (
+                        <li key={sub.href}>
+                          <Link
+                            href={sub.href}
+                            variant="standalone"
+                            aria-current={isActiveRoute(pathname, sub.href) ? 'page' : undefined}
+                            className="block py-1.5 text-body text-on-surface-2 hover:text-accent"
+                            onClick={closeSheet}
+                          >
+                            {sub.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </li>
               ))}
             </Stack>

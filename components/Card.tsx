@@ -88,13 +88,15 @@ function frameClass({
   emphasized?: boolean;
 }): string {
   return cx(
-    'relative rounded-lg p-6 shadow-1',
-    surface === 'glass' ? 'lx-glass' : 'bg-surface-raised',
-    emphasized ? 'border-hairline border-accent' : 'border border-border-subtle',
+    'relative rounded-xl p-6 shadow-1 transition-all duration-300',
+    surface === 'glass'
+      ? 'lx-glass backdrop-blur-xl border border-accent/30'
+      : 'bg-surface-raised/90 backdrop-blur-md border border-border-subtle/80',
+    emphasized ? 'border-accent shadow-[0_0_24px_rgba(255,193,7,0.2)]' : '',
     interactive &&
       cx(
-        'transition-shadow-transform duration-micro ease-standard motion-reduce:transition-none',
-        'hover:-translate-y-[var(--motion-distance-lift)] hover:shadow-2',
+        'transition-all duration-300 ease-standard motion-reduce:transition-none',
+        'hover:-translate-y-[var(--motion-distance-lift)] hover:shadow-2 hover:border-accent/50 hover:bg-surface-raised',
         'active:scale-press motion-reduce:active:scale-100',
         'focus-visible:outline focus-visible:outline-focus focus-visible:outline-offset-focus focus-visible:outline-focus-ring',
       ),
@@ -207,7 +209,7 @@ export function ProjectCard({
 /* ------------------------------------------------------------------ */
 
 export type FeatureCardProps = {
-  href: string;
+  href?: string;
   /** Optional. A feature is usually best introduced by its glyph, but some
    *  cards in this family lead with words alone — the home page's persona
    *  tiles ask "which of these is you?", where any icon would be decoration
@@ -222,22 +224,34 @@ export type FeatureCardProps = {
 };
 
 export function FeatureCard({ href, icon, title, body, surface = 'solid', className }: FeatureCardProps) {
+  const content = (
+    <Stack gap={4}>
+      {icon && <Icon name={icon} size="lg" decorative className="text-accent" />}
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="font-ui text-[length:var(--typography-h3-font-size)] font-semibold text-on-surface transition-colors duration-micro ease-standard group-hover:text-accent">
+          {title}
+        </h3>
+        {href && <TrailingArrow />}
+      </div>
+      {body && <p className="text-small text-on-surface-2">{body}</p>}
+    </Stack>
+  );
+
+  if (href) {
+    return (
+      <NextLink
+        href={href}
+        className={cx('group block', frameClass({ surface, interactive: true }), className)}
+      >
+        {content}
+      </NextLink>
+    );
+  }
+
   return (
-    <NextLink
-      href={href}
-      className={cx('group block', frameClass({ surface, interactive: true }), className)}
-    >
-      <Stack gap={4}>
-        {icon && <Icon name={icon} size="lg" decorative className="text-accent" />}
-        <div className="flex items-start justify-between gap-3">
-          <h3 className="font-ui text-[length:var(--typography-h3-font-size)] font-semibold text-on-surface transition-colors duration-micro ease-standard group-hover:text-accent">
-            {title}
-          </h3>
-          <TrailingArrow />
-        </div>
-        {body && <p className="text-small text-on-surface-2">{body}</p>}
-      </Stack>
-    </NextLink>
+    <div className={cx('group block', frameClass({ surface, interactive: false }), className)}>
+      {content}
+    </div>
   );
 }
 

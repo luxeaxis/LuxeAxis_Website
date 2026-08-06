@@ -29,7 +29,9 @@ export type IconName =
   | 'compass'
   | 'gauge'
   | 'device'
-  | 'layers';
+  | 'layers'
+  | 'play'
+  | 'pause';
 
 export type IconSize = 'sm' | 'md' | 'lg';
 
@@ -109,6 +111,8 @@ const PATHS: Record<IconName, React.ReactNode> = {
       <path d="M3 12.5 12 17l9-4.5" />
     </>
   ),
+  play: <path d="M7 5.5l12 6.5-12 6.5v-13Z" />,
+  pause: <path d="M7 5h3.5v14H7V5Zm6.5 0H17v14h-3.5V5Z" />,
 };
 
 type IconBaseProps = {

@@ -79,20 +79,12 @@ const ICON_HIT_PAD: Record<ButtonSize, string | false> = {
 };
 
 const VARIANT_CLASS: Record<ButtonVariant, string> = {
-  primary: 'bg-accent text-accent-contrast hover:bg-accent-hover',
+  primary: 'lx-liquid-btn text-accent-contrast font-bold shadow-lg hover:shadow-xl',
   secondary:
-    'bg-transparent border-regular border-border-strong text-on-surface hover:border-accent',
-  // Underline is revealed on hover/focus rather than permanent — §3.1 calls
-  // for "accent + underline-draw" on tertiary, the same "Underline draw"
-  // pattern (§2.3) Link's `standalone` variant uses, and for the same
-  // reason: a tertiary button already sits inside its own surrounding
-  // button-like chrome (padding, group context), so it doesn't need a
-  // permanent underline the way an inline-prose link does to signal
-  // "this is interactive" at rest. See Link.tsx for the fuller rationale on
-  // why `inline` and this treatment deliberately differ.
+    'bg-surface-deep/85 backdrop-blur-md border border-accent/40 text-on-surface hover:bg-surface-raised hover:border-accent hover:shadow-[0_0_20px_rgba(255,193,7,0.25)] font-semibold transition-all duration-300',
   tertiary:
     'bg-transparent text-accent underline decoration-transparent decoration-[length:var(--border-width-regular)] underline-offset-4 hover:text-accent-hover hover:decoration-current focus-visible:decoration-current',
-  icon: 'rounded-round border-regular border-border-subtle text-on-surface-2 hover:border-border hover:text-on-surface',
+  icon: 'rounded-round border border-accent/30 bg-surface-deep/60 backdrop-blur-sm text-on-surface hover:border-accent hover:bg-accent/20 hover:text-accent transition-all duration-300',
   destructive: 'bg-transparent border-regular border-error text-error hover:bg-error hover:text-accent-contrast',
 };
 

@@ -31,7 +31,7 @@ describe('MobileSheet', () => {
     expect(document.body.style.overflow).toBe('hidden');
     expect(dialog.contains(document.activeElement)).toBe(true);
 
-    expect(within(dialog).getByRole('heading', { name: 'Menu' })).toBeDefined();
+    expect(within(dialog).getByRole('heading', { name: 'LUXE AXIS' })).toBeDefined();
     expect(within(dialog).getByRole('link', { name: 'Pricing' })).toBeDefined();
     expect(within(dialog).getByRole('link', { name: 'Book Audit' }).getAttribute('href')).toBe('/book-audit');
   });

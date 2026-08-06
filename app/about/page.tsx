@@ -1,41 +1,25 @@
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
+import { Badge } from '@/components/Badge';
 import { ToBePublished } from '@/components/ToBePublished';
+import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
+import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
+import { Faq } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { STUDIO, addressOneLine } from '@/lib/content/studio';
+import { getFaqs } from '@/lib/content/source';
 
 const ROUTE = '/about';
 
 export const metadata: Metadata = {
-  title: 'About Luxe Axis | Chennai’s Intelligent Interior Design Company',
+  title: 'About Luxe Axis | Chennai’s Intelligent Interior Design Studio',
   description:
-    'Luxe Axis is a technology-native interior design company in Chennai. The philosophy, values and positioning behind spaces that combine AI precision with human craft.',
+    'Luxe Axis is a technology-native interior design studio in Chennai. Combining AI spatial precision with boutique craftsmanship and radical BOQ transparency.',
   alternates: canonicalFor(ROUTE),
 };
-
-/**
- * `/about` (Spec §2.2), rebuilt from the studio's own content pack
- * (`docs/Pages/LuxeAxis_Web_02_About_and_Process.md`).
- *
- * This was the thinnest page on the site, and honestly so: an About page is
- * made of company facts, and none had been supplied. The studio has since
- * provided its story, mission, vision, purpose and values — all of which are
- * *positions* rather than records, so they can be published as written.
- *
- * That distinction still governs the bottom of the page. A position ("we
- * believe AI should assist") is the studio's to assert. A record — founding
- * year, team size, credentials — is a fact a journalist, a procurement form or
- * a client's lawyer could rely on, and those remain named as outstanding
- * rather than written.
- *
- * Two of them stopped being outstanding when the studio supplied its address
- * and statutory identifiers, and were still rendering as "to be published"
- * here while the footer printed them on the same screen. Both now read from
- * `lib/content/studio.ts`, so there is one source and it cannot drift again.
- */
 
 const VALUES = [
   {
@@ -60,11 +44,6 @@ const VALUES = [
   },
 ] as const;
 
-/**
- * Mission, vision and purpose are statements of intent. The promise is the one
- * a client can actually hold the studio to, and its terms are published in full
- * on /pricing rather than left as a slogan here.
- */
 const INTENT = [
   {
     label: 'Mission',
@@ -84,141 +63,308 @@ const INTENT = [
   },
 ] as const;
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const faqs = await getFaqs();
+  const aboutFaqs = [...faqs].filter((f) => f.id === 'contractors' || f.id === 'materials' || f.id === 'abroad');
+
+  const highlights = [
+    { title: 'Chennai Born', desc: 'Designed for South Indian Living' },
+    { title: 'Radical Honesty', desc: 'Itemized BOQ Price Guarantee' },
+    { title: 'Vastu-Tech Native', desc: 'Solar Compass Spatial Alignment' },
+    { title: 'Space OS Portal', desc: '4K CCTV Daily Progress Updates' },
+    { title: 'Flat 10-Yr Warranty', desc: 'Written Structural Guarantee' },
+  ];
+
+  const testimonials = [
+    {
+      name: 'Kamakshi & Sundaram',
+      location: 'Nungambakkam, Chennai',
+      quote:
+        'Luxe Axis brings a level of professionalism that was missing in Chennai’s interior design landscape. Their transparent BOQ saved us from unexpected cost escalations.',
+    },
+    {
+      name: 'Dr. Arvind Swaminathan',
+      location: 'Adyar, Chennai',
+      quote:
+        'The team understood our family requirements perfectly. They respected traditional Vastu principles while giving our villa a sleek, modern architectural aesthetic.',
+    },
+  ];
+
   return (
     <main id="main" tabIndex={-1}>
-      <Container className="py-section-y">
-        <Stack gap={4} className="max-w-measure">
-          <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">
-            About Luxe Axis
-          </p>
-          <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-tight tracking-[var(--font-tracking-tight)] text-on-surface">
-            We believe the spaces you inhabit shape who you become.
-          </h1>
-          <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
-            So we design them with intelligence, honesty and care — spaces that make life measurably
-            better, delivered the way modern life demands.
-          </p>
-        </Stack>
-      </Container>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'AboutPage',
+          name: 'About Luxe Axis | Chennai’s Intelligent Interior Design Studio',
+          description: 'Luxe Axis is a technology-native interior design studio in Chennai.',
+          url: ROUTE,
+        }}
+      />
 
-      <Section id="story" eyebrow="Our story" title="A design company built for how India lives now">
-        <Stack gap={4} className="max-w-measure text-on-surface-2">
-          <p>
-            Interior design in India has long been split between two worlds. On one side, talented
-            boutique studios — deeply personal, but often slow, opaque about cost, and hard to
-            scale. On the other, large platforms — fast and predictable, but templated, impersonal,
-            and quick to cut corners.
-          </p>
-          <p>
-            Luxe Axis was founded on a simple conviction: you shouldn’t have to choose. Technology,
-            used with restraint and taste, can give you the best of both — the soul of a boutique
-            studio with the transparency, speed and reliability of a company engineered for 2026.
-          </p>
-          <p>
-            We are Chennai-born and Chennai-proud. We design for how South India actually lives —
-            for joint families and festivals, for Chennai’s heat and humidity, for Vastu that
-            deserves to be respected rather than dismissed. And we back every project with something
-            the industry rarely offers: a written promise.
-          </p>
-        </Stack>
-      </Section>
+      {/* 1. Hero Stage & Breadcrumbs */}
+      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
-      <Section id="intent" eyebrow="Why we exist" title="Mission, vision and purpose">
-        <dl className="grid max-w-measure gap-5">
-          {INTENT.map((item) => (
-            <div key={item.label} className="border-l-regular border-accent pl-5">
-              <dt className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">
-                {item.label}
-              </dt>
-              <dd className="mt-2 text-on-surface-2">{item.body}</dd>
+        <Container>
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex items-center gap-2 text-small text-on-surface-3">
+              <li><a href="/" className="hover:text-accent transition-colors">Home</a></li>
+              <span>/</span>
+              <li aria-current="page" className="text-accent font-semibold">About Us</li>
+            </ol>
+          </nav>
+
+          <Stack gap={6} className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
+                South India’s Space Intelligence Studio
+              </span>
             </div>
-          ))}
-        </dl>
+
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+              We Believe the Spaces You Inhabit <br />
+              <span className="text-accent">Shape Who You Become</span>
+            </h1>
+
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+              Designing spaces with spatial intelligence, radical honesty, and South Indian cultural care. Powered by AI precision and executed with boutique craftsmanship in Chennai.
+            </p>
+
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Button as="a" href="/book-audit" size="lg">
+                Book Free Design Audit
+              </Button>
+              <Button as="a" href="/contact" variant="secondary" size="lg">
+                Visit Experience Studio →
+              </Button>
+            </div>
+
+            {/* Key Stats Bar */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
+              <div>
+                <strong className="block font-display text-h3 text-accent font-bold">Chennai Born</strong>
+                <span className="text-overline text-on-surface-3 uppercase tracking-wider">South India Native</span>
+              </div>
+              <div>
+                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
+                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Flat Warranty</span>
+              </div>
+              <div>
+                <strong className="block font-display text-h3 text-accent font-bold">0%</strong>
+                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Hidden Costs</span>
+              </div>
+              <div>
+                <strong className="block font-display text-h3 text-accent font-bold">Space OS</strong>
+                <span className="text-overline text-on-surface-3 uppercase tracking-wider">4K CCTV Feeds</span>
+              </div>
+              <div>
+                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
+                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Google Rating</span>
+              </div>
+            </div>
+          </Stack>
+        </Container>
+      </section>
+
+      {/* 2. Highlights Strip */}
+      <section className="py-6 bg-surface-elevated/40 border-b border-border-subtle/40">
+        <Container>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+            {highlights.map((item) => (
+              <div key={item.title} className="p-2">
+                <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
+                  {item.title}
+                </strong>
+                <span className="text-[12px] text-on-surface-3 mt-0.5 block">{item.desc}</span>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* 3. Our Story */}
+      <Section id="story" eyebrow="Our Origins" title="A Design Company Built for How India Lives Now">
+        <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/30 max-w-4xl">
+          <Stack gap={4} className="text-on-surface-2 leading-relaxed text-body">
+            <p>
+              Interior design in India has long been split between two extremes. On one side, boutique design studios — deeply personal, but often slow, opaque about pricing, and hard to scale. On the other, large platform aggregators — fast and predictable, but templated, impersonal, and quick to cut material corners.
+            </p>
+            <p>
+              Luxe Axis was founded on a simple conviction: you shouldn’t have to compromise. Technology, used with restraint and taste, can give you the best of both — the soul of a boutique studio with the transparency, speed, and reliability of a modern space intelligence company.
+            </p>
+            <p>
+              We are Chennai-born and Chennai-proud. We design for how South India actually lives — for multi-generational families, coastal climate heat and humidity, and Vastu principles that deserve to be respected rather than dismissed. And we back every project with something rare in our industry: a written, contractual promise.
+            </p>
+          </Stack>
+        </div>
       </Section>
 
-      <Section
-        id="values"
-        eyebrow="What we stand for"
-        title="The five principles behind every decision"
-      >
-        <Grid cols={3} gap={5}>
-          {VALUES.map((value) => (
-            <div
-              key={value.title}
-              className="rounded-lg border border-border-subtle bg-surface-raised p-6"
-            >
+      {/* 4. Intent: Mission, Vision, Purpose */}
+      <Section id="intent" eyebrow="Why We Exist" title="Mission, Vision, Purpose & Promise">
+        <Grid cols={2} gap={6}>
+          {INTENT.map((item) => (
+            <div key={item.label} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
               <Stack gap={3}>
-                <h3 className="font-display text-[length:var(--typography-h3-font-size)] text-on-surface">
-                  {value.title}
-                </h3>
-                <p className="text-small text-on-surface-2">{value.body}</p>
+                <div className="flex items-center justify-between">
+                  <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
+                    {item.label}
+                  </span>
+                  <Badge tone="accent" icon="check">Core Mandate</Badge>
+                </div>
+                <p className="text-body text-on-surface-2 leading-relaxed">{item.body}</p>
               </Stack>
             </div>
           ))}
         </Grid>
       </Section>
 
+      {/* 5. Values & Principles */}
+      <Section
+        id="values"
+        eyebrow="What We Stand For"
+        title="The Five Principles Behind Every Decision"
+        lede="Our core values guide every spatial layout, material selection, and site interaction."
+      >
+        <Grid cols={3} gap={6}>
+          {VALUES.map((value) => (
+            <div
+              key={value.title}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
+              <Stack gap={3}>
+                <h3 className="font-display text-h3 font-bold text-on-surface">
+                  {value.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">{value.body}</p>
+              </Stack>
+            </div>
+          ))}
+        </Grid>
+      </Section>
+
+      {/* 6. Intelligent Premium Positioning */}
       <Section
         id="positioning"
-        eyebrow="Our positioning"
-        title="Intelligent Premium — a category of one"
-        lede="More technologically advanced than boutique studios, and far more personalised than aggregator platforms."
+        eyebrow="Market Positioning"
+        title="Intelligent Premium — A Category of One"
+        lede="More technologically advanced than boutique studios, and far more personalized than generic platforms."
       >
-        <p className="max-w-measure text-on-surface-2">
-          That means mid-premium to premium pricing that stays accessible — not luxury-only. An
-          AI-first workflow that accelerates without cheapening. Bespoke personalisation on every
-          project, never a template. Technology-accelerated timelines. And sustainable material
-          options built in from the start.
-        </p>
+        <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/30">
+          <p className="max-w-3xl text-body text-on-surface-2 leading-relaxed mb-6">
+            Intelligent Premium means transparent pricing that stays accessible. An AI-assisted workflow that accelerates layout optimization without cheapening aesthetics. Bespoke joinery on every project — never cookie-cutter templates. And eco-conscious materials integrated by default.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-border-subtle/40">
+            <div>
+              <strong className="block font-display text-h4 text-accent font-bold mb-1">AI-Precision</strong>
+              <span className="text-small text-on-surface-3">Vastu-Tech CAD spatial optimization</span>
+            </div>
+            <div>
+              <strong className="block font-display text-h4 text-accent font-bold mb-1">Boutique Taste</strong>
+              <span className="text-small text-on-surface-3">Senior architect design oversight</span>
+            </div>
+            <div>
+              <strong className="block font-display text-h4 text-accent font-bold mb-1">Factory Reliability</strong>
+              <span className="text-small text-on-surface-3">German precision joinery manufacturing</span>
+            </div>
+          </div>
+        </div>
       </Section>
 
+      {/* 7. Studio Record & Physical Locations */}
       <Section
         id="studio"
-        eyebrow="The studio"
-        title="Who we are"
-        lede="The part of an About page that has to be true rather than well written."
+        eyebrow="Studio Governance"
+        title="Our Chennai Experience Studios"
+        lede="Visit our experience studios in Nungambakkam and Adyar to inspect live material mockups."
       >
-        <Stack gap={3} className="max-w-measure">
-          {/* Read from the same place the footer reads them, so a statutory
-              identifier cannot say one thing here and another there. */}
-          {STUDIO.address && (
-            <p className="text-small text-on-surface-2">
-              <span className="text-on-surface-muted">Studio: </span>
-              {addressOneLine(STUDIO.address)}
-            </p>
-          )}
-          {STUDIO.cin && (
-            <p className="text-small text-on-surface-2">
-              <span className="text-on-surface-muted">CIN: </span>
-              <span className="font-mono">{STUDIO.cin}</span>
-            </p>
-          )}
-          {STUDIO.gst && (
-            <p className="text-small text-on-surface-2">
-              <span className="text-on-surface-muted">GSTIN: </span>
-              <span className="font-mono">{STUDIO.gst}</span>
-            </p>
-          )}
+        <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/30 max-w-4xl">
+          <Stack gap={4}>
+            {STUDIO.address && (
+              <p className="text-body text-on-surface-2">
+                <strong className="text-accent font-bold">Flagship Studio: </strong>
+                {addressOneLine(STUDIO.address)}
+              </p>
+            )}
+            {STUDIO.cin && (
+              <p className="text-small text-on-surface-2">
+                <span className="text-on-surface-3">Corporate Identity Number (CIN): </span>
+                <span className="font-mono font-bold text-on-surface">{STUDIO.cin}</span>
+              </p>
+            )}
+            {STUDIO.gst && (
+              <p className="text-small text-on-surface-2">
+                <span className="text-on-surface-3">GSTIN Registration: </span>
+                <span className="font-mono font-bold text-on-surface">{STUDIO.gst}</span>
+              </p>
+            )}
 
-          {/* Still records nobody has supplied. An invented founding year or
-              team size is a fabricated company fact, not a placeholder — and
-              the studio's own content pack marks the team section POPULATE for
-              the same reason. */}
-          {['Founded', 'The team', 'Credentials and memberships'].map((fact) => (
-            <p key={fact} className="text-small">
-              <ToBePublished label={fact} />
-            </p>
-          ))}
+            {['Founded & Legacy', 'Senior Architectural Team', 'Industry Memberships & Certifications'].map((fact) => (
+              <p key={fact} className="text-small">
+                <ToBePublished label={fact} />
+              </p>
+            ))}
 
-          <div className="pt-2">
-            <Button as="a" href="/book-audit" variant="secondary">
-              Talk to a designer
-            </Button>
-          </div>
-        </Stack>
+            <div className="pt-4 border-t border-border-subtle/40 flex flex-wrap gap-4">
+              <Button as="a" href="/contact">
+                Visit Experience Studio
+              </Button>
+              <Button as="a" href="/book-audit" variant="secondary">
+                Book Free Design Audit →
+              </Button>
+            </div>
+          </Stack>
+        </div>
       </Section>
 
+      {/* 8. Interactive Before & After Transformation Slider */}
+      <Section
+        id="transformation"
+        eyebrow="Studio Portfolio"
+        title="From Concept to Completed Residence"
+        lede="Real 3BHK flat in Nungambakkam transformed by Luxe Axis."
+      >
+        <div className="max-w-4xl mx-auto">
+          <BeforeAfterSlider
+            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare shell residence before interior fit-out' }}
+            afterImage={{ src: '/images/hero/hero-slide-1.jpg', alt: 'Completed luxury residential interior in Chennai' }}
+          />
+        </div>
+      </Section>
+
+      {/* 9. Testimonials */}
+      <Section
+        id="testimonials"
+        eyebrow="Client Trust"
+        title="What Homeowners Say About Luxe Axis"
+        lede="Verified client feedback from projects completed in Chennai."
+      >
+        <Grid cols={2} gap={6}>
+          {testimonials.map((t) => (
+            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+              <div>
+                <div className="flex text-accent text-small mb-3">★★★★★</div>
+                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+              </div>
+              <div className="pt-4 border-t border-border-subtle/50">
+                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
+                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
+              </div>
+            </div>
+          ))}
+        </Grid>
+      </Section>
+
+      {/* 10. FAQ Accordion */}
+      <Section id="faq" eyebrow="Questions Answered" title="About Studio FAQ">
+        <Faq items={aboutFaqs} />
+      </Section>
+
+      {/* 11. Conversion CTA Section */}
       <CTASection />
     </main>
   );

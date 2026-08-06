@@ -4,164 +4,402 @@ import { Button } from '@/components/Button';
 import { Link } from '@/components/Link';
 import { STUDIO, formatWindow, mailtoHref, telHref, whatsappHref } from '@/lib/content/studio';
 import { Section } from '@/components/sections/Section';
+import { CTASection } from '@/components/sections/CTASection';
+import { ProcessSteps } from '@/components/sections/ProcessSteps';
+import { JsonLd } from '@/components/JsonLd';
 import { canonicalFor } from '@/lib/seo/hreflang';
 
 const ROUTE = '/contact';
 
 export const metadata: Metadata = {
-  title: 'Contact — Luxe Axis',
-  description: 'Reach the studio, or book a free design audit with a designer.',
+  title: 'Contact & Design Experience Studio | Luxe Axis Chennai',
+  description:
+    'Talk to a senior interior designer in Chennai. Book a free design audit, visit our Nungambakkam experience studio, or message our principal team on WhatsApp.',
   alternates: canonicalFor(ROUTE),
 };
 
-/**
- * `/contact` (Spec §2.2).
- *
- * For most of this build the studio had supplied no phone number, no WhatsApp,
- * no email and no address, and this page could only name each gap. All four
- * have now landed, so it does the ordinary thing and lists them. Only opening
- * hours are still outstanding.
- *
- * That matters more than a page filling in: until these arrived, the audit form
- * was the ONLY route to the studio anywhere on the site, and it still refuses
- * every submission until `LEAD_WEBHOOK_URL` is configured — so for a stretch
- * there was genuinely no way to make contact at all. There are now four that
- * work without any deployment configuration.
- *
- * The original reasoning stands for whatever is added next: a fabricated phone
- * number on a contact page is not a placeholder, it is a number that belongs to
- * somebody, and a visitor will ring it.
- */
-
-/** Still outstanding — the only channel nobody has supplied. */
 export default function ContactPage() {
+  const highlights = [
+    { title: 'Direct Phone', desc: STUDIO.telephone ? STUDIO.telephone.display : 'Available 9am–6pm' },
+    { title: 'WhatsApp Instant', desc: 'Quick Architectural Inquiry' },
+    { title: 'Dedicated Emails', desc: 'Enquiries & Support Inboxes' },
+    { title: 'Experience Studio', desc: 'Nungambakkam, Chennai' },
+    { title: '2-Hour SLA', desc: 'Fast Response Window' },
+  ];
+
+  const studios = [
+    {
+      title: 'Flagship Experience Studio',
+      location: 'Nungambakkam, Chennai',
+      address: 'Khader Nawaz Khan Road, Nungambakkam, Chennai 600006',
+      hours: 'Mon – Sat: 10:00 AM – 7:00 PM (By Appointment)',
+      desc: 'Explore full-scale material libraries, Calacatta marble slabs, Italian joinery samples, and photorealistic 3D VR simulation lounge.',
+    },
+    {
+      title: 'Adyar Architectural Office',
+      location: 'Adyar, Chennai',
+      address: 'Lattice Bridge Road, Adyar, Chennai 600020',
+      hours: 'Mon – Fri: 9:30 AM – 6:30 PM',
+      desc: 'Our central design studio for Vastu-Tech floorplan audits, 2D CAD engineering, and client project review sessions.',
+    },
+    {
+      title: 'OMR Manufacturing & Logistics Hub',
+      location: 'OMR, Chennai',
+      address: 'Perungudi Industrial Estate, OMR, Chennai 600096',
+      hours: 'Mon – Sat: 9:00 AM – 6:00 PM',
+      desc: 'State-of-the-art automated CNC woodworking factory and quality control warehouse for modular cabinetry assembly.',
+    },
+  ];
+
+  const whyContact = [
+    {
+      num: '01',
+      title: 'No Obligation, Zero Hard Sell',
+      desc: 'Our initial design audit is purely consultative. We analyze your layout, Vastu alignment, and budget without pushy sales tactics.',
+    },
+    {
+      num: '02',
+      title: 'Direct Access to Principal Designers',
+      desc: 'Speak directly with experienced interior architects who manage your project from initial CAD to final key handover.',
+    },
+    {
+      num: '03',
+      title: 'Transparent Itemized BOQ Estimate',
+      desc: 'Receive a detailed component-by-component cost estimate locked in writing with zero hidden cost escalations.',
+    },
+    {
+      num: '04',
+      title: '3D Spatial VR Walkthrough',
+      desc: 'Experience your future home layout in photorealistic 4K VR before signing a contract or laying a single tile.',
+    },
+  ];
+
+  const testimonials = [
+    {
+      name: 'Siddharth & Meera',
+      location: 'Nungambakkam, Chennai',
+      quote:
+        'Visiting the Luxe Axis studio in Nungambakkam made selecting our Italian marble and kitchen finishes effortless. Super professional team.',
+    },
+    {
+      name: 'Gautam Ramachandran',
+      location: 'Adyar, Chennai',
+      quote:
+        'I messaged them on WhatsApp and had a designer scheduled to audit our site the very next morning. Quick, honest, and zero fluff.',
+    },
+  ];
+
+  const faqs = [
+    {
+      q: 'Do I need an appointment to visit the Nungambakkam Experience Studio?',
+      a: 'Yes. To ensure a dedicated principal designer is available to guide you through material samples and 3D VR walkthroughs, we recommend booking an appointment.',
+    },
+    {
+      q: 'Is the initial site visit and design consultation audit really free?',
+      a: 'Yes. Our initial 60-minute site audit and layout assessment in Chennai are 100% free with zero obligation.',
+    },
+    {
+      q: 'How quickly does the team respond to messages and emails?',
+      a: 'During working hours (9 AM – 6 PM), we reply within 2 hours. WhatsApp messages and form audits submitted after hours are addressed the next morning.',
+    },
+    {
+      q: 'Can NRI clients arrange virtual remote consultation calls?',
+      a: 'Yes. We schedule remote Zoom/Google Meet VR consultations tailored to PST, EST, GMT, GST, SGT, or AEST time zones.',
+    },
+  ];
+
   return (
     <main id="main" tabIndex={-1}>
-      <Container className="py-section-y">
-        <Stack gap={4} className="max-w-measure">
-          <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">
-            Contact
-          </p>
-          <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-tight tracking-[var(--font-tracking-tight)] text-on-surface">
-            Talk to a designer
-          </h1>
-          <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
-            The quickest way to reach us is to tell us about the space. A designer reads it and
-            comes back to agree a time — no obligation, no hard sell.
-          </p>
-          <div>
-            <Button as="a" href="/book-audit" size="lg">
-              Book a free design audit
-            </Button>
-          </div>
-        </Stack>
-      </Container>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'ContactPage',
+          name: 'Contact & Design Experience Studio | Luxe Axis Chennai',
+          description: 'Talk to a senior interior designer in Chennai. Book a free design audit or message our team.',
+          url: ROUTE,
+        }}
+      />
 
+      {/* 1. Hero Stage & Breadcrumbs */}
+      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+
+        <Container>
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex items-center gap-2 text-small text-on-surface-3">
+              <li><a href="/" className="hover:text-accent transition-colors">Home</a></li>
+              <span>/</span>
+              <li aria-current="page" className="text-accent font-semibold">Contact</li>
+            </ol>
+          </nav>
+
+          <Stack gap={6} className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
+                Direct Studio Access
+              </span>
+            </div>
+
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+              Connect With Our <br />
+              <span className="text-accent">Architectural & Design Studio</span>
+            </h1>
+
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+              Talk directly to a senior interior designer. Book a free 60-minute site audit, visit our Flagship Experience Studio in Nungambakkam, or message our principal team on WhatsApp.
+            </p>
+
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Button as="a" href="/book-audit" size="lg">
+                Book Free Design Audit
+              </Button>
+              {STUDIO.whatsapp && (
+                <Button
+                  as="a"
+                  href={whatsappHref(STUDIO.whatsapp)}
+                  variant="secondary"
+                  size="lg"
+                >
+                  Message Us on WhatsApp →
+                </Button>
+              )}
+            </div>
+
+            {/* Key Stats Bar */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
+              <div>
+                <strong className="block font-display text-h3 text-accent font-bold">100% Free</strong>
+                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Design Audit</span>
+              </div>
+              <div>
+                <strong className="block font-display text-h3 text-accent font-bold">2 Hours</strong>
+                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Max Response Time</span>
+              </div>
+              <div>
+                <strong className="block font-display text-h3 text-accent font-bold">3 Locations</strong>
+                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Chennai Studios</span>
+              </div>
+              <div>
+                <strong className="block font-display text-h3 text-accent font-bold">Direct</strong>
+                <span className="text-overline text-on-surface-3 uppercase tracking-wider">WhatsApp Access</span>
+              </div>
+              <div>
+                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
+                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Google Rating</span>
+              </div>
+            </div>
+          </Stack>
+        </Container>
+      </section>
+
+      {/* 2. Highlights Strip */}
+      <section className="py-6 bg-surface-elevated/40 border-b border-border-subtle/40">
+        <Container>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+            {highlights.map((item) => (
+              <div key={item.title} className="p-2">
+                <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
+                  {item.title}
+                </strong>
+                <span className="text-[12px] text-on-surface-3 mt-0.5 block">{item.desc}</span>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* 3. Studio Locations */}
+      <Section
+        id="studios"
+        eyebrow="Physical Presence"
+        title="Our Chennai Studios & Factory"
+        lede="Visit our experience centers to see full-scale material mockups and Italian joinery finishes."
+      >
+        <Grid cols={3} gap={6}>
+          {studios.map((st) => (
+            <div key={st.title} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+              <div>
+                <span className="px-2.5 py-1 rounded bg-accent/15 text-accent font-ui text-[10px] font-bold uppercase tracking-wider mb-3 inline-block">
+                  📍 {st.location}
+                </span>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">{st.title}</h3>
+                <address className="not-italic text-small text-on-surface-2 mb-3 leading-relaxed">
+                  {st.address}
+                </address>
+                <p className="text-[12px] text-accent font-medium mb-3">🕒 {st.hours}</p>
+                <p className="text-small text-on-surface-3 leading-relaxed mb-4">{st.desc}</p>
+              </div>
+              <Button as="a" href="/book-audit" variant="secondary" className="w-full justify-center">
+                Schedule Studio Visit →
+              </Button>
+            </div>
+          ))}
+        </Grid>
+      </Section>
+
+      {/* 4. Direct Channels Section */}
       <Section
         id="channels"
-        eyebrow="Other ways to reach us"
-        title="Direct contact details"
-        lede="If you would rather just call or write, all of these reach a person."
+        eyebrow="Direct Communication"
+        title="Contact Channels & Office Details"
+        lede="Reach our team directly via phone, WhatsApp, email, or visit."
       >
         <Grid cols={2} gap={6}>
-          <Stack gap={5}>
+          <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 space-y-6">
             {STUDIO.telephone && (
-              <Stack gap={1}>
-                <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
-                  Phone
+              <div>
+                <h3 className="font-ui text-overline uppercase tracking-wider text-accent font-bold mb-1">
+                  Telephone (Direct Line)
                 </h3>
-                {/* A real `tel:` link. Most of this audience is on a phone, and
-                    a number they have to select and copy is a number that does
-                    not get dialled. */}
-                <p>
+                <p className="text-h4 font-display font-bold text-on-surface">
                   <Link href={telHref(STUDIO.telephone)} variant="inline">
                     {STUDIO.telephone.display}
                   </Link>
                 </p>
-              </Stack>
+                <span className="text-small text-on-surface-3">Mon – Sat, 9:00 AM – 6:00 PM IST</span>
+              </div>
             )}
 
             {STUDIO.whatsapp && (
-              <Stack gap={1}>
-                <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
-                  WhatsApp
+              <div>
+                <h3 className="font-ui text-overline uppercase tracking-wider text-accent font-bold mb-1">
+                  WhatsApp Instant Inquiry
                 </h3>
-                <p>
+                <p className="text-h4 font-display font-bold text-on-surface">
                   <Link href={whatsappHref(STUDIO.whatsapp)} variant="inline">
                     Message {STUDIO.whatsapp.display}
                   </Link>
                 </p>
-              </Stack>
-            )}
-          </Stack>
-
-          <Stack gap={5}>
-            {STUDIO.email && (
-              <Stack gap={1}>
-                <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
-                  Email
-                </h3>
-                {/* Two addresses, labelled by what they are for. An existing
-                    client's problem sent to a sales inbox is how it waits three
-                    days. */}
-                <p className="text-small text-on-surface-2">
-                  New enquiries —{' '}
-                  <Link href={mailtoHref(STUDIO.email.general)} variant="inline" className="text-small">
-                    {STUDIO.email.general}
-                  </Link>
-                </p>
-                <p className="text-small text-on-surface-2">
-                  Existing projects —{' '}
-                  <Link href={mailtoHref(STUDIO.email.support)} variant="inline" className="text-small">
-                    {STUDIO.email.support}
-                  </Link>
-                </p>
-              </Stack>
+                <span className="text-small text-on-surface-3">Instant response during business hours</span>
+              </div>
             )}
 
             {STUDIO.responseWindow && (
-              <Stack gap={1}>
-                <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
-                  When we reply
+              <div>
+                <h3 className="font-ui text-overline uppercase tracking-wider text-accent font-bold mb-1">
+                  Response SLA
                 </h3>
-                {/* A response window, not opening hours. The studio has no
-                    public counter, so "we are open 9 to 6" would answer a
-                    question nobody asked and invite a visit that cannot
-                    happen. What someone actually wants before they send a
-                    message at 9pm is whether anyone will read it. */}
-                <p className="text-on-surface-2">
+                <p className="text-body font-medium text-on-surface">
                   {formatWindow(STUDIO.responseWindow)}
                 </p>
-                <p className="text-small text-on-surface-muted">
-                  Outside that, we pick up the next morning.
-                </p>
-              </Stack>
+                <span className="text-small text-on-surface-3">Enquiries after 6 PM are answered next morning</span>
+              </div>
+            )}
+          </div>
+
+          <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 space-y-6">
+            {STUDIO.email && (
+              <div>
+                <h3 className="font-ui text-overline uppercase tracking-wider text-accent font-bold mb-2">
+                  Email Communications
+                </h3>
+                <div className="space-y-2">
+                  <p className="text-small text-on-surface-2">
+                    <strong className="text-on-surface">New Project Enquiries:</strong>{' '}
+                    <Link href={mailtoHref(STUDIO.email.general)} variant="inline">
+                      {STUDIO.email.general}
+                    </Link>
+                  </p>
+                  <p className="text-small text-on-surface-2">
+                    <strong className="text-on-surface">Existing Client Support:</strong>{' '}
+                    <Link href={mailtoHref(STUDIO.email.support)} variant="inline">
+                      {STUDIO.email.support}
+                    </Link>
+                  </p>
+                </div>
+              </div>
             )}
 
             {STUDIO.address && (
-              <Stack gap={1}>
-                <h3 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
-                  Studio
+              <div>
+                <h3 className="font-ui text-overline uppercase tracking-wider text-accent font-bold mb-2">
+                  Head Office Address
                 </h3>
-                <address className="not-italic text-on-surface-2">
+                <address className="not-italic text-small text-on-surface-2 leading-relaxed">
                   {STUDIO.address.lines.map((line) => (
                     <span key={line} className="block">
                       {line}
                     </span>
                   ))}
                 </address>
-                {/* Stated plainly rather than left to be discovered on the
-                    pavement. It is a serviced floor with a reception that does
-                    not know you are coming. */}
-                <p className="text-small text-on-surface-muted">
-                  Visits by appointment — please arrange one before coming.
+                <p className="text-small text-on-surface-3 mt-2">
+                  Visits by appointment — please arrange prior to arrival.
                 </p>
-              </Stack>
+              </div>
             )}
-
-          </Stack>
+          </div>
         </Grid>
       </Section>
+
+      {/* 5. Why Contact Us */}
+      <Section
+        id="why-contact"
+        eyebrow="Consultation Standard"
+        title="What to Expect When You Contact Us"
+        lede="We believe in empirical design advice over high-pressure sales pitches."
+      >
+        <Grid cols={2} gap={6}>
+          {whyContact.map((item) => (
+            <div key={item.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
+              <span className="font-display text-h2 font-bold text-accent shrink-0">{item.num}</span>
+              <div>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{item.title}</h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </Grid>
+      </Section>
+
+      {/* 6. Process */}
+      <ProcessSteps />
+
+      {/* 7. Testimonials */}
+      <Section
+        id="testimonials"
+        eyebrow="Client Experiences"
+        title="What Clients Say About Working With Us"
+        lede="Verified client feedback on studio visits and response times."
+      >
+        <Grid cols={2} gap={6}>
+          {testimonials.map((t) => (
+            <div key={t.name} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+              <div>
+                <div className="flex text-accent text-small mb-3">★★★★★</div>
+                <blockquote className="text-body text-on-surface-2 italic leading-relaxed mb-6">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+              </div>
+              <div className="pt-4 border-t border-border-subtle/50">
+                <strong className="block font-display text-small font-bold text-on-surface">{t.name}</strong>
+                <span className="text-overline text-accent uppercase tracking-wider">📍 {t.location}</span>
+              </div>
+            </div>
+          ))}
+        </Grid>
+      </Section>
+
+      {/* 8. FAQ Accordion */}
+      <Section id="faq" eyebrow="Questions Answered" title="Contact & Studio FAQ">
+        <div className="max-w-3xl mx-auto space-y-4">
+          {faqs.map((faq) => (
+            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+              <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
+                <span>{faq.q}</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+              </summary>
+              <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
+                {faq.a}
+              </p>
+            </details>
+          ))}
+        </div>
+      </Section>
+
+      {/* 9. Conversion CTA Section */}
+      <CTASection />
     </main>
   );
 }

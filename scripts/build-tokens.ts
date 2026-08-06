@@ -107,7 +107,7 @@ async function main() {
   const GLASS = [
     {
       selector: ':root',
-      fill: hexToRgba(tokens.color.brand.navy.$value, tokens.opacity['glass-dark'].$value),
+      fill: hexToRgba(tokens.color.brand.emerald.$value, tokens.opacity['glass-dark'].$value),
     },
     {
       selector: '[data-theme="light"]',

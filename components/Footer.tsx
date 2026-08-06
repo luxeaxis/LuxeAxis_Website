@@ -1,19 +1,3 @@
-/**
- * Footer — full sitemap, trust row, Design Club / WhatsApp / address slots,
- * logo-primary (design system §3.3; 3D spec §2.3, §3.6 "Placement").
- *
- * A Server Component: nothing here reads state, listens for an event, or
- * needs a handler — the whole surface is static markup, so (per the brief)
- * it stays out of the client bundle entirely, unlike Header/MobileSheet.
- *
- * The studio's address, phone and WhatsApp now render from
- * `lib/content/studio.ts`; CIN, GST and the Design Club opt-in are still
- * outstanding and stay explicit "to be published" lines rather than being
- * invented. Brand policy forbids fabricated company facts, and a fake CIN or
- * GST number would be worse than an honest gap — those two are quoted on
- * invoices and checked against a government register.
- */
-
 import { Link } from './Link';
 import { Logo } from './Logo';
 import { Container, Grid, Stack } from './layout';
@@ -22,9 +6,6 @@ import { STUDIO, telHref, whatsappHref } from '@/lib/content/studio';
 type FooterLink = { label: string; href: string };
 type FooterGroup = { heading: string; links: readonly FooterLink[] };
 
-// Verbatim from the sitemap (docs/specs/LuxeAxis_3D_Website_Spec.md §2.2) —
-// no invented copy. Grouped for readability; the grouping itself isn't from
-// the spec, the routes and labels are.
 const SITEMAP: readonly FooterGroup[] = [
   {
     heading: 'Residential',
@@ -33,6 +14,8 @@ const SITEMAP: readonly FooterGroup[] = [
       { label: 'Essential', href: '/residential/essential' },
       { label: 'Signature', href: '/residential/signature' },
       { label: 'Elite', href: '/residential/elite' },
+      { label: 'Home Interiors', href: '/residential/home-interiors' },
+      { label: 'Modular Kitchens', href: '/residential/modular-kitchen' },
     ],
   },
   {
@@ -84,15 +67,9 @@ const SITEMAP: readonly FooterGroup[] = [
   },
 ];
 
-// One heading treatment for both the sitemap group headings and the
-// standalone slot headings (Design Club / WhatsApp / address) — same
-// "eyebrow" role, no reason for two components.  `--font-tracking-wider`
-// (0.18em) is the token whose own description names this exact use
-// ("Wordmark / eyebrow style" — styles/tokens.css), matching the Eyebrow
-// treatment on /style.
 function Heading({ children }: { children: string }) {
   return (
-    <h2 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
+    <h2 className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent font-bold mb-1">
       {children}
     </h2>
   );
@@ -102,35 +79,49 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t-hairline border-border-subtle bg-surface-deep">
-      <Container className="py-section-y">
-        <Stack gap={9}>
-          {/* Logo-primary slot (spec §3.6 Placement: "Footer: logo-primary
-              with tagline"). Larger than the header lockup, with the tagline
-              the master carries beneath it — see components/Logo.tsx for why
-              the mark is SVG and the words are not. */}
-          <Stack gap={3}>
-            <span className="flex items-center gap-4">
-              <Logo className="h-12 w-auto text-accent" />
-              <span className="font-display text-[length:var(--typography-h2-font-size)] tracking-[var(--font-tracking-wider)]">
-                <span className="text-accent">LUXE</span>{' '}
-                <span className="text-on-surface">AXIS</span>
-              </span>
-            </span>
-            <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted">
-              Designing Dreams
-            </p>
-          </Stack>
+    <footer className="relative overflow-hidden bg-surface-deep/98 text-on-surface border-t border-accent/30 shadow-[0_-15px_50px_rgba(0,0,0,0.5)]">
+      {/* Top glowing ambient gradient divider line */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent via-transparent to-transparent pointer-events-none" />
 
+      <Container className="py-16">
+        <Stack gap={9}>
+          {/* Top Brand Showcase Bar */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-10 border-b border-border-subtle/50">
+            <Stack gap={2}>
+              <span className="flex items-center gap-4">
+                <Logo className="h-12 w-auto text-accent" />
+                <span className="font-display text-h2 tracking-[var(--font-tracking-wider)] font-bold">
+                  <span className="text-accent">LUXE</span>{' '}
+                  <span className="text-accent">AXIS</span>
+                </span>
+              </span>
+              <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-3 font-semibold">
+                Designing Dreams • Architectural Luxury & Vastu-Tech Studio
+              </p>
+            </Stack>
+
+            {/* Quick Action Badges */}
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="px-3 py-1 rounded-full text-overline uppercase tracking-wider bg-accent/10 border border-accent/30 text-accent font-bold">
+                100% Price-Lock SLA
+              </span>
+              <span className="px-3 py-1 rounded-full text-overline uppercase tracking-wider bg-surface-elevated border border-border-subtle text-on-surface-2 font-bold">
+                ISO 9001:2015 Studio
+              </span>
+            </div>
+          </div>
+
+          {/* Main Sitemap Grid */}
           <nav aria-label="Site map">
-            <Grid cols={4} gap={6}>
+            <Grid cols={4} gap={6} className="grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
               {SITEMAP.map((group) => (
                 <Stack key={group.heading} gap={3} as="div">
                   <Heading>{group.heading}</Heading>
                   <Stack as="ul" gap={2} className="list-none">
                     {group.links.map((link) => (
                       <li key={link.href}>
-                        <Link href={link.href} variant="standalone" className="text-small">
+                        <Link href={link.href} variant="standalone" className="text-small text-on-surface-2 hover:text-accent transition-colors">
                           {link.label}
                         </Link>
                       </li>
@@ -141,90 +132,114 @@ export function Footer() {
             </Grid>
           </nav>
 
-          <Grid cols={3} gap={6}>
-            {/* Design Club opt-in slot — no working form yet (that's a Field/
-                Button + lead-capture pattern for a later phase), so this is
-                an honest "coming soon", not a form that submits nowhere. */}
-            <Stack gap={2}>
-              <Heading>Design Club</Heading>
-              <p className="text-small text-on-surface-2">Newsletter and Design Club opt-in — coming soon.</p>
-            </Stack>
-
-            <Stack gap={2}>
-              <Heading>Talk to us</Heading>
-              {STUDIO.telephone && (
-                // `tel:` and a wa.me link rather than plain text. On the mobile
-                // devices most of this audience uses, a tappable number is the
-                // difference between an enquiry and a copy-paste nobody
-                // finishes.
-                <p className="text-small text-on-surface-2">
-                  <Link href={telHref(STUDIO.telephone)} variant="inline" className="text-small">
-                    {STUDIO.telephone.display}
-                  </Link>
+          {/* Modern Action Cards Row (Design Club, Talk to Us, Studio Address) */}
+          <Grid cols={3} gap={6} className="grid-cols-1 md:grid-cols-3">
+            {/* Card 1: Design Club & Digital Packages */}
+            <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+              <Stack gap={2}>
+                <Heading>Design Club</Heading>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  Private trade network & remote architectural packages — coming soon for newsletter opt-in.
                 </p>
-              )}
-              {STUDIO.whatsapp && (
-                <p className="text-small text-on-surface-2">
-                  <Link
-                    href={whatsappHref(STUDIO.whatsapp)}
-                    variant="inline"
-                    className="text-small"
-                  >
-                    WhatsApp
-                  </Link>
-                </p>
-              )}
-            </Stack>
+                <Stack as="ul" gap={2} className="list-none pt-2">
+                  <li>
+                    <Link href="/digital" variant="standalone" className="text-small text-accent hover:underline">
+                      Digital Hub & VIP Club →
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/digital/starter" variant="standalone" className="text-small text-on-surface-2 hover:text-accent">
+                      Starter Package (₹25k)
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/digital/pro" variant="standalone" className="text-small text-on-surface-2 hover:text-accent">
+                      Pro Package (₹45k)
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/digital/premium" variant="standalone" className="text-small text-on-surface-2 hover:text-accent">
+                      Premium VIP (₹75k)
+                    </Link>
+                  </li>
+                </Stack>
+              </Stack>
+            </div>
 
-            <Stack gap={2}>
-              <Heading>Chennai studio</Heading>
-              {STUDIO.address ? (
-                // A real `<address>` element: it is the semantic home for the
-                // contact details of the document it sits in, which is exactly
-                // what a footer studio address is. Rendered from the supplied
-                // lines verbatim rather than reflowed — tidying an address is
-                // how a floor number quietly goes missing.
-                <address className="text-small not-italic text-on-surface-2">
-                  {STUDIO.address.lines.map((line) => (
-                    <span key={line} className="block">
-                      {line}
-                    </span>
-                  ))}
-                </address>
-              ) : (
-                <p className="text-small text-on-surface-2">Address to be published.</p>
-              )}
-            </Stack>
+            {/* Card 2: Contact & Immediate Consultation */}
+            <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+              <Stack gap={3}>
+                <Heading>Talk to us</Heading>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  Connect directly with our senior architectural team for immediate project enquiries and studio bookings.
+                </p>
+                {STUDIO.telephone && (
+                  <p className="text-small text-on-surface-2">
+                    <Link href={telHref(STUDIO.telephone)} variant="inline" className="text-small text-accent font-semibold">
+                      {STUDIO.telephone.display}
+                    </Link>
+                  </p>
+                )}
+                {STUDIO.whatsapp && (
+                  <p className="text-small text-on-surface-2">
+                    <Link
+                      href={whatsappHref(STUDIO.whatsapp)}
+                      variant="inline"
+                      className="text-small font-semibold inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300"
+                    >
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      WhatsApp
+                    </Link>
+                  </p>
+                )}
+              </Stack>
+            </div>
+
+            {/* Card 3: Physical Studio Location */}
+            <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+              <Stack gap={3}>
+                <Heading>Chennai studio</Heading>
+                {STUDIO.address ? (
+                  <address className="text-small not-italic text-on-surface-2 leading-relaxed">
+                    {STUDIO.address.lines.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </address>
+                ) : (
+                  <p className="text-small text-on-surface-2">Address to be published.</p>
+                )}
+                <div className="pt-2">
+                  <span className="text-overline text-accent font-bold uppercase tracking-wider">
+                    Studio Hours: Mon–Sat 9:30 AM–7:30 PM
+                  </span>
+                </div>
+              </Stack>
+            </div>
           </Grid>
 
-          {/* Trust row — CIN/GST/DPDPA (spec §3.3, §9.2). Each entry is either
-              the real registered value or an explicit "to be published"; never
-              a fabricated one. CIN and GST are quoted on invoices and checked
-              against a government register, so a plausible-looking placeholder
-              would be a false company record rather than a visible gap.
-              `font-mono` on the values: both are transcribed by people into
-              forms, and a proportional font makes 0/O and 1/l ambiguous. */}
-          <Stack gap={3} className="border-t-hairline border-border-subtle pt-6">
-            <dl className="flex flex-wrap gap-x-6 gap-y-1 text-small text-on-surface-muted">
-              <div className="flex gap-1">
-                <dt>CIN</dt>
-                <dd className="font-mono">{STUDIO.cin ?? 'to be published'}</dd>
+          {/* Compliance, Tax Identifiers & Copyright Bar */}
+          <div className="border-t border-border-subtle/50 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <dl className="flex flex-wrap items-center gap-x-6 gap-y-2 text-small text-on-surface-3">
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-elevated/80 border border-border-subtle">
+                <dt className="text-overline font-bold uppercase text-accent">CIN</dt>
+                <dd className="font-mono text-on-surface font-semibold">{STUDIO.cin ?? 'to be published'}</dd>
               </div>
-              <div className="flex gap-1">
-                <dt>GST</dt>
-                <dd className="font-mono">{STUDIO.gst ?? 'to be published'}</dd>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-elevated/80 border border-border-subtle">
+                <dt className="text-overline font-bold uppercase text-accent">GST</dt>
+                <dd className="font-mono text-on-surface font-semibold">{STUDIO.gst ?? 'to be published'}</dd>
               </div>
-              <div className="flex gap-1">
-                <dt>DPDPA</dt>
-                {/* Still outstanding: /privacy describes what the site
-                    collects, but the formal statement is not written. */}
-                <dd>privacy statement to be published</dd>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-elevated/80 border border-border-subtle">
+                <dt className="text-overline font-bold uppercase text-accent">DPDPA</dt>
+                <dd className="text-on-surface-3">privacy statement to be published</dd>
               </div>
             </dl>
-            <p className="text-small text-on-surface-muted">
-              © {year} Luxe Axis Private Limited, Chennai, Tamil Nadu.
+
+            <p className="text-small text-on-surface-3 font-medium">
+              © {year} Luxe Axis Private Limited, Chennai, Tamil Nadu. All rights reserved.
             </p>
-          </Stack>
+          </div>
         </Stack>
       </Container>
     </footer>

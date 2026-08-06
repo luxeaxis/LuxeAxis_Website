@@ -40,8 +40,8 @@ describe('token build', () => {
   });
 
   it('derives the nav glass fill from the surface and opacity tokens', () => {
-    expect(css).toMatch(/--nav-bg:\s*rgba\(13, ?43, ?78, ?0\.55\)/);
-    expect(css).toMatch(/--nav-bg:\s*rgba\(252, ?250, ?245, ?0\.7\)/);
+    expect(css).toMatch(/--nav-bg:\s*rgba\(30, ?63, ?46, ?0\.55\)/);
+    expect(css).toMatch(/--nav-bg:\s*rgba\(233, ?227, ?216, ?0\.7\)/);
   });
 
   it('declares nav-bg exactly once per theme', () => {
@@ -64,9 +64,9 @@ describe('token build', () => {
 
   it('resolves semantic tokens to literal values in both themes', () => {
     const [, darkBlock, lightBlock] = css.split(/:root\s*\{|\[data-theme="light"\]\s*\{/);
-    expect(darkBlock).toMatch(/--surface:\s*#0D2B4E/i);
-    expect(darkBlock).toMatch(/--accent:\s*#C9A84C/i);
-    expect(lightBlock).toMatch(/--surface:\s*#FCFAF5/i);
-    expect(lightBlock).toMatch(/--accent:\s*#1A7A85/i);
+    expect(darkBlock).toMatch(/--surface:\s*#1E3F2E/i);
+    expect(darkBlock).toMatch(/--accent:\s*#FFC107/i);
+    expect(lightBlock).toMatch(/--surface:\s*#E9E3D8/i);
+    expect(lightBlock).toMatch(/--accent:\s*#1E6B52/i);
   });
 });

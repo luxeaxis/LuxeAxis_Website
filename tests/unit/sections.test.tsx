@@ -42,7 +42,7 @@ describe('Hero', () => {
   const render_ = () =>
     render(
       <Hero
-        headline="Your Chennai home, thoughtfully designed. Transparently priced."
+        headline="Your home, thoughtfully designed. Transparently priced."
         sub="AI-assisted design, Vastu-smart, delivered on a 60-day handover guarantee."
         trustPoints={['Transparent pricing', '60-day handover guarantee']}
       />,

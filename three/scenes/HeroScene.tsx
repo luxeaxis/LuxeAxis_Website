@@ -7,45 +7,74 @@ import type { SceneId, SceneModule } from '../registry';
 
 function HeroSceneContent() {
   const groupRef = useRef<Group>(null);
-  const ringRef = useRef<Mesh>(null);
+  const outerRingRef = useRef<Mesh>(null);
+  const innerRingRef = useRef<Mesh>(null);
+  const node1Ref = useRef<Mesh>(null);
+  const node2Ref = useRef<Mesh>(null);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
+    const time = state.clock.getElapsedTime();
     if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.15;
+      groupRef.current.rotation.y += delta * 0.12;
     }
-    if (ringRef.current) {
-      ringRef.current.rotation.x += delta * 0.1;
-      ringRef.current.rotation.z += delta * 0.05;
+    if (outerRingRef.current) {
+      outerRingRef.current.rotation.x = Math.sin(time * 0.5) * 0.2;
+      outerRingRef.current.rotation.z += delta * 0.08;
+    }
+    if (innerRingRef.current) {
+      innerRingRef.current.rotation.y += delta * 0.15;
+      innerRingRef.current.rotation.x += delta * 0.05;
+    }
+    if (node1Ref.current) {
+      node1Ref.current.position.y = Math.sin(time * 1.5) * 0.3 + 0.8;
+      node1Ref.current.rotation.y += delta * 0.4;
+    }
+    if (node2Ref.current) {
+      node2Ref.current.position.y = Math.cos(time * 1.2) * 0.25 - 0.8;
+      node2Ref.current.rotation.x += delta * 0.3;
     }
   });
 
   return (
     <group ref={groupRef}>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 8, 5]} intensity={1.2} color="#C9A84C" />
-      <pointLight position={[-4, -3, -2]} intensity={0.8} color="#1A7A85" />
+      <ambientLight intensity={0.7} color="#1E3F2E" />
+      <directionalLight position={[6, 10, 6]} intensity={1.6} color="#FFC107" />
+      <pointLight position={[-5, -4, -3]} intensity={1.4} color="#38BDF8" />
+      <pointLight position={[4, -2, 4]} intensity={1.0} color="#FFE082" />
 
-      {/* Central Gold Axis Pillar */}
+      {/* Central Luxe Gold Axis Pillar */}
       <mesh position={[0, 0, 0]}>
-        <cylinderGeometry args={[0.08, 0.08, 6, 16]} />
-        <meshStandardMaterial color="#C9A84C" roughness={0.2} metalness={0.8} />
+        <cylinderGeometry args={[0.09, 0.09, 6.5, 32]} />
+        <meshStandardMaterial color="#FFC107" roughness={0.15} metalness={0.95} />
       </mesh>
 
-      {/* Rotating Outer Architectural Ring */}
-      <mesh ref={ringRef} position={[0, 0, 0]}>
-        <torusGeometry args={[1.8, 0.03, 16, 64]} />
-        <meshStandardMaterial color="#FCFAF5" roughness={0.3} metalness={0.5} wireframe={false} />
+      {/* Outer Champagne Gold Torus Ring */}
+      <mesh ref={outerRingRef} position={[0, 0, 0]}>
+        <torusGeometry args={[2.2, 0.035, 16, 80]} />
+        <meshStandardMaterial color="#FFE082" roughness={0.2} metalness={0.8} />
       </mesh>
 
-      {/* Accent Geometric Nodes */}
-      <mesh position={[1.4, 0.8, 0]}>
-        <octahedronGeometry args={[0.2, 0]} />
-        <meshStandardMaterial color="#1A7A85" roughness={0.1} metalness={0.9} />
+      {/* Inner Tech Sapphire Torus Ring */}
+      <mesh ref={innerRingRef} position={[0, 0, 0]}>
+        <torusGeometry args={[1.5, 0.025, 16, 64]} />
+        <meshStandardMaterial color="#38BDF8" roughness={0.1} metalness={0.9} />
       </mesh>
 
-      <mesh position={[-1.2, -0.9, 0.5]}>
-        <boxGeometry args={[0.3, 0.3, 0.3]} />
-        <meshStandardMaterial color="#C9A84C" roughness={0.2} metalness={0.7} />
+      {/* Floating Geometric Nodes (Vastu-Tech Signals) */}
+      <mesh ref={node1Ref} position={[1.6, 0.8, 0.4]}>
+        <octahedronGeometry args={[0.25, 0]} />
+        <meshStandardMaterial color="#38BDF8" roughness={0.1} metalness={0.95} />
+      </mesh>
+
+      <mesh ref={node2Ref} position={[-1.4, -0.8, -0.4]}>
+        <icosahedronGeometry args={[0.22, 0]} />
+        <meshStandardMaterial color="#FFC107" roughness={0.2} metalness={0.85} />
+      </mesh>
+
+      {/* Subtle Base Floor Wireframe Grid */}
+      <mesh position={[0, -2.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[10, 10, 10, 10]} />
+        <meshStandardMaterial color="#FFC107" wireframe transparent opacity={0.12} />
       </mesh>
     </group>
   );
