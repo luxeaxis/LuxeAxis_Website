@@ -199,7 +199,7 @@ export function MobileSheet() {
                                 >
                                   <span>{sub.label}</span>
                                   {sub.badge && (
-                                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 bg-accent/20 text-accent rounded border border-accent/30">
+                                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 bg-accent/20 text-accent rounded border border-accent/30">
                                       {sub.badge}
                                     </span>
                                   )}

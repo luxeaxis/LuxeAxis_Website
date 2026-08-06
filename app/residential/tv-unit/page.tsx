@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Container, Grid, Stack } from '@/components/layout';
@@ -293,16 +294,7 @@ export default function TvUnitPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-2 text-small text-on-surface-3">
-              <li><a href="/" className="hover:text-accent transition-colors">Home</a></li>
-              <span>/</span>
-              <li><a href="/residential" className="hover:text-accent transition-colors">Residential</a></li>
-              <span>/</span>
-              <li aria-current="page" className="text-accent font-semibold">TV Unit Design</li>
-            </ol>
-          </nav>
+          <Breadcrumbs path="/residential/tv-unit" labels={{ 'tv-unit': "TV Unit Design" }} />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -334,23 +326,23 @@ export default function TvUnitPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">8,000+</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">TV Units Built</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">TV Units Built</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Build Guarantee</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Build Guarantee</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Flat Warranty</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Google Rating</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">3+</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Chennai Studios</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
               </div>
             </div>
           </Stack>
@@ -358,7 +350,7 @@ export default function TvUnitPage() {
       </section>
 
       {/* 2. Highlights Strip */}
-      <section className="py-6 bg-surface-elevated/40 border-b border-border-subtle/40">
+      <section className="py-6 bg-surface-raised/40 border-b border-border-subtle/40">
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
             {highlights.map((item) => (
@@ -366,7 +358,7 @@ export default function TvUnitPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-3 mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
               </div>
             ))}
           </div>
@@ -442,26 +434,26 @@ export default function TvUnitPage() {
                   {g.homeType}
                 </span>
                 <h3 className="font-display text-h3 font-bold text-on-surface mt-3">{g.title}</h3>
-                <p className="text-overline text-on-surface-3 uppercase tracking-wider mb-4">{g.sub}</p>
+                <p className="text-overline text-on-surface-muted uppercase tracking-wider mb-4">{g.sub}</p>
                 <div className="mb-4 pb-4 border-b border-border-subtle/40">
                   <span className="text-overline text-accent uppercase font-bold tracking-wider block">Recommended Wall Width</span>
                   <span className="font-display text-h2 font-bold text-accent">{g.wallWidth}</span>
                 </div>
                 <ul className="space-y-2 text-small text-on-surface-2 mb-4">
                   <li className="flex justify-between">
-                    <span className="text-on-surface-3">TV Size:</span>
+                    <span className="text-on-surface-muted">TV Size:</span>
                     <strong className="text-on-surface">{g.tvSize}</strong>
                   </li>
                   <li className="flex justify-between">
-                    <span className="text-on-surface-3">Unit Height:</span>
+                    <span className="text-on-surface-muted">Unit Height:</span>
                     <strong className="text-on-surface">{g.height}</strong>
                   </li>
                   <li className="flex justify-between">
-                    <span className="text-on-surface-3">Best Style:</span>
+                    <span className="text-on-surface-muted">Best Style:</span>
                     <strong className="text-accent">{g.bestStyle}</strong>
                   </li>
                   <li className="flex justify-between">
-                    <span className="text-on-surface-3">Starting Cost:</span>
+                    <span className="text-on-surface-muted">Starting Cost:</span>
                     <strong className="text-on-surface">{g.cost}</strong>
                   </li>
                 </ul>
@@ -525,7 +517,7 @@ export default function TvUnitPage() {
               alt: 'Completed backlit media wall TV unit by Luxe Axis in Velachery',
             }}
           />
-          <p className="text-center text-small text-on-surface-3 mt-3">
+          <p className="text-center text-small text-on-surface-muted mt-3">
             Media Wall Transformation — Velachery, Chennai
           </p>
         </div>
@@ -556,7 +548,7 @@ export default function TvUnitPage() {
                 <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{tier.name}</h3>
                 <div className="my-4 flex items-baseline gap-1">
                   <span className="font-display text-[36px] font-bold text-accent">{tier.price}</span>
-                  <span className="text-small text-on-surface-3">{tier.unit}</span>
+                  <span className="text-small text-on-surface-muted">{tier.unit}</span>
                 </div>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {tier.desc}

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Container, Grid, Stack } from '@/components/layout';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Button } from '@/components/Button';
 import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
@@ -198,16 +199,12 @@ export default async function CommercialVerticalPage({
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-2 text-small text-on-surface-3">
-              <li><a href="/" className="hover:text-accent transition-colors">Home</a></li>
-              <span>/</span>
-              <li><a href="/commercial" className="hover:text-accent transition-colors">Commercial</a></li>
-              <span>/</span>
-              <li aria-current="page" className="text-accent font-semibold">{vertical.name}</li>
-            </ol>
-          </nav>
+          {/* The vertical's own name, not the humanised slug —
+              `retail-hospitality` should read "Retail & Hospitality". */}
+          <Breadcrumbs
+            path={`/commercial/${vertical.slug}`}
+            labels={{ [vertical.slug]: vertical.name }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -239,19 +236,19 @@ export default async function CommercialVerticalPage({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Fit-Out Guarantee</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Fit-Out Guarantee</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Flat Warranty</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">100%</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Fixed BOQ Quote</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Fixed BOQ Quote</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Google Rating</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
               </div>
             </div>
           </Stack>
@@ -336,12 +333,12 @@ export default async function CommercialVerticalPage({
                         ₹{rate.perSqFt.low}–{rate.perSqFt.high} / sq ft
                       </span>
                       {rate.conceptFee !== null && (
-                        <span className="block text-[12px] text-on-surface-3">
+                        <span className="block text-[12px] text-on-surface-muted">
                           + {formatRupees(rate.conceptFee)} concept fee
                         </span>
                       )}
                       {rate.executionMargin !== null && (
-                        <span className="block text-[12px] text-on-surface-3">
+                        <span className="block text-[12px] text-on-surface-muted">
                           + {Math.round(rate.executionMargin * 100)}% execution margin
                         </span>
                       )}

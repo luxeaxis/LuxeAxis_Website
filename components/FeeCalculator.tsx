@@ -81,7 +81,12 @@ export function FeeCalculator({ config }: { config: CalculatorConfig }) {
                     className="sr-only"
                   />
                   <span className="font-medium">{bracket.label}</span>
-                  {area && <span className="text-overline opacity-80">{area}</span>}
+                  {/* No `opacity-80` here. Dimming the secondary role took it
+                      to 3.96:1 on this card, and opacity cannot be checked by
+                      the token tests — it is applied at the call site, after
+                      every contrast assertion has already passed. The size
+                      difference carries the hierarchy on its own. */}
+                  {area && <span className="text-overline">{area}</span>}
                 </label>
               );
             })}

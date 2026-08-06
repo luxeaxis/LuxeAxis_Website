@@ -32,6 +32,26 @@ const ROUTES = [
   '/accessibility',
   '/style',
   '/this-route-does-not-exist',
+  // The service, collection, tier and package routes. These are built from a
+  // shared template, so one of each family would catch a template fault — but
+  // not a per-page copy fault, and every one of them carries its own hand-
+  // written headings, tables and FAQ blocks. The whole family shipped without
+  // ever being looked at by axe, which is how forty copies of a malformed
+  // breadcrumb reached main; the extra minute of runtime is the cheaper side
+  // of that trade.
+  '/residential/modular-kitchen',
+  '/residential/luxury',
+  '/residential/3d-design',
+  '/portfolio/villas',
+  '/portfolio/penthouses',
+  '/portfolio/apartments',
+  '/pricing/essential',
+  '/pricing/signature',
+  '/pricing/elite',
+  '/pricing/calculator',
+  '/digital/starter',
+  '/digital/pro',
+  '/digital/premium',
 ];
 
 for (const route of ROUTES) {

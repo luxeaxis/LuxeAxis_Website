@@ -20,18 +20,18 @@
       "ink":           { "$value": "#12291E", "$description": "Label color on gold fills." }
     },
     "neutral-on-dark": {
-      "$description": "Text/icon ramp for use on Emerald surfaces (all verified).",
-      "primary":   { "$value": "#E9E3D8", "$description": "Warm Clay 14.8:1 AAA" },
-      "secondary": { "$value": "#D4C4B7", "$description": "Taupe / Umber tint 7.8:1 AAA" },
-      "tertiary":  { "$value": "#BFAEA0", "$description": "5.6:1 AA" },
-      "disabled":  { "$value": "#6B7280", "$description": "Disabled/placeholder." }
+      "$description": "Text/icon ramp for Emerald surfaces. Ratios are quoted against surface-raised (#28523D), the LIGHTEST surface these sit on, not against the base — a role verified only on the base surface is the bug axe caught on /style.",
+      "primary":   { "$value": "#E9E3D8", "$description": "Warm Clay. 9.11:1 on base, 6.96:1 on raised — AAA/AA." },
+      "secondary": { "$value": "#D4C4B7", "$description": "Taupe. 6.86:1 on base, 5.24:1 on raised — AA." },
+      "tertiary":  { "$value": "#CDBEB0", "$description": "Muted taupe. 6.42:1 on base, 4.90:1 on raised — AA in both. Lightened from #BFAEA0, which held 5.41:1 on the base surface but only 4.13:1 on raised and so failed AA wherever a card sat under it." },
+      "disabled":  { "$value": "#6B7280", "$description": "Disabled/placeholder (exempt from AA)." }
     },
     "neutral-on-light": {
-      "$description": "Text/icon ramp for use on Warm Clay surfaces.",
-      "primary":   { "$value": "#1E3F2E", "$description": "Deep Emerald 14.8:1 AAA" },
-      "secondary": { "$value": "#5D4037", "$description": "Rich Umber 7.6:1 AAA" },
-      "tertiary":  { "$value": "#4A332C", "$description": "Rich Umber dark 9.8:1 AAA" },
-      "disabled":  { "$value": "#9CA3AF", "$description": "Disabled/placeholder." }
+      "$description": "Text/icon ramp for Warm Clay surfaces. Ratios are quoted against surface-deep (#DDD5C6), the DARKEST surface these sit on — the mirror of the on-dark rule above.",
+      "primary":   { "$value": "#1E3F2E", "$description": "Deep Emerald. 9.11:1 on base, 7.98:1 on sunken — AAA." },
+      "secondary": { "$value": "#5D4037", "$description": "Rich Umber. 7.30:1 on base, 6.39:1 on sunken — AAA on base." },
+      "tertiary":  { "$value": "#6B4F45", "$description": "Umber tint. 5.81:1 on base, 5.09:1 on sunken — AA in both. Lightened from #4A332C, which measured 9.13:1 and so rendered the MUTED role with more contrast than the secondary one above it — a ramp that ran backwards." },
+      "disabled":  { "$value": "#9CA3AF", "$description": "Disabled/placeholder (exempt from AA)." }
     },
     "status": {
       "$description": "Feedback colors ship in per-surface variants: *-on-dark (lighter) for navy, *-on-light (deeper) for ivory.",

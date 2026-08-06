@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
@@ -125,14 +126,7 @@ export default function ContactPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-2 text-small text-on-surface-3">
-              <li><a href="/" className="hover:text-accent transition-colors">Home</a></li>
-              <span>/</span>
-              <li aria-current="page" className="text-accent font-semibold">Contact</li>
-            </ol>
-          </nav>
+          <Breadcrumbs path="/contact" />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -171,23 +165,23 @@ export default function ContactPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">100% Free</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Design Audit</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Design Audit</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">2 Hours</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Max Response Time</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Max Response Time</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">3 Locations</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Chennai Studios</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">Direct</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">WhatsApp Access</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">WhatsApp Access</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Google Rating</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
               </div>
             </div>
           </Stack>
@@ -195,7 +189,7 @@ export default function ContactPage() {
       </section>
 
       {/* 2. Highlights Strip */}
-      <section className="py-6 bg-surface-elevated/40 border-b border-border-subtle/40">
+      <section className="py-6 bg-surface-raised/40 border-b border-border-subtle/40">
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
             {highlights.map((item) => (
@@ -203,7 +197,7 @@ export default function ContactPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-3 mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
               </div>
             ))}
           </div>
@@ -229,7 +223,7 @@ export default function ContactPage() {
                   {st.address}
                 </address>
                 <p className="text-[12px] text-accent font-medium mb-3">🕒 {st.hours}</p>
-                <p className="text-small text-on-surface-3 leading-relaxed mb-4">{st.desc}</p>
+                <p className="text-small text-on-surface-muted leading-relaxed mb-4">{st.desc}</p>
               </div>
               <Button as="a" href="/book-audit" variant="secondary" className="w-full justify-center">
                 Schedule Studio Visit →
@@ -258,7 +252,7 @@ export default function ContactPage() {
                     {STUDIO.telephone.display}
                   </Link>
                 </p>
-                <span className="text-small text-on-surface-3">Mon – Sat, 9:00 AM – 6:00 PM IST</span>
+                <span className="text-small text-on-surface-muted">Mon – Sat, 9:00 AM – 6:00 PM IST</span>
               </div>
             )}
 
@@ -272,7 +266,7 @@ export default function ContactPage() {
                     Message {STUDIO.whatsapp.display}
                   </Link>
                 </p>
-                <span className="text-small text-on-surface-3">Instant response during business hours</span>
+                <span className="text-small text-on-surface-muted">Instant response during business hours</span>
               </div>
             )}
 
@@ -284,7 +278,7 @@ export default function ContactPage() {
                 <p className="text-body font-medium text-on-surface">
                   {formatWindow(STUDIO.responseWindow)}
                 </p>
-                <span className="text-small text-on-surface-3">Enquiries after 6 PM are answered next morning</span>
+                <span className="text-small text-on-surface-muted">Enquiries after 6 PM are answered next morning</span>
               </div>
             )}
           </div>
@@ -324,7 +318,7 @@ export default function ContactPage() {
                     </span>
                   ))}
                 </address>
-                <p className="text-small text-on-surface-3 mt-2">
+                <p className="text-small text-on-surface-muted mt-2">
                   Visits by appointment — please arrange prior to arrival.
                 </p>
               </div>

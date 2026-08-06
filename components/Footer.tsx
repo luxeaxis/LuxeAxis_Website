@@ -96,7 +96,7 @@ export function Footer() {
                   <span className="text-accent">AXIS</span>
                 </span>
               </span>
-              <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-3 font-semibold">
+              <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted font-semibold">
                 Designing Dreams • Architectural Luxury & Vastu-Tech Studio
               </p>
             </Stack>
@@ -106,7 +106,7 @@ export function Footer() {
               <span className="px-3 py-1 rounded-full text-overline uppercase tracking-wider bg-accent/10 border border-accent/30 text-accent font-bold">
                 100% Price-Lock SLA
               </span>
-              <span className="px-3 py-1 rounded-full text-overline uppercase tracking-wider bg-surface-elevated border border-border-subtle text-on-surface-2 font-bold">
+              <span className="px-3 py-1 rounded-full text-overline uppercase tracking-wider bg-surface-raised border border-border-subtle text-on-surface-2 font-bold">
                 ISO 9001:2015 Studio
               </span>
             </div>
@@ -221,22 +221,22 @@ export function Footer() {
 
           {/* Compliance, Tax Identifiers & Copyright Bar */}
           <div className="border-t border-border-subtle/50 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <dl className="flex flex-wrap items-center gap-x-6 gap-y-2 text-small text-on-surface-3">
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-elevated/80 border border-border-subtle">
+            <dl className="flex flex-wrap items-center gap-x-6 gap-y-2 text-small text-on-surface-muted">
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-raised/80 border border-border-subtle">
                 <dt className="text-overline font-bold uppercase text-accent">CIN</dt>
                 <dd className="font-mono text-on-surface font-semibold">{STUDIO.cin ?? 'to be published'}</dd>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-elevated/80 border border-border-subtle">
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-raised/80 border border-border-subtle">
                 <dt className="text-overline font-bold uppercase text-accent">GST</dt>
                 <dd className="font-mono text-on-surface font-semibold">{STUDIO.gst ?? 'to be published'}</dd>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-elevated/80 border border-border-subtle">
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-raised/80 border border-border-subtle">
                 <dt className="text-overline font-bold uppercase text-accent">DPDPA</dt>
-                <dd className="text-on-surface-3">privacy statement to be published</dd>
+                <dd className="text-on-surface-muted">privacy statement to be published</dd>
               </div>
             </dl>
 
-            <p className="text-small text-on-surface-3 font-medium">
+            <p className="text-small text-on-surface-muted font-medium">
               © {year} Luxe Axis Private Limited, Chennai, Tamil Nadu. All rights reserved.
             </p>
           </div>

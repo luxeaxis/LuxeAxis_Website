@@ -52,7 +52,7 @@ describe('verified pairings hold', () => {
     expect(contrastRatio(onDark.primary.$value, brand.emerald.$value)).toBeGreaterThanOrEqual(7);
   });
 
-  it('secondary text on navy reaches AA', () => {
+  it('secondary text on emerald reaches AA', () => {
     expect(contrastRatio(onDark.secondary.$value, brand.emerald.$value)).toBeGreaterThanOrEqual(4.5);
   });
 
@@ -84,8 +84,8 @@ describe('verified pairings hold on the light theme too', () => {
     expect(contrastRatio(onLight.primary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(7);
   });
 
-  it('secondary text on ivory reaches AA', () => {
-    expect(contrastRatio(onLight.secondary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+  it('secondary text on ivory reaches AAA', () => {
+    expect(contrastRatio(onLight.secondary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(7);
   });
 
   it('muted text on ivory reaches AA — the role that used to fail here', () => {
@@ -95,6 +95,68 @@ describe('verified pairings hold on the light theme too', () => {
   it('the muted role clears AA in BOTH themes, not just one', () => {
     expect(contrastRatio(onDark.tertiary.$value, brand.emerald.$value)).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio(onLight.tertiary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+// A surface role is not one colour. `bg-surface-raised` is a card, and a card
+// is the most common thing to put muted text inside — so a text role verified
+// only against the base surface is verified against the easiest case and
+// nothing else. on-surface-muted shipped at #BFAEA0 on exactly that reasoning:
+// 5.41:1 on the base surface, 4.13:1 on a card, and axe on /style was the only
+// thing in the whole stack that noticed.
+//
+// Each theme is checked against its WORST surface for that ramp's direction:
+// light text is hardest on the lightest dark surface, dark text on the darkest
+// light one.
+describe('the text ramp clears AA on every surface it can land on, not just the base', () => {
+  const darkSurfaces = {
+    'surface-deep': brand['emerald-900'].$value,
+    surface: brand.emerald.$value,
+    'surface-raised': brand['emerald-700'].$value,
+  };
+  const lightSurfaces = {
+    'surface-raised': brand['ivory-hi'].$value,
+    surface: brand.ivory.$value,
+    'surface-deep': brand['ivory-sunken'].$value,
+  };
+
+  for (const [name, bg] of Object.entries(darkSurfaces)) {
+    it(`every dark-theme text role clears AA on ${name}`, () => {
+      for (const role of ['primary', 'secondary', 'tertiary'] as const) {
+        expect(contrastRatio(onDark[role].$value, bg), `${role} on ${name}`).toBeGreaterThanOrEqual(4.5);
+      }
+    });
+  }
+
+  for (const [name, bg] of Object.entries(lightSurfaces)) {
+    it(`every light-theme text role clears AA on ${name}`, () => {
+      for (const role of ['primary', 'secondary', 'tertiary'] as const) {
+        expect(contrastRatio(onLight[role].$value, bg), `${role} on ${name}`).toBeGreaterThanOrEqual(4.5);
+      }
+    });
+  }
+});
+
+// The ramp has to actually be a ramp. `on-light.tertiary` once measured
+// 9.13:1 against `on-light.secondary`'s 7.30:1 — the "muted" role rendering
+// with MORE contrast than the role above it, so emphasis ran backwards and no
+// contrast assertion could see it, since running backwards is not a failure of
+// any minimum.
+describe('the text ramp descends', () => {
+  it('primary > secondary > tertiary on dark', () => {
+    const [p, s, t] = (['primary', 'secondary', 'tertiary'] as const).map((role) =>
+      contrastRatio(onDark[role].$value, brand.emerald.$value),
+    );
+    expect(p).toBeGreaterThan(s!);
+    expect(s).toBeGreaterThan(t!);
+  });
+
+  it('primary > secondary > tertiary on light', () => {
+    const [p, s, t] = (['primary', 'secondary', 'tertiary'] as const).map((role) =>
+      contrastRatio(onLight[role].$value, brand.ivory.$value),
+    );
+    expect(p).toBeGreaterThan(s!);
+    expect(s).toBeGreaterThan(t!);
   });
 
   it('teal is the accessible accent for text on ivory', () => {

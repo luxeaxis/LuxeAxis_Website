@@ -99,7 +99,7 @@ export function Header() {
 
                   {item.megaMenu ? (
                     <div className="absolute top-full left-1/2 -translate-x-1/2 hidden group-hover:block group-focus-within:block pt-2 w-[760px] max-w-[90vw] z-50 transition-all duration-300">
-                      <div className="lx-liquid-glass rounded-2xl p-4 shadow-[0_24px_60px_rgba(0,0,0,0.9)] border border-accent/40 backdrop-blur-2xl bg-surface-deep/95 max-h-[72vh] overflow-y-auto scrollbar-thin">
+                      <div className="lx-liquid-glass rounded-2xl p-4 shadow-[0_24px_60px_rgba(0,0,0,0.9)] border border-accent/40 backdrop-blur-2xl bg-surface-deep/95 max-h-[72vh] overflow-y-auto">
                         <div className="grid grid-cols-12 gap-5 items-start">
                           {/* Main Links Area (7 cols or 12 cols) */}
                           <div className={item.megaMenu.featured ? 'col-span-7' : 'col-span-12'}>
@@ -116,7 +116,7 @@ export function Header() {
                                         href={sub.href}
                                         variant="standalone"
                                         aria-current={isActiveRoute(pathname, sub.href) ? 'page' : undefined}
-                                        className="group/item flex items-center justify-between p-1 rounded hover:bg-surface-elevated/60 transition-colors"
+                                        className="group/item flex items-center justify-between p-1 rounded hover:bg-surface-raised/60 transition-colors"
                                       >
                                         <div className="min-w-0 pr-1">
                                           <div className="flex items-center gap-1.5">
@@ -124,13 +124,13 @@ export function Header() {
                                               {sub.label}
                                             </span>
                                             {sub.badge && (
-                                              <span className="text-[9px] uppercase font-bold tracking-wider px-1 py-0.2 rounded bg-accent/20 text-accent border border-accent/30 shrink-0">
+                                              <span className="text-[9px] uppercase font-bold tracking-wider px-1 py-0.5 rounded bg-accent/20 text-accent border border-accent/30 shrink-0">
                                                 {sub.badge}
                                               </span>
                                             )}
                                           </div>
                                           {sub.description && (
-                                            <p className="text-[10px] text-on-surface-3 line-clamp-1 font-sans">
+                                            <p className="text-[10px] text-on-surface-muted line-clamp-1 font-sans">
                                               {sub.description}
                                             </p>
                                           )}

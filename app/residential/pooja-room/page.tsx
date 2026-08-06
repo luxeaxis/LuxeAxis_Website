@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Container, Grid, Stack } from '@/components/layout';
@@ -279,16 +280,7 @@ export default function PoojaRoomPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-2 text-small text-on-surface-3">
-              <li><a href="/" className="hover:text-accent transition-colors">Home</a></li>
-              <span>/</span>
-              <li><a href="/residential" className="hover:text-accent transition-colors">Residential</a></li>
-              <span>/</span>
-              <li aria-current="page" className="text-accent font-semibold">Pooja Room Design</li>
-            </ol>
-          </nav>
+          <Breadcrumbs path="/residential/pooja-room" labels={{ 'pooja-room': "Pooja Room Design" }} />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -320,23 +312,23 @@ export default function PoojaRoomPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">10,000+</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Sacred Spaces</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Sacred Spaces</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Move-In Guarantee</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Move-In Guarantee</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Flat Warranty</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Google Rating</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Google Rating</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">3</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Chennai Studios</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Chennai Studios</span>
               </div>
             </div>
           </Stack>
@@ -344,7 +336,7 @@ export default function PoojaRoomPage() {
       </section>
 
       {/* 2. Highlights Strip */}
-      <section className="py-6 bg-surface-elevated/40 border-b border-border-subtle/40">
+      <section className="py-6 bg-surface-raised/40 border-b border-border-subtle/40">
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
             {highlights.map((item) => (
@@ -352,7 +344,7 @@ export default function PoojaRoomPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-3 mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
               </div>
             ))}
           </div>
@@ -481,7 +473,7 @@ export default function PoojaRoomPage() {
               alt: 'Completed dedicated pooja room with marble and teak by Luxe Axis',
             }}
           />
-          <p className="text-center text-small text-on-surface-3 mt-3">
+          <p className="text-center text-small text-on-surface-muted mt-3">
             Dedicated Pooja Room — Velachery, Chennai
           </p>
         </div>
@@ -512,7 +504,7 @@ export default function PoojaRoomPage() {
                 <h3 className="font-display text-h3 font-bold text-on-surface mt-1">{tier.name}</h3>
                 <div className="my-4 flex items-baseline gap-1">
                   <span className="font-display text-[36px] font-bold text-accent">{tier.price}</span>
-                  <span className="text-small text-on-surface-3">{tier.unit}</span>
+                  <span className="text-small text-on-surface-muted">{tier.unit}</span>
                 </div>
                 <p className="text-small text-on-surface-2 mb-4 pb-4 border-b border-border-subtle/50">
                   {tier.desc}

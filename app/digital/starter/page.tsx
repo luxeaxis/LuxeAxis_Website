@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
@@ -48,16 +49,7 @@ export default async function StarterDigitalPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-2 text-small text-on-surface-3">
-              <li><a href="/" className="hover:text-accent transition-colors">Home</a></li>
-              <span>/</span>
-              <li><a href="/digital" className="hover:text-accent transition-colors">Digital</a></li>
-              <span>/</span>
-              <li aria-current="page" className="text-accent font-semibold">Starter Package</li>
-            </ol>
-          </nav>
+          <Breadcrumbs path="/digital/starter" labels={{ 'starter': "Starter Package" }} />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -89,19 +81,19 @@ export default async function StarterDigitalPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">₹25,000</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Per Room Rate</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Per Room Rate</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">7 Days</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Turnaround SLA</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Turnaround SLA</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">2D CAD</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Layout Optimization</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Layout Optimization</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">1 Call</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Video Review</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Video Review</span>
               </div>
             </div>
           </Stack>

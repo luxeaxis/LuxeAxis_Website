@@ -153,7 +153,7 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
                 <strong className="block font-display text-h3 text-accent font-bold">
                   {tier.id === 'essential' ? '₹1,800' : tier.id === 'signature' ? '₹2,800' : 'Bespoke'}
                 </strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
                   {tier.id === 'elite' ? 'Itemized BOQ' : 'Per Carpet Sq.Ft'}
                 </span>
               </div>
@@ -161,15 +161,15 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
                 <strong className="block font-display text-h3 text-accent font-bold">
                   {tier.id === 'essential' ? '45 Days' : tier.id === 'signature' ? 'Signature' : 'Milestone'}
                 </strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Handover Guarantee</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Handover Guarantee</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Flat Warranty</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">0%</strong>
-                <span className="text-overline text-on-surface-3 uppercase tracking-wider">Cost Escalation</span>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Cost Escalation</span>
               </div>
             </div>
           </Stack>
@@ -177,7 +177,7 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
       </section>
 
       {/* 2. Highlights Strip */}
-      <section className="py-6 bg-surface-elevated/40 border-b border-border-subtle/40">
+      <section className="py-6 bg-surface-raised/40 border-b border-border-subtle/40">
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
             {highlights.map((item) => (
@@ -185,7 +185,7 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-3 mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
               </div>
             ))}
           </div>

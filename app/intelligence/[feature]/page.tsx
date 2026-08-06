@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Container, Grid, Stack } from '@/components/layout';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Button } from '@/components/Button';
 import { FeatureCard } from '@/components/Card';
 import { JsonLd } from '@/components/JsonLd';
@@ -136,16 +137,12 @@ export default async function IntelligenceFeaturePage({
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-2 text-small text-on-surface-3">
-              <li><a href="/" className="hover:text-accent transition-colors">Home</a></li>
-              <span>/</span>
-              <li><a href="/intelligence" className="hover:text-accent transition-colors">Intelligence</a></li>
-              <span>/</span>
-              <li aria-current="page" className="text-accent font-semibold">{feature.name}</li>
-            </ol>
-          </nav>
+          {/* The feature's own name, not the humanised slug — `space-score`
+              should read "Space Score™". */}
+          <Breadcrumbs
+            path={`/intelligence/${feature.id}`}
+            labels={{ [feature.id]: feature.name }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -178,7 +175,7 @@ export default async function IntelligenceFeaturePage({
               {stats.map((stat) => (
                 <div key={stat.label}>
                   <strong className="block font-display text-h3 text-accent font-bold">{stat.value}</strong>
-                  <span className="text-overline text-on-surface-3 uppercase tracking-wider">{stat.label}</span>
+                  <span className="text-overline text-on-surface-muted uppercase tracking-wider">{stat.label}</span>
                 </div>
               ))}
             </div>
@@ -222,7 +219,7 @@ export default async function IntelligenceFeaturePage({
             {feature.highlights.map((item) => (
               <div key={item} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 text-center">
                 <span className="block font-display text-h4 font-bold text-accent mb-1">{item}</span>
-                <span className="text-[12px] text-on-surface-3">System Module Active</span>
+                <span className="text-[12px] text-on-surface-muted">System Module Active</span>
               </div>
             ))}
           </Grid>
@@ -284,7 +281,7 @@ export default async function IntelligenceFeaturePage({
             {comparison.map((item) => (
               <div key={item.traditional} className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-border-subtle/40 last:border-0 last:pb-0">
                 <div className="p-3 rounded-lg bg-surface-deep/50 border border-border-subtle/50">
-                  <span className="text-[10px] uppercase tracking-wider text-on-surface-3 font-bold block mb-1">Traditional Method</span>
+                  <span className="text-[10px] uppercase tracking-wider text-on-surface-muted font-bold block mb-1">Traditional Method</span>
                   <p className="text-small text-on-surface-2">{item.traditional}</p>
                 </div>
                 <div className="p-3 rounded-lg bg-accent/10 border border-accent/30">

@@ -160,8 +160,8 @@ export function Hero({
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
-                <Button as="a" href={BOOK_AUDIT.href} size="lg" className="w-full xs:w-auto text-center justify-center shadow-2xl font-bold">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
+                <Button as="a" href={BOOK_AUDIT.href} size="lg" className="w-full sm:w-auto text-center justify-center shadow-2xl font-bold">
                   {BOOK_AUDIT.label}
                 </Button>
                 <Button
@@ -170,7 +170,7 @@ export function Hero({
                   variant="secondary"
                   size="lg"
                   iconTrailing="arrow-right"
-                  className="w-full xs:w-auto text-center justify-center bg-surface-raised/90 hover:bg-surface-raised text-on-surface border border-accent/30 shadow-2xl backdrop-blur-sm font-semibold"
+                  className="w-full sm:w-auto text-center justify-center bg-surface-raised/90 hover:bg-surface-raised text-on-surface border border-accent/30 shadow-2xl backdrop-blur-sm font-semibold"
                 >
                   See your price
                 </Button>
