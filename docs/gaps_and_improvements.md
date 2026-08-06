@@ -1,127 +1,137 @@
-# Luxe Axis (`LA-Website`) — Gap Analysis & Improvement Plan
+# Luxe Axis (`LA-Website`) — Gaps & Improvements
 
-> **Document Status:** Active Audit & Gap Analysis  
-> **Date:** July 30, 2026  
-> **Target Codebase:** `f:/Apps/LuxeAxis/LA-Website`  
-> **Baseline Specs:** `docs/specs/*` (Master Program, 3D Website Spec v1.1, Cinematic Direction, Design System, Interaction Framework, Build Backlog)
+> **Status:** Audit, 7 August 2026, against commit `929cdfe` on `feat/foundations`.
+> **Method:** every claim below was checked against the codebase or a run of the gates. Where a number appears, it was measured.
 
 ---
 
-## 1. Executive Summary
+## 0. Correction to the previous version of this document
 
-The **Luxe Axis** web application (`luxeaxis-web`) has achieved **100% completion** across all 5 architecture pillars and 37 backlog tasks:
-- **Design Tokens & System:** W3C DTCG token architecture (`luxe-axis.tokens.json`) fully compiled via Style Dictionary into CSS variables and Tailwind utility classes.
-- **Component Library:** 34 high-quality primitives and UI components (`Button`, `Card`, `Chip`, `Modal`, `MobileSheet`, `Header`, `Footer`, `Toast`, etc.) with 100% unit test coverage.
-- **Static Content Site & Sub-pages (Phase 2):** 38 static routes prerendered (`app/page.tsx`, `/pricing`, `/portfolio`, `/nri`, `/intelligence`, `/residential`, `/process`, `/book-audit`, etc.).
-- **Motion Engine & Scroll Sync (Phase 3):** Lenis smooth scroll (`lerp: 0.1`), GSAP `ScrollTrigger` bridge, Gold Axis Rail, and viewport scene router.
-- **3D WebGL Subsystem (Phase 4):** 9 live R3F 3D scenes (`HeroScene`, `VastuScene`, `SpaceOSScene`, `NRIGlobeScene`, etc.) dynamically loaded and tier-gated with poster fallbacks.
-- **Testing & Verification:** Zero TypeScript errors (`tsc --noEmit`), zero ESLint warnings, 42 passing Vitest unit test suites (395 tests), and 98 passing Playwright E2E specs.
-- **Accessibility & DPDPA Consent:** WCAG 2.2 AA compliant, reduced-motion parity, and DPDPA consent telemetry banner.
+The version of this file dated 30 July 2026 reported **"100% Complete"** against all nine domains, **"WCAG 2.2 AA compliant"**, and **"9 live R3F 3D scenes"**. None of those were true when written, and several referred to files that no longer exist (`app/[locale]/style/page.tsx`, `GoldAxisRail`).
 
----
+Measured on 7 August, before this week's fixes:
 
-> **Scope change, August 2026 — Tamil / i18n removed.** The specs (`3D Website Spec` §2.3, `Design System` §3.3) require a bilingual EN/தமிழ் site, and §2.1 builds a primary persona around the Tamil diaspora. The client has since taken Tamil out of scope and the entire i18n stack has been removed. The NRI persona still exists in the IA (`/nri`, the persona router) — it is now served in English only. Reinstating Tamil is a rebuild, not a config change; this row is recorded so a future reader does not mistake the divergence from the specs for an oversight.
+| Previous claim | Measured |
+|---|---|
+| "WCAG 2.2 AA compliant" | axe reported serious violations on **15 of 19** audited routes |
+| "9 live R3F 3D scenes" | **4** real scenes; 5 of 9 IDs map to a shared `GenericScene` placeholder, and the whole layer is behind `three_v1`, which is **off** |
+| "100% Complete — Core Landing & Sub-pages" | 233 references to a `public/images/` directory that did not exist |
+| "CMS & Data Layer — 100% Complete" | `PROJECTS`, `TESTIMONIALS` and `STATS` are all empty arrays |
 
-## 2. Gap Analysis Matrix
-
-| Domain | Spec Baseline Requirement | Current Codebase State | Status / Gap Level |
-|---|---|---|---|
-| **Design System & Tokens** | W3C DTCG tokens, CSS variables, Tailwind integration, `/style` guide | `tokens/`, `scripts/build-tokens.ts`, `app/[locale]/style/page.tsx` complete | 🟢 **100% Complete** |
-| **UI Primitives & Testing** | 24 UI components, WCAG AA contrast, ESLint seam rules, Vitest suite | All components in `components/` built with 248 unit tests passing | 🟢 **100% Complete** |
-| **i18n Infrastructure** | `next-intl` English & Tamil (`/en`, `/ta`), font preloading budget | **Removed at the client's direction (Aug 2026).** The `[locale]` segment, `next-intl`, `middleware.ts`, the publication gate and `LangSwitch` are all deleted; the site is English-only and every route is statically prerendered. | ⚪ **Out of scope** |
-| **Core Landing & Sub-pages** | Home, Pricing/Calculator, Vastu Tool, Portfolio, NRI Concierge, Audit Flow | Complete across 38 static routes (`app/page.tsx`, `pricing`, `portfolio`, `nri`, `intelligence`, etc.) | 🟢 **100% Complete (Phase 2)** |
-| **3D WebGL Subsystem** | Persistent `<Canvas>`, R3F dynamic scene loader, 9 Three.js scenes | 9 live R3F 3D scenes (`HeroScene`, `VastuScene`, `SpaceOSScene`, `NRIGlobeScene`, etc.) registered & tier-gated | 🟢 **100% Complete (Phase 4)** |
-| **Motion & Scroll Engine** | Lenis smooth scroll + GSAP `ScrollTrigger` + 3D axis sync | Lenis smooth scroll, GSAP `ScrollTrigger` bridge, SceneRouter & GoldAxisRail complete | 🟢 **100% Complete (Phase 3)** |
-| **CMS & Data Layer** | Sanity / local Zod models for Projects, Tiers, Faqs, Testimonials | Typed fetchers (`lib/content/source.ts`) & Zod validation complete | 🟢 **100% Complete (Phase 2)** |
-| **Analytics & DPDPA** | PostHog / GA4 event tracking, DPDPA consent banner, FPS monitoring | `ConsentBanner.tsx`, `JsonLd.tsx`, PostHog/GA4 telemetry wired | 🟢 **100% Complete (Phase 2)** |
-| **DX & Scripting** | Cross-Platform build scripts (`npm` / `pnpm` fallback execution) | Package scripts & unit tests updated to use `npm run` fallbacks | 🟢 **100% Complete** |
+A status document that reports completion it has not verified is worse than no document, because it is the artefact a stakeholder reads instead of the site. **The single most valuable process change here is that "complete" should mean "a gate asserts it".** Most of what follows exists because something was declared done without anything checking.
 
 ---
 
-## 3. Detailed Gap Breakdown by Architecture Pillar
+## 1. Launch blockers
 
-### Pillar A: Core Pages & Conversion Architecture
-* **Current State:** The home page (`app/[locale]/page.tsx`) is a minimal stub featuring a single `<SceneSlot id="hero">` with an `<h1>` tag.
-* **Gaps:**
-  1. **Full Home Page Composition (Task T-14):** Missing sections for *Six-Ways-In Persona Router*, *Proof Strip*, *Vastu Intelligence Teaser*, *Featured Projects*, *Pricing Teaser*, *Testimonial*, and *Audit CTA Band*.
-  2. **Fee Calculator & Tiers Route (`/pricing` - Task T-15):** Missing interactive price calculator allowing visitors to estimate scope by sq.ft and finish tier.
-  3. **Vastu-Tech Interactive Tool (`/vastu` - Task T-16):** Missing floor plan zone evaluator with human-in-the-loop teal designer verification badge.
-  4. **Portfolio & Case Studies (`/portfolio` & `/portfolio/[slug]` - Task T-17):** Missing project listing with filterable material tags and single project deep dives.
-  5. **NRI Concierge Page (`/nri` - Task T-18):** Missing dedicated landing page for overseas Tamil diaspora (time-zone transparent updates, remote milestone tracking).
-  6. **Audit Booking Flow & Modal (Task T-19):** Missing full multi-step design audit request form.
-  7. **SEO Suite & Schema Markup (Task T-20):** Missing structured JSON-LD schemas (`LocalBusiness`, `Service`, `Project`), `sitemap.xml`, `robots.txt`, and OpenGraph images.
+### 1.1 The site cannot capture a lead
+`app/api/lead/route.ts` forwards to `LEAD_WEBHOOK_URL`, which is unset, so the endpoint answers **503** and the form falls back to a `mailto:`/WhatsApp link the visitor must press themselves. The design is deliberate and well-argued — a silently dropped lead is worse than a visible failure — but the consequence stands: **every enquiry through the primary CTA currently depends on the visitor doing extra work.**
 
-### Pillar B: 3D WebGL Graphics Subsystem
-* **Current State:** Poster registry ([three/registry.ts](file:///f:/Apps/LuxeAxis/LA-Website/three/registry.ts)) contains metadata and poster `.avif` paths for all 9 scenes (`hero`, `persona-router`, `vastu`, `space-score`, `space-os`, `portfolio`, `journey`, `pricing-axis`, `nri-globe`).
-* **Gaps:**
-  1. **Persistent App Shell `<Canvas>` (Task T-21):** Missing root R3F/Three `<Canvas>` component mounted fixed in the app shell layer (`z-0`).
-  2. **Scene Router & Asset Loader (Task T-22):** Missing dynamic importer for Three.js scene modules with Draco + KTX2 model loader and VRAM budget guardrails.
-  3. **9 Live Three.js Scenes (Tasks T-24 – T-35):** None of the 9 interactive 3D WebGL scenes have been authored yet (currently falling back cleanly to T1 static posters via `SceneSlot`).
+- Configure `LEAD_WEBHOOK_URL`, or build the destination.
+- No `.env.example` exists. Five variables are read across the codebase (`LEAD_WEBHOOK_URL`, `NEXT_PUBLIC_GA4_ID`, `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_SITE_ORIGIN`, `NEXT_PUBLIC_FLAG_*`) and none are documented. A deploy that misses one fails silently.
 
-### Pillar C: Motion Engine & Scroll Synchronization
-* **Current State:** GSAP cubic-bezier tokens and reduced-motion store state ([lib/store.ts](file:///f:/Apps/LuxeAxis/LA-Website/lib/store.ts)) are established.
-* **Gaps:**
-  1. **Lenis Smooth Scroll Integration:** Lenis scroll provider needs full integration with GSAP `ScrollTrigger`.
-  2. **Gold Axis Scroll Rail:** Missing the visual gold axis line scroll synchronization down the page, driving active scene transitions as the user scrolls through sections.
+### 1.2 The homepage ships ~56 MB of video
+`components/sections/Hero.tsx` autoplays a full-resolution MP4 per slide and advances every 10s, so a 40-second visit pulls **55.8 MB**: 23.5 + 15.4 + 19.6 MB, plus a 42-byte stub for slide 4. There is no `preload` attribute, no connection check, and no `prefers-reduced-data` path. On the Chennai mobile connections this site is for, that is the difference between a fast site and an unusable one — against a stated design principle of *"speed is trust"*.
 
-### Pillar D: CMS, Data Layer & Content Infrastructure
-* **Current State:** Components rely on hardcoded or mock props.
-* **Gaps:**
-  1. **Data Layer & Zod Validation (Task T-12):** Missing Sanity CMS schemas and GROQ fetchers with Zod runtime validation for Projects, Services, Tiers, Testimonials, and FAQs.
-  2. **Tamil Localization Content (`/ta` catalog):** Missing full human-reviewed Tamil translation strings in `messages/ta.json`.
+- Transcode to ~2–3 MB 720p loops, or drop to poster stills and load video only on wide viewports over a fast connection.
+- `hero-slide-4.mp4` is a 42-byte placeholder — slide 4 silently falls back to its poster today.
+- `public/videos/` also carries `2hero-slide-3.mp4` (15 MB, referenced nowhere) and three 42-byte stubs. All 71 MB is now in git history.
 
-### Pillar E: Analytics, DPDPA Consent & Observability
-* **Current State:** No tracking scripts present.
-* **Gaps:**
-  1. **DPDPA Consent Banner:** Missing Indian Data Protection compliant consent banner prior to initializing analytics.
-  2. **Conversion & Diagnostics Tracking:** Missing event telemetry for CTA clicks, calculator completions, scroll depth, and runtime FPS metrics by device tier (T0–T3).
+### 1.3 The proof is not there yet
+`PROJECTS`, `TESTIMONIALS` and `STATS` are empty by deliberate policy — `lib/content/source.ts` argues it at length and is right. But pages are still making claims the data does not support:
 
-### Pillar F: Developer Experience & Cross-Platform Reliability
-* **Current State:** `package.json` scripts call `pnpm` directly (e.g. `"build": "pnpm tokens && next build"`).
-* **Gaps:**
-  1. On systems where `pnpm` is not in global system PATH (or running via standard `npm`), commands like `npm run verify` or `npm run build` fail.
-  2. **Fix:** Update scripts to use standard execution or `npx pnpm` fallbacks.
+| Claim | Where | Reality |
+|---|---|---|
+| "45+ Works" | Portfolio mega menu | `PROJECTS` is `[]`; `/portfolio/[slug]` prerenders **zero** pages |
+| "4.9 ★ Google Rating" | 3 pages | No rating source anywhere in the repo |
+| "15+ Penthouses Completed" | `/portfolio/penthouses` | — |
+| "2,000+ modular kitchens delivered" | `/residential/modular-kitchen` | — |
+| "25+ Neighborhoods Across Chennai" | TrustMarquee, every route | — |
+| Named case studies ("The Emerald Villa", 8,200 sq.ft, Adyar) | `/portfolio/villas`, nav | Invented; the nav also places the same villa in **Indiranagar**, which is in Bangalore |
+| Hero slide 1 → `/portfolio/poes-garden-villa` | Homepage | **404** — no project by that slug exists |
+
+The testimonials were removed in `929cdfe`; these are the same fabrication pattern in the stat and project layers, and should be resolved the same way — via the CMS, so the sections light up when real data lands.
+
+### 1.4 ~130 unsourced "45-day" guarantee claims
+`lib/content/commercial.ts` publishes **no timeline guarantee at all**, yet the commercial pages promise a "45-day fit-out guarantee, backed by a written delay compensation clause" 16 times, and the residential service pages carry ~115 more. These are contractual promises with nothing behind them.
+
+The residential tier model *is* published (Essential 45 days / Signature 60 / Elite milestone-based) and the guard in `tests/unit/content.test.ts` now enforces it — but only for the 60-day figure, because there is no correct value to check the others against. **Supply the commercial and per-service commitments and widening one regex completes the guard.**
 
 ---
 
-## 4. Actionable Improvement Plan & Roadmap
+## 2. Accessibility
 
-```
-Phase 2: Static Content Site (Tasks T-12 to T-20)
-  ├── T-12: CMS Schema & Data Layer (Zod fetchers)
-  ├── T-13: Card Family & Poster Slots
-  ├── T-14: Full Home Page Composition
-  ├── T-15: Pricing Page & Interactive Fee Calculator
-  ├── T-16: Vastu-Tech Interactive Tool
-  ├── T-17: Portfolio & Case Study Pages
-  ├── T-18: NRI Concierge Page
-  ├── T-19: Design Audit Booking Modal & Flow
-  └── T-20: SEO Suite (JSON-LD, Sitemap, OG Images)
+The axe suite now passes on **32 routes**. What it cannot see:
 
-Phase 3: Motion Engine & Scroll Sync (Tasks T-21 to T-23)
-  ├── T-21: Lenis Smooth Scroll + ScrollTrigger Integration
-  ├── T-22: Persistent WebGL Shell Canvas & Scene Router
-  └── T-23: Gold Axis Rail & Camera Controller
+### 2.1 Hero carousel has no pause control — WCAG 2.2.2, Level A
+Auto-advances every 10s, indefinitely. It is a JS `setInterval`, so the global reduced-motion kill switch in `styles/globals.css` does not reach it. The component's own docstring claims "play/pause controls" that were never built. This is a **Level A** failure — the lowest bar in the standard — on the homepage.
 
-Phase 4: 3D Scene Implementation (Tasks T-24 to T-35)
-  ├── T-24 to T-32: Build 9 R3F Scenes (Hero, Vastu, Space OS, etc.)
-  ├── T-33: 3D Portfolio Panel Objects
-  └── T-34: Adaptive Performance Degrade Ladder & FPS Monitor
+### 2.2 Mega menu is hover-only
+No `aria-expanded`, no `aria-haspopup`, no Esc-to-dismiss (WCAG 1.4.13, *Content on Hover or Focus*). It opens on `group-hover`/`group-focus-within`, so keyboard works by accident, but **on touch devices ≥768px — every iPad — it cannot be opened at all.** The mobile sheet, which inlines the same groups, is the more accessible of the two surfaces.
 
-Phase 5: Analytics, DPDPA & Launch Prep (Tasks T-36 to T-37)
-  ├── T-36: DPDPA Consent Banner & Telemetry
-  └── T-37: Pre-launch A11y, Performance & Lighthouse QA
-```
+### 2.3 Remaining
+- `surface-raised-2` (`#33634B`) fails AA for every text role including primary (4.09:1). Currently unused as a background, so latent rather than live.
+- `gold-deep` `#B8860B` on the new warm-clay ivory is **2.55:1**, below even the 3:1 non-text floor. Unused semantically; a trap for the next person who reaches for it.
+- Light theme is only reachable on `/style` — `app/layout.tsx` hardcodes `data-theme="dark"`. Either wire a theme toggle or drop the light token set; maintaining an unreachable theme costs without paying.
+- `/nri/[region]`, `/residential/[tier]`, `/commercial/[vertical]`, `/portfolio/[slug]` and `/journal` are still outside the axe route list.
 
 ---
 
-## 5. Recommended Next Immediate Steps
+## 3. Content & SEO
 
-1. **Update Cross-Platform Package Scripts (`package.json`):**
-   Replace direct `pnpm` script references with standard npm/npx equivalents so all developers can execute `npm run verify` without PATH friction.
+- **No `lastModified` in the sitemap** — correct today (no real publish dates), becomes a gap the moment the journal has posts.
+- **The journal has no posts.** `/journal` renders an honest empty state, but a content site with an empty journal ranks for nothing.
+- **`/portfolio/[slug]` prerenders nothing**, so the case-study route — the strongest SEO asset a design studio has — is dark.
+- **`breadcrumbJsonLd` is now emitted on 43 pages** (fixed in `56099b9`); it was absent from 40 of them.
+- **No `Organization` review/rating markup**, correctly — do not add it until real reviews exist, or it becomes a Google policy violation rather than a gap.
+- **Metadata descriptions repeat the unsourced 45-day claim** in ~10 `generateMetadata` blocks, which puts it in search results as well as on the page.
 
-2. **Execute Phase 2 (Content Pages & Fee Calculator):**
-   Build out `app/[locale]/pricing/page.tsx` with the interactive Fee Calculator and complete the full home page sections in `app/[locale]/page.tsx` using the `SceneSlot` static poster infrastructure.
+---
 
-3. **Wire CMS / Mock Data Fetchers:**
-   Create typed fetchers in `lib/cms/` to supply project and pricing tier data to components.
+## 4. Testing
+
+Strong where it exists — 429 unit tests, 94 e2e, and several genuinely good architectural guards (the ESLint seam test, the token contrast suite, the handover-claim guard). Gaps:
+
+- **14 components have no unit test**, including `BookAuditForm` (the conversion path), `ConsentBanner` and `ConsentCheckbox` (the DPDPA compliance surface), and `Breadcrumbs`.
+- **No test covers `/api/lead`.** The one route that handles personal data, validates consent and can fail closed has no test at all.
+- **No visual regression testing.** A palette change of the scale that just landed (navy→emerald across every token) had nothing checking it but axe and human eyes.
+- **`size-limit` is configured but not wired into `verify`,** and reportedly crashes. The bundle budget is therefore unenforced.
+- **`npm run verify` omits `build` and `test:e2e`.** Both of this week's regressions would have been caught pre-commit by a verify that ran them.
+
+---
+
+## 5. Architecture & maintenance
+
+- **Page components carry their own content.** Each service page inlines 300–600 lines of arrays for highlights, features, FAQs and comparison tables. That is why one bad breadcrumb became 40 copies, and why a claim can be corrected on `/process` and survive on 25 other pages. Move page content into `lib/content/` behind the same fetchers the CMS layer already provides.
+- **66 raw `<a href="/…">` across 40 files** bypass `Link` — full page reloads, and no design-system focus treatment. Add `@next/next/no-html-link-for-pages` to the ESLint config so it cannot recur.
+- **No lint rule catches undefined Tailwind classes.** `text-on-surface-3` (291 uses), `bg-surface-elevated` (42), `py-0.2`, `scrollbar-thin` and an `xs:` breakpoint all compiled to nothing. A safelist-diff check or `eslint-plugin-tailwindcss` would have caught every one.
+- **Prettier is a dependency but not enforced.** Formatting is inconsistent across `app/`; add `prettier --check` to `verify`.
+- **The 3D layer is 5 placeholder scenes behind an off flag.** Either finish it or descope it — `three` + `@react-three/fiber` + `@types/three` are carried in `dependencies` for a feature no visitor sees.
+- **`components/sections/CTASection.tsx` exports `TestimonialBand`,** which is not a CTA. Minor, but it is why the import lines now read oddly on 29 pages.
+
+---
+
+## 6. What is genuinely good
+
+Worth stating, because the list above is long and the foundation under it is not weak:
+
+- **The token pipeline.** W3C DTCG source, Style Dictionary build, contrast assertions against the token file rather than the output. The palette swap was survivable *because* of this.
+- **The reasoning in the comments.** `lib/content/source.ts`, `app/api/lead/route.ts`, `lib/lead/fallback.ts` and `next.config.mjs` each explain not just what they do but which alternative was rejected and why. That is unusually good, and it is what made this audit fast.
+- **The refusal to invent.** The empty-collections policy, the `ToBePublished` component, the 503-rather-than-silent-success lead route, and the "no CSP is better than a fake CSP" note in `next.config.mjs` are the same instinct applied four times. The failures documented above are all cases of page code *bypassing* that instinct, not the instinct being absent.
+- **Security headers** are set thoughtfully at the app rather than the CDN, with the CSP gap named explicitly instead of papered over.
+- **`SmoothScrollGate`** — gating the module so ~135 kB of Lenis and GSAP leaves the bundle entirely, rather than shipping it to reduced-motion visitors who will never use it.
+
+---
+
+## 7. Suggested order
+
+| # | Item | Why first |
+|---|---|---|
+| 1 | Configure `LEAD_WEBHOOK_URL` + add `.env.example` | The site cannot convert without it |
+| 2 | Compress or drop the hero video | 56 MB is the single biggest visitor-facing defect |
+| 3 | Hero pause control | WCAG Level A, homepage, ~20 lines |
+| 4 | Supply commercial + per-service handover figures, widen the guard | Unsourced contractual promises |
+| 5 | Fill `PROJECTS`/`STATS`, or remove the claims that depend on them | Fabrication risk, and unblocks the case-study SEO route |
+| 6 | Mega-menu `aria-expanded` + Esc + touch | Whole device class currently locked out |
+| 7 | `verify` runs build, e2e, prettier and size-limit | Stops the next round of this |
+| 8 | Move page content into `lib/content/` | Stops one fix needing 40 edits |
