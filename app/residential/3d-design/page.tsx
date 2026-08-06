@@ -33,25 +33,25 @@ export default function ThreeDDesignPage() {
       num: '01',
       title: 'Site Measurement & Survey',
       desc: 'Our design team visits your home and records laser-guided measurements, existing fixtures, and structural constraints alongside room photography.',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       num: '02',
       title: 'CAD Floor Plan & Layout',
       desc: 'Technical architects draft precise CAD drawings. Furniture layouts, traffic flow, and structural constraints are resolved before any 3D work begins.',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       num: '03',
       title: 'Photorealistic 3D Renders',
       desc: 'Photorealistic 3D renders are produced for every room showing exact materials, LED lighting, furniture, and custom fittings as they will appear in real life.',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       num: '04',
       title: 'Your Sign-Off & Execution',
       desc: 'Review renders at our studio or VR session. Request any changes. Execution begins immediately after your formal approval.',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
   ];
 
@@ -79,25 +79,25 @@ export default function ThreeDDesignPage() {
       title: '3BHK Living Room Photorealistic 3D Render',
       tag: 'Living Room 3D',
       location: 'Adyar, Chennai',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'U-Kitchen 3D Spatial Visualisation',
       tag: 'Kitchen 3D',
       location: 'T. Nagar, Chennai',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       title: 'Master Bedroom Suite 3D Design',
       tag: 'Bedroom 3D',
       location: 'Velachery, Chennai',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Home Office & Executive Desk 3D Plan',
       tag: 'Office 3D',
       location: 'Anna Nagar, Chennai',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
   ];
 

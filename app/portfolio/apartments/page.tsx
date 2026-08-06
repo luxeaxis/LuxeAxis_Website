@@ -35,7 +35,7 @@ export default function ApartmentsPortfolioPage() {
       area: '1,850 sq.ft',
       tier: 'Signature Tier',
       desc: 'Smart 3BHK apartment with fluted louvers, concealed pooja room mandap, and acrylic modular kitchen.',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Velachery 4BHK Luxury Flat',
@@ -43,7 +43,7 @@ export default function ApartmentsPortfolioPage() {
       area: '2,400 sq.ft',
       tier: 'Signature Tier',
       desc: 'Spacious 4BHK featuring Italian marble dining counter, floor-to-ceiling sliding wardrobes, and Gyproc false ceilings.',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Sholinganallur 2BHK Modern Home',
@@ -51,7 +51,7 @@ export default function ApartmentsPortfolioPage() {
       area: '1,250 sq.ft',
       tier: 'Essential Tier',
       desc: 'Compact 2BHK designed with space-saving fold-down dining table, mirror wall accents, and warm cove lighting.',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       title: 'Anna Nagar Gated Apartment',
@@ -59,7 +59,7 @@ export default function ApartmentsPortfolioPage() {
       area: '2,100 sq.ft',
       tier: 'Signature Tier',
       desc: 'Elegant 3BHK with stone veneer TV backdrops, bronze tinted glass wardrobes, and smart home lighting switches.',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
   ];
 
@@ -256,8 +256,8 @@ export default function ApartmentsPortfolioPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare apartment shell before fit-out' }}
-            afterImage={{ src: '/images/hero/hero-slide-3.jpg', alt: 'Completed 3BHK apartment interior in T. Nagar' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare apartment shell before fit-out' }}
+            afterImage={{ src: '/posters/pricing-axis.avif', alt: 'Completed 3BHK apartment interior in T. Nagar' }}
           />
         </div>
       </Section>

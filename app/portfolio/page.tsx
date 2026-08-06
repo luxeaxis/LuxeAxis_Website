@@ -34,21 +34,21 @@ export default function PortfolioPage() {
       count: '15+ Projects',
       desc: 'Panoramic high-rise duplex transformations with double-height Italian marble walls and automated sky lounges.',
       href: '/portfolio/penthouses',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Gated Estate Villas',
       count: '25+ Projects',
       desc: 'Sprawling private sanctuary architecture with Vastu-Tech solar alignment, central courtyards, and solid teakwood joinery.',
       href: '/portfolio/villas',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       title: 'Luxury Apartments',
       count: '150+ Projects',
       desc: 'Smart 2BHK, 3BHK, and 4BHK urban flat interiors featuring Blum soft-close BWP kitchens and sensor wardrobes.',
       href: '/portfolio/apartments',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
   ];
 
@@ -59,7 +59,7 @@ export default function PortfolioPage() {
       location: 'Adyar, Chennai',
       area: '8,200 sq.ft',
       tier: 'Elite Tier',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
       desc: '5BHK gated villa featuring central open-to-sky courtyard, Vastu-Tech brass mandap, and Calacatta marble flooring.',
     },
     {
@@ -68,7 +68,7 @@ export default function PortfolioPage() {
       location: 'OMR, Chennai',
       area: '5,800 sq.ft',
       tier: 'Signature Tier',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
       desc: 'Double-height living room with book-matched Calacatta marble wall, suspended brass chandelier, and automated sky lounge.',
     },
     {
@@ -77,7 +77,7 @@ export default function PortfolioPage() {
       location: 'Nungambakkam, Chennai',
       area: '6,400 sq.ft',
       tier: 'Elite Tier',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
       desc: 'Panoramic terrace apartment with Venetian plaster walls, motorized drapery, and integrated Bang & Olufsen soundscapes.',
     },
     {
@@ -86,7 +86,7 @@ export default function PortfolioPage() {
       location: 'T. Nagar, Chennai',
       area: '1,850 sq.ft',
       tier: 'Signature Tier',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
       desc: 'Smart 3BHK apartment with fluted louvers, concealed pooja room mandap, and acrylic modular kitchen.',
     },
     {
@@ -95,7 +95,7 @@ export default function PortfolioPage() {
       location: 'Besant Nagar, Chennai',
       area: '7,500 sq.ft',
       tier: 'Elite Tier',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
       desc: 'Contemporary beachside villa with teakwood ceiling rafters, sea-facing master suite lounge, and automated deck.',
     },
     {
@@ -104,7 +104,7 @@ export default function PortfolioPage() {
       location: 'Velachery, Chennai',
       area: '2,400 sq.ft',
       tier: 'Signature Tier',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
       desc: 'Spacious 4BHK featuring Italian marble dining counter, floor-to-ceiling sliding wardrobes, and Gyproc false ceilings.',
     },
     {
@@ -113,7 +113,7 @@ export default function PortfolioPage() {
       location: 'Sholinganallur, Chennai',
       area: '12,000 sq.ft',
       tier: 'Commercial Fit-Out',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
       desc: 'Activity-based workstations, collaborative tech hubs, quiet zones, and acoustic sound-masking ceiling baffles.',
     },
     {
@@ -122,7 +122,7 @@ export default function PortfolioPage() {
       location: 'Anna Nagar, Chennai',
       area: '6,800 sq.ft',
       tier: 'Signature Tier',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
       desc: 'Modernized traditional villa with carved solid teak main door, onyx lighted bar counter, and home theater suite.',
     },
   ];
@@ -367,8 +367,8 @@ export default function PortfolioPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare villa shell before fit-out' }}
-            afterImage={{ src: '/images/hero/hero-slide-1.jpg', alt: 'Completed luxury interior by Luxe Axis' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare villa shell before fit-out' }}
+            afterImage={{ src: '/posters/hero.avif', alt: 'Completed luxury interior by Luxe Axis' }}
           />
         </div>
       </Section>

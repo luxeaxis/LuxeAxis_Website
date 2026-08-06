@@ -255,8 +255,8 @@ export default async function TierPage({ params }: { params: Promise<{ tier: str
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: `Bare shell residence before ${tier.name} fit-out` }}
-            afterImage={{ src: '/images/hero/hero-slide-1.jpg', alt: `Completed ${tier.name} interior in Chennai` }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: `Bare shell residence before ${tier.name} fit-out` }}
+            afterImage={{ src: '/posters/hero.avif', alt: `Completed ${tier.name} interior in Chennai` }}
           />
         </div>
       </Section>

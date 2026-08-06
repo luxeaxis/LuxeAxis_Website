@@ -41,7 +41,7 @@ export default function PoojaRoomPage() {
         'Integrated storage drawers for oil, cotton & pooja items',
         'Flat 10-year warranty included (Starting from Rs. 30,000)',
       ],
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       tag: 'For Villas & Large Apartments',
@@ -54,7 +54,7 @@ export default function PoojaRoomPage() {
         'Solid teakwood main cabinet with traditional carvings',
         'Flat 10-year warranty included (Starting from Rs. 80,000)',
       ],
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       tag: 'For Premium Luxury Villas',
@@ -67,7 +67,7 @@ export default function PoojaRoomPage() {
         'Dome or vaulted ceiling with subtle gold leaf detailing',
         'Flat 10-year warranty included (Starting from Rs. 1,80,000)',
       ],
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
   ];
 
@@ -99,25 +99,25 @@ export default function PoojaRoomPage() {
       title: 'Walk-In White Marble & Teak Mandir',
       tag: 'Walk-In Mandir',
       location: 'Adyar, Chennai',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Compact Apartment Pooja Unit with LED Niches',
       tag: 'Compact Unit',
       location: 'T. Nagar, Chennai',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       title: 'Dedicated Pooja Room with Backlit Onyx Panel',
       tag: 'Dedicated Room',
       location: 'Velachery, Chennai',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Traditional Brass Jali & Teak Pooja Sanctum',
       tag: 'Brass Jali',
       location: 'Anna Nagar, Chennai',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
   ];
 
@@ -465,11 +465,11 @@ export default function PoojaRoomPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: 'Plain room corner before pooja room installation',
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-2.jpg',
+              src: '/posters/portfolio.avif',
               alt: 'Completed dedicated pooja room with marble and teak by Luxe Axis',
             }}
           />

@@ -35,7 +35,7 @@ export default function PenthousesPortfolioPage() {
       area: '5,800 sq.ft',
       tier: 'Signature Tier',
       desc: 'Double-height living room with book-matched Calacatta marble wall, suspended brass chandelier, and automated sky lounge.',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Nungambakkam Sky Villa',
@@ -43,7 +43,7 @@ export default function PenthousesPortfolioPage() {
       area: '6,400 sq.ft',
       tier: 'Elite Tier',
       desc: 'Panoramic terrace apartment with Venetian plaster walls, motorized drapery, and integrated Bang & Olufsen soundscapes.',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Adyar Riverfront Penthouse',
@@ -51,7 +51,7 @@ export default function PenthousesPortfolioPage() {
       area: '5,200 sq.ft',
       tier: 'Elite Tier',
       desc: 'Full-floor residence with private elevator vestibule, smoked oak flooring, and custom Italian glass wardrobes.',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       title: 'Anna Nagar Tower Residence',
@@ -59,7 +59,7 @@ export default function PenthousesPortfolioPage() {
       area: '4,600 sq.ft',
       tier: 'Signature Tier',
       desc: 'Minimalist penthouse featuring cantilevered stone breakfast island, concealed pantry door, and smart lighting scenes.',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
   ];
 
@@ -256,8 +256,8 @@ export default function PenthousesPortfolioPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare shell penthouse space before fit-out' }}
-            afterImage={{ src: '/images/hero/hero-slide-1.jpg', alt: 'Completed penthouse interior in OMR' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell penthouse space before fit-out' }}
+            afterImage={{ src: '/posters/hero.avif', alt: 'Completed penthouse interior in OMR' }}
           />
         </div>
       </Section>

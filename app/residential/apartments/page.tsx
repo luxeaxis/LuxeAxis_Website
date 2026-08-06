@@ -101,25 +101,25 @@ export default function ApartmentsPage() {
       title: 'Premium 3BHK Apartment Interior',
       tag: '3BHK Full Interior',
       location: 'Adyar, Chennai',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Contemporary 2BHK Space-Optimized Flat',
       tag: '2BHK Living Room',
       location: 'T. Nagar, Chennai',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Ergonomic Modular Kitchen in 2BHK',
       tag: 'Apartment Kitchen',
       location: 'Velachery, Chennai',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       title: 'Luxury 4BHK Master Bedroom Suite',
       tag: '4BHK Master Suite',
       location: 'Anna Nagar, Chennai',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
   ];
 
@@ -380,7 +380,7 @@ export default function ApartmentsPage() {
 
           <div className="relative rounded-2xl overflow-hidden border border-accent/30 aspect-[4/5] shadow-2xl group">
             <Image
-              src="/images/hero/hero-slide-2.jpg"
+              src="/posters/portfolio.avif"
               alt="Apartment space optimization design by Luxe Axis"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -438,11 +438,11 @@ export default function ApartmentsPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-3.jpg',
+              src: '/posters/pricing-axis.avif',
               alt: 'Bare Chennai apartment before interior design execution',
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-2.jpg',
+              src: '/posters/portfolio.avif',
               alt: 'Complete apartment interior design by Luxe Axis',
             }}
           />

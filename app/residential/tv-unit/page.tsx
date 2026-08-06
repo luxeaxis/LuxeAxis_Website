@@ -65,7 +65,7 @@ export default function TvUnitPage() {
         'Storage cabinet with soft-close Hettich hardware',
         'Ideal for rooms with 9 to 10 ft walls',
       ],
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       tag: 'Maximum Storage',
@@ -78,7 +78,7 @@ export default function TvUnitPage() {
         'Integrated cable management channels',
         'Best for rooms with 10 ft plus slab height',
       ],
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       tag: 'Fully Configurable',
@@ -91,7 +91,7 @@ export default function TvUnitPage() {
         'Asymmetric compositions for editorial looks',
         'Hettich & Hafele hardware standard',
       ],
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       tag: 'Luxury & Villas',
@@ -104,7 +104,7 @@ export default function TvUnitPage() {
         'Tunable white 2700K to 6500K available',
         'Smart dimmer scene control compatible',
       ],
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
   ];
 
@@ -149,25 +149,25 @@ export default function TvUnitPage() {
       title: 'Backlit Media Wall in 4BHK Living Suite',
       tag: 'Backlit Media Wall',
       location: 'Adyar, Chennai',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Floor-to-Ceiling Modular Media Wall',
       tag: 'Floor to Ceiling',
       location: 'Velachery, Chennai',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Floating TV Panel with Cove LED',
       tag: 'Floating Panel',
       location: 'OMR, Chennai',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       title: 'Modular TV Wall with Open Shelves',
       tag: 'Modular Wall',
       location: 'Anna Nagar, Chennai',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
   ];
 
@@ -509,11 +509,11 @@ export default function TvUnitPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: 'Plain living room wall before TV unit installation',
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-1.jpg',
+              src: '/posters/hero.avif',
               alt: 'Completed backlit media wall TV unit by Luxe Axis in Velachery',
             }}
           />

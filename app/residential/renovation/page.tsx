@@ -34,22 +34,22 @@ export default function RenovationPage() {
       tag: 'Kitchen Renovation',
       title: 'Old Slab Kitchen to Modular',
       desc: 'Existing brick slab counter removed, full modular kitchen installed with soft-close drawers, Hettich hardware, and granite top in 14 days.',
-      beforeImg: '/images/hero/hero-slide-4.jpg',
-      afterImg: '/images/hero/hero-slide-3.jpg',
+      beforeImg: '/posters/persona-router.avif',
+      afterImg: '/posters/pricing-axis.avif',
     },
     {
       tag: 'Bedroom Renovation',
       title: 'Outdated Bedroom to Master Suite',
       desc: 'New wall panelling, integrated floor-to-ceiling wardrobe, false ceiling with cove lighting, and premium laminate flooring completed without family vacating.',
-      beforeImg: '/images/hero/hero-slide-3.jpg',
-      afterImg: '/images/hero/hero-slide-2.jpg',
+      beforeImg: '/posters/pricing-axis.avif',
+      afterImg: '/posters/portfolio.avif',
     },
     {
       tag: 'Living Room Renovation',
       title: 'Dated Living Space to Open Plan',
       desc: 'Sintered stone feature wall added, TV console redesigned, new Gyproc false ceiling, ambient cove lighting throughout. Transformed in 18 days.',
-      beforeImg: '/images/hero/hero-slide-2.jpg',
-      afterImg: '/images/hero/hero-slide-1.jpg',
+      beforeImg: '/posters/portfolio.avif',
+      afterImg: '/posters/hero.avif',
     },
   ];
 
@@ -67,25 +67,25 @@ export default function RenovationPage() {
       title: '3BHK Complete Home Renovation Makeover',
       tag: 'Full Home Renovation',
       location: 'Adyar, Chennai',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Old Slab Kitchen to Modern Modular',
       tag: 'Kitchen Renovation',
       location: 'T. Nagar, Chennai',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       title: 'Master Bedroom False Ceiling & Joinery Upgrade',
       tag: 'Bedroom Renovation',
       location: 'Velachery, Chennai',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Living Room Feature Wall & Open Plan',
       tag: 'Living Room Renovation',
       location: 'Anna Nagar, Chennai',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
   ];
 
@@ -425,11 +425,11 @@ export default function RenovationPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: 'Dated 15-year-old Chennai home before renovation',
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-1.jpg',
+              src: '/posters/hero.avif',
               alt: 'Completely renovated modern luxury home by Luxe Axis',
             }}
           />

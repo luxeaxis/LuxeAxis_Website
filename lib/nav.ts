@@ -102,7 +102,7 @@ export const RESIDENTIAL_MEGA_MENU: MegaMenuConfig = {
     title: 'The Platinum Residence',
     tagline: 'Vastu-Tech Villa Interiors with Real-time 3D VR Simulation',
     href: '/residential/luxury',
-    image: '/images/hero/hero-slide-1.jpg',
+    image: '/posters/hero.avif',
     ctaText: 'Explore Ultra-Luxury →',
   },
 };
@@ -128,7 +128,7 @@ export const COMMERCIAL_MEGA_MENU: MegaMenuConfig = {
     title: 'Corporate Headquarters',
     tagline: 'Precision engineered 15,000 sq.ft tech hub fitout in Chennai',
     href: '/commercial/workplace',
-    image: '/images/hero/hero-slide-2.jpg',
+    image: '/posters/portfolio.avif',
     ctaText: 'View Commercial Showcase →',
   },
 };
@@ -164,7 +164,7 @@ export const DIGITAL_MEGA_MENU: MegaMenuConfig = {
     title: 'Luxe Axis Digital',
     tagline: 'Professional architectural design delivered remotely anywhere in the world',
     href: '/digital',
-    image: '/images/hero/hero-slide-3.jpg',
+    image: '/posters/pricing-axis.avif',
     ctaText: 'Explore Digital Hub →',
   },
 };
@@ -195,7 +195,7 @@ export const INTELLIGENCE_MEGA_MENU: MegaMenuConfig = {
     title: 'Vastu-Tech AI Simulator',
     tagline: 'Scan your CAD floorplan against ancient cosmic grids in seconds',
     href: '/intelligence/vastu-tech',
-    image: '/images/hero/hero-slide-3.jpg',
+    image: '/posters/pricing-axis.avif',
     ctaText: 'Launch Vastu Scan →',
   },
 };
@@ -232,7 +232,7 @@ export const PORTFOLIO_MEGA_MENU: MegaMenuConfig = {
     title: 'The Emerald Villa',
     tagline: '8,200 sq.ft Vastu-Tech Masterpiece in Indiranagar',
     href: '/portfolio/villas',
-    image: '/images/hero/hero-slide-4.jpg',
+    image: '/posters/persona-router.avif',
     ctaText: 'View Case Study →',
   },
 };
@@ -264,7 +264,7 @@ export const PRICING_MEGA_MENU: MegaMenuConfig = {
     title: 'Instant Cost Audit',
     tagline: 'Get a accurate BOQ breakdown tailored to your floorplan',
     href: '/pricing/calculator',
-    image: '/images/hero/hero-slide-1.jpg',
+    image: '/posters/hero.avif',
     ctaText: 'Calculate Budget →',
   },
 };

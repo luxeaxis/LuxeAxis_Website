@@ -35,7 +35,7 @@ export default function VillasPortfolioPage() {
       area: '8,200 sq.ft',
       tier: 'Elite Tier',
       desc: 'Sprawling 5BHK gated villa featuring central open-to-sky courtyard, Vastu-Tech brass mandap, and Calacatta marble flooring.',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       title: 'Besant Nagar Coastal Estate',
@@ -43,7 +43,7 @@ export default function VillasPortfolioPage() {
       area: '7,500 sq.ft',
       tier: 'Elite Tier',
       desc: 'Contemporary beachside villa with teakwood ceiling rafters, sea-facing master suite lounge, and automated infinity pool deck.',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'ECR Sanctuary Bungalow',
@@ -51,7 +51,7 @@ export default function VillasPortfolioPage() {
       area: '9,000 sq.ft',
       tier: 'Elite Tier',
       desc: 'Private gated estate with tropical courtyard landscaping, double-volume dining room, and custom wine cellar.',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Anna Nagar Heritage Villa',
@@ -59,7 +59,7 @@ export default function VillasPortfolioPage() {
       area: '6,800 sq.ft',
       tier: 'Signature Tier',
       desc: 'Modernized traditional villa with carved solid teak main door, onyx lighted bar counter, and home theater suite.',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
   ];
 
@@ -256,8 +256,8 @@ export default function VillasPortfolioPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare villa shell before fit-out' }}
-            afterImage={{ src: '/images/hero/hero-slide-2.jpg', alt: 'Completed villa interior in Adyar' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare villa shell before fit-out' }}
+            afterImage={{ src: '/posters/portfolio.avif', alt: 'Completed villa interior in Adyar' }}
           />
         </div>
       </Section>

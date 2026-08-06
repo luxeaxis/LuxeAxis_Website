@@ -34,7 +34,7 @@ export default function HomeInteriorsPage() {
     {
       title: 'Curated Living Spaces',
       tag: 'Living Room',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
       href: '/residential/living-room',
       specs: [
         'Gyproc false ceiling with magnetic LED cove lighting',
@@ -45,7 +45,7 @@ export default function HomeInteriorsPage() {
     {
       title: 'Restful Master Suites',
       tag: 'Bedroom',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
       href: '/residential/bedroom',
       specs: [
         'Floor-to-ceiling sliding glass wardrobes with sensor LEDs',
@@ -56,7 +56,7 @@ export default function HomeInteriorsPage() {
     {
       title: 'Precision-Built Kitchens',
       tag: 'Modular Kitchen',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
       href: '/residential/modular-kitchen',
       specs: [
         'BWP boiling-water-proof marine plywood carcass',
@@ -67,7 +67,7 @@ export default function HomeInteriorsPage() {
     {
       title: 'Sacred Spaces, Crafted',
       tag: 'Pooja Room',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
       href: '/residential/pooja-room',
       specs: [
         'Vastu-Tech aligned brass & backlit onyx mandaps',
@@ -78,7 +78,7 @@ export default function HomeInteriorsPage() {
     {
       title: 'Playful. Safe. Built to Grow.',
       tag: 'Kids Room',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
       href: '/residential/bedroom',
       specs: [
         'Non-toxic anti-scratch laminate & soft-edge joinery',
@@ -89,7 +89,7 @@ export default function HomeInteriorsPage() {
     {
       title: 'Engineered to Store More',
       tag: 'Wardrobe & Storage',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
       href: '/residential/wardrobe',
       specs: [
         'Custom walk-in wardrobe suites & bi-fold glass doors',
@@ -135,25 +135,25 @@ export default function HomeInteriorsPage() {
       title: 'Full 3BHK Home Transformation',
       tag: 'Complete 3BHK',
       location: 'Adyar, Chennai',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Modern 2BHK Full-Home Interior',
       tag: '2BHK Complete',
       location: 'T. Nagar, Chennai',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Luxury 4BHK Penthouse Interior',
       tag: '4BHK Luxury',
       location: 'OMR, Chennai',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       title: 'Sprawling Full Villa Interior',
       tag: 'Villa Project',
       location: 'Velachery, Chennai',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
   ];
 
@@ -356,7 +356,7 @@ export default function HomeInteriorsPage() {
 
           <div className="relative rounded-2xl overflow-hidden border border-accent/30 aspect-[4/3] shadow-2xl group">
             <Image
-              src="/images/hero/hero-slide-1.jpg"
+              src="/posters/hero.avif"
               alt="Complete home interior design by Luxe Axis"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -541,11 +541,11 @@ export default function HomeInteriorsPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: 'Bare 3BHK apartment before interior design execution',
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-1.jpg',
+              src: '/posters/hero.avif',
               alt: 'Complete luxury 3BHK interior transformation after execution',
             }}
           />

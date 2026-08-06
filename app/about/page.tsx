@@ -322,8 +322,8 @@ export default async function AboutPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare shell residence before interior fit-out' }}
-            afterImage={{ src: '/images/hero/hero-slide-1.jpg', alt: 'Completed luxury residential interior in Chennai' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell residence before interior fit-out' }}
+            afterImage={{ src: '/posters/hero.avif', alt: 'Completed luxury residential interior in Chennai' }}
           />
         </div>
       </Section>

@@ -349,8 +349,8 @@ export default async function ResidentialPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare shell 3BHK flat before interior fit-out' }}
-            afterImage={{ src: '/images/hero/hero-slide-2.jpg', alt: 'Completed luxury 3BHK residential interior in Chennai' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell 3BHK flat before interior fit-out' }}
+            afterImage={{ src: '/posters/portfolio.avif', alt: 'Completed luxury 3BHK residential interior in Chennai' }}
           />
         </div>
       </Section>

@@ -53,22 +53,22 @@ export default async function CommercialVerticalPage({
           {
             title: 'Open Collaborative Workstations',
             desc: 'Ergonomic benching systems with integrated cable spines, acoustic divider screens, and power drop modules.',
-            image: '/images/hero/hero-slide-3.jpg',
+            image: '/posters/pricing-axis.avif',
           },
           {
             title: 'Executive Cabins & Suite',
             desc: 'Acoustically isolated glass cabins with double-glazed partitions, custom veneer credenzas, and mood lighting.',
-            image: '/images/hero/hero-slide-1.jpg',
+            image: '/posters/hero.avif',
           },
           {
             title: 'AV Boardrooms & Conference',
             desc: 'Integrated zoom room technology, ceiling-array microphones, sound-absorbing wall cladding, and dimmable scenes.',
-            image: '/images/hero/hero-slide-4.jpg',
+            image: '/posters/persona-router.avif',
           },
           {
             title: 'Breakout Lounges & Pantry',
             desc: 'High-top dining counters, collaborative booth seating, coffee bars, and sound-dampened ceiling baffles.',
-            image: '/images/hero/hero-slide-2.jpg',
+            image: '/posters/portfolio.avif',
           },
         ]
       : slug === 'retail-hospitality'
@@ -76,44 +76,44 @@ export default async function CommercialVerticalPage({
           {
             title: 'Flagship Retail Showrooms',
             desc: 'Calculated shopper circulation loops, high-CRI accent spotlighting, statement entrance portals, and display joinery.',
-            image: '/images/hero/hero-slide-4.jpg',
+            image: '/posters/persona-router.avif',
           },
           {
             title: 'Boutique Fashion & Luxury Stores',
             desc: 'Custom brass garment racks, velvet fitting rooms, frameless mirror walls, and integrated cash wrap counters.',
-            image: '/images/hero/hero-slide-1.jpg',
+            image: '/posters/hero.avif',
           },
           {
             title: 'Fine Dining & Specialty Restaurants',
             desc: 'Acoustic banquet seating, warm 2700K dimmable table lighting, commercial kitchen layout flow, and bar counters.',
-            image: '/images/hero/hero-slide-2.jpg',
+            image: '/posters/portfolio.avif',
           },
           {
             title: 'Boutique Hotel Lobbies & Lounges',
             desc: 'Grand reception desks, concierge lounges, ambient acoustic ceiling treatments, and durable stone flooring.',
-            image: '/images/hero/hero-slide-3.jpg',
+            image: '/posters/pricing-axis.avif',
           },
         ]
       : [
           {
             title: 'Polyclinics & Doctor Chambers',
             desc: 'Infection-resistant seamless vinyl flooring, anti-microbial laminate desks, and patient consultation privacy.',
-            image: '/images/hero/hero-slide-2.jpg',
+            image: '/posters/portfolio.avif',
           },
           {
             title: 'Dental Operatories & Suites',
             desc: 'Pre-plumbed suction lines, shadowless task lighting, sterilisable surfaces, and soothing patient visual zones.',
-            image: '/images/hero/hero-slide-3.jpg',
+            image: '/posters/pricing-axis.avif',
           },
           {
             title: 'Diagnostic Labs & Sample Collection',
             desc: 'Cleanroom-compliant wall cladding, chemical-resistant resin counters, and organised technician workstations.',
-            image: '/images/hero/hero-slide-1.jpg',
+            image: '/posters/hero.avif',
           },
           {
             title: 'Patient Waiting Lounges & Reception',
             desc: 'Calming color palettes, barrier-free wheelchair clearance, acoustic privacy desk partitions, and clear signage.',
-            image: '/images/hero/hero-slide-4.jpg',
+            image: '/posters/persona-router.avif',
           },
         ];
 
@@ -364,11 +364,11 @@ export default async function CommercialVerticalPage({
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: `Bare shell before ${vertical.name.toLowerCase()} fit-out`,
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-2.jpg',
+              src: '/posters/portfolio.avif',
               alt: `Completed ${vertical.name.toLowerCase()} interior in Chennai`,
             }}
           />

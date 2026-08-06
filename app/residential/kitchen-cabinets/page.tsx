@@ -84,25 +84,25 @@ export default function KitchenCabinetsPage() {
       title: 'White Gloss Modular Kitchen Cabinets',
       tag: 'U-Shape Kitchen',
       location: 'Adyar, Chennai',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Grey Laminate L-Kitchen Cabinets',
       tag: 'L-Shape Kitchen',
       location: 'T. Nagar, Chennai',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       title: 'Hettich Soft-Close Drawer Detail',
       tag: 'Hardware Detail',
       location: 'Velachery, Chennai',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Floor-to-Ceiling Tall Pantry Unit',
       tag: 'Tall Unit',
       location: 'Anna Nagar, Chennai',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
   ];
 
@@ -434,11 +434,11 @@ export default function KitchenCabinetsPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: 'Raw kitchen wall before modular cabinet installation',
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-1.jpg',
+              src: '/posters/hero.avif',
               alt: 'Completed modular kitchen cabinets by Luxe Axis in Adyar',
             }}
           />

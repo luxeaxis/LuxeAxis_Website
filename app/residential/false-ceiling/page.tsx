@@ -42,7 +42,7 @@ export default function FalseCeilingPage() {
         'Smart dimmer and scene control compatible',
         'Combined with centre recessed downlights',
       ],
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       tag: 'Architectural Statement',
@@ -55,7 +55,7 @@ export default function FalseCeilingPage() {
         'POP moulding on coffer edges available',
         'Acoustic insulation layer optional',
       ],
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       tag: 'Master Bedroom Preferred',
@@ -68,7 +68,7 @@ export default function FalseCeilingPage() {
         'Visual height gain of 6 to 12 inches',
         'Ideal for rooms with 10 ft and above slab',
       ],
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       tag: 'Luxury Homes & Theatres',
@@ -81,7 +81,7 @@ export default function FalseCeilingPage() {
         'Printed or custom-colored membranes',
         'Home theatre acoustic fabric options',
       ],
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
   ];
 
@@ -109,37 +109,37 @@ export default function FalseCeilingPage() {
       room: 'Living Room',
       design: 'Cove + Coffered Combo',
       desc: 'Ambient LED perimeter wash with a coffered feature zone above seating. Maximum drama with full dimmer control.',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       room: 'Master Bedroom',
       design: 'Tray with Dimmable Cove',
       desc: 'Warm 2700K cove in a stepped tray. Supports healthy sleep lighting and full scene control from the bedside.',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       room: 'Dining Room',
       design: 'Single Coffered Bay',
       desc: 'One centred coffer frames a chandelier over the table. Creates focal separation between dining and living zones.',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       room: 'Kitchen',
       design: 'Flat Gypsum with Task Lights',
       desc: 'IP44-rated moisture-resistant board with recessed downlights over work zones. Clean, hygienic, easy to repaint.',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       room: 'Pooja Room',
       design: 'Stepped Tray with Warm Cove',
       desc: 'Layered gypsum tiers with warm 2700K indirect light. Sacred geometry in POP border creates a sanctified focal point.',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       room: 'Kids Room & Study',
       design: 'Clean White with Task Zones',
       desc: 'Anti-glare recessed lights over the study desk. Cool 5000K for focus, warm 2700K for sleep.',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
   ];
 
@@ -148,25 +148,25 @@ export default function FalseCeilingPage() {
       title: 'Cove LED False Ceiling in 4BHK Suite',
       tag: 'Cove LED',
       location: 'Adyar, Chennai',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Coffered Ceiling in Dining Area',
       tag: 'Coffered',
       location: 'Velachery, Chennai',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       title: 'Master Bedroom Tray Ceiling',
       tag: 'Tray Ceiling',
       location: 'OMR, Chennai',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Stretch Ceiling in Villa Home Theatre',
       tag: 'Stretch Ceiling',
       location: 'Adyar Villa, Chennai',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
   ];
 
@@ -486,11 +486,11 @@ export default function FalseCeilingPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: 'Bare concrete slab ceiling before false ceiling installation',
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-1.jpg',
+              src: '/posters/hero.avif',
               alt: 'Completed cove LED false ceiling by Luxe Axis in Adyar',
             }}
           />

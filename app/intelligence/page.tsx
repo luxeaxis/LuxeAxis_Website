@@ -42,7 +42,7 @@ export default function IntelligencePage() {
         'Non-structural micro-corrections (color, brass & spatial placement)',
       ],
       href: '/intelligence/vastu-tech',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       id: 'space-score',
@@ -57,7 +57,7 @@ export default function IntelligencePage() {
         'Post-occupancy verification audit included',
       ],
       href: '/intelligence/space-score',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       id: 'space-os',
@@ -72,7 +72,7 @@ export default function IntelligencePage() {
         'AR mobile preview for furniture & finishes',
       ],
       href: '/intelligence/space-os',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       id: 'virtual-staging',
@@ -87,7 +87,7 @@ export default function IntelligencePage() {
         '360° virtual reality walkthroughs for prospective buyers',
       ],
       href: '/intelligence/virtual-staging',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
   ];
 
@@ -325,11 +325,11 @@ export default function IntelligencePage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: 'Bare shell floor plan before spatial intelligence scan',
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-3.jpg',
+              src: '/posters/pricing-axis.avif',
               alt: 'Completed intelligence-optimized interior by Luxe Axis',
             }}
           />

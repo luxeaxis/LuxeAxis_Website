@@ -129,8 +129,8 @@ export default async function PremiumDigitalPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare shell villa before Premium VIP design package' }}
-            afterImage={{ src: '/images/hero/hero-slide-2.jpg', alt: 'Completed luxury villa interior using Premium VIP 360 VR drawings' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell villa before Premium VIP design package' }}
+            afterImage={{ src: '/posters/portfolio.avif', alt: 'Completed luxury villa interior using Premium VIP 360 VR drawings' }}
           />
         </div>
       </Section>

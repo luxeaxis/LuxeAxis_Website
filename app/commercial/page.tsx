@@ -55,7 +55,7 @@ export default function CommercialPage() {
         'Structured cabling from day one',
         'Standing desks & ergonomic layouts',
       ],
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       sector: 'Corporate / MNC',
@@ -66,7 +66,7 @@ export default function CommercialPage() {
         'Executive cabin with acoustic privacy',
         'Brand identity in every surface',
       ],
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       sector: 'SME / Startup',
@@ -77,7 +77,7 @@ export default function CommercialPage() {
         'Meeting pod and phone booth zones',
         'Fixed price from Rs.900 per sqft',
       ],
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       sector: 'Professionals & Clinics',
@@ -88,7 +88,7 @@ export default function CommercialPage() {
         'Acoustic private consultation rooms',
         'Compliance-aware healthcare design',
       ],
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
   ];
 
@@ -97,25 +97,25 @@ export default function CommercialPage() {
       title: 'Open Collaborative IT Campus',
       tag: 'IT Office',
       location: 'Sholinganallur, Chennai',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       title: 'Executive Conference Suite & Boardroom',
       tag: 'Boardroom',
       location: 'Nungambakkam, Chennai',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'First Impressions Reception Lobby',
       tag: 'Reception Lobby',
       location: 'Guindy, Chennai',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       title: 'Growth-Ready Startup HQ',
       tag: 'SME Office',
       location: 'OMR, Chennai',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
   ];
 
@@ -481,11 +481,11 @@ export default function CommercialPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: 'Bare shell office space before commercial fit-out',
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-3.jpg',
+              src: '/posters/pricing-axis.avif',
               alt: 'Completed premium IT office interior by Luxe Axis in OMR',
             }}
           />

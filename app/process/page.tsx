@@ -326,8 +326,8 @@ export default async function ProcessPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Raw shell apartment before Stage 1 Discover' }}
-            afterImage={{ src: '/images/hero/hero-slide-3.jpg', alt: 'Completed home interior after Stage 6 Handover' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Raw shell apartment before Stage 1 Discover' }}
+            afterImage={{ src: '/posters/pricing-axis.avif', alt: 'Completed home interior after Stage 6 Handover' }}
           />
         </div>
       </Section>

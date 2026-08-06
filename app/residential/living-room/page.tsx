@@ -85,25 +85,25 @@ export default function LivingRoomPage() {
       title: 'Contemporary Sintered Stone Feature Wall',
       tag: 'Full Living Room',
       location: 'Adyar, Chennai',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       title: 'Open Plan Living and Dining Zone',
       tag: 'Open Plan',
       location: 'Anna Nagar, Chennai',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       title: 'Minimalist Clean-Line Living Space',
       tag: 'Minimalist',
       location: 'T. Nagar, Chennai',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       title: 'Integrated Entertainment Wall & Magnetic Lighting',
       tag: 'TV + Ceiling',
       location: 'Velachery, Chennai',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
   ];
 
@@ -440,11 +440,11 @@ export default function LivingRoomPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: 'Plain living room before Luxe Axis transformation',
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-2.jpg',
+              src: '/posters/portfolio.avif',
               alt: 'Luxury living room with feature wall after Luxe Axis transformation',
             }}
           />

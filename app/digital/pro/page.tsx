@@ -129,8 +129,8 @@ export default async function ProDigitalPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare shell flat before Pro Digital package' }}
-            afterImage={{ src: '/images/hero/hero-slide-1.jpg', alt: 'Completed apartment interior using Pro Digital 4K 3D drawings' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell flat before Pro Digital package' }}
+            afterImage={{ src: '/posters/hero.avif', alt: 'Completed apartment interior using Pro Digital 4K 3D drawings' }}
           />
         </div>
       </Section>

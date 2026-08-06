@@ -42,7 +42,7 @@ export default async function JournalPage() {
       title: 'The Architectural Guide to Vastu-Tech: Solar Alignment for Chennai Homes',
       excerpt:
         'How ancient Vastu orientation mapped to solar compass vectors eliminates dead zones and optimizes natural light in modern 3BHK and 4BHK apartments.',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       slug: 'bwp-plywood-vs-commercial-ply',
@@ -52,7 +52,7 @@ export default async function JournalPage() {
       title: 'BWP Marine Plywood vs Commercial Ply: What Every Homeowner Must Know',
       excerpt:
         'Why IS:710 Boiling Water Proof marine plywood is essential for Chennai coastal humidity and preventing kitchen cabinet swelling.',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
     {
       slug: 'chennai-interior-cost-breakdown',
@@ -62,7 +62,7 @@ export default async function JournalPage() {
       title: 'How to Estimate Your Chennai Home Interior Budget (Essential vs Signature)',
       excerpt:
         'A comprehensive cost breakdown of carpet area rates, Blum soft-close joinery, acrylic finishes, and itemized BOQ contracts.',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
     },
     {
       slug: 'nri-remote-home-supervision',
@@ -72,7 +72,7 @@ export default async function JournalPage() {
       title: 'NRI Remote Home Design: How to Monitor Villa Construction Overseas',
       excerpt:
         'Using 4K Space OS daily live feeds, timezone-matched video reviews, and digital escrow milestone releases for zero-leave execution.',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
     },
     {
       slug: '45-day-handover-factory-prefabrication',
@@ -82,7 +82,7 @@ export default async function JournalPage() {
       title: 'The 45-Day Handover Guarantee: How Factory Manufacturing Prevents Delays',
       excerpt:
         'How precision German CNC joinery pre-fabrication cuts on-site civil disruption and guarantees on-time key handover.',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
     },
     {
       slug: 'coastal-humidity-interior-finishes',
@@ -92,7 +92,7 @@ export default async function JournalPage() {
       title: 'Designing for Coastal Humidity: Anti-Rust Hardware & Mold-Resistant Finishes',
       excerpt:
         'Selecting marine grade BWP cores, PU lacquers, and stainless steel fittings engineered for Chennai’s saline air.',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
     },
   ];
 
@@ -217,7 +217,7 @@ export default async function JournalPage() {
         <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/30 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
           <div className="relative aspect-video rounded-xl overflow-hidden border border-accent/20">
             <Image
-              src="/images/hero/hero-slide-3.jpg"
+              src="/posters/pricing-axis.avif"
               alt="Featured Vastu-Tech Architectural Journal Guide"
               fill
               className="object-cover"
@@ -320,8 +320,8 @@ export default async function JournalPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare shell 3BHK flat before interior fit-out' }}
-            afterImage={{ src: '/images/hero/hero-slide-1.jpg', alt: 'Completed luxury 3BHK residential interior in Chennai' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell 3BHK flat before interior fit-out' }}
+            afterImage={{ src: '/posters/hero.avif', alt: 'Completed luxury 3BHK residential interior in Chennai' }}
           />
         </div>
       </Section>

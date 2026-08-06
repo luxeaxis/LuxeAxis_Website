@@ -329,8 +329,8 @@ export default async function DigitalPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare shell flat before Luxe Axis Digital design package' }}
-            afterImage={{ src: '/images/hero/hero-slide-2.jpg', alt: 'Completed apartment interior using Luxe Axis Digital drawings' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell flat before Luxe Axis Digital design package' }}
+            afterImage={{ src: '/posters/portfolio.avif', alt: 'Completed apartment interior using Luxe Axis Digital drawings' }}
           />
         </div>
       </Section>

@@ -273,8 +273,8 @@ export default async function NriPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare villa shell before fit-out' }}
-            afterImage={{ src: '/images/hero/hero-slide-2.jpg', alt: 'Completed NRI villa in Adyar, Chennai' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare villa shell before fit-out' }}
+            afterImage={{ src: '/posters/portfolio.avif', alt: 'Completed NRI villa in Adyar, Chennai' }}
           />
         </div>
       </Section>

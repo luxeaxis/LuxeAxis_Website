@@ -56,7 +56,7 @@ export default async function PricingPage() {
       rate: '₹1,800 / sq.ft',
       desc: 'Complete specifications for modern homes. Blum soft-close hardware, BWP marine plywood, 45-day guaranteed handover.',
       href: '/pricing/essential',
-      image: '/images/hero/hero-slide-3.jpg',
+      image: '/posters/pricing-axis.avif',
       badge: 'Turnkey',
     },
     {
@@ -64,7 +64,7 @@ export default async function PricingPage() {
       rate: '₹2,800 / sq.ft',
       desc: 'Bespoke luxury for penthouses & villas. Italian PU lacquer, Hafele hardware, smart home lighting automation, Signature tier timeline handover.',
       href: '/pricing/signature',
-      image: '/images/hero/hero-slide-1.jpg',
+      image: '/posters/hero.avif',
       badge: 'Popular',
     },
     {
@@ -72,7 +72,7 @@ export default async function PricingPage() {
       rate: 'Custom BOQ',
       desc: 'Architect-designed private luxury. Imported Calacatta Italian marble, liquid metal joinery, and dedicated principal team.',
       href: '/pricing/elite',
-      image: '/images/hero/hero-slide-4.jpg',
+      image: '/posters/persona-router.avif',
       badge: 'Elite',
     },
     {
@@ -80,7 +80,7 @@ export default async function PricingPage() {
       rate: 'Instant Tool',
       desc: 'Calculate your exact interior design cost in Chennai based on carpet area, residence type, and material finishes.',
       href: '/pricing/calculator',
-      image: '/images/hero/hero-slide-2.jpg',
+      image: '/posters/portfolio.avif',
       badge: 'Tool',
     },
   ];
@@ -358,8 +358,8 @@ export default async function PricingPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/images/hero/hero-slide-4.jpg', alt: 'Bare shell residence before fit-out' }}
-            afterImage={{ src: '/images/hero/hero-slide-1.jpg', alt: 'Completed luxury interior by Luxe Axis' }}
+            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell residence before fit-out' }}
+            afterImage={{ src: '/posters/hero.avif', alt: 'Completed luxury interior by Luxe Axis' }}
           />
         </div>
       </Section>

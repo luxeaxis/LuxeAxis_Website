@@ -258,11 +258,11 @@ export default async function IntelligenceFeaturePage({
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/images/hero/hero-slide-4.jpg',
+              src: '/posters/persona-router.avif',
               alt: `Un-optimized floor plan layout before ${feature.name}`,
             }}
             afterImage={{
-              src: '/images/hero/hero-slide-1.jpg',
+              src: '/posters/hero.avif',
               alt: `Completed ${feature.name} optimized space by Luxe Axis`,
             }}
           />
