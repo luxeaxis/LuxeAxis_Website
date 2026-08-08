@@ -1,8 +1,25 @@
 import type { ComponentType } from 'react';
 
 export const SCENE_IDS = [
-  'hero', 'persona-router', 'vastu', 'space-score',
-  'space-os', 'portfolio', 'journey', 'pricing-axis', 'nri-globe',
+  // Narrative scenes — the homepage film and its set-pieces.
+  'hero',
+  'persona-router',
+  'vastu',
+  'space-score',
+  'space-os',
+  'portfolio',
+  'journey',
+  'pricing-axis',
+  'nri-globe',
+  // Room scenes — one per service page, built on three/rooms/RoomShell.
+  // These differ from the narrative scenes in kind: a narrative scene argues a
+  // claim, a room scene shows a room. They share the canvas, the tier gates and
+  // the poster contract, and nothing else.
+  'living-room',
+  'kitchen',
+  'bedroom',
+  'office',
+  'reception',
 ] as const;
 
 export type SceneId = (typeof SCENE_IDS)[number];
@@ -93,17 +110,102 @@ export const POSTERS: Record<SceneId, ScenePoster> = {
     alt: 'An arc drawn from the Tamil diaspora to Chennai, tracing how a home here is designed and delivered from abroad.',
     aspect: '1/1',
   },
+
+  // Room posters.
+  //
+  // Same rule as every entry above: the alt text carries the CLAIM the scene
+  // makes, not an inventory of its pixels. A screen-reader user is told what
+  // the room argues — proportion, light, joinery, calm — because that is what
+  // a sighted visitor takes from it, and it is what the surrounding copy is
+  // selling. "A 3D model of a living room" would be an accurate description
+  // and a useless one.
+  //
+  // These are placeholder stills today, like eight of the nine above. They
+  // must be replaced with art-directed photography of real completed projects
+  // before `three_v1` is switched on: the poster is the LCP candidate, the
+  // reduced-motion frame, and everything a T0/T1 visitor ever sees.
+  'living-room': {
+    src: '/posters/living-room.avif',
+    alt: 'A living room arranged for conversation: a deep sofa facing two turned armchairs across a marble table, lit low and warm, with a gold line running floor to ceiling behind.',
+    aspect: '16/9',
+  },
+  kitchen: {
+    src: '/posters/kitchen.avif',
+    alt: 'A fitted kitchen shown in working light: a run of emerald lacquer cabinetry under a single stone worktop, a walnut island with the stone returning to the floor, three pendants above it.',
+    aspect: '16/9',
+  },
+  bedroom: {
+    src: '/posters/bedroom.avif',
+    alt: 'A bedroom kept deliberately sparse: an upholstered headboard wider than the bed, matched bedside tables, a bench at the foot, and nothing else competing for attention.',
+    aspect: '16/9',
+  },
+  office: {
+    src: '/posters/office.avif',
+    alt: 'An open-plan workplace seen whole: two facing rows of five desks under an acoustic ceiling raft, with a glazed meeting room holding the corner.',
+    aspect: '16/9',
+  },
+  reception: {
+    src: '/posters/reception.avif',
+    alt: 'A double-height reception under a single strong light: a stone desk floating on a gold shadow gap, a slatted walnut screen behind it, seating turned away from the counter.',
+    aspect: '16/9',
+  },
 };
 
-/** Registered live 3D scenes loaded dynamically per scene ID. */
+/**
+ * Registered live 3D scenes loaded dynamically per scene ID.
+ *
+ * ## Every entry is its own chunk, and that is the contract
+ *
+ * Each value is a distinct `import()`, so webpack emits one async chunk per
+ * scene and the canvas fetches exactly the one the visitor reached. A
+ * visitor who lands on `/residential/kitchen` and leaves downloads the kitchen
+ * and nothing else — not the bedroom, not the office, not the hero.
+ *
+ * The five room scenes additionally share `three/core/*`, `RoomShell` and
+ * `primitives`. Webpack hoists that shared code into a common async chunk that
+ * loads alongside whichever room is requested first and is then reused by the
+ * rest. This is the desired shape, not a leak: the shared layer is downloaded
+ * once per session rather than duplicated five times, and it is still gated
+ * behind the same flag, tier and reduced-motion checks as everything else —
+ * nothing here is reachable until `three/stage.tsx` decides a canvas may exist.
+ *
+ * The one thing that would break this is a static `import` of a scene from
+ * anywhere. That is what pulls a scene into the parent chunk and silently
+ * un-splits it, and it is why this map holds thunks rather than modules.
+ */
 export const SCENES: Partial<Record<SceneId, () => Promise<SceneModule>>> = {
   hero: () => import('./scenes/HeroScene').then((m) => m.default),
   vastu: () => import('./scenes/VastuScene').then((m) => m.default),
   'space-os': () => import('./scenes/SpaceOSScene').then((m) => m.default),
   'nri-globe': () => import('./scenes/NRIGlobeScene').then((m) => m.default),
-  'persona-router': () => import('./scenes/GenericScene').then((m) => m.default),
+  'persona-router': () =>
+    import('./scenes/GenericScene').then((m) => m.default),
   'space-score': () => import('./scenes/GenericScene').then((m) => m.default),
   portfolio: () => import('./scenes/GenericScene').then((m) => m.default),
   journey: () => import('./scenes/GenericScene').then((m) => m.default),
   'pricing-axis': () => import('./scenes/GenericScene').then((m) => m.default),
+
+  'living-room': () => import('./rooms/LivingRoomScene').then((m) => m.default),
+  kitchen: () => import('./rooms/KitchenScene').then((m) => m.default),
+  bedroom: () => import('./rooms/BedroomScene').then((m) => m.default),
+  office: () => import('./rooms/OfficeScene').then((m) => m.default),
+  reception: () => import('./rooms/ReceptionScene').then((m) => m.default),
 };
+
+/**
+ * Warm a scene's chunk without rendering it.
+ *
+ * The code half of the spec's "`<Preload>` the *next* scene during
+ * `requestIdleCallback`" (Performance §4); `preloadAsset` in
+ * `three/core/assets.ts` is the geometry half. Calling both as a visitor
+ * approaches a boundary is what makes a room fade in rather than pop.
+ *
+ * Safe to call repeatedly — a resolved dynamic import is cached by the module
+ * loader, so the second call is free.
+ */
+export function preloadScene(id: SceneId): void {
+  void SCENES[id]?.().catch(() => {
+    // A failed preload is not a failure the visitor has yet, and may never
+    // have. The poster is already on screen and already carries the meaning.
+  });
+}

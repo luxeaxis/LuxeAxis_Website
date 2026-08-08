@@ -45,6 +45,47 @@
     scroll-padding-top: calc(var(--component-nav-height) + var(--space-4));
   }
 
+  /* The guided journey's rhythm — implemented by the browser, not by
+     JavaScript.
+
+     `scroll-snap-type: y proximity` is the whole "guided" mechanism. Crucially
+     it is `proximity`, never `mandatory`:
+
+       - `mandatory` forces the viewport to a snap point at the end of EVERY
+         scroll gesture. On a section taller than the viewport that makes the
+         middle of the content literally unreachable — the browser drags you
+         off it — and it fights find-in-page, which scrolls to a match and is
+         then yanked away from it.
+       - `proximity` snaps only when a gesture already ends near a station.
+         Scroll past, scroll slowly, or scroll halfway and stay: all honoured.
+
+     This is what satisfies Cinematic Direction §10.2 ("no scroll-jacking that
+     changes speed or direction") while still producing the composed, station-
+     to-station feel the journey is for. The visitor keeps every native
+     behaviour: trackpad momentum, Page Up/Down, Space, Home/End, find-in-page,
+     screen-reader virtual cursors, and the browser's own scroll restoration on
+     back/forward. A wheel-event handler would break all of them. */
+  .lx-journey {
+    scroll-snap-type: y proximity;
+  }
+
+  .lx-station {
+    scroll-snap-align: start;
+    /* Stops a station taller than the viewport from trapping the visitor
+       against its own snap point — the browser is told it may leave. */
+    scroll-snap-stop: normal;
+  }
+
+  /* Motion has an off-ramp (§10.7). Snapping is movement the visitor did not
+     ask for, so reduced motion removes it entirely rather than merely speeding
+     it up. The journey still works: the rail still navigates, the sections are
+     still anchored, and the camera cuts instead of travelling. */
+  @media (prefers-reduced-motion: reduce) {
+    .lx-journey {
+      scroll-snap-type: none;
+    }
+  }
+
   /* Never remove focus without a stronger cue. This is the floor. */
   :focus-visible {
     outline: var(--border-width-focus) solid var(--focus-ring);

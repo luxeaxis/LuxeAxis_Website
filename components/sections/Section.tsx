@@ -42,7 +42,20 @@ export function Section({
     // `#calculator` passes vacuously by matching nothing. The
     // `scroll-padding-top` added in globals.css exists precisely so these
     // anchors clear the sticky header.
-    <section id={id} aria-labelledby={headingId} className="relative w-full py-section-y">
+    // `tabIndex={-1}` and `lx-station` make every Section a journey station
+    // without each block opting in. The two attributes are what let journey
+    // navigation move FOCUS to a section (a <section> cannot receive
+    // programmatic focus otherwise, so `focus()` silently no-ops and keyboard
+    // users are stranded at the top of the document) and what gives the browser
+    // its native scroll-snap point. Neither changes anything on a page that is
+    // not a journey: -1 keeps the section out of the Tab order, and the snap
+    // class is inert unless an ancestor carries `lx-journey`.
+    <section
+      id={id}
+      tabIndex={-1}
+      aria-labelledby={headingId}
+      className="lx-station relative w-full py-section-y focus:outline-none"
+    >
       <Container>
         <Stack gap={8}>
           {/* The heading block and the body rise in as two beats rather than

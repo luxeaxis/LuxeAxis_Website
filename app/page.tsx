@@ -13,6 +13,10 @@ import {
   PricingTeaser,
 } from '@/components/sections/Teaser';
 import { CTASection, TestimonialBand } from '@/components/sections/CTASection';
+import { JourneyProvider } from '@/components/JourneyProvider';
+import { JourneyRail } from '@/components/JourneyRail';
+import { JourneyStation } from '@/components/JourneyStation';
+import { HOME_STATIONS } from '@/lib/journey/stations';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import {
   getFeaturedProjects,
@@ -57,14 +61,39 @@ export default async function HomePage() {
   ]);
 
   return (
-    <main id="main" tabIndex={-1}>
-      <Hero
-        headline="Your home, thoughtfully designed. Transparently priced."
-        sub="AI-assisted design, Vastu-smart, delivered on a guaranteed handover date. Real designers, honest pricing."
-        trustPoints={trustPoints}
-      />
-      <AboutSplit />
-      <ServicesGrid />
+    // `lx-journey` turns on native CSS scroll-snap for this page only. It is a
+    // class and not a script: no wheel handler, no scroll animation, no
+    // interception. See styles/globals.css for why it is `proximity` and never
+    // `mandatory`.
+    <main id="main" tabIndex={-1} className="lx-journey">
+      {/* Resolves which station is current from scroll, the URL fragment, and
+          browser history, then publishes it. Renders nothing. The camera reads
+          the result; nothing reads the camera. */}
+      <JourneyProvider stations={HOME_STATIONS} />
+      {/* Wayfinding. Real anchor links, so it works with JavaScript disabled,
+          with WebGL unavailable, and with the three_v1 flag off — which is
+          every visitor today. */}
+      <JourneyRail stations={HOME_STATIONS} />
+
+      <JourneyStation id="hero">
+        <Hero
+          headline="Your home, thoughtfully designed. Transparently priced."
+          sub="AI-assisted design, Vastu-smart, delivered on a guaranteed handover date. Real designers, honest pricing."
+          trustPoints={trustPoints}
+        />
+      </JourneyStation>
+
+      {/* AboutSplit, ServicesGrid, ProcessSteps and CTASection render a bare
+          <section> with no id of their own, so they are wrapped to become
+          stations. Everything built on components/sections/Section.tsx already
+          carries its own id and is a station automatically — see that file. */}
+      <JourneyStation id="about">
+        <AboutSplit />
+      </JourneyStation>
+      <JourneyStation id="services">
+        <ServicesGrid />
+      </JourneyStation>
+
       <PersonaRouter personas={personas} />
       <ProofStrip stats={stats} pendingLabels={pendingStatLabels} />
       <BeforeAfterSection />
@@ -72,9 +101,16 @@ export default async function HomePage() {
       <MaterialPartners />
       <FeaturedProjects projects={projects} />
       <PricingTeaser tiers={tiers} />
-      <ProcessSteps />
+
+      <JourneyStation id="process">
+        <ProcessSteps />
+      </JourneyStation>
+
       <TestimonialBand testimonials={testimonials} />
-      <CTASection />
+
+      <JourneyStation id="contact">
+        <CTASection />
+      </JourneyStation>
     </main>
   );
 }

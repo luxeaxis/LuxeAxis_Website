@@ -1,8 +1,26 @@
 'use client';
 
-import { Canvas } from '@react-three/fiber';
-import { useEffect, useState } from 'react';
+import { Canvas, useThree } from '@react-three/fiber';
+import { Suspense, useEffect, useState } from 'react';
 import { SCENES, type SceneId, type SceneModule } from './registry';
+import { useCanvasInteractive } from './core/interaction';
+import { configureAssetPipeline } from './core/assets';
+import { TIER_BUDGET, useSceneTier } from './core/tier';
+import { JourneyCamera } from './core/JourneyCamera';
+import { HOME_STATIONS } from '@/lib/journey/stations';
+import { useAppStore } from '@/lib/store';
+
+/** Hands the live renderer to the asset pipeline, which needs it for
+ *  `KTX2Loader.detectSupport` — without it, compressed textures transcode to
+ *  uncompressed RGBA and cost more VRAM than the PNGs they replaced. Must be
+ *  inside the Canvas; that is the only place `gl` exists. */
+function AssetPipelineBridge() {
+  const gl = useThree((state) => state.gl);
+  useEffect(() => {
+    configureAssetPipeline(gl);
+  }, [gl]);
+  return null;
+}
 
 /**
  * The single persistent WebGL context (Build Backlog T-25, Spec §3.2).
@@ -46,19 +64,62 @@ export function ThreeCanvas({ activeScene }: { activeScene: SceneId | null }) {
   }, [activeScene]);
 
   const Scene = module_?.Scene;
+  const tier = useSceneTier();
+
+  /**
+   * Pointer events and `aria-hidden` are opt-in, per scene, and off by default.
+   *
+   * The default matters more than the exception. This is a fixed, full-screen
+   * layer sitting above the entire page: if it accepted pointer events
+   * unconditionally it would swallow every click meant for the links and
+   * buttons underneath it, everywhere, on every route. `useInteractive` in
+   * `three/core/interaction.tsx` is the only thing that can flip this, it is
+   * reference-counted so an overlapping mount during a cross-fade cannot
+   * strand the wrong state, and only the scenes the Cinematic Direction doc
+   * lists as interactive are permitted to call it.
+   *
+   * `aria-hidden` is released in lockstep, never independently. A region that
+   * responds to a mouse but is hidden from assistive technology is a WCAG 2.2
+   * failure, so the two flags are the same flag.
+   */
+  const interactive = useCanvasInteractive();
+  const onJourney = useAppStore((state) => state.station) !== null;
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-canvas">
+    <div
+      aria-hidden={interactive ? undefined : 'true'}
+      className={`fixed inset-0 z-canvas ${interactive ? 'pointer-events-auto' : 'pointer-events-none'}`}
+    >
       <Canvas
         frameloop="demand"
         // Capped: at devicePixelRatio 3 a phone renders nine times the pixels
         // of 1 for a difference almost nobody sees, and it is the biggest single
-        // cause of thermal throttling in a scene like this.
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        // cause of thermal throttling in a scene like this. The upper bound is
+        // per-tier now — T2 stops at 1.5, which is roughly a 30% fragment
+        // saving on exactly the devices that need it.
+        dpr={[1, TIER_BUDGET[tier].maxDpr]}
+        shadows={TIER_BUDGET[tier].shadows}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: 'high-performance',
+        }}
         style={{ position: 'absolute', inset: 0 }}
       >
-        {Scene && activeScene && <Scene sceneId={activeScene} />}
+        <AssetPipelineBridge />
+        {/* The journey camera, mounted only while a station is current. It
+            reacts to navigation and never causes it — see JourneyCamera's own
+            note. `HOME_STATIONS` is the only journey today; when a second one
+            exists this takes the station list from the store rather than the
+            module, which is a one-line change and deliberately not made yet. */}
+        {onJourney && <JourneyCamera stations={HOME_STATIONS} />}
+        {/* A scene that suspends on a GLB renders nothing until it resolves,
+            which is correct: the poster is already on screen underneath and
+            already carries the claim. There is no spinner to design, and a
+            spinner over a poster would be strictly worse than the poster. */}
+        <Suspense fallback={null}>
+          {Scene && activeScene && <Scene sceneId={activeScene} />}
+        </Suspense>
       </Canvas>
     </div>
   );

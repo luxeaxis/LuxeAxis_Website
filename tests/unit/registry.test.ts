@@ -26,8 +26,15 @@ describe('scene registry parity', () => {
     expect(prioritised).toEqual(['hero']);
   });
 
-  it('registers live 3D scenes for all 9 scene IDs', () => {
-    expect(Object.keys(SCENES)).toHaveLength(9);
+  it('registers a live 3D scene for every declared scene ID', () => {
+    // Asserted against SCENE_IDS rather than a hardcoded count. The literal 9
+    // this used to check went stale the moment the five room scenes were
+    // added, and a number in a test tells you nothing about which id is
+    // missing. Comparing the sets names it.
+    const registered = new Set(Object.keys(SCENES));
+    const unregistered = SCENE_IDS.filter((id) => !registered.has(id));
+    expect(unregistered, `scene IDs with no loader: ${unregistered.join(', ')}`).toEqual([]);
+    expect(registered.size).toBe(SCENE_IDS.length);
   });
 });
 
@@ -50,6 +57,12 @@ describe('the WebGL seam stays out of every route bundle', () => {
   const registrySource = readFileSync('three/registry.ts', 'utf8');
 
   it('registry.ts references neither the canvas nor the stage', () => {
+    // A substring check over the raw source, so it trips on the name appearing
+    // in a COMMENT too. That is a false positive in the strict sense and it is
+    // kept anyway: the check costs a millisecond, the failure mode it guards
+    // against costs 214 kB on every route, and "write `the canvas` instead of
+    // the module name in your prose" is a trivially cheap constraint. If you
+    // landed here from a doc comment, reword the comment.
     expect(registrySource).not.toContain('ThreeCanvas');
     expect(registrySource).not.toContain('./stage');
   });
