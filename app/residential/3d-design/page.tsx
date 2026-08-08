@@ -11,11 +11,12 @@ import { JsonLd } from '@/components/JsonLd';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
+import { ThreeDHeroBackground } from '@/components/sections/ThreeDHeroBackground';
 
 const ROUTE = '/residential/3d-design';
 
 export const metadata: Metadata = {
-  title: '3D Interior Design in Chennai | Luxe Axis',
+  title: '3D Interior Design in Chennai | Photorealistic VR Walkthroughs',
   description:
     '3D interior design in Chennai. Walk through your new home in photorealistic 3D before any work begins. Free with every project, 45-day delivery, flat 10-year warranty.',
   alternates: canonicalFor(ROUTE),
@@ -24,94 +25,94 @@ export const metadata: Metadata = {
 export default async function ThreeDDesignPage() {
   const highlights = [
     {
-      title: 'Photorealistic Renders',
-      desc: 'V-Ray Ray-Traced Renders Indistinguishable from Real Photos',
+      title: 'V-Ray Ray-Tracing',
+      desc: 'Photorealistic Renders with Accurate Material Lighting Physics',
     },
     {
-      title: 'VR Walkthrough',
+      title: '360° VR Walkthrough',
       desc: 'Immersive Oculus VR Session at Our Flagship Studio',
     },
     {
-      title: 'Completely Free',
-      desc: '100% Complimentary Step Included in Every Project',
+      title: '100% Free Included',
+      desc: 'Complimentary Spatial Design Step in Every Project Tier',
     },
     {
       title: 'Unlimited Revisions',
-      desc: 'Modify Layouts, Colors & Finishes Until Fully Satisfied',
+      desc: 'Modify Layouts, Material Finishes & Lighting Until Satisfied',
     },
     {
-      title: 'Approval First Guarantee',
-      desc: 'Zero On-Site Work Starts Without Your Written Sign-Off',
+      title: 'Written Sign-Off',
+      desc: 'Zero On-Site Work Begins Without Your Prior Formal Approval',
     },
   ];
 
   const processSteps3D = [
     {
       num: '01',
-      title: 'Site Measurement & Survey',
-      desc: 'Our design team visits your home and records laser-guided measurements, existing fixtures, and structural constraints alongside room photography.',
+      title: 'Laser Site Survey & CAD Floor Plan',
+      desc: 'Our interior architects record laser-guided measurements, existing fixtures, and structural constraints to draft millimeter-precise AutoCAD floor plans.',
       image: '/posters/persona-router.avif',
     },
     {
       num: '02',
-      title: 'CAD Floor Plan & Layout',
-      desc: 'Technical architects draft precise CAD drawings. Furniture layouts, traffic flow, and structural constraints are resolved before any 3D work begins.',
+      title: '3D Spatial Modeling & Joinery',
+      desc: '3D spatial geometry is built in 3ds Max. Custom kitchen modules, wardrobe shutters, false ceiling coves, and furniture layouts are aligned to Vastu grids.',
       image: '/posters/pricing-axis.avif',
     },
     {
       num: '03',
-      title: 'Photorealistic 3D Renders',
-      desc: 'Photorealistic 3D renders are produced for every room showing exact materials, LED lighting, furniture, and custom fittings as they will appear in real life.',
+      title: 'V-Ray Photorealistic Rendering',
+      desc: 'V-Ray ray-tracing renders every room with exact material shaders, Italian marble reflections, veneer textures, and ambient LED cove lighting physics.',
       image: '/posters/hero.avif',
     },
     {
       num: '04',
-      title: 'Your Sign-Off & Execution',
-      desc: 'Review renders at our studio or VR session. Request any changes. Execution begins immediately after your formal approval.',
+      title: 'VR Walkthrough & Formal Sign-Off',
+      desc: 'Experience your future home in 360° VR at our flagship studio. Make instant material or layout swaps. Execution begins after your written sign-off.',
       image: '/posters/portfolio.avif',
     },
   ];
 
   const freeVsCostly = {
     free3D: [
-      'Kitchen layout configuration & module swaps',
-      'Wardrobe shutter finish, color & handles',
-      'False ceiling cove pattern & LED positions',
-      'Flooring material & tile size selection',
-      'Wall paint shade, texture & wallpaper',
-      'Furniture placement & accent decor',
+      'Kitchen modular layout configuration & cabinet swaps',
+      'Wardrobe shutter finish, veneer texture & handle selection',
+      'False ceiling cove pattern & LED cove positions',
+      'Italian marble vs wooden flooring material choices',
+      'Wall paint shade, textured stucco & wallpaper accents',
+      'Furniture placement & custom lighting fixture positions',
     ],
     costlyExecution: [
-      'Dismantling installed modular cabinets',
-      'Relaying floor tiles & breaking screed',
-      'Repainting walls after carpentry work',
+      'Dismantling installed factory modular cabinets',
+      'Relaying floor tiles & re-screeding concrete',
+      'Repainting walls after custom carpentry work',
       'Rewiring electrical conduits for light positions',
       'Relocating plumbing outlets & drain pipes',
-      'Re-ordering custom imported materials',
+      'Re-ordering custom imported Italian marble or veneer',
     ],
   };
 
   const galleryProjects = [
     {
-      title: '3BHK Living Room Photorealistic 3D Render',
+      title: '3BHK Villa Living Room Photorealistic 3D Render',
       tag: 'Living Room 3D',
       location: 'Adyar, Chennai',
       image: '/posters/hero.avif',
     },
     {
-      title: 'U-Kitchen 3D Spatial Visualisation',
+      title: 'Modular U-Kitchen 3D Spatial Visualisation',
       tag: 'Kitchen 3D',
       location: 'T. Nagar, Chennai',
       image: '/posters/pricing-axis.avif',
     },
     {
-      title: 'Master Bedroom Suite 3D Design',
+      title: 'Luxury Master Bedroom Suite 3D Fit-Out Plan',
       tag: 'Bedroom 3D',
       location: 'Velachery, Chennai',
       image: '/posters/portfolio.avif',
     },
     {
-      title: 'Home Office & Executive Desk 3D Plan',
+      title: 'Bespoke Home Office & Teak Joinery 3D Plan',
       tag: 'Office 3D',
       location: 'Anna Nagar, Chennai',
       image: '/posters/persona-router.avif',
@@ -121,33 +122,33 @@ export default async function ThreeDDesignPage() {
   const whyChoose3D = [
     {
       num: '01',
-      title: 'Photorealistic, Not Cartoon Renders',
-      desc: 'Our renders use V-Ray software with real-world lighting physics, material shaders, and shadow depth. Finished rooms routinely match the 3D renders side by side.',
+      title: 'Photorealistic V-Ray Shader Depth',
+      desc: 'Our renders use V-Ray rendering software with real-world lighting physics, material shaders, and shadow depth. Finished rooms match the 3D renders side by side.',
     },
     {
       num: '02',
-      title: 'Unlimited Revisions Until You Approve',
-      desc: 'We revise the 3D design as many times as needed. Swap the floor tile, move the TV wall, or change the kitchen color at zero additional fee.',
+      title: 'Unlimited Free Design Revisions',
+      desc: 'We revise the 3D design as many times as needed. Swap floor tiles, adjust TV wall paneling, or change kitchen colors at zero extra fee.',
     },
     {
       num: '03',
-      title: 'VR Walkthrough at Our Flagship Studio',
-      desc: 'Visit our flagship studio for an immersive VR walkthrough of your home before it is built. Experience scale, ceiling height, and lighting in 360 degrees.',
+      title: 'Oculus VR 360° Walkthrough Session',
+      desc: 'Visit our flagship studio for an immersive VR walkthrough of your home before it is built. Experience spatial volume, ceiling height, and lighting in 360 degrees.',
     },
     {
       num: '04',
-      title: 'Execution Starts Only After Your Sign-Off',
+      title: 'Zero On-Site Work Without Sign-Off',
       desc: 'No material is ordered, no work begins, and no crew is deployed until you give formal written approval on the final 3D design renders.',
     },
     {
       num: '05',
-      title: 'Included Free in Every Project',
-      desc: 'Luxe Axis does not charge extra for 3D visualization. It is an integral, non-negotiable step included complimentary with every interior project.',
+      title: 'Included Free in Every Interior Tier',
+      desc: 'Luxe Axis does not charge extra for 3D visualization. It is an integral, non-negotiable step included complimentary with every residential interior project.',
     },
     {
       num: '06',
-      title: 'Post-Installation Care & 10-Year Warranty',
-      desc: 'Our commitment extends past handover. Every project receives dedicated post-installation snagging and support backed by our flat 10-year warranty.',
+      title: 'Millimeter-Accurate Working Drawings',
+      desc: 'Approved 3D renders translate directly into 2D CAD working drawings, ensuring factory joinery and site teams build to exact millimeter specs.',
     },
   ];
 
@@ -196,20 +197,9 @@ export default async function ThreeDDesignPage() {
       />
 
       {/* 1. Hero Section with Ken Burns Cinematic Background */}
-      <section className="relative overflow-hidden pt-12 pb-16 min-h-[80vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
-        {/* Full-Bleed Background Image with Ken Burns Cinematic Effect */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <Image
-            src="/posters/residential-3d-design-hero.png"
-            alt="Luxe Axis 3D Interior Design & VR Walkthrough Studio in Chennai"
-            fill
-            priority
-            className="object-cover animate-ken-burns opacity-40 scale-105"
-          />
-          {/* Ambient Gradient Overlay for High-Contrast Text Legibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-surface-deep via-surface-deep/90 to-surface-deep/60" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-surface-deep via-surface-deep/80 to-transparent" />
-        </div>
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        {/* Full-Bleed Background with Ken Burns Animated 3D Interior Renders */}
+        <ThreeDHeroBackground />
 
         <Container className="relative z-10">
           <Breadcrumbs
@@ -218,22 +208,22 @@ export default async function ThreeDDesignPage() {
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
-                See It Before You Build It
+                Photorealistic VR Interior Visualisation
               </span>
             </div>
 
             <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
-              3D Interior Design <br />
+              3D Interior Design & VR <br />
               <span className="text-accent">in Chennai</span>
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-              Walk through your new home in photorealistic 3D before any work
-              begins. Approve every room, material, and fitting. Free with every
-              Luxe Axis project. 45-day delivery guarantee.
+              Walk through your new home in photorealistic V-Ray 3D before any work begins.
+              Approve every material, lighting cove, and custom joinery detail.
+              Free with every Luxe Axis project tier with a 45-day delivery guarantee.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">

@@ -92,23 +92,30 @@ export function AboutSplit() {
             </div>
           </Stack>
 
-          {/* Studio Image Showcase */}
-          <div className="relative isolate overflow-hidden rounded-xl border border-border-subtle aspect-[4/3] shadow-xl">
+          {/* Studio Image Showcase with Ken Burns Effect */}
+          <div className="relative isolate overflow-hidden rounded-2xl border border-accent/40 aspect-[4/3] shadow-2xl group">
             <Image
-              src="/posters/hero.avif"
-              alt="Luxe Axis Chennai Interior Studio & Materials Workspace"
+              src="/posters/tech-enabled-studio.png"
+              alt="Luxe Axis Chennai Tech-Enabled Interior Studio & Space OS Workspace"
               fill
+              priority
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+              className="object-cover animate-ken-burns-zoom-in scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-deep/90 via-transparent to-transparent" />
-            <div className="absolute bottom-6 left-6 rounded-xl border border-accent/40 bg-surface-raised/95 p-4 shadow-xl backdrop-blur-md">
-              <p className="font-display text-h3 text-accent font-bold">
-                200+ Homes
-              </p>
-              <p className="font-ui text-small text-on-surface-2">
-                Designed Across Chennai & OMR
-              </p>
+            <div className="absolute inset-0 bg-gradient-to-t from-surface-deep/90 via-surface-deep/30 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 lx-liquid-glass-card rounded-xl p-4 shadow-2xl backdrop-blur-md border border-accent/40 flex items-center justify-between">
+              <div>
+                <p className="font-display text-h3 text-accent font-bold">
+                  200+ Homes
+                </p>
+                <p className="font-ui text-small text-on-surface font-medium">
+                  Tech-Enabled Interior Fit-Outs Across Chennai
+                </p>
+              </div>
+              <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 text-accent font-ui text-[11px] font-bold uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                Space OS Sync
+              </div>
             </div>
           </div>
         </Grid>

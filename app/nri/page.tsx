@@ -1,7 +1,6 @@
 import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { Container, Grid, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
 import { FeatureCard } from '@/components/Card';
@@ -13,6 +12,7 @@ import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { getFaqs, getNriRegions, getTestimonials } from '@/lib/content/source';
+import { NriHeroBackground } from '@/components/sections/NriHeroBackground';
 
 const ROUTE = '/nri';
 
@@ -31,33 +31,33 @@ export default async function NriPage() {
   );
 
   const highlights = [
-    { title: 'Timezone-Flexible', desc: 'Video Reviews in Your Local Time' },
-    { title: 'Space OS Live Portal', desc: '4K Live Feeds & Real-Time Spend' },
-    { title: 'Dedicated Site Lead', desc: 'On-Ground Principal Supervision' },
-    { title: 'Fixed BOQ Guarantee', desc: 'Zero Hidden Escalation Costs' },
-    { title: 'Flat 10-Year Warranty', desc: 'Zero Fine Print Guarantee' },
+    { title: 'Timezone-Flexible', desc: '3D VR Reviews in Your Local Time' },
+    { title: 'Space OS 4K Portal', desc: 'Live Camera Streams & Spend Ledgers' },
+    { title: 'Principal Architect', desc: 'On-Ground Lead Supervision' },
+    { title: 'Fixed BOQ Contract', desc: 'Zero Price Escalation Guarantee' },
+    { title: '10-Year Warranty', desc: 'Comprehensive Structural & Joinery Cover' },
   ];
 
   const protocolPillars = [
     {
       num: '01',
-      title: 'Timezone-Matched Video Reviews',
-      desc: '3D VR walkthroughs scheduled at hours convenient for PST, EST, GMT, GST, SGT, or AEST without taking work leave.',
+      title: 'Timezone-Matched 3D VR Design Reviews',
+      desc: 'Walk through high-fidelity 3D interior renders and VR walkthroughs scheduled at hours convenient for PST, EST, GMT, GST, SGT, or AEST without taking work leave.',
     },
     {
       num: '02',
       title: 'Space OS 4K Live Site Tracking',
-      desc: 'Live site camera feeds, daily photo logs, and real-time financial drawdown ledgers accessible via iOS/Android.',
+      desc: 'Continuous HD site camera streams, daily photo logs of fit-out progress, and real-time financial drawdown ledgers accessible via iOS/Android app.',
     },
     {
       num: '03',
-      title: 'Escrow & Milestone Financials',
-      desc: 'Bank escrow payment releases tied strictly to 4K verified milestone completions, protecting your investment.',
+      title: 'Material Sample Kits & Sourcing',
+      desc: 'Physical material boards (Italian marble swatches, veneer finishes, brass accents, acoustic fabrics) dispatched directly to your overseas address for physical approval.',
     },
     {
       num: '04',
-      title: 'White-Glove Keys-Handover',
-      desc: 'Deep cleaning, air purification, appliance setup, and fresh linens so your home is 100% ready when you land in Chennai.',
+      title: 'White-Glove Turnkey Keys Handover',
+      desc: 'Deep cleaning, medical-grade air purification, appliance integration, smart home automation calibration, and fresh linens so your home is 100% ready when you land in Chennai.',
     },
   ];
 
@@ -66,7 +66,7 @@ export default async function NriPage() {
       feature: 'Site Oversight',
       traditional: 'Relying on relatives or unmonitored local contractors',
       whiteglove:
-        'Full-time dedicated senior site manager with 4K camera feeds',
+        'Full-time dedicated senior site architect with 4K camera feeds',
     },
     {
       feature: 'Design Review',
@@ -80,9 +80,14 @@ export default async function NriPage() {
     },
     {
       feature: 'Material Sourcing',
-      traditional: 'Local shop visits required in person during visits',
+      traditional: 'Local shop visits required in person during short trips',
       whiteglove:
-        'Digital material sample kits delivered to your overseas door',
+        'Physical material sample kits delivered to your overseas door',
+    },
+    {
+      feature: 'Quality Assurance',
+      traditional: 'Unchecked joinery finish & uneven tile alignment',
+      whiteglove: 'Laser-guided precision leveling & factory-controlled joinery',
     },
     {
       feature: 'Handover State',
@@ -98,42 +103,31 @@ export default async function NriPage() {
       <FaqJsonLd items={nriFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
-      <section className="relative overflow-hidden pt-12 pb-16 min-h-[80vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
-        {/* Full-Bleed Background Image with Ken Burns Cinematic Effect */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <Image
-            src="/posters/nri-hub-hero.png"
-            alt="Luxe Axis NRI Remote Interior Design Protocol"
-            fill
-            priority
-            className="object-cover animate-ken-burns opacity-40 scale-105"
-          />
-          {/* Ambient Gradient Overlay for High-Contrast Text Legibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-surface-deep via-surface-deep/90 to-surface-deep/60" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-surface-deep via-surface-deep/80 to-transparent" />
-        </div>
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        {/* Full-Bleed Animated Background with Ken Burns Effect */}
+        <NriHeroBackground />
 
         <Container className="relative z-10">
           <Breadcrumbs path="/nri" labels={{ nri: 'NRI Remote Design' }} />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
-                Turnkey Remote Protocol
+                Turnkey Remote Interior Architecture Protocol
               </span>
             </div>
 
             <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
-              Design Your Chennai Home <br />
+              Design Your Chennai Luxury Residence <br />
               <span className="text-accent">From Anywhere in the World</span>
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-              You do not need to be in the country, take work leave, or ask
-              relatives to supervise a site. Reviews happen over 3D VR video
-              calls in your time zone, with live 4K camera streams and spend
-              tracking in Space OS.
+              Bespoke interior design and turnkey fit-outs for overseas home-owners.
+              You do not need to take work leave or ask relatives to supervise a site.
+              Design reviews happen over 3D VR video calls in your timezone, with live 4K site feeds,
+              curated material sample kits sent abroad, and milestone spend tracking in Space OS.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">

@@ -175,7 +175,7 @@ export const RESIDENTIAL_MEGA_MENU: MegaMenuConfig = {
     title: 'The Platinum Residence',
     tagline: 'Vastu-Tech Villa Interiors with Real-time 3D VR Simulation',
     href: '/residential/luxury',
-    image: '/posters/hero.avif',
+    image: '/posters/residential-spotlight.png',
     ctaText: 'Explore Ultra-Luxury →',
   },
 };
