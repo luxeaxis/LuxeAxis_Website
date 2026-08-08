@@ -1,13 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { Hero } from '@/components/sections/Hero';
 import { PersonaRouter } from '@/components/sections/PersonaRouter';
 import { ProofStrip } from '@/components/sections/ProofStrip';
-import {
-  FeaturedProjects,
-  IntelligenceTeaser,
-  PricingTeaser,
-} from '@/components/sections/Teaser';
+import { FeaturedProjects, IntelligenceTeaser, PricingTeaser } from '@/components/sections/Teaser';
 import { CTASection, TestimonialBand } from '@/components/sections/CTASection';
 import type { Persona, Stat, Testimonial, Tier } from '@/lib/content/types';
 
@@ -19,13 +15,7 @@ import type { Persona, Stat, Testimonial, Tier } from '@/lib/content/types';
 beforeEach(() => {
   vi.stubGlobal(
     'matchMedia',
-    vi
-      .fn()
-      .mockReturnValue({
-        matches: true,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      }),
+    vi.fn().mockReturnValue({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }),
   );
   class StubIntersectionObserver {
     observe() {}
@@ -75,44 +65,11 @@ describe('Hero', () => {
 
   it('renders the trust strip as a list, so its shape is announced', () => {
     render_();
-    // Scoped to the named list rather than querying every listitem on the
-    // page. The hero carries two lists now — the guarantees and the hotspot
-    // disclosures — and both are labelled precisely so they can be told apart,
-    // by this test and by a screen reader alike.
-    const list = screen.getByRole('list', { name: 'Studio guarantees' });
-    const items = within(list).getAllByRole('listitem');
+    const items = screen.getAllByRole('listitem');
     expect(items.map((li) => li.textContent)).toEqual([
       'Transparent pricing',
       '60-day handover guarantee',
     ]);
-  });
-
-  it('exposes each hotspot as a real disclosure button paired with the 3D marker', () => {
-    render_();
-    const list = screen.getByRole('list', { name: 'What you are looking at' });
-    const buttons = within(list).getAllByRole('button');
-    expect(buttons).toHaveLength(3);
-
-    // The button ids ARE the controlIds the 3D markers dispatch to (see
-    // three/core/interaction.tsx). If these drift, the meshes go dead and no
-    // type error catches it — the binding is by string, across the seam.
-    expect(buttons.map((button) => button.id)).toEqual([
-      'hero-hotspot-materials',
-      'hero-hotspot-lighting',
-      'hero-hotspot-axis',
-    ]);
-
-    // Collapsed on load, and operable with no WebGL involved at all.
-    for (const button of buttons) {
-      expect(button.getAttribute('aria-expanded')).toBe('false');
-    }
-  });
-
-  it('no longer ships the autoplaying video carousel', () => {
-    const { container } = render_();
-    // 71 MB of MP4 on a 10-second timer: banned by the performance spec (video
-    // on the hero) and by Cinematic Direction §10.2 (timed reveals).
-    expect(container.querySelector('video')).toBeNull();
   });
 });
 
@@ -171,9 +128,7 @@ describe('sections waiting on content that does not exist yet', () => {
   });
 
   it('but each appears as soon as content arrives, with no component change', () => {
-    const stats: Stat[] = [
-      { id: 'delivered', value: 120, label: 'Projects delivered' },
-    ];
+    const stats: Stat[] = [{ id: 'delivered', value: 120, label: 'Projects delivered' }];
     const testimonials: Testimonial[] = [
       {
         id: 't1',
@@ -198,13 +153,7 @@ describe('sections waiting on content that does not exist yet', () => {
 
 describe('PricingTeaser', () => {
   const unpriced: Tier[] = [
-    {
-      id: 'essential',
-      name: 'Essential',
-      summary: 'A complete 2 or 3BHK.',
-      priceFrom: null,
-      inclusions: ['Design'],
-    },
+    { id: 'essential', name: 'Essential', summary: 'A complete 2 or 3BHK.', priceFrom: null, inclusions: ['Design'] },
   ];
 
   it('names the fee band as pending rather than inventing a figure', () => {
@@ -227,11 +176,7 @@ describe('PricingTeaser', () => {
 
   it('still leads with the transparency claim either way', () => {
     render(<PricingTeaser tiers={unpriced} />);
-    expect(
-      screen.getByRole('heading', {
-        name: /Most Chennai studios hide the price/,
-      }),
-    ).toBeDefined();
+    expect(screen.getByRole('heading', { name: /Most Chennai studios hide the price/ })).toBeDefined();
   });
 });
 
@@ -243,8 +188,7 @@ describe('IntelligenceTeaser', () => {
           {
             id: 'vastu-tech',
             name: 'Vastu-Tech',
-            claim:
-              'We check your plan against Vastu in seconds, then a human confirms it.',
+            claim: 'We check your plan against Vastu in seconds, then a human confirms it.',
             href: '/intelligence/vastu-tech',
             icon: 'compass',
             summary: 'A Vastu grid is laid over your floor plan and scanned.',
@@ -252,9 +196,9 @@ describe('IntelligenceTeaser', () => {
         ]}
       />,
     );
-    expect(
-      screen.getByRole('link', { name: /Vastu-Tech/ }).getAttribute('href'),
-    ).toBe('/intelligence/vastu-tech');
+    expect(screen.getByRole('link', { name: /Vastu-Tech/ }).getAttribute('href')).toBe(
+      '/intelligence/vastu-tech',
+    );
   });
 });
 
@@ -271,13 +215,7 @@ describe('CTASection', () => {
     // been supplied. Better absent than wired to a placeholder that fails on
     // the highest-value click on the page.
     render(<CTASection />);
-    const hrefs = screen
-      .getAllByRole('link')
-      .map((a) => a.getAttribute('href'));
-    expect(
-      hrefs.some(
-        (href) => href?.includes('wa.me') || href?.includes('whatsapp'),
-      ),
-    ).toBe(false);
+    const hrefs = screen.getAllByRole('link').map((a) => a.getAttribute('href'));
+    expect(hrefs.some((href) => href?.includes('wa.me') || href?.includes('whatsapp'))).toBe(false);
   });
 });

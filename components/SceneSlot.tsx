@@ -40,29 +40,7 @@ export function SceneSlot({
   const slotRef = useRef<HTMLDivElement>(null);
   const setActiveScene = useAppStore((state) => state.setActiveScene);
 
-  /**
-   * On a journey page, the journey owns `activeScene` and this slot stands down.
-   *
-   * Both this component and `components/JourneyProvider.tsx` publish
-   * `activeScene`, and on the home page both are mounted at once — so without
-   * this they fight. The failure is specific and would have been unpleasant to
-   * diagnose: at the `about` or `services` station the journey correctly writes
-   * `null` (neither declares a scene), while a `Card` further down the page
-   * whose media slot happens to be 30% visible writes its own scene id back.
-   * The canvas then mounts a scene the camera is not composed for, and which
-   * station "wins" depends on scroll speed.
-   *
-   * The journey wins by design: it knows the whole page's narrative order,
-   * whereas a slot only knows whether it personally is on screen. The two
-   * observers also disagree on what "visible" means — 30% of the slot here,
-   * versus owning the middle 10% of the viewport there — and reconciling that
-   * is not worth doing when one of them is strictly better informed.
-   */
-  const onJourney = useAppStore((state) => state.station) !== null;
-
   useEffect(() => {
-    if (onJourney) return;
-
     const el = slotRef.current;
     if (!el || typeof IntersectionObserver === 'undefined') return;
 
@@ -78,7 +56,7 @@ export function SceneSlot({
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [id, setActiveScene, onJourney]);
+  }, [id, setActiveScene]);
 
   return (
     <div
