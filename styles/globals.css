@@ -24,7 +24,8 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     font-family: var(--font-family-display);
     letter-spacing: var(--font-tracking-tight);
     line-height: var(--font-leading-tight);
@@ -126,7 +127,8 @@
     background-color: var(--nav-bg);
     backdrop-filter: blur(var(--component-nav-blur)) saturate(1.1);
     -webkit-backdrop-filter: blur(var(--component-nav-blur)) saturate(1.1);
-    border-bottom: var(--border-width-hairline) solid var(--component-nav-border);
+    border-bottom: var(--border-width-hairline) solid
+      var(--component-nav-border);
   }
   .lx-glass--condensed {
     backdrop-filter: blur(var(--blur-glass-strong)) saturate(1.1);
@@ -137,7 +139,9 @@
      "Always ship a solid fallback where backdrop-filter is unsupported").
      Legibility must never depend on what happens to be scrolling behind an
      unsupported blur, so this drops straight to the opaque surface colour. */
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
     .lx-glass {
       background-color: var(--surface);
     }
@@ -233,33 +237,51 @@
 
   /* Ultra-Premium Liquid Glass Surface */
   .lx-liquid-glass {
-    background: linear-gradient(135deg, rgba(30, 63, 46, 0.85) 0%, rgba(18, 41, 30, 0.90) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(30, 63, 46, 0.85) 0%,
+      rgba(18, 41, 30, 0.9) 100%
+    );
     backdrop-filter: blur(18px) saturate(1.2);
     -webkit-backdrop-filter: blur(18px) saturate(1.2);
     border: 1px solid rgba(255, 193, 7, 0.25);
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 12px 40px 0 rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .lx-liquid-glass:hover {
     border-color: rgba(255, 193, 7, 0.85);
-    box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.5), 0 0 35px 4px rgba(255, 193, 7, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+    box-shadow:
+      0 20px 50px 0 rgba(0, 0, 0, 0.5),
+      0 0 35px 4px rgba(255, 193, 7, 0.45),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
   }
 
   /* Interactive Liquid Glass Card with Radiant Outer Golden Glow */
   .lx-liquid-glass-card {
-    background: linear-gradient(135deg, rgba(40, 82, 61, 0.8) 0%, rgba(30, 63, 46, 0.9) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(40, 82, 61, 0.8) 0%,
+      rgba(30, 63, 46, 0.9) 100%
+    );
     backdrop-filter: blur(16px) saturate(1.15);
     -webkit-backdrop-filter: blur(16px) saturate(1.15);
     border: 1px solid rgba(255, 193, 7, 0.25);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 8px 32px 0 rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .lx-liquid-glass-card:hover {
     border-color: rgba(255, 193, 7, 0.85) !important;
     transform: translateY(-5px);
-    box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.5), 0 0 35px 4px rgba(255, 193, 7, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3) !important;
+    box-shadow:
+      0 20px 50px 0 rgba(0, 0, 0, 0.5),
+      0 0 35px 4px rgba(255, 193, 7, 0.45),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.3) !important;
   }
 
   /* Liquid Sheen Accent Button */
@@ -269,12 +291,17 @@
     background: linear-gradient(135deg, #ffc107 0%, #ffe082 50%, #c79100 100%);
     background-size: 200% 200%;
     animation: lx-liquid-flow 6s ease infinite;
-    box-shadow: 0 4px 20px rgba(255, 193, 7, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    box-shadow:
+      0 4px 20px rgba(255, 193, 7, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .lx-liquid-btn:hover {
-    box-shadow: 0 8px 32px rgba(255, 193, 7, 0.65), 0 0 28px rgba(255, 193, 7, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    box-shadow:
+      0 8px 32px rgba(255, 193, 7, 0.65),
+      0 0 28px rgba(255, 193, 7, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
     transform: translateY(-2px);
   }
 
@@ -290,6 +317,26 @@
 
   .lx-glass-panel:hover {
     border-color: rgba(255, 193, 7, 0.85);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 35px 4px rgba(255, 193, 7, 0.45);
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, 0.5),
+      0 0 35px 4px rgba(255, 193, 7, 0.45);
+  }
+
+  /* Ken Burns Slow Cinematic Pan & Zoom Animation */
+  @keyframes ken-burns {
+    0% {
+      transform: scale(1) translate(0%, 0%);
+    }
+    50% {
+      transform: scale(1.12) translate(-1.5%, -1%);
+    }
+    100% {
+      transform: scale(1) translate(0%, 0%);
+    }
+  }
+
+  .animate-ken-burns {
+    animation: ken-burns 28s ease-in-out infinite alternate;
+    will-change: transform;
   }
 }
