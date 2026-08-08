@@ -48,6 +48,23 @@ export type StationPose = {
   fov: number;
   /** How the camera arrives here from the previous station. */
   move: JourneyMove;
+  /**
+   * An authored opening move into this station, played once on a fresh load.
+   *
+   * Only honoured for the FIRST station, and only when motion is not reduced.
+   * That restriction is the whole reason this is safe: an entry animation on
+   * any other station would mean a deep link to `/#pricing` flying the camera
+   * in from somewhere the visitor never asked to be, and every arrival by
+   * scroll would replay an opening the visitor is already past.
+   *
+   * `entryFrom` is where the camera starts; it travels to `position` over
+   * `entryDuration` seconds. `entryTarget` is where it looks at the start — a
+   * separate value because "enter through a doorway" needs the camera aimed at
+   * the opening it is passing through, not at where it will end up.
+   */
+  entryFrom?: Vec3;
+  entryTarget?: Vec3;
+  entryDuration?: number;
 };
 
 /**

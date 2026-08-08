@@ -1,82 +1,98 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+import { useState } from 'react';
 import { Button } from '../Button';
 import { Container } from '../layout';
 import { SceneSlot } from '../SceneSlot';
 import { Icon } from '../Icon';
 import { BOOK_AUDIT } from '@/lib/nav';
+import { track } from '@/lib/analytics/client';
 
-export interface HeroSlide {
+/**
+ * The hero (Landing Blueprint §1, §3.1; Cinematic Direction Scene 01).
+ *
+ * ## What changed, and why the video had to go
+ *
+ * This used to be a four-slide MP4 carousel advancing on a 10-second timer.
+ * Three separate rules said it could not stay:
+ *
+ *   - `LuxeAxis_Performance_A11y_QA.md` §5, on video: "avoid on the hero",
+ *     "prefer a poster still over autoplay video", "never the LCP". The four
+ *     files totalled 71 MB — 99.9% of every asset in `public/`.
+ *   - Cinematic Direction §10.2 bans timed reveals in the main flow: "No
+ *     autoplay, no scroll-jacking, no timed reveals." A carousel that advances
+ *     on a clock takes the pacing away from the visitor.
+ *   - §10.1 requires content be readable at every frame. A slide that changes
+ *     under a reader mid-sentence is the opposite.
+ *
+ * What replaces it is `three/scenes/HeroRoomScene.tsx` — a camera entering a
+ * living room — layered over the poster that was always meant to be the LCP
+ * element.
+ *
+ * ## What is preserved, exactly
+ *
+ * The `h1`, the sub, the eyebrow, both CTAs and their hrefs, and the trust
+ * points are unchanged. The page's `metadata` export lives in `app/page.tsx`
+ * and is untouched, so nothing about the SEO surface moves.
+ *
+ * The showcase card is gone with the carousel that fed it: it existed to name
+ * whichever slide was on screen, and three of its four entries pointed at
+ * `/portfolio` rather than at a project. Its job — proving there is real work —
+ * is done properly by `FeaturedProjects` further down the same page, from real
+ * content rather than a hardcoded list.
+ *
+ * ## The 3D layer is an enhancement, and this file assumes nothing about it
+ *
+ * `SceneSlot` decides poster-versus-live by itself. With `three_v1` off, on
+ * T0/T1, under reduced motion, or with no WebGL, everything below renders
+ * identically over a still. The hotspot buttons work in all of those cases —
+ * they are ordinary disclosure buttons whose content is ordinary DOM. The 3D
+ * markers are a second way to reach a control that already works, never the
+ * only way.
+ */
+
+type Hotspot = {
   id: string;
-  number: string;
-  title: string;
-  category: string;
-  location: string;
-  videoUrl: string;
-  posterUrl: string;
+  label: string;
+  detail: string;
   href: string;
-}
+  linkLabel: string;
+};
 
-const HERO_SLIDES: readonly HeroSlide[] = [
+/**
+ * The three claims the room makes.
+ *
+ * Each `id` is also the `controlId` a marker in the 3D scene dispatches to (see
+ * `three/core/interaction.tsx`). The pairing is the accessibility contract: the
+ * mesh is a pointer affordance for this button, not a separate control.
+ */
+const HOTSPOTS: readonly Hotspot[] = [
   {
-    id: 'poes-garden',
-    number: '01',
-    title: 'Poes Garden Villa',
-    category: 'Architectural Interiors & Vastu-Tech',
-    location: 'Poes Garden',
-    videoUrl: '/videos/hero-slide-1.mp4',
-    posterUrl: '/posters/hero.avif',
-    href: '/portfolio/poes-garden-villa',
+    id: 'hero-hotspot-materials',
+    label: 'Materials',
+    detail:
+      'Stone, solid timber and real metal, specified by name in your estimate rather than described as “premium finishes”.',
+    href: '/style',
+    linkLabel: 'See the material system',
   },
   {
-    id: 'adyar-waterfront',
-    number: '02',
-    title: 'Adyar Waterfront Penthouse',
-    category: 'Luxury Minimalist Residence',
-    location: 'Adyar',
-    videoUrl: '/videos/hero-slide-2.mp4',
-    posterUrl: '/posters/portfolio.avif',
-    href: '/portfolio',
+    id: 'hero-hotspot-lighting',
+    label: 'Lighting',
+    detail:
+      'A layered scheme — ambient, task and accent — designed as one circuit plan, not chosen fitting by fitting at the end.',
+    href: '/residential/false-ceiling',
+    linkLabel: 'How we plan lighting',
   },
   {
-    id: 'omr-innovation-campus',
-    number: '03',
-    title: 'OMR Innovation Campus',
-    category: 'Commercial Architecture & Workspace OS',
-    location: 'OMR IT Corridor',
-    videoUrl: '/videos/hero-slide-3.mp4',
-    posterUrl: '/posters/space-os.avif',
-    href: '/commercial',
-  },
-  {
-    id: 'ecr-sanctuary',
-    number: '04',
-    title: 'ECR Beachfront Sanctuary',
-    category: 'Sustainable Coastal Villa',
-    location: 'East Coast Road',
-    videoUrl: '/videos/hero-slide-4.mp4',
-    posterUrl: '/posters/journey.avif',
-    href: '/portfolio',
+    id: 'hero-hotspot-axis',
+    label: 'Vastu alignment',
+    detail:
+      'Every plan is checked against Vastu zoning, and a human designer reviews the result before it reaches you.',
+    href: '/intelligence/vastu',
+    linkLabel: 'About Vastu-Tech',
   },
 ];
 
-const SLIDE_DURATION_MS = 10000;
-
-/**
- * The flagship hero video slider (Landing Blueprint §1, §3.1).
- *
- * Full-bleed architectural video over a poster fallback, advancing on a timer.
- *
- * The name of a large international architecture practice was used throughout
- * this file as shorthand for the visual reference — including inside the
- * section's `aria-label`, where it was the accessible name a screen-reader
- * user heard on the studio's own home page. A competitor's trade name is not
- * ours to put in our markup, and least of all in the one place that reads as
- * self-description. Referencing someone's work is a design conversation; their
- * name belongs in that conversation, not in the DOM.
- */
 export function Hero({
   headline,
   sub,
@@ -86,90 +102,66 @@ export function Hero({
   sub: string;
   trustPoints: readonly string[];
 }) {
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [videoError, setVideoError] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  // Null means "nothing expanded", which is the state the page loads in. The
+  // room reads as a room before it reads as a diagram of one.
+  const [openHotspot, setOpenHotspot] = useState<string | null>(null);
 
-  const activeSlide = HERO_SLIDES[currentSlideIndex]!;
+  const toggle = (hotspot: Hotspot) => {
+    const next = openHotspot === hotspot.id ? null : hotspot.id;
+    setOpenHotspot(next);
+    if (next) {
+      // `hero_hotspot` was added to the `AnalyticsEvent` union rather than
+      // passed as a free string — the union is what stops event names drifting
+      // into six spellings of the same thing. `track` is a no-op until a
+      // provider is configured AND consent is granted, so this costs nothing
+      // today and starts working the moment either lands.
+      track('hero_hotspot', { hotspot: hotspot.label });
+    }
+  };
 
-  // Auto-slide timer effect
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlideIndex((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, SLIDE_DURATION_MS);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  // Reset video error state whenever active slide changes
-  useEffect(() => {
-    setVideoError(false);
-  }, [currentSlideIndex]);
+  const open = HOTSPOTS.find((hotspot) => hotspot.id === openHotspot) ?? null;
 
   return (
     <SceneSlot id="hero" layout="content">
-      <section aria-label="Featured project showcase" className="relative w-full overflow-hidden isolate min-h-[85vh] flex flex-col justify-between">
-        
-        {/* Full-Bleed Video & Poster Background Stage */}
-        <div className="absolute inset-0 -z-10 overflow-hidden bg-surface-deep">
-          {/* Base Layer: High-Resolution Poster Image */}
-          <Image
-            key={activeSlide.posterUrl}
-            src={activeSlide.posterUrl}
-            alt={activeSlide.title}
-            fill
-            priority
-            className="object-cover transition-opacity duration-1000 opacity-100"
-          />
-
-          {/* Top Layer: Background Video Loop (renders when valid MP4 video is present) */}
-          {!videoError && (
-            <video
-              ref={videoRef}
-              key={activeSlide.videoUrl}
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster={activeSlide.posterUrl}
-              onError={() => setVideoError(true)}
-              className="absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 opacity-100"
-            >
-              <source src={activeSlide.videoUrl} type="video/mp4" />
-            </video>
-          )}
-
-          {/* Perfect High-Contrast Vignette: Solid Left Shadow Layer for 100% Text Legibility without Fog */}
-          <div className="absolute inset-0 bg-gradient-to-r from-surface-deep via-surface-deep/85 to-transparent w-full md:w-4/5 lg:w-2/3 pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-surface-deep via-surface-deep/80 to-transparent pointer-events-none" />
-        </div>
-
-        <Container className="relative z-10 w-full py-8 sm:py-12 md:py-16 lg:py-20 my-auto">
+      <section
+        aria-label="Introduction"
+        className="relative isolate flex min-h-[85vh] w-full flex-col justify-between overflow-hidden"
+      >
+        <Container className="relative z-10 my-auto w-full py-8 sm:py-12 md:py-16 lg:py-20">
           <div className="grid grid-cols-1 gap-8 md:gap-10 lg:grid-cols-12 lg:gap-12 lg:items-center">
-            
-            {/* Left Editorial Statement Column (Unboxed High-Contrast Typography) */}
-            <div className="flex flex-col gap-5 sm:gap-6 lg:col-span-7 max-w-full lg:max-w-measure">
-              
-              {/* Category Eyebrow Badge (High-Contrast Pill) */}
-              <div className="self-start inline-flex max-w-full items-center gap-2 text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent animate-pulse" />
-                <span className="truncate">Architecture, Interiors & Vastu-Tech</span>
+            <div className="flex max-w-full flex-col gap-5 sm:gap-6 lg:col-span-7 lg:max-w-measure">
+              {/* Eyebrow. The pulsing dot is gone: §10.7 bans anything flashing
+                  more than three times a second, and an indefinite pulse beside
+                  a headline is motion with no message. */}
+              <div className="inline-flex max-w-full items-center gap-2 self-start font-ui text-overline font-bold uppercase tracking-[var(--font-tracking-wider)] text-accent drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                <span
+                  aria-hidden="true"
+                  className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                />
+                <span className="truncate">
+                  Architecture, Interiors &amp; Vastu-Tech
+                </span>
               </div>
-              
-              {/* High-Contrast Headline & Subtitle */}
-              <div className="flex flex-col gap-3 sm:gap-4 m-0 p-0">
-                <h1 className="m-0 p-0 font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface text-balance font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] [text-shadow:_0_2px_12px_rgba(0,0,0,0.9)]">
+
+              <div className="m-0 flex flex-col gap-3 p-0 sm:gap-4">
+                {/* The page's only h1, and the LCP text. It is server-rendered
+                    and never waits on WebGL — the whole reason the scene is
+                    allowed to exist at all. */}
+                <h1 className="m-0 text-balance p-0 font-display text-[length:var(--typography-display-font-size)] font-bold leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] [text-shadow:_0_2px_12px_rgba(0,0,0,0.9)]">
                   {headline}
                 </h1>
-                
-                <p className="m-0 p-0 text-body sm:text-[length:var(--typography-body-lg-font-size)] leading-relaxed text-on-surface font-semibold text-pretty drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] [text-shadow:_0_1px_8px_rgba(0,0,0,0.9)]">
+                <p className="m-0 text-pretty p-0 text-body font-semibold leading-relaxed text-on-surface drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] [text-shadow:_0_1px_8px_rgba(0,0,0,0.9)] sm:text-[length:var(--typography-body-lg-font-size)]">
                   {sub}
                 </p>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
-                <Button as="a" href={BOOK_AUDIT.href} size="lg" className="w-full sm:w-auto text-center justify-center shadow-2xl font-bold">
+              <div className="flex flex-col items-stretch gap-3 pt-1 sm:flex-row sm:items-center sm:gap-4 sm:pt-2">
+                <Button
+                  as="a"
+                  href={BOOK_AUDIT.href}
+                  size="lg"
+                  className="w-full justify-center text-center font-bold shadow-2xl sm:w-auto"
+                >
                   {BOOK_AUDIT.label}
                 </Button>
                 <Button
@@ -178,67 +170,120 @@ export function Hero({
                   variant="secondary"
                   size="lg"
                   iconTrailing="arrow-right"
-                  className="w-full sm:w-auto text-center justify-center bg-surface-raised/90 hover:bg-surface-raised text-on-surface border border-accent/30 shadow-2xl backdrop-blur-sm font-semibold"
+                  className="w-full justify-center border border-accent/30 bg-surface-raised/90 text-center font-semibold text-on-surface shadow-2xl backdrop-blur-sm hover:bg-surface-raised sm:w-auto"
                 >
                   See your price
                 </Button>
               </div>
 
-              {/* Trust Points List */}
-              <ul className="m-0 p-0 list-none flex flex-wrap gap-x-5 sm:gap-x-6 gap-y-2 sm:gap-y-2.5 text-overline sm:text-small text-on-surface pt-2 sm:pt-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+              {/* Named, because the hero now contains two lists. An unlabelled
+                  list is announced as "list, 2 items" with no indication of
+                  what it is a list OF, and two of them in one region is worse
+                  again — a screen-reader user has to read into each to tell
+                  them apart. */}
+              <ul
+                aria-label="Studio guarantees"
+                className="m-0 flex list-none flex-wrap gap-x-5 gap-y-2 p-0 pt-2 text-overline text-on-surface drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] sm:gap-x-6 sm:gap-y-2.5 sm:pt-3 sm:text-small"
+              >
                 {trustPoints.map((point) => (
                   <li key={point} className="flex items-center gap-2 font-bold">
-                    <Icon name="check" size="sm" className="text-accent shrink-0" decorative />
+                    <Icon
+                      name="check"
+                      size="sm"
+                      className="shrink-0 text-accent"
+                      decorative
+                    />
                     <span>{point}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Right column: the active slide, as a spotlight card. */}
-            <div className="flex flex-col gap-4 sm:gap-5 lg:col-span-5 w-full">
-              
-              {/* Active slide spotlight card */}
-              <div className="relative isolate overflow-hidden rounded-xl bg-surface-deep/95 border border-accent/20 p-4 shadow-2xl backdrop-blur-md group">
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg bg-surface-raised">
-                  <Image
-                    src={activeSlide.posterUrl}
-                    alt={activeSlide.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface-deep/90 via-transparent to-transparent" />
-                  
-                  <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="rounded-full bg-accent px-2.5 py-0.5 text-overline font-bold text-accent-contrast uppercase tracking-wider shadow-md">
-                      Featured Showcase {activeSlide.number}
-                    </span>
-                  </div>
-                </div>
+            {/* Right column: the hotspots, as an ordinary disclosure list.
+                This is the "keyboard-operable DOM equivalent" spec §8.2 asks
+                for — real DOM rather than drei's <Html>, so it is
+                server-rendered, indexable, focusable in document order, and
+                present for every visitor who never loads a canvas. */}
+            <div className="w-full lg:col-span-5">
+              <div className="rounded-xl border border-accent/20 bg-surface-deep/95 p-4 shadow-2xl backdrop-blur-md sm:p-5">
+                <h2
+                  id="hero-hotspots-heading"
+                  className="m-0 font-display text-small font-bold text-on-surface"
+                >
+                  What you are looking at
+                </h2>
+                <p className="m-0 mt-1 font-ui text-overline text-on-surface-2">
+                  Three decisions in every room we design.
+                </p>
 
-                <div className="mt-3.5 flex items-center justify-between gap-3">
-                  <div className="min-w-0 flex-1">
-                    <h3 className="m-0 font-display text-small font-bold text-on-surface truncate">
-                      {activeSlide.title}
-                    </h3>
-                    <p className="m-0 font-ui text-overline text-on-surface-2 truncate">
-                      {activeSlide.category} • {activeSlide.location}
-                    </p>
-                  </div>
-                  
-                  <a
-                    href={activeSlide.href}
-                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/20 text-accent transition-all hover:bg-accent hover:text-accent-contrast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                    aria-label={`Explore ${activeSlide.title}`}
-                  >
-                    <Icon name="arrow-right" size="sm" decorative />
-                  </a>
-                </div>
+                <ul
+                  aria-labelledby="hero-hotspots-heading"
+                  className="m-0 mt-4 flex list-none flex-col gap-2 p-0"
+                >
+                  {HOTSPOTS.map((hotspot) => {
+                    const isOpen = openHotspot === hotspot.id;
+                    return (
+                      <li key={hotspot.id}>
+                        <button
+                          id={hotspot.id}
+                          type="button"
+                          onClick={() => toggle(hotspot)}
+                          aria-expanded={isOpen}
+                          aria-controls={`${hotspot.id}-detail`}
+                          className="flex w-full items-center justify-between gap-3 rounded-lg border border-border-subtle bg-surface-raised/60 px-3 py-2.5 text-left font-ui text-small font-semibold text-on-surface transition-colors hover:bg-surface-raised focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent motion-reduce:transition-none"
+                        >
+                          <span className="flex items-center gap-2.5">
+                            {/* Paired with the marker in the 3D scene. Shape
+                                and text carry the meaning, never colour alone. */}
+                            <span
+                              aria-hidden="true"
+                              className={`h-2 w-2 shrink-0 rounded-full ${isOpen ? 'bg-accent' : 'bg-on-surface-3/60'}`}
+                            />
+                            {hotspot.label}
+                          </span>
+                          {/* Rotated rather than swapped for a `chevron-up`:
+                              the Icon set is a deliberately closed list and
+                              does not contain one. A transform is also the
+                              better answer here — it animates, and it cannot
+                              fall out of sync with the open state. */}
+                          <Icon
+                            name="chevron-down"
+                            size="sm"
+                            className={`shrink-0 text-accent transition-transform motion-reduce:transition-none ${isOpen ? 'rotate-180' : ''}`}
+                            decorative
+                          />
+                        </button>
+
+                        <div
+                          id={`${hotspot.id}-detail`}
+                          role="region"
+                          aria-labelledby={hotspot.id}
+                          hidden={!isOpen}
+                          className="px-3 pb-3 pt-2"
+                        >
+                          <p className="m-0 text-small leading-relaxed text-on-surface-2">
+                            {hotspot.detail}
+                          </p>
+                          <a
+                            href={hotspot.href}
+                            className="mt-2 inline-flex items-center gap-1.5 font-ui text-overline font-bold uppercase tracking-[var(--font-tracking-wider)] text-accent underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                          >
+                            {hotspot.linkLabel}
+                            <Icon name="arrow-right" size="sm" decorative />
+                          </a>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                {open === null && (
+                  <p className="m-0 mt-3 font-ui text-overline text-on-surface-3">
+                    Select any of the three, or the matching marker in the room.
+                  </p>
+                )}
               </div>
-
             </div>
-
           </div>
         </Container>
       </section>

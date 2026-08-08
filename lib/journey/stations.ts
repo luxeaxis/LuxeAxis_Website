@@ -36,6 +36,14 @@ export const HOME_STATIONS: readonly Station[] = [
       target: [0, 1.6, 0],
       fov: 42,
       move: 'descent',
+      // The doorway dolly of Scene 01: the camera starts outside the room, at
+      // standing eye height, looking through the opening — then travels in and
+      // rises to the establishing pose. This is the "entering a luxury living
+      // room" move, and it is authored rather than scroll-driven because an
+      // arrival is something that happens once.
+      entryFrom: [0, 1.5, 15.5],
+      entryTarget: [0, 1.5, 2.0],
+      entryDuration: 3.4,
     },
   },
   {

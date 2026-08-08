@@ -12,6 +12,15 @@
  * room, here is the part you will actually live in, now decide. The settle is
  * mandatory before the page's CTA — the spec requires decisions be made from
  * stillness.
+ *
+ * ## Furniture is exported separately
+ *
+ * `LivingRoomFurniture` carries the room's contents with no shell, camera or
+ * lighting of its own, so `three/scenes/HeroRoomScene.tsx` can furnish the
+ * identical room under a different film. Two living rooms that were meant to
+ * match and slowly stopped matching is exactly the drift this avoids — and the
+ * hero is the one place a visitor will compare them, because it is where they
+ * arrive before clicking through.
  */
 
 import { useMemo } from 'react';
@@ -29,7 +38,7 @@ import {
   Table,
 } from './primitives';
 
-const MATERIALS = [
+export const LIVING_ROOM_MATERIALS = [
   'oakFloor',
   'plasterDeep',
   'plasterWarm',
@@ -42,38 +51,36 @@ const MATERIALS = [
   'signalGold',
 ] as const;
 
-const DIMENSIONS = { width: 8, depth: 7, height: 3.1 };
+export const LIVING_ROOM_DIMENSIONS = { width: 8, depth: 7, height: 3.1 };
 
-function LivingRoomContent() {
-  const m = useMaterials(MATERIALS);
+/**
+ * Where the hotspots sit, in world space.
+ *
+ * Exported because the hero scene places interactive markers at exactly these
+ * points and the DOM copy describes exactly these objects. A hotspot floating
+ * next to nothing is the failure mode; keeping the coordinates beside the
+ * furniture that justifies them is what prevents it.
+ */
+export const LIVING_ROOM_ANCHORS = {
+  /** The marble coffee table — the materials claim. */
+  materials: [0, 0.5, -0.5] as [number, number, number],
+  /** The pendant over the table — the lighting claim. */
+  lighting: [0, 1.95, -0.5] as [number, number, number],
+  /** The gold Axis against the back wall — the Vastu claim. */
+  axis: [-2.9, 1.5, -3.2] as [number, number, number],
+};
 
-  const config = useMemo<RoomConfig>(
-    () => ({
-      dimensions: DIMENSIONS,
-      mood: 'domesticWarm',
-      floor: 'oakFloor',
-      walls: 'plasterDeep',
-      shots: [
-        // Wide, high, taking in the whole volume.
-        shot.pullBack(0, [0, 2.6, 7.4], [0, 1.1, -0.6], 45),
-        // Down and forward, onto the seating group.
-        shot.descent(0.42, [0.4, 1.75, 4.6], [0, 0.85, -0.8], 41),
-        // The sofa fills the frame; the lens tightens.
-        shot.pushIn(0.72, [0.2, 1.35, 3.1], [-0.1, 0.72, -1.2], 36),
-        // Dead rest.
-        shot.settle(1, [0.2, 1.3, 2.9], [-0.1, 0.7, -1.2], 38),
-      ],
-    }),
-    [],
-  );
+export function LivingRoomFurniture() {
+  const m = useMaterials(LIVING_ROOM_MATERIALS);
+  const height = LIVING_ROOM_DIMENSIONS.height;
 
   return (
-    <RoomShell config={config}>
+    <group>
       {/* The Axis, against the back wall, off-centre so it reads as a
           deliberate architectural line rather than as a symmetry axis. */}
       <AxisPillar
         position={[-2.9, 0, -3.2]}
-        height={DIMENSIONS.height}
+        height={height}
         material={m.polishedGold}
       />
 
@@ -142,13 +149,41 @@ function LivingRoomContent() {
 
       {/* A single pendant over the coffee table. */}
       <Pendant
-        position={[0, DIMENSIONS.height, -0.5]}
+        position={[0, height, -0.5]}
         dropTo={1.85}
         shade={m.brushedGold}
         stem={m.brushedGold}
         glow={m.signalGold}
         radius={0.2}
       />
+    </group>
+  );
+}
+
+function LivingRoomContent() {
+  const config = useMemo<RoomConfig>(
+    () => ({
+      dimensions: LIVING_ROOM_DIMENSIONS,
+      mood: 'domesticWarm',
+      floor: 'oakFloor',
+      walls: 'plasterDeep',
+      shots: [
+        // Wide, high, taking in the whole volume.
+        shot.pullBack(0, [0, 2.6, 7.4], [0, 1.1, -0.6], 45),
+        // Down and forward, onto the seating group.
+        shot.descent(0.42, [0.4, 1.75, 4.6], [0, 0.85, -0.8], 41),
+        // The sofa fills the frame; the lens tightens.
+        shot.pushIn(0.72, [0.2, 1.35, 3.1], [-0.1, 0.72, -1.2], 36),
+        // Dead rest.
+        shot.settle(1, [0.2, 1.3, 2.9], [-0.1, 0.7, -1.2], 38),
+      ],
+    }),
+    [],
+  );
+
+  return (
+    <RoomShell config={config}>
+      <LivingRoomFurniture />
     </RoomShell>
   );
 }

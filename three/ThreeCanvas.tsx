@@ -6,6 +6,7 @@ import { SCENES, type SceneId, type SceneModule } from './registry';
 import { useCanvasInteractive } from './core/interaction';
 import { configureAssetPipeline } from './core/assets';
 import { TIER_BUDGET, useSceneTier } from './core/tier';
+import { useCapabilities } from './core/quality';
 import { JourneyCamera } from './core/JourneyCamera';
 import { HOME_STATIONS } from '@/lib/journey/stations';
 import { useAppStore } from '@/lib/store';
@@ -84,6 +85,14 @@ export function ThreeCanvas({ activeScene }: { activeScene: SceneId | null }) {
    */
   const interactive = useCanvasInteractive();
   const onJourney = useAppStore((state) => state.station) !== null;
+  const capabilities = useCapabilities(tier);
+
+  // The bottom rung of the degradation ladder. A device that still cannot hold
+  // 30fps with particles, postprocessing, parallax and resolution all already
+  // sacrificed is better served by the still underneath than by a canvas
+  // stuttering on top of it — and the poster is guaranteed to be there, with
+  // alt text carrying the same claim (see three/registry.ts).
+  if (!capabilities.canvas) return null;
 
   return (
     <div
@@ -94,10 +103,12 @@ export function ThreeCanvas({ activeScene }: { activeScene: SceneId | null }) {
         frameloop="demand"
         // Capped: at devicePixelRatio 3 a phone renders nine times the pixels
         // of 1 for a difference almost nobody sees, and it is the biggest single
-        // cause of thermal throttling in a scene like this. The upper bound is
-        // per-tier now — T2 stops at 1.5, which is roughly a 30% fragment
-        // saving on exactly the devices that need it.
-        dpr={[1, TIER_BUDGET[tier].maxDpr]}
+        // cause of thermal throttling in a scene like this. The ceiling is the
+        // lower of two independent limits — the tier's own cap (T2 stops at
+        // 1.5, roughly a 30% fragment saving) and the runtime ladder's
+        // resolution rung, which scales it further on a device already
+        // struggling.
+        dpr={[1, TIER_BUDGET[tier].maxDpr * capabilities.resolutionScale]}
         shadows={TIER_BUDGET[tier].shadows}
         gl={{
           antialias: true,

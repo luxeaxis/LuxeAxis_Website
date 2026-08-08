@@ -174,7 +174,10 @@ export const POSTERS: Record<SceneId, ScenePoster> = {
  * un-splits it, and it is why this map holds thunks rather than modules.
  */
 export const SCENES: Partial<Record<SceneId, () => Promise<SceneModule>>> = {
-  hero: () => import('./scenes/HeroScene').then((m) => m.default),
+  // Scene 01, "The Spark". Replaced the abstract rings-and-pillar HeroScene,
+  // which painted #38BDF8 against a palette that no longer had a sapphire in
+  // it and argued nothing in particular. The room is the argument.
+  hero: () => import('./scenes/HeroRoomScene').then((m) => m.default),
   vastu: () => import('./scenes/VastuScene').then((m) => m.default),
   'space-os': () => import('./scenes/SpaceOSScene').then((m) => m.default),
   'nri-globe': () => import('./scenes/NRIGlobeScene').then((m) => m.default),

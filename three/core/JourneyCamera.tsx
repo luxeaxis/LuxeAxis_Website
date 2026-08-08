@@ -126,16 +126,45 @@ export function JourneyCamera({
     const pose = station.pose;
 
     if (!initialised.current) {
-      // First station of the session: compose there immediately. Flying in
-      // from the camera's default origin would be an unrequested opening move,
-      // and on a deep link (`/#pricing`) it would animate past six stations the
-      // visitor never asked to see.
+      initialised.current = true;
+
+      // An authored opening move, but only where it is actually an arrival:
+      // the first station of the journey, on a fresh load, with motion allowed.
+      //
+      // Everywhere else the camera composes immediately. A deep link to
+      // `/#pricing` must not fly in past six stations the visitor never asked
+      // to see, and an entry animation on a mid-journey station would replay
+      // its opening every time the visitor scrolled back to it.
+      const isFirstStation = stations[0]?.id === station.id;
+      const canEnter =
+        isFirstStation && !reducedMotion && pose.entryFrom !== undefined;
+
+      if (canEnter) {
+        fromPosition.current.set(...pose.entryFrom!);
+        fromTarget.current.set(...(pose.entryTarget ?? pose.target));
+        fromFov.current = MathUtils.clamp(pose.fov, FOV_MIN, FOV_MAX);
+
+        toPosition.current.set(...pose.position);
+        toTarget.current.set(...pose.target);
+        toFov.current = MathUtils.clamp(pose.fov, FOV_MIN, FOV_MAX);
+
+        camera.position.copy(fromPosition.current);
+        currentTarget.current.copy(fromTarget.current);
+        camera.fov = fromFov.current;
+        camera.updateProjectionMatrix();
+        camera.lookAt(currentTarget.current);
+
+        duration.current = pose.entryDuration ?? 3;
+        elapsed.current = 0;
+        invalidate();
+        return;
+      }
+
       camera.position.set(...pose.position);
       currentTarget.current.set(...pose.target);
       camera.fov = MathUtils.clamp(pose.fov, FOV_MIN, FOV_MAX);
       camera.updateProjectionMatrix();
       camera.lookAt(currentTarget.current);
-      initialised.current = true;
       elapsed.current = Number.POSITIVE_INFINITY;
       invalidate();
       return;
@@ -158,7 +187,7 @@ export function JourneyCamera({
 
     elapsed.current = 0;
     invalidate();
-  }, [station, direction, camera, invalidate]);
+  }, [station, stations, direction, reducedMotion, camera, invalidate]);
 
   /**
    * Reduced motion is handled here, not by unmounting.

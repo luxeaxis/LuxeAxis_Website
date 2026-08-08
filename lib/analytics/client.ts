@@ -37,7 +37,10 @@ export type AnalyticsEvent =
   | 'audit_start'
   | 'audit_submit'
   | 'calc_complete'
-  | 'lookbook_dl';
+  | 'lookbook_dl'
+  /** Hero hotspot expanded. Added to the union rather than passed as a free
+   *  string: the union is what stops one event acquiring six spellings. */
+  | 'hero_hotspot';
 
 export type EventProps = Record<string, string | number | boolean | undefined>;
 
@@ -63,7 +66,8 @@ const PHONE = /(?:\+?\d[\d\s\-()]{7,})/;
 export function stripPii(props: EventProps): EventProps {
   const safe: EventProps = {};
   for (const [key, value] of Object.entries(props)) {
-    if (typeof value === 'string' && (EMAIL.test(value) || PHONE.test(value))) continue;
+    if (typeof value === 'string' && (EMAIL.test(value) || PHONE.test(value)))
+      continue;
     safe[key] = value;
   }
   return safe;
@@ -92,7 +96,10 @@ export function track(event: AnalyticsEvent, props: EventProps = {}): void {
  * converting visitor actually saw, there is no way to tell whether the scenes
  * help or hurt. Same two gates as `track`.
  */
-export function identifyExperience(props: { motionTier: string; reducedMotion: boolean }): void {
+export function identifyExperience(props: {
+  motionTier: string;
+  reducedMotion: boolean;
+}): void {
   if (typeof document === 'undefined') return;
   if (readConsent(document.cookie) !== 'granted') return;
   if (!isAnalyticsConfigured()) return;
