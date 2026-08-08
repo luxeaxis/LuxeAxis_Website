@@ -38,7 +38,7 @@ export function MaterialPartners() {
               {[...partners, ...partners].map((partner, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center space-x-3 rounded-xl lx-liquid-glass-card px-6 py-4 transition-all duration-300 hover:border-accent/60"
+                  className="flex items-center space-x-3 rounded-xl bg-surface-deep/90 border border-accent/25 backdrop-blur-md px-6 py-4 transition-all duration-300 hover:border-accent/60 hover:!shadow-none hover:translate-y-0"
                 >
                   <span className="font-display text-h3 font-bold text-accent drop-shadow-sm">
                     {partner.name}
