@@ -202,47 +202,6 @@ export function Hero({
                 </Button>
               </div>
 
-              {/* Slide controls — WCAG 2.2.2 pause for auto-updating content & slide pagination. */}
-              <div className="flex items-center gap-3 pt-1">
-                <button
-                  type="button"
-                  onClick={() => setPaused((p) => !p)}
-                  aria-pressed={paused}
-                  aria-label={paused ? 'Resume slideshow' : 'Pause slideshow'}
-                  className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-surface-raised/90 text-on-surface backdrop-blur-sm transition-colors hover:bg-surface-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                >
-                  <Icon name={paused ? 'play' : 'pause'} size="sm" decorative />
-                </button>
-                <div
-                  className="flex items-center gap-1.5"
-                  role="tablist"
-                  aria-label="Slideshow pagination"
-                >
-                  {HERO_SLIDES.map((slide, idx) => (
-                    <button
-                      key={slide.id}
-                      type="button"
-                      role="tab"
-                      aria-selected={idx === currentSlideIndex}
-                      aria-label={`Go to slide ${slide.number}: ${slide.title}`}
-                      onClick={() => {
-                        setCurrentSlideIndex(idx);
-                        setPaused(true);
-                      }}
-                      className={`h-2 rounded-full transition-all ${
-                        idx === currentSlideIndex
-                          ? 'w-6 bg-accent'
-                          : 'w-2 bg-on-surface-muted/40 hover:bg-on-surface-muted'
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="text-overline font-semibold text-on-surface-2 tabular-nums ml-1">
-                  {activeSlide.number} /{' '}
-                  {String(HERO_SLIDES.length).padStart(2, '0')}
-                </span>
-              </div>
-
               {/* Trust Points List */}
               <ul className="m-0 p-0 list-none flex flex-wrap gap-x-5 sm:gap-x-6 gap-y-2 sm:gap-y-2.5 text-overline sm:text-small text-on-surface pt-2 sm:pt-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                 {trustPoints.map((point) => (

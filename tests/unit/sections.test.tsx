@@ -80,13 +80,6 @@ describe('Hero', () => {
     ]);
   });
 
-  it('offers a pause control for the auto-advancing slideshow', () => {
-    render_();
-    expect(
-      screen.getByRole('button', { name: 'Pause slideshow' }),
-    ).toBeDefined();
-  });
-
   it('does not mount background video when reduced motion is preferred', () => {
     render_();
     expect(document.querySelector('video')).toBeNull();
