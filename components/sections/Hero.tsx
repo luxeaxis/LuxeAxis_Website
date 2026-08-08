@@ -262,7 +262,7 @@ export function Hero({
 
                   <a
                     href={activeSlide.href}
-                    className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-surface-deep font-bold transition-all hover:scale-105 hover:bg-accent-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent shadow-lg"
+                    className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-surface-deep font-bold transition-all hover:scale-110 hover:bg-accent-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent shadow-md"
                     aria-label={`Explore ${activeSlide.title}`}
                   >
                     <Icon name="arrow-right" size="sm" decorative />
