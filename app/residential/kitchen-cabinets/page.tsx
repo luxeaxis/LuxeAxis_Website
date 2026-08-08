@@ -245,34 +245,51 @@ export default async function KitchenCabinetsPage() {
         })}
       />
 
-      {/* 1. Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Section with Ken Burns Cinematic Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[80vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        {/* Full-Bleed Background Image with Ken Burns Cinematic Effect */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <Image
+            src="/posters/residential-kitchen-cabinets-hero.png"
+            alt="Luxe Axis Modular Kitchen Cabinets in Chennai"
+            fill
+            priority
+            className="object-cover animate-ken-burns opacity-40 scale-105"
+          />
+          {/* Ambient Gradient Overlay for High-Contrast Text Legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-surface-deep via-surface-deep/90 to-surface-deep/60" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-surface-deep via-surface-deep/80 to-transparent" />
+        </div>
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs path="/residential/kitchen-cabinets" />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Factory Precision. Zero Compromise.
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Modular Kitchen Cabinets <br />
               <span className="text-accent">in Chennai</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               CNC-cut to 0.1mm precision, BWR marine ply carcass, Hettich
               soft-close hardware, and 40+ finish options. Fixed price, flat
               10-year warranty on every panel.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button
+                as="a"
+                href="/book-audit"
+                size="lg"
+                className="shadow-2xl"
+              >
                 Get Free Cabinet Quote
               </Button>
               <Button
@@ -280,14 +297,15 @@ export default async function KitchenCabinetsPage() {
                 href="/residential/modular-kitchen"
                 variant="secondary"
                 size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
               >
                 Full Kitchen Services →
               </Button>
             </div>
 
-            {/* Key Stats Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
-              <div>
+            {/* Hero Key Stats Bar with Liquid Glass Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-accent/20">
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   10,000+
                 </strong>
@@ -295,7 +313,7 @@ export default async function KitchenCabinetsPage() {
                   Kitchens Built
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   0.1mm
                 </strong>
@@ -303,7 +321,7 @@ export default async function KitchenCabinetsPage() {
                   CNC Tolerance
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   40+
                 </strong>
@@ -311,7 +329,7 @@ export default async function KitchenCabinetsPage() {
                   Finish Options
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   10 Yr
                 </strong>
@@ -319,7 +337,7 @@ export default async function KitchenCabinetsPage() {
                   Flat Warranty
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center col-span-2 sm:col-span-1">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   45 Days
                 </strong>
