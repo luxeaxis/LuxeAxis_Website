@@ -22,4 +22,5 @@
  * owned, whichever is NOT this one should 301 to it rather than serving a
  * duplicate site.
  */
-export const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? 'https://luxeaxis.in';
+export const SITE_ORIGIN =
+  process.env.NEXT_PUBLIC_SITE_ORIGIN ?? 'https://luxeaxis.in';

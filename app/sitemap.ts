@@ -17,5 +17,7 @@ import { INDEXABLE_ROUTES } from '@/lib/seo/routes';
  * deploy. It becomes real when the content layer carries genuine publish dates.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  return INDEXABLE_ROUTES.map((route) => ({ url: canonicalFor(route).canonical }));
+  return INDEXABLE_ROUTES.map((route) => ({
+    url: canonicalFor(route).canonical,
+  }));
 }

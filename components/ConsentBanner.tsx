@@ -67,9 +67,9 @@ export function ConsentBanner() {
       <Container className="py-5">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <p className="max-w-measure text-small text-on-surface-2">
-            We would like to measure how this site is used, so we can make it better. Nothing is
-            measured unless you agree, and we never put your personal details into analytics. See
-            our{' '}
+            We would like to measure how this site is used, so we can make it
+            better. Nothing is measured unless you agree, and we never put your
+            personal details into analytics. See our{' '}
             <Link href="/privacy" variant="inline" className="text-small">
               privacy notes
             </Link>

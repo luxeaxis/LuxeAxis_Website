@@ -6,18 +6,30 @@ describe('BeforeAfterSlider (T-16)', () => {
   afterEach(() => {
     cleanup();
   });
-  const beforeImage = { src: '/posters/hero.avif', alt: 'Original space before renovation' };
-  const afterImage = { src: '/posters/hero.avif', alt: 'Finished luxury interior after renovation' };
+  const beforeImage = {
+    src: '/posters/hero.avif',
+    alt: 'Original space before renovation',
+  };
+  const afterImage = {
+    src: '/posters/hero.avif',
+    alt: 'Finished luxury interior after renovation',
+  };
 
   it('renders slider element with accessibility role and initial value', () => {
-    const { getByRole } = render(<BeforeAfterSlider beforeImage={beforeImage} afterImage={afterImage} />);
-    const slider = getByRole('slider', { name: /Before and after renovation comparison slider/i });
+    const { getByRole } = render(
+      <BeforeAfterSlider beforeImage={beforeImage} afterImage={afterImage} />,
+    );
+    const slider = getByRole('slider', {
+      name: /Before and after renovation comparison slider/i,
+    });
     expect(slider).toBeDefined();
     expect(slider.getAttribute('aria-valuenow')).toBe('50');
   });
 
   it('responds to keyboard ArrowLeft and ArrowRight navigation', () => {
-    const { getByRole } = render(<BeforeAfterSlider beforeImage={beforeImage} afterImage={afterImage} />);
+    const { getByRole } = render(
+      <BeforeAfterSlider beforeImage={beforeImage} afterImage={afterImage} />,
+    );
     const slider = getByRole('slider');
 
     fireEvent.keyDown(slider, { key: 'ArrowLeft' });
@@ -28,7 +40,9 @@ describe('BeforeAfterSlider (T-16)', () => {
   });
 
   it('responds to Home and End keys', () => {
-    const { getByRole } = render(<BeforeAfterSlider beforeImage={beforeImage} afterImage={afterImage} />);
+    const { getByRole } = render(
+      <BeforeAfterSlider beforeImage={beforeImage} afterImage={afterImage} />,
+    );
     const slider = getByRole('slider');
 
     fireEvent.keyDown(slider, { key: 'Home' });

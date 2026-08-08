@@ -10,7 +10,9 @@ import { expect, test } from '@playwright/test';
  * behaviours, re-checked where they actually matter.
  */
 test.describe('Modal', () => {
-  test('traps focus, closes on Esc, and returns focus to its trigger', async ({ page }) => {
+  test('traps focus, closes on Esc, and returns focus to its trigger', async ({
+    page,
+  }) => {
     await page.goto('/style');
 
     const trigger = page.getByRole('button', { name: 'Open the modal' });
@@ -38,11 +40,15 @@ test.describe('Modal', () => {
 
   test('releases the body scroll lock once closed', async ({ page }) => {
     await page.goto('/style');
-    const overflowAtRest = await page.evaluate(() => getComputedStyle(document.body).overflow);
+    const overflowAtRest = await page.evaluate(
+      () => getComputedStyle(document.body).overflow,
+    );
 
     await page.getByRole('button', { name: 'Open the modal' }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
-    expect(await page.evaluate(() => getComputedStyle(document.body).overflow)).toBe('hidden');
+    expect(
+      await page.evaluate(() => getComputedStyle(document.body).overflow),
+    ).toBe('hidden');
 
     await page.keyboard.press('Escape');
     await expect(page.getByRole('dialog')).toBeHidden();
@@ -54,7 +60,9 @@ test.describe('Modal', () => {
       .toBe(overflowAtRest);
   });
 
-  test('a toast announces politely and does not steal focus', async ({ page }) => {
+  test('a toast announces politely and does not steal focus', async ({
+    page,
+  }) => {
     await page.goto('/style');
 
     const trigger = page.getByRole('button', { name: 'Fire a success toast' });
@@ -63,7 +71,9 @@ test.describe('Modal', () => {
     // Scoped to the toast region: the page also renders a Field in its error
     // state, which legitimately carries role="alert" and would otherwise
     // satisfy a looser selector.
-    const toast = page.getByRole('status').filter({ hasText: 'Audit request received' });
+    const toast = page
+      .getByRole('status')
+      .filter({ hasText: 'Audit request received' });
     await expect(toast).toBeVisible();
 
     // A toast that grabs focus interrupts whatever the visitor was doing.

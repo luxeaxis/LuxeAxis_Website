@@ -36,18 +36,26 @@ describe('Chip', () => {
   });
 
   it('a removable chip requires removeLabel — omitting it while passing onRemove throws', () => {
-    expect(() => render(<Chip onRemove={() => {}}>Adyar</Chip>)).toThrow(/removeLabel/);
+    expect(() => render(<Chip onRemove={() => {}}>Adyar</Chip>)).toThrow(
+      /removeLabel/,
+    );
   });
 
   it('the close button is independently labelled and calls onRemove without triggering onSelect', () => {
     const onRemove = vi.fn();
     const onSelect = vi.fn();
     render(
-      <Chip onSelect={onSelect} onRemove={onRemove} removeLabel="Remove Adyar filter">
+      <Chip
+        onSelect={onSelect}
+        onRemove={onRemove}
+        removeLabel="Remove Adyar filter"
+      >
         Adyar
       </Chip>,
     );
-    const closeButton = screen.getByRole('button', { name: 'Remove Adyar filter' });
+    const closeButton = screen.getByRole('button', {
+      name: 'Remove Adyar filter',
+    });
     fireEvent.click(closeButton);
     expect(onRemove).toHaveBeenCalledTimes(1);
     expect(onSelect).not.toHaveBeenCalled();

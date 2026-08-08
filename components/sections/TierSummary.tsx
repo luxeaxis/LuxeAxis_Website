@@ -19,12 +19,21 @@ import type { Tier } from '@/lib/content/types';
  *  the same content cannot be presented two different ways. The check is
  *  decorative: "included" is already carried by the list's own heading, so
  *  announcing a tick before every item would be noise. */
-export function InclusionList({ inclusions }: { inclusions: readonly string[] }) {
+export function InclusionList({
+  inclusions,
+}: {
+  inclusions: readonly string[];
+}) {
   return (
     <ul className="flex flex-col gap-3">
       {inclusions.map((item) => (
         <li key={item} className="flex items-start gap-3 text-on-surface-2">
-          <Icon name="check" size="sm" decorative className="mt-1 shrink-0 text-accent" />
+          <Icon
+            name="check"
+            size="sm"
+            decorative
+            className="mt-1 shrink-0 text-accent"
+          />
           <span>{item}</span>
         </li>
       ))}
@@ -40,7 +49,7 @@ export function TierSummary({ tier }: { tier: Tier }) {
     // above the detail there — a genuine sheet would be a modal layer over
     // content the visitor is actively reading.
     <div className="lg:sticky lg:top-[calc(var(--component-nav-height)+var(--space-6))]">
-      <div className="rounded-lg border border-border-subtle bg-surface-raised p-6">
+      <div className="rounded-2xl border border-accent/40 lx-liquid-glass p-6 shadow-2xl">
         <Stack gap={5}>
           <Stack gap={2}>
             {/* A styled `<p>`, not a heading. The tier name is already the
@@ -50,7 +59,7 @@ export function TierSummary({ tier }: { tier: Tier }) {
                 than a section of it. The visual repetition is the point — it is
                 what makes the sticky panel readable on its own — but it does
                 not need to be structural to achieve that. */}
-            <p className="font-display text-[length:var(--typography-h2-font-size)] text-on-surface">
+            <p className="font-display text-[length:var(--typography-h2-font-size)] font-bold text-on-surface">
               {tier.name}
             </p>
             <p className="text-small text-on-surface-2">{tier.summary}</p>
@@ -68,7 +77,11 @@ export function TierSummary({ tier }: { tier: Tier }) {
             <PriceTag amount={tier.priceFrom} period="onwards" />
           )}
 
-          <Button as="a" href={BOOK_AUDIT.href} className="w-full">
+          <Button
+            as="a"
+            href={BOOK_AUDIT.href}
+            className="w-full lx-liquid-btn justify-center font-bold text-surface-deep"
+          >
             {BOOK_AUDIT.label}
           </Button>
         </Stack>

@@ -32,7 +32,12 @@
  */
 
 /** Cropped to the monogram's own bounds — see the note in `components/Logo.tsx`. */
-export const MARK_VIEWBOX = { x: 302, y: 144, width: 235, height: 202 } as const;
+export const MARK_VIEWBOX = {
+  x: 302,
+  y: 144,
+  width: 235,
+  height: 202,
+} as const;
 
 export type MarkPath = {
   id: 'l' | 'a';

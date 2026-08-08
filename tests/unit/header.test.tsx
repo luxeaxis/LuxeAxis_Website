@@ -28,9 +28,16 @@ describe('Header', () => {
     expect(inactive.getAttribute('aria-current')).toBeNull();
   });
 
-  it('renders every top-level nav item from the sitemap, capped at five', () => {
+  it('renders every top-level nav item from the sitemap', () => {
     render(<Header />);
-    for (const label of ['Residential', 'Commercial', 'Intelligence', 'Portfolio', 'Pricing']) {
+    for (const label of [
+      'Home',
+      'Residential',
+      'Commercial',
+      'Intelligence',
+      'Portfolio',
+      'Pricing',
+    ]) {
       expect(screen.getByRole('link', { name: label })).toBeDefined();
     }
   });
@@ -50,6 +57,16 @@ describe('Header', () => {
     expect(home.getAttribute('href')).toBe('/');
   });
 
+  it('exposes aria-expanded on mega-menu triggers and toggles on click', () => {
+    render(<Header />);
+    const trigger = screen.getByRole('button', { name: 'Residential menu' });
+    expect(trigger.getAttribute('aria-expanded')).toBe('false');
+    fireEvent.click(trigger);
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(trigger.getAttribute('aria-expanded')).toBe('false');
+  });
+
   it('condenses height and gains stronger blur once scrolled past the 80px threshold (§3.3 N1)', () => {
     const scrollY = vi.spyOn(window, 'scrollY', 'get').mockReturnValue(0);
     const { container } = render(<Header />);
@@ -61,7 +78,9 @@ describe('Header', () => {
     scrollY.mockReturnValue(100);
     fireEvent.scroll(window);
 
-    expect(header!.className).toMatch(/h-\[var\(--component-nav-height-condensed\)\]/);
+    expect(header!.className).toMatch(
+      /h-\[var\(--component-nav-height-condensed\)\]/,
+    );
     expect(header!.className).toMatch(/lx-glass--condensed/);
   });
 });

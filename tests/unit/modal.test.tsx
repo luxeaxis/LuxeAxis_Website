@@ -33,7 +33,9 @@ describe('Modal', () => {
 
     const dialog = screen.getByRole('dialog');
     expect(dialog.getAttribute('aria-modal')).toBe('true');
-    expect(screen.getByRole('heading', { name: 'Confirm booking' })).toBeDefined();
+    expect(
+      screen.getByRole('heading', { name: 'Confirm booking' }),
+    ).toBeDefined();
     expect(dialog.contains(document.activeElement)).toBe(true);
     expect(document.body.style.overflow).toBe('hidden');
   });
@@ -70,7 +72,9 @@ describe('Modal', () => {
 
     // The scrim is a real <button>, aria-hidden and out of tab order, whose
     // only job is the click-outside-closes affordance (see Modal.tsx).
-    const scrim = document.querySelector('button[aria-hidden="true"]') as HTMLElement;
+    const scrim = document.querySelector(
+      'button[aria-hidden="true"]',
+    ) as HTMLElement;
     expect(scrim).not.toBeNull();
     fireEvent.click(scrim);
 
@@ -96,7 +100,9 @@ describe('Modal', () => {
     render(<Harness />);
     fireEvent.click(screen.getByRole('button', { name: 'Open modal' }));
     const dialog = screen.getByRole('dialog');
-    const focusables = dialog.querySelectorAll('a[href], button:not([disabled])');
+    const focusables = dialog.querySelectorAll(
+      'a[href], button:not([disabled])',
+    );
     const first = focusables[0] as HTMLElement;
     const last = focusables[focusables.length - 1] as HTMLElement;
     expect(focusables.length).toBeGreaterThan(1);
@@ -110,7 +116,9 @@ describe('Modal', () => {
     render(<Harness />);
     fireEvent.click(screen.getByRole('button', { name: 'Open modal' }));
     const dialog = screen.getByRole('dialog');
-    const focusables = dialog.querySelectorAll('a[href], button:not([disabled])');
+    const focusables = dialog.querySelectorAll(
+      'a[href], button:not([disabled])',
+    );
     const first = focusables[0] as HTMLElement;
     const last = focusables[focusables.length - 1] as HTMLElement;
 
@@ -187,9 +195,17 @@ describe('Modal focus trap, when focus starts outside the panel', () => {
     function FormHarness() {
       const [value, setValue] = useState('');
       return (
-        <Modal open onClose={() => setValue('')} title="Confirm your preferred time">
+        <Modal
+          open
+          onClose={() => setValue('')}
+          title="Confirm your preferred time"
+        >
           <label htmlFor="when">When</label>
-          <input id="when" value={value} onChange={(event) => setValue(event.target.value)} />
+          <input
+            id="when"
+            value={value}
+            onChange={(event) => setValue(event.target.value)}
+          />
         </Modal>
       );
     }
@@ -218,7 +234,9 @@ describe('Modal focus trap, when focus starts outside the panel', () => {
       return (
         <div>
           <button onClick={() => setCount((n) => n + 1)}>bump</button>
-          <span data-testid="closed-at">{closedAt === null ? 'open' : String(closedAt)}</span>
+          <span data-testid="closed-at">
+            {closedAt === null ? 'open' : String(closedAt)}
+          </span>
           <Modal open onClose={() => setClosedAt(count)} title="Trap">
             <button type="button">inside</button>
           </Modal>

@@ -31,7 +31,8 @@ export const COMMERCIAL_VERTICALS: readonly CommercialVertical[] = [
     slug: 'workplace',
     name: 'Workplace',
     icon: 'gauge',
-    summary: 'Offices designed around how the space is actually used, and measured afterwards.',
+    summary:
+      'Offices designed around how the space is actually used, and measured afterwards.',
     concerns: [
       'Desk and meeting-room utilisation',
       'Acoustic separation between focus and collaboration',
@@ -43,7 +44,8 @@ export const COMMERCIAL_VERTICALS: readonly CommercialVertical[] = [
     slug: 'retail-hospitality',
     name: 'Retail & Hospitality',
     icon: 'layers',
-    summary: 'Rooms that route people well and hold up to being used hard, every day.',
+    summary:
+      'Rooms that route people well and hold up to being used hard, every day.',
     concerns: [
       'Footfall and circulation',
       'Sightlines to what you want seen',

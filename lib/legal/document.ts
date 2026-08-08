@@ -67,7 +67,9 @@ function substitutions(): Record<string, string> {
   const address = STUDIO.address ? addressOneLine(STUDIO.address) : null;
   return {
     ...(address ? { '[Registered office address]': address } : {}),
-    ...(STUDIO.address?.postalCode ? { '[PIN]': STUDIO.address.postalCode } : {}),
+    ...(STUDIO.address?.postalCode
+      ? { '[PIN]': STUDIO.address.postalCode }
+      : {}),
     ...(STUDIO.cin ? { '[Corporate Identity Number]': STUDIO.cin } : {}),
     ...(STUDIO.gst ? { '[GSTIN]': STUDIO.gst } : {}),
   };
@@ -96,7 +98,8 @@ function parseInline(source: string): Inline[] {
 
   for (const match of source.matchAll(pattern)) {
     const index = match.index!;
-    if (index > last) out.push({ kind: 'text', text: source.slice(last, index) });
+    if (index > last)
+      out.push({ kind: 'text', text: source.slice(last, index) });
     last = index + match[0].length;
 
     if (match[1] !== undefined) {
@@ -109,11 +112,16 @@ function parseInline(source: string): Inline[] {
       );
     } else if (match[4] !== undefined) {
       const filled = substitutions()[`[${match[4]}]`];
-      out.push(filled ? { kind: 'text', text: filled } : { kind: 'gap', label: match[4] });
+      out.push(
+        filled
+          ? { kind: 'text', text: filled }
+          : { kind: 'gap', label: match[4] },
+      );
     }
   }
 
-  if (last < source.length) out.push({ kind: 'text', text: source.slice(last) });
+  if (last < source.length)
+    out.push({ kind: 'text', text: source.slice(last) });
   return out;
 }
 
@@ -164,7 +172,9 @@ export function parseLegalMarkdown(source: string): LegalDocument {
 
     // The two dated lines in the front matter, lifted out so the page can put
     // them where a reader looks for them rather than mid-prose.
-    const dated = /^\*\*(Effective date|Last updated):\*\*\s*(.+)$/.exec(trimmed);
+    const dated = /^\*\*(Effective date|Last updated):\*\*\s*(.+)$/.exec(
+      trimmed,
+    );
     if (dated) {
       const value = dated[2]!.trim();
       // "[Insert publication date]" is not a date. Left empty so the page shows
@@ -198,11 +208,16 @@ export function parseLegalMarkdown(source: string): LegalDocument {
         // the first cell is the row header. A wider table would need a real
         // <thead>, and the parse error below is how we would find out.
         if (cells.length !== 2) {
-          throw new Error(`legal markdown: expected a 2-column row, got: ${current}`);
+          throw new Error(
+            `legal markdown: expected a 2-column row, got: ${current}`,
+          );
         }
         // The first row of the CIN/GSTIN tables is an empty `| | |` header.
         if (!cells[0] && !cells[1]) continue;
-        rows.push({ header: parseInline(cells[0]!), cells: parseInline(cells[1]!) });
+        rows.push({
+          header: parseInline(cells[0]!),
+          cells: parseInline(cells[1]!),
+        });
       }
       i -= 1;
       if (rows.length > 0) blocks.push({ kind: 'table', rows });
@@ -217,5 +232,7 @@ export function parseLegalMarkdown(source: string): LegalDocument {
 
 /** Reads and parses one of the documents in `docs/Pages/`. */
 export function loadLegalDocument(file: string): LegalDocument {
-  return parseLegalMarkdown(readFileSync(join(process.cwd(), 'docs', 'Pages', file), 'utf8'));
+  return parseLegalMarkdown(
+    readFileSync(join(process.cwd(), 'docs', 'Pages', file), 'utf8'),
+  );
 }

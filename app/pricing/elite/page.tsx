@@ -55,12 +55,42 @@ export default function ElitePricingPage() {
   ];
 
   const comparisons = [
-    { feature: 'Price per Sq.Ft', essential: '₹1,800 / sq.ft', signature: '₹2,800 / sq.ft', elite: 'Custom Quote' },
-    { feature: 'Core Material', essential: 'Marine BWP Plywood', signature: 'High-Density HDMR & Teak', elite: 'Imported Solid Hardwood' },
-    { feature: 'Kitchen Finish', essential: 'High-Gloss Acrylic / Laminate', signature: 'Italian PU Lacquer / Tinted Glass', elite: 'Calacatta Marble & Metal' },
-    { feature: 'Hardware', essential: 'Blum Soft-Close Standard', signature: 'Hafele / Hettich Premium', elite: 'Custom Italian Brass Joinery' },
-    { feature: 'Delivery Timeline', essential: '45 Days Guaranteed', signature: '60 Days Guaranteed', elite: 'Milestone Guaranteed' },
-    { feature: 'Warranty', essential: 'Flat 10-Year Warranty', signature: 'Flat 10-Year Warranty', elite: 'Flat 10-Year Warranty' },
+    {
+      feature: 'Price per Sq.Ft',
+      essential: '₹1,800 / sq.ft',
+      signature: '₹2,800 / sq.ft',
+      elite: 'Custom Quote',
+    },
+    {
+      feature: 'Core Material',
+      essential: 'Marine BWP Plywood',
+      signature: 'High-Density HDMR & Teak',
+      elite: 'Imported Solid Hardwood',
+    },
+    {
+      feature: 'Kitchen Finish',
+      essential: 'High-Gloss Acrylic / Laminate',
+      signature: 'Italian PU Lacquer / Tinted Glass',
+      elite: 'Calacatta Marble & Metal',
+    },
+    {
+      feature: 'Hardware',
+      essential: 'Blum Soft-Close Standard',
+      signature: 'Hafele / Hettich Premium',
+      elite: 'Custom Italian Brass Joinery',
+    },
+    {
+      feature: 'Delivery Timeline',
+      essential: '45 Days Guaranteed',
+      signature: '60 Days Guaranteed',
+      elite: 'Milestone Guaranteed',
+    },
+    {
+      feature: 'Warranty',
+      essential: 'Flat 10-Year Warranty',
+      signature: 'Flat 10-Year Warranty',
+      elite: 'Flat 10-Year Warranty',
+    },
   ];
 
   const faqs = [
@@ -85,7 +115,8 @@ export default function ElitePricingPage() {
           '@context': 'https://schema.org',
           '@type': 'Product',
           name: 'Elite Private Commission Tier',
-          description: 'Custom architect-designed private luxury commissions for large villas and estate homes in Chennai.',
+          description:
+            'Custom architect-designed private luxury commissions for large villas and estate homes in Chennai.',
           url: ROUTE,
         }}
       />
@@ -95,7 +126,7 @@ export default function ElitePricingPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/pricing/elite" labels={{ 'elite': "Elite Tier" }} />
+          <Breadcrumbs path="/pricing/elite" labels={{ elite: 'Elite Tier' }} />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -111,34 +142,58 @@ export default function ElitePricingPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Custom architect-designed private luxury commissions for large estate villas, sky mansions, and legacy homes in Chennai. Imported Italian marble, liquid metal joinery, and dedicated principal team.
+              Custom architect-designed private luxury commissions for large
+              estate villas, sky mansions, and legacy homes in Chennai. Imported
+              Italian marble, liquid metal joinery, and dedicated principal
+              team.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
               <Button as="a" href="/book-audit" size="lg">
                 Book Elite Private Audit
               </Button>
-              <Button as="a" href="/pricing/calculator" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/pricing/calculator"
+                variant="secondary"
+                size="lg"
+              >
                 Calculate Project Budget →
               </Button>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Bespoke</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Itemized BOQ</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Bespoke
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Itemized BOQ
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Milestone</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Phased Guarantee</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Milestone
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Phased Guarantee
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">24/7</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Concierge Service</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  24/7
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Concierge Service
+                </span>
               </div>
             </div>
           </Stack>
@@ -154,7 +209,9 @@ export default function ElitePricingPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -170,11 +227,20 @@ export default function ElitePricingPage() {
       >
         <Grid cols={2} gap={6}>
           {inclusions.map((inc, idx) => (
-            <div key={inc.title} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">0{idx + 1}</span>
+            <div
+              key={inc.title}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                0{idx + 1}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{inc.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{inc.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {inc.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {inc.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -195,16 +261,22 @@ export default function ElitePricingPage() {
                 <th className="py-3 px-4">Feature / Specification</th>
                 <th className="py-3 px-4">Essential Tier</th>
                 <th className="py-3 px-4">Signature Tier</th>
-                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">Elite Commission</th>
+                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">
+                  Elite Commission
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-subtle/40 text-on-surface-2">
               {comparisons.map((row) => (
                 <tr key={row.feature}>
-                  <td className="py-3 px-4 font-bold text-on-surface">{row.feature}</td>
+                  <td className="py-3 px-4 font-bold text-on-surface">
+                    {row.feature}
+                  </td>
                   <td className="py-3 px-4">{row.essential}</td>
                   <td className="py-3 px-4">{row.signature}</td>
-                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">{row.elite}</td>
+                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">
+                    {row.elite}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -221,8 +293,14 @@ export default function ElitePricingPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare villa shell before Elite fit-out' }}
-            afterImage={{ src: '/posters/portfolio.avif', alt: 'Completed Elite Tier villa in Adyar' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Bare villa shell before Elite fit-out',
+            }}
+            afterImage={{
+              src: '/posters/portfolio.avif',
+              alt: 'Completed Elite Tier villa in Adyar',
+            }}
           />
         </div>
       </Section>
@@ -234,10 +312,15 @@ export default function ElitePricingPage() {
       <Section id="faq" eyebrow="Questions Answered" title="Elite Tier FAQ">
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

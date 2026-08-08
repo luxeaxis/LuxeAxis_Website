@@ -23,12 +23,11 @@ export const metadata: Metadata = {
 };
 
 export default async function NriPage() {
-  const [regions, faqs] = await Promise.all([
-    getNriRegions(),
-    getFaqs(),
-  ]);
+  const [regions, faqs] = await Promise.all([getNriRegions(), getFaqs()]);
 
-  const nriFaqs = [...faqs].sort((a, b) => (a.id === 'abroad' ? -1 : b.id === 'abroad' ? 1 : 0));
+  const nriFaqs = [...faqs].sort((a, b) =>
+    a.id === 'abroad' ? -1 : b.id === 'abroad' ? 1 : 0,
+  );
 
   const highlights = [
     { title: 'Timezone-Flexible', desc: 'Video Reviews in Your Local Time' },
@@ -65,7 +64,8 @@ export default async function NriPage() {
     {
       feature: 'Site Oversight',
       traditional: 'Relying on relatives or unmonitored local contractors',
-      whiteglove: 'Full-time dedicated senior site manager with 4K camera feeds',
+      whiteglove:
+        'Full-time dedicated senior site manager with 4K camera feeds',
     },
     {
       feature: 'Design Review',
@@ -80,7 +80,8 @@ export default async function NriPage() {
     {
       feature: 'Material Sourcing',
       traditional: 'Local shop visits required in person during visits',
-      whiteglove: 'Digital material sample kits delivered to your overseas door',
+      whiteglove:
+        'Digital material sample kits delivered to your overseas door',
     },
     {
       feature: 'Handover State',
@@ -100,7 +101,7 @@ export default async function NriPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/nri" labels={{ 'nri': "NRI Remote Design" }} />
+          <Breadcrumbs path="/nri" labels={{ nri: 'NRI Remote Design' }} />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -116,7 +117,10 @@ export default async function NriPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              You do not need to be in the country, take work leave, or ask relatives to supervise a site. Reviews happen over 3D VR video calls in your time zone, with live 4K camera streams and spend tracking in Space OS.
+              You do not need to be in the country, take work leave, or ask
+              relatives to supervise a site. Reviews happen over 3D VR video
+              calls in your time zone, with live 4K camera streams and spend
+              tracking in Space OS.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -138,24 +142,44 @@ export default async function NriPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">100%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Remote Execution</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  100%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Remote Execution
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">6 Hubs</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Global Timezones</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  6 Hubs
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Global Timezones
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4K Feeds</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Space OS Dashboard</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4K Feeds
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Space OS Dashboard
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">0 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Leave Needed</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  0 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Leave Needed
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
             </div>
           </Stack>
@@ -171,7 +195,9 @@ export default async function NriPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -206,11 +232,20 @@ export default async function NriPage() {
       >
         <Grid cols={2} gap={6}>
           {protocolPillars.map((p) => (
-            <div key={p.num} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-              <span className="font-display text-h2 font-bold text-accent shrink-0">{p.num}</span>
+            <div
+              key={p.num}
+              className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+            >
+              <span className="font-display text-h2 font-bold text-accent shrink-0">
+                {p.num}
+              </span>
               <div>
-                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{p.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed">{p.desc}</p>
+                <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                  {p.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed">
+                  {p.desc}
+                </p>
               </div>
             </div>
           ))}
@@ -230,15 +265,23 @@ export default async function NriPage() {
               <tr className="border-b border-border-subtle/60 text-accent font-display text-body font-bold">
                 <th className="py-3 px-4">Dimension</th>
                 <th className="py-3 px-4">Traditional Remote Supervision</th>
-                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">Luxe Axis White-Glove</th>
+                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">
+                  Luxe Axis White-Glove
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-subtle/40 text-on-surface-2">
               {comparisons.map((row) => (
                 <tr key={row.feature}>
-                  <td className="py-3 px-4 font-bold text-on-surface">{row.feature}</td>
-                  <td className="py-3 px-4 text-on-surface-muted">{row.traditional}</td>
-                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">{row.whiteglove}</td>
+                  <td className="py-3 px-4 font-bold text-on-surface">
+                    {row.feature}
+                  </td>
+                  <td className="py-3 px-4 text-on-surface-muted">
+                    {row.traditional}
+                  </td>
+                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">
+                    {row.whiteglove}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -255,8 +298,14 @@ export default async function NriPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare villa shell before fit-out' }}
-            afterImage={{ src: '/posters/portfolio.avif', alt: 'Completed NRI villa in Adyar, Chennai' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Bare villa shell before fit-out',
+            }}
+            afterImage={{
+              src: '/posters/portfolio.avif',
+              alt: 'Completed NRI villa in Adyar, Chennai',
+            }}
           />
         </div>
       </Section>

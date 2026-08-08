@@ -10,18 +10,34 @@ beforeAll(() => {
 });
 
 const SEMANTIC_ROLES = [
-  'surface', 'surface-deep', 'surface-raised', 'on-surface', 'on-surface-2',
-  'on-surface-muted', 'accent', 'accent-contrast', 'accent-hover', 'signal',
-  'border-subtle', 'border', 'border-strong', 'focus-ring',
-  'field-bg', 'field-border-focus',
+  'surface',
+  'surface-deep',
+  'surface-raised',
+  'on-surface',
+  'on-surface-2',
+  'on-surface-muted',
+  'accent',
+  'accent-contrast',
+  'accent-hover',
+  'signal',
+  'border-subtle',
+  'border',
+  'border-strong',
+  'focus-ring',
+  'field-bg',
+  'field-border-focus',
 ];
 
 describe('token build', () => {
   it('declares every semantic role in both themes', () => {
-    const [, darkBlock, lightBlock] = css.split(/:root\s*\{|\[data-theme="light"\]\s*\{/);
+    const [, darkBlock, lightBlock] = css.split(
+      /:root\s*\{|\[data-theme="light"\]\s*\{/,
+    );
     for (const role of SEMANTIC_ROLES) {
       expect(darkBlock, `--${role} missing from dark`).toContain(`--${role}:`);
-      expect(lightBlock, `--${role} missing from light`).toContain(`--${role}:`);
+      expect(lightBlock, `--${role} missing from light`).toContain(
+        `--${role}:`,
+      );
     }
   });
 
@@ -36,7 +52,9 @@ describe('token build', () => {
   });
 
   it('flattens shadow arrays into a single box-shadow list', () => {
-    expect(css).toMatch(/--elevation-dark-1:\s*0 0 0 1px rgba\(252,250,245,0\.06\), 0 8px 40px 0 rgba\(201,168,76,0\.10\)/);
+    expect(css).toMatch(
+      /--elevation-dark-1:\s*0 0 0 1px rgba\(252,250,245,0\.06\), 0 8px 40px 0 rgba\(201,168,76,0\.10\)/,
+    );
   });
 
   it('derives the nav glass fill from the surface and opacity tokens', () => {
@@ -63,7 +81,9 @@ describe('token build', () => {
   });
 
   it('resolves semantic tokens to literal values in both themes', () => {
-    const [, darkBlock, lightBlock] = css.split(/:root\s*\{|\[data-theme="light"\]\s*\{/);
+    const [, darkBlock, lightBlock] = css.split(
+      /:root\s*\{|\[data-theme="light"\]\s*\{/,
+    );
     expect(darkBlock).toMatch(/--surface:\s*#1E3F2E/i);
     expect(darkBlock).toMatch(/--accent:\s*#FFC107/i);
     expect(lightBlock).toMatch(/--surface:\s*#E9E3D8/i);

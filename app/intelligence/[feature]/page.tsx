@@ -14,7 +14,9 @@ import { getIntelligenceFeatures } from '@/lib/content/source';
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  return (await getIntelligenceFeatures()).map((feature) => ({ feature: feature.id }));
+  return (await getIntelligenceFeatures()).map((feature) => ({
+    feature: feature.id,
+  }));
 }
 
 export async function generateMetadata({
@@ -23,7 +25,9 @@ export async function generateMetadata({
   params: Promise<{ feature: string }>;
 }): Promise<Metadata> {
   const { feature: id } = await params;
-  const feature = (await getIntelligenceFeatures()).find((candidate) => candidate.id === id);
+  const feature = (await getIntelligenceFeatures()).find(
+    (candidate) => candidate.id === id,
+  );
   if (!feature) return {};
 
   return {
@@ -55,50 +59,86 @@ export default async function IntelligenceFeaturePage({
           { value: '0 Cost', label: 'Included in Design Audit' },
         ]
       : feature.id === 'space-score'
-      ? [
-          { value: '4 Pillars', label: 'Wellness, Function, Design, Eco' },
-          { value: '100 Pt', label: 'Granular Index System' },
-          { value: '3D Simulation', label: 'Acoustic & Lighting Map' },
-          { value: 'Verified', label: 'Post-Occupancy Audit' },
-        ]
-      : feature.id === 'space-os'
-      ? [
-          { value: 'Real-time', label: 'Budget & BOQ Tracking' },
-          { value: '4K VR', label: 'Interactive 3D Walkthrough' },
-          { value: '24/7', label: 'Client Portal Access' },
-          { value: 'Zero', label: 'Hidden Escalations' },
-        ]
-      : [
-          { value: 'Photorealistic', label: '8K V-Ray Render Quality' },
-          { value: '48 Hours', label: 'First Render Delivery' },
-          { value: 'B2B Ready', label: 'Real Estate Developer Suite' },
-          { value: 'Unlimited', label: 'Material Finish Options' },
-        ];
+        ? [
+            { value: '4 Pillars', label: 'Wellness, Function, Design, Eco' },
+            { value: '100 Pt', label: 'Granular Index System' },
+            { value: '3D Simulation', label: 'Acoustic & Lighting Map' },
+            { value: 'Verified', label: 'Post-Occupancy Audit' },
+          ]
+        : feature.id === 'space-os'
+          ? [
+              { value: 'Real-time', label: 'Budget & BOQ Tracking' },
+              { value: '4K VR', label: 'Interactive 3D Walkthrough' },
+              { value: '24/7', label: 'Client Portal Access' },
+              { value: 'Zero', label: 'Hidden Escalations' },
+            ]
+          : [
+              { value: 'Photorealistic', label: '8K V-Ray Render Quality' },
+              { value: '48 Hours', label: 'First Render Delivery' },
+              { value: 'B2B Ready', label: 'Real Estate Developer Suite' },
+              { value: 'Unlimited', label: 'Material Finish Options' },
+            ];
 
   const comparison =
     feature.id === 'vastu-tech'
       ? [
-          { traditional: 'Manual paper compass & vague guidelines', luxe: 'Raytraced solar orientation & electromagnetic grid overlay' },
-          { traditional: 'Expensive demolition suggested for errors', luxe: 'Non-structural micro-corrections (pyramids, brass & color zoning)' },
-          { traditional: 'Subjective interpretations without proof', luxe: 'Favourable zones marked gold, review zones in teal with notes' },
+          {
+            traditional: 'Manual paper compass & vague guidelines',
+            luxe: 'Raytraced solar orientation & electromagnetic grid overlay',
+          },
+          {
+            traditional: 'Expensive demolition suggested for errors',
+            luxe: 'Non-structural micro-corrections (pyramids, brass & color zoning)',
+          },
+          {
+            traditional: 'Subjective interpretations without proof',
+            luxe: 'Favourable zones marked gold, review zones in teal with notes',
+          },
         ]
       : feature.id === 'space-score'
-      ? [
-          { traditional: 'Guesswork on room acoustics & daylight', luxe: 'Quantified 4-pillar index (Wellness, Function, Aesthetics, Eco)' },
-          { traditional: 'Dark spots & harsh lighting glare', luxe: 'Lux-level simulation & circadian color-temperature planning' },
-          { traditional: 'Averages away design flaws', luxe: 'Weakest arc identified so effort targets the biggest impact' },
-        ]
-      : feature.id === 'space-os'
-      ? [
-          { traditional: 'Paper invoices & unexpected cost overruns', luxe: 'Live digital BOQ budget dashboard updated in real-time' },
-          { traditional: 'Visiting dusty construction sites blindly', luxe: 'Daily 3D site progress tracker & 4K VR simulation' },
-          { traditional: 'Scattered WhatsApp photos & lost emails', luxe: 'Unified client portal with moodboards, AR & approvals' },
-        ]
-      : [
-          { traditional: 'Costly physical staging with rented furniture', luxe: 'Instant photorealistic 3D virtual staging in 8K resolution' },
-          { traditional: 'Static 2D photos that fail to convey space', luxe: 'Interactive 360° VR walkthroughs for prospective buyers' },
-          { traditional: 'Fixed styles that cannot be altered', luxe: 'One-click finish swap between Contemporary, Classical & Minimalist' },
-        ];
+        ? [
+            {
+              traditional: 'Guesswork on room acoustics & daylight',
+              luxe: 'Quantified 4-pillar index (Wellness, Function, Aesthetics, Eco)',
+            },
+            {
+              traditional: 'Dark spots & harsh lighting glare',
+              luxe: 'Lux-level simulation & circadian color-temperature planning',
+            },
+            {
+              traditional: 'Averages away design flaws',
+              luxe: 'Weakest arc identified so effort targets the biggest impact',
+            },
+          ]
+        : feature.id === 'space-os'
+          ? [
+              {
+                traditional: 'Paper invoices & unexpected cost overruns',
+                luxe: 'Live digital BOQ budget dashboard updated in real-time',
+              },
+              {
+                traditional: 'Visiting dusty construction sites blindly',
+                luxe: 'Daily 3D site progress tracker & 4K VR simulation',
+              },
+              {
+                traditional: 'Scattered WhatsApp photos & lost emails',
+                luxe: 'Unified client portal with moodboards, AR & approvals',
+              },
+            ]
+          : [
+              {
+                traditional: 'Costly physical staging with rented furniture',
+                luxe: 'Instant photorealistic 3D virtual staging in 8K resolution',
+              },
+              {
+                traditional: 'Static 2D photos that fail to convey space',
+                luxe: 'Interactive 360° VR walkthroughs for prospective buyers',
+              },
+              {
+                traditional: 'Fixed styles that cannot be altered',
+                luxe: 'One-click finish swap between Contemporary, Classical & Minimalist',
+              },
+            ];
 
   const faqs = [
     {
@@ -174,8 +214,12 @@ export default async function IntelligenceFeaturePage({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
               {stats.map((stat) => (
                 <div key={stat.label}>
-                  <strong className="block font-display text-h3 text-accent font-bold">{stat.value}</strong>
-                  <span className="text-overline text-on-surface-muted uppercase tracking-wider">{stat.label}</span>
+                  <strong className="block font-display text-h3 text-accent font-bold">
+                    {stat.value}
+                  </strong>
+                  <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                    {stat.label}
+                  </span>
                 </div>
               ))}
             </div>
@@ -196,7 +240,9 @@ export default async function IntelligenceFeaturePage({
               <strong className="block font-display text-body text-accent font-bold mb-1">
                 Verified Market Claim:
               </strong>
-              <p className="text-small text-on-surface font-medium">{feature.proof}</p>
+              <p className="text-small text-on-surface font-medium">
+                {feature.proof}
+              </p>
             </div>
           )}
           {feature.humanInTheLoop && (
@@ -212,14 +258,25 @@ export default async function IntelligenceFeaturePage({
         <Section
           id="highlights"
           eyebrow="Capability Architecture"
-          title={feature.id === 'space-score' ? 'The Four Evaluated Pillars' : 'What You Get'}
+          title={
+            feature.id === 'space-score'
+              ? 'The Four Evaluated Pillars'
+              : 'What You Get'
+          }
           lede="Engineered into every Luxe Axis project workflow."
         >
           <Grid cols={4} gap={4}>
             {feature.highlights.map((item) => (
-              <div key={item} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 text-center">
-                <span className="block font-display text-h4 font-bold text-accent mb-1">{item}</span>
-                <span className="text-[12px] text-on-surface-muted">System Module Active</span>
+              <div
+                key={item}
+                className="lx-liquid-glass rounded-xl p-5 border border-accent/30 text-center"
+              >
+                <span className="block font-display text-h4 font-bold text-accent mb-1">
+                  {item}
+                </span>
+                <span className="text-[12px] text-on-surface-muted">
+                  System Module Active
+                </span>
               </div>
             ))}
           </Grid>
@@ -236,11 +293,20 @@ export default async function IntelligenceFeaturePage({
         >
           <Grid cols={2} gap={6}>
             {feature.steps.map((step, idx) => (
-              <div key={step.title} className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4">
-                <span className="font-display text-h2 font-bold text-accent shrink-0">0{idx + 1}</span>
+              <div
+                key={step.title}
+                className="lx-liquid-glass rounded-xl p-5 border border-accent/30 flex items-start gap-4"
+              >
+                <span className="font-display text-h2 font-bold text-accent shrink-0">
+                  0{idx + 1}
+                </span>
                 <div>
-                  <h3 className="font-display text-h4 font-bold text-on-surface mb-1">{step.title}</h3>
-                  <p className="text-small text-on-surface-2 leading-relaxed">{step.body}</p>
+                  <h3 className="font-display text-h4 font-bold text-on-surface mb-1">
+                    {step.title}
+                  </h3>
+                  <p className="text-small text-on-surface-2 leading-relaxed">
+                    {step.body}
+                  </p>
                 </div>
               </div>
             ))}
@@ -279,14 +345,25 @@ export default async function IntelligenceFeaturePage({
         <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 max-w-4xl mx-auto">
           <div className="space-y-4">
             {comparison.map((item) => (
-              <div key={item.traditional} className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-border-subtle/40 last:border-0 last:pb-0">
+              <div
+                key={item.traditional}
+                className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-border-subtle/40 last:border-0 last:pb-0"
+              >
                 <div className="p-3 rounded-lg bg-surface-deep/50 border border-border-subtle/50">
-                  <span className="text-[10px] uppercase tracking-wider text-on-surface-muted font-bold block mb-1">Traditional Method</span>
-                  <p className="text-small text-on-surface-2">{item.traditional}</p>
+                  <span className="text-[10px] uppercase tracking-wider text-on-surface-muted font-bold block mb-1">
+                    Traditional Method
+                  </span>
+                  <p className="text-small text-on-surface-2">
+                    {item.traditional}
+                  </p>
                 </div>
                 <div className="p-3 rounded-lg bg-accent/10 border border-accent/30">
-                  <span className="text-[10px] uppercase tracking-wider text-accent font-bold block mb-1">Luxe Axis {feature.name}</span>
-                  <p className="text-small text-on-surface font-medium">{item.luxe}</p>
+                  <span className="text-[10px] uppercase tracking-wider text-accent font-bold block mb-1">
+                    Luxe Axis {feature.name}
+                  </span>
+                  <p className="text-small text-on-surface font-medium">
+                    {item.luxe}
+                  </p>
                 </div>
               </div>
             ))}
@@ -323,10 +400,15 @@ export default async function IntelligenceFeaturePage({
       >
         <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group lx-liquid-glass rounded-xl p-4 border border-accent/30">
+            <details
+              key={faq.q}
+              className="group lx-liquid-glass rounded-xl p-4 border border-accent/30"
+            >
               <summary className="font-display text-body font-bold text-on-surface cursor-pointer flex items-center justify-between list-none">
                 <span>{faq.q}</span>
-                <span className="text-accent group-open:rotate-45 transition-transform text-h4">＋</span>
+                <span className="text-accent group-open:rotate-45 transition-transform text-h4">
+                  ＋
+                </span>
               </summary>
               <p className="text-small text-on-surface-2 mt-3 pt-3 border-t border-border-subtle/40 leading-relaxed">
                 {faq.a}

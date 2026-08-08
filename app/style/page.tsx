@@ -11,7 +11,12 @@ import { Skeleton } from '@/components/Skeleton';
 import { Tooltip } from '@/components/Tooltip';
 import type { StatusTone } from '@/lib/status';
 import { OverlayDemo } from './OverlayDemo';
-import { FeatureCard, ProjectCard, StatCard, TierCard } from '@/components/Card';
+import {
+  FeatureCard,
+  ProjectCard,
+  StatCard,
+  TierCard,
+} from '@/components/Card';
 import { Field } from '@/components/Field';
 import { FeeCalculator } from '@/components/FeeCalculator';
 import { Icon, type IconName } from '@/components/Icon';
@@ -68,10 +73,17 @@ function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-heading`} className="border-t border-border-subtle pt-8">
+    <section
+      id={id}
+      aria-labelledby={`${id}-heading`}
+      className="border-t border-border-subtle pt-8"
+    >
       <Stack gap={6}>
         <Stack gap={2}>
-          <h2 id={`${id}-heading`} className="font-display text-[length:var(--typography-h2-font-size)] text-on-surface">
+          <h2
+            id={`${id}-heading`}
+            className="font-display text-[length:var(--typography-h2-font-size)] text-on-surface"
+          >
             {title}
           </h2>
           <Center>
@@ -95,7 +107,9 @@ function Spec({ token, children }: { token: string; children: ReactNode }) {
   return (
     <Stack gap={2}>
       <div>{children}</div>
-      <code className="font-mono text-overline text-on-surface-muted">{token}</code>
+      <code className="font-mono text-overline text-on-surface-muted">
+        {token}
+      </code>
     </Stack>
   );
 }
@@ -103,7 +117,9 @@ function Spec({ token, children }: { token: string; children: ReactNode }) {
 function Swatch({ token, className }: { token: string; className: string }) {
   return (
     <Spec token={token}>
-      <div className={`h-control-lg w-full rounded-md border border-border-subtle ${className}`} />
+      <div
+        className={`h-control-lg w-full rounded-md border border-border-subtle ${className}`}
+      />
     </Spec>
   );
 }
@@ -153,8 +169,16 @@ const TYPE_RAMP = [
     'font-display text-[length:var(--typography-h1-font-size)] leading-snug tracking-tight',
     'The Intelligence Behind the Space',
   ],
-  ['h2', 'font-display text-[length:var(--typography-h2-font-size)] leading-snug', 'Designing Dreams'],
-  ['h3', 'font-ui text-[length:var(--typography-h3-font-size)] font-semibold', 'A designed life, measured'],
+  [
+    'h2',
+    'font-display text-[length:var(--typography-h2-font-size)] leading-snug',
+    'Designing Dreams',
+  ],
+  [
+    'h3',
+    'font-ui text-[length:var(--typography-h3-font-size)] font-semibold',
+    'A designed life, measured',
+  ],
   [
     'body-lg',
     'font-ui text-[length:var(--typography-body-lg-font-size)]',
@@ -165,8 +189,16 @@ const TYPE_RAMP = [
     'font-ui text-[length:var(--typography-body-font-size)]',
     'Every animation must prove a capability, orient, guide, or give feedback.',
   ],
-  ['small', 'font-ui text-small', 'Reviewed by a designer before it reaches you.'],
-  ['overline', 'font-ui text-overline uppercase tracking-[var(--font-tracking-wider)]', 'Radical Transparency'],
+  [
+    'small',
+    'font-ui text-small',
+    'Reviewed by a designer before it reaches you.',
+  ],
+  [
+    'overline',
+    'font-ui text-overline uppercase tracking-[var(--font-tracking-wider)]',
+    'Radical Transparency',
+  ],
   [
     'price',
     'font-mono text-[length:var(--typography-price-font-size)] tabular-nums',
@@ -211,7 +243,11 @@ const SPACE_WIDTH: Record<(typeof SPACE_STEPS)[number], string> = {
 
 const EASINGS = [
   ['standard', 'ease-standard', 'General UI. The default.'],
-  ['entrance', 'ease-entrance', 'Decelerates — things settle rather than arrive.'],
+  [
+    'entrance',
+    'ease-entrance',
+    'Decelerates — things settle rather than arrive.',
+  ],
   ['exit', 'ease-exit', 'Accelerates away. Shorter than its entrance.'],
   ['spatial', 'ease-spatial', 'Weighted. Reserved for camera and 3D moves.'],
 ] as const;
@@ -231,8 +267,20 @@ const ICON_NAMES: readonly IconName[] = [
   'alert-circle',
 ];
 
-const BADGE_TONES: readonly BadgeTone[] = ['neutral', 'accent', 'success', 'warning', 'error', 'info'];
-const STATUS_TONES: readonly StatusTone[] = ['success', 'warning', 'error', 'info'];
+const BADGE_TONES: readonly BadgeTone[] = [
+  'neutral',
+  'accent',
+  'success',
+  'warning',
+  'error',
+  'info',
+];
+const STATUS_TONES: readonly StatusTone[] = [
+  'success',
+  'warning',
+  'error',
+  'info',
+];
 
 // Illustrative only. Real copy is content work and does not exist yet, so
 // these say what the component is for rather than pretending to be product
@@ -264,7 +312,9 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         <Eyebrow>{theme} theme</Eyebrow>
 
         <Stack gap={3}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Buttons</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Buttons
+          </h3>
           {(['lg', 'md', 'sm'] as const).map((size) => (
             <Cluster key={size} gap={3}>
               {BUTTON_VARIANTS.map((variant) => (
@@ -272,7 +322,12 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
                   {variant}
                 </Button>
               ))}
-              <Button variant="icon" size={size} aria-label="Close" icon="close" />
+              <Button
+                variant="icon"
+                size={size}
+                aria-label="Close"
+                icon="close"
+              />
             </Cluster>
           ))}
           <Cluster gap={3}>
@@ -297,10 +352,13 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Links</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Links
+          </h3>
           <p className="text-on-surface-2">
-            An <Link href="/pricing">inline link</Link> keeps its underline permanently — in prose
-            there is no surrounding affordance to signal it is interactive.
+            An <Link href="/pricing">inline link</Link> keeps its underline
+            permanently — in prose there is no surrounding affordance to signal
+            it is interactive.
           </p>
           <Cluster gap={5}>
             <Link href="/pricing" variant="standalone">
@@ -313,8 +371,14 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={4}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Fields</h3>
-          <Field label="Full name" name={`name-${theme}`} help="As it should appear on the proposal." />
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Fields
+          </h3>
+          <Field
+            label="Full name"
+            name={`name-${theme}`}
+            help="As it should appear on the proposal."
+          />
           <Field
             label="Phone"
             name={`phone-${theme}`}
@@ -328,11 +392,19 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
             type="email"
             success="We'll confirm within the hour."
           />
-          <Field label="Notes" name={`notes-${theme}`} multiline rows={2} disabled />
+          <Field
+            label="Notes"
+            name={`notes-${theme}`}
+            multiline
+            rows={2}
+            disabled
+          />
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Icons</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Icons
+          </h3>
           <Cluster gap={4}>
             {ICON_NAMES.map((name) => (
               <Icon key={name} name={name} size="lg" decorative />
@@ -346,7 +418,9 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
             clearly on navy can wash out on ivory. Both are on screen at once
             precisely so that is visible rather than merely asserted. */}
         <Stack gap={3}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Badges</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Badges
+          </h3>
           <Cluster gap={2}>
             {BADGE_TONES.map((tone) => (
               <Badge key={tone} tone={tone}>
@@ -361,7 +435,9 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Inline alerts</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Inline alerts
+          </h3>
           {STATUS_TONES.map((tone) => (
             <InlineAlert key={tone} tone={tone} title={ALERT_TITLE[tone]}>
               {ALERT_BODY[tone]}
@@ -370,7 +446,9 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Tooltip</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Tooltip
+          </h3>
           <Cluster gap={3}>
             <Tooltip content="Opens on hover and on focus, and is wired via aria-describedby.">
               <Button variant="secondary">Hover or focus me</Button>
@@ -379,7 +457,9 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Progress</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Progress
+          </h3>
           <Progress
             value={62}
             label="Uploading floor plan"
@@ -388,7 +468,9 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">BrandLoader</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            BrandLoader
+          </h3>
           <p className="text-small text-on-surface-2">
             For the 3D scene layer, never for the page. Every route here is
             prerendered, so gating the document behind this would add the
@@ -400,9 +482,15 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Skeleton</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Skeleton
+          </h3>
           <Stack gap={3}>
-            <Skeleton variant="text" lines={3} label="Loading project summary" />
+            <Skeleton
+              variant="text"
+              lines={3}
+              label="Loading project summary"
+            />
             <Cluster gap={3} align="center">
               <Skeleton variant="circle" />
               <Skeleton variant="block" height="4rem" />
@@ -411,7 +499,9 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={3}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Empty state</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Empty state
+          </h3>
           <EmptyState
             icon="alert-circle"
             title="No projects match those filters"
@@ -421,15 +511,17 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
         </Stack>
 
         <Stack gap={4}>
-          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Cards</h3>
+          <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+            Cards
+          </h3>
           {/* Every figure, inclusion and project name below is an obvious
               placeholder — §3.2/the brief: "no invented copy and no
               fabricated facts… demo content on /style must be obviously
               illustrative." Nothing here is a real Luxe Axis project, price
               or client number. */}
           <p className="text-small text-on-surface-muted">
-            Specimen content only — figures, inclusions and the project name below are illustrative
-            placeholders, not real Luxe Axis data.
+            Specimen content only — figures, inclusions and the project name
+            below are illustrative placeholders, not real Luxe Axis data.
           </p>
 
           <Grid cols={2} gap={5}>
@@ -453,7 +545,10 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
             <TierCard
               name="Essential"
               price={{ amount: 500000, period: 'onwards (illustrative)' }}
-              inclusions={['Illustrative inclusion one', 'Illustrative inclusion two']}
+              inclusions={[
+                'Illustrative inclusion one',
+                'Illustrative inclusion two',
+              ]}
               cta={{ label: 'Book audit', href: '/book-audit' }}
             />
             <TierCard
@@ -470,19 +565,32 @@ function ThemeSpecimen({ theme }: { theme: 'dark' | 'light' }) {
             <TierCard
               name="Elite"
               price={{ amount: 2000000, period: 'onwards (illustrative)' }}
-              inclusions={['Illustrative inclusion one', 'Illustrative inclusion two']}
+              inclusions={[
+                'Illustrative inclusion one',
+                'Illustrative inclusion two',
+              ]}
               cta={{ label: 'Book audit', href: '/book-audit' }}
             />
           </Grid>
 
           <Grid cols={3} gap={5}>
-            <StatCard value={120} suffix="+" label="Illustrative projects delivered" />
-            <StatCard value={98} suffix="%" label="Illustrative client satisfaction" />
+            <StatCard
+              value={120}
+              suffix="+"
+              label="Illustrative projects delivered"
+            />
+            <StatCard
+              value={98}
+              suffix="%"
+              label="Illustrative client satisfaction"
+            />
             <StatCard value={12} label="Illustrative years in practice" />
           </Grid>
 
           <Stack gap={2}>
-            <Eyebrow>Glass card — floating over the 3D canvas only (§1.7)</Eyebrow>
+            <Eyebrow>
+              Glass card — floating over the 3D canvas only (§1.7)
+            </Eyebrow>
             {/* The literal permitted case: a card floating ON TOP of a
                 scene, not styled next to one. SceneSlot's own overlay slot
                 (`components/SceneSlot.tsx`) hosts it directly, the same
@@ -519,9 +627,10 @@ export default function StylePage() {
               </h1>
               <Center>
                 <p className="text-on-surface-2">
-                  Every token and primitive in the system, rendered. Tests prove these behave; this
-                  page is how a human judges whether they look right. Luxury here is precision,
-                  space and consistency — not ornament.
+                  Every token and primitive in the system, rendered. Tests prove
+                  these behave; this page is how a human judges whether they
+                  look right. Luxury here is precision, space and consistency —
+                  not ornament.
                 </p>
               </Center>
             </Stack>
@@ -589,7 +698,9 @@ export default function StylePage() {
                   <code className="w-icon-lg font-mono text-overline text-on-surface-muted">
                     {step}
                   </code>
-                  <div className={`h-2 rounded-sm bg-accent ${SPACE_WIDTH[step]}`} />
+                  <div
+                    className={`h-2 rounded-sm bg-accent ${SPACE_WIDTH[step]}`}
+                  />
                 </Cluster>
               ))}
             </Stack>

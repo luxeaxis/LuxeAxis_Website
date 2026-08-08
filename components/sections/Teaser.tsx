@@ -23,7 +23,11 @@ import type { IntelligenceFeature, Project, Tier } from '@/lib/content/types';
 /** Intelligence teaser — links to §5.3/5.4/5.5. Claims come from each scene's
  *  "Proves:" line, which is the right register: these are assertions the studio
  *  has to stand behind, not feature bullets. */
-export function IntelligenceTeaser({ features }: { features: readonly IntelligenceFeature[] }) {
+export function IntelligenceTeaser({
+  features,
+}: {
+  features: readonly IntelligenceFeature[];
+}) {
   if (features.length === 0) return null;
 
   return (
@@ -41,6 +45,7 @@ export function IntelligenceTeaser({ features }: { features: readonly Intelligen
             icon={feature.icon}
             title={feature.name}
             body={feature.claim}
+            surface="glass"
           />
         ))}
       </Grid>
@@ -57,7 +62,11 @@ export function IntelligenceTeaser({ features }: { features: readonly Intelligen
  * "don't render the finished home in 3D where a real photo exists; a render of
  * a real project reads as *less* trustworthy than the photograph."
  */
-export function FeaturedProjects({ projects }: { projects: readonly Project[] }) {
+export function FeaturedProjects({
+  projects,
+}: {
+  projects: readonly Project[];
+}) {
   if (projects.length === 0) {
     return (
       <Section id="work" eyebrow="The work" title="Recent Chennai projects">
@@ -83,11 +92,7 @@ export function FeaturedProjects({ projects }: { projects: readonly Project[] })
   }
 
   return (
-    <Section
-      id="work"
-      eyebrow="The work"
-      title="Recent Chennai projects"
-    >
+    <Section id="work" eyebrow="The work" title="Recent Chennai projects">
       <Grid cols={3} gap={5}>
         {projects.map((project) => (
           <ProjectCard
@@ -97,11 +102,17 @@ export function FeaturedProjects({ projects }: { projects: readonly Project[] })
             neighbourhood={project.neighbourhood}
             tier={project.tier}
             media={{ kind: 'photo', ...project.image }}
+            surface="glass"
           />
         ))}
       </Grid>
       <Cluster gap={3}>
-        <Button as="a" href="/portfolio" variant="secondary" iconTrailing="arrow-right">
+        <Button
+          as="a"
+          href="/portfolio"
+          variant="secondary"
+          iconTrailing="arrow-right"
+        >
           See the full portfolio
         </Button>
       </Cluster>
@@ -129,7 +140,9 @@ export function FeaturedProjects({ projects }: { projects: readonly Project[] })
 export function PricingTeaser({ tiers }: { tiers: readonly Tier[] }) {
   if (tiers.length === 0) return null;
 
-  const priced = tiers.filter((tier): tier is Tier & { priceFrom: number } => tier.priceFrom !== null);
+  const priced = tiers.filter(
+    (tier): tier is Tier & { priceFrom: number } => tier.priceFrom !== null,
+  );
   const allPriced = priced.length === tiers.length;
 
   return (
@@ -159,7 +172,13 @@ export function PricingTeaser({ tiers }: { tiers: readonly Tier[] }) {
         <Grid cols={3} gap={5}>
           {tiers.map((tier) => (
             <div key={tier.id} className="flex flex-col gap-3">
-              <FeatureCard href="/pricing" icon="check" title={tier.name} body={tier.summary} />
+              <FeatureCard
+                href="/pricing"
+                icon="check"
+                title={tier.name}
+                body={tier.summary}
+                surface="glass"
+              />
               {/* The fee band named as pending, in the place the price will go.
                   This is the one section where a placeholder number would be
                   actively self-defeating: the heading above it says the studio

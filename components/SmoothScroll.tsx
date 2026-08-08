@@ -4,7 +4,11 @@ import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import { useAppStore } from '@/lib/store';
 import { useReducedMotion } from '@/lib/motion/useReducedMotion';
-import { gsap, registerScrollPlugins, ScrollTrigger } from '@/lib/motion/scroll';
+import {
+  gsap,
+  registerScrollPlugins,
+  ScrollTrigger,
+} from '@/lib/motion/scroll';
 
 /**
  * The Smooth Scroll Provider (Build Backlog T-21, Spec §3.3).
@@ -39,7 +43,10 @@ export function SmoothScroll() {
       const handleNativeScroll = () => {
         const docEl = document.documentElement;
         const totalHeight = docEl.scrollHeight - docEl.clientHeight;
-        const progress = totalHeight > 0 ? Math.min(1, Math.max(0, window.scrollY / totalHeight)) : 0;
+        const progress =
+          totalHeight > 0
+            ? Math.min(1, Math.max(0, window.scrollY / totalHeight))
+            : 0;
         setScrollProgress(progress);
       };
 

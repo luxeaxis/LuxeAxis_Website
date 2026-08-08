@@ -31,7 +31,10 @@ export function AboutSplit() {
   ];
 
   return (
-    <section className="bg-surface py-section-y border-b border-border-subtle" aria-labelledby="about-heading">
+    <section
+      className="bg-surface py-section-y border-b border-border-subtle"
+      aria-labelledby="about-heading"
+    >
       <Container>
         <Grid cols={2} gap={8} className="items-center">
           <Stack gap={6}>
@@ -39,24 +42,41 @@ export function AboutSplit() {
               <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent font-semibold">
                 Chennai’s Tech-Enabled Interior Studio
               </p>
-              <h2 id="about-heading" className="font-display text-[length:var(--typography-h2-font-size)] leading-tight text-on-surface">
+              <h2
+                id="about-heading"
+                className="font-display text-[length:var(--typography-h2-font-size)] leading-tight text-on-surface"
+              >
                 Where Space Meets Intelligence. On Time. Every Time.
               </h2>
               <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
-                Luxe Axis bridges high-end Chennai architectural craft with software precision. We publish our pricing,
-                guarantee handover dates, and provide live client transparency throughout the design journey.
+                Luxe Axis bridges high-end Chennai architectural craft with
+                software precision. We publish our pricing, guarantee handover
+                dates, and provide live client transparency throughout the
+                design journey.
               </p>
             </Stack>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {pillars.map((pillar) => (
-                <div key={pillar.title} className="rounded-xl border border-accent/20 bg-surface-raised/90 p-4 transition-all duration-ui hover:border-accent hover:shadow-lg hover:shadow-accent/10">
+                <div
+                  key={pillar.title}
+                  className="lx-liquid-glass-card rounded-xl p-4 transition-all duration-300 hover:border-accent/60 hover:-translate-y-1 hover:shadow-xl"
+                >
                   <Stack gap={2}>
                     <div className="flex items-center gap-2 text-accent">
-                      <Icon name={pillar.icon} size="sm" decorative />
-                      <h3 className="font-ui text-small font-bold text-on-surface">{pillar.title}</h3>
+                      <Icon
+                        name={pillar.icon}
+                        size="sm"
+                        decorative
+                        className="text-accent"
+                      />
+                      <h3 className="font-ui text-small font-bold text-on-surface">
+                        {pillar.title}
+                      </h3>
                     </div>
-                    <p className="font-ui text-small text-on-surface-2">{pillar.desc}</p>
+                    <p className="font-ui text-small text-on-surface-2">
+                      {pillar.desc}
+                    </p>
                   </Stack>
                 </div>
               ))}
@@ -83,8 +103,12 @@ export function AboutSplit() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-surface-deep/90 via-transparent to-transparent" />
             <div className="absolute bottom-6 left-6 rounded-xl border border-accent/40 bg-surface-raised/95 p-4 shadow-xl backdrop-blur-md">
-              <p className="font-display text-h3 text-accent font-bold">200+ Homes</p>
-              <p className="font-ui text-small text-on-surface-2">Designed Across Chennai & OMR</p>
+              <p className="font-display text-h3 text-accent font-bold">
+                200+ Homes
+              </p>
+              <p className="font-ui text-small text-on-surface-2">
+                Designed Across Chennai & OMR
+              </p>
             </div>
           </div>
         </Grid>

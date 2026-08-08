@@ -41,7 +41,10 @@ export async function POST(request: NextRequest) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ ok: false, error: 'invalid_json' }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, error: 'invalid_json' },
+      { status: 400 },
+    );
   }
 
   // Re-validated server-side rather than trusted. The form validates with this
@@ -64,7 +67,10 @@ export async function POST(request: NextRequest) {
   // It is the one field where a future schema loosening would be a compliance
   // failure rather than a bug, so it gets its own guard.
   if (parsed.data.consent !== true) {
-    return NextResponse.json({ ok: false, error: 'consent_required' }, { status: 422 });
+    return NextResponse.json(
+      { ok: false, error: 'consent_required' },
+      { status: 422 },
+    );
   }
 
   const receivedAt = new Date();
@@ -81,8 +87,13 @@ export async function POST(request: NextRequest) {
   if (!WEBHOOK_URL) {
     // Not an error in the code — a deployment that has not been finished. Said
     // plainly so it is obvious in staging rather than looking like a bug.
-    console.warn('[lead] LEAD_WEBHOOK_URL is not set; refusing to accept a lead that would be lost.');
-    return NextResponse.json({ ok: false, error: 'not_configured' }, { status: 503 });
+    console.warn(
+      '[lead] LEAD_WEBHOOK_URL is not set; refusing to accept a lead that would be lost.',
+    );
+    return NextResponse.json(
+      { ok: false, error: 'not_configured' },
+      { status: 503 },
+    );
   }
 
   try {
@@ -98,19 +109,34 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       console.error(`[lead] destination responded ${response.status}`);
-      return NextResponse.json({ ok: false, error: 'destination_failed' }, { status: 502 });
+      return NextResponse.json(
+        { ok: false, error: 'destination_failed' },
+        { status: 502 },
+      );
     }
   } catch (cause) {
     // The message only — never the lead body.
-    console.error('[lead] could not reach destination:', cause instanceof Error ? cause.message : 'unknown');
-    return NextResponse.json({ ok: false, error: 'destination_unreachable' }, { status: 502 });
+    console.error(
+      '[lead] could not reach destination:',
+      cause instanceof Error ? cause.message : 'unknown',
+    );
+    return NextResponse.json(
+      { ok: false, error: 'destination_unreachable' },
+      { status: 502 },
+    );
   }
 
-  return NextResponse.json({ ok: true, firstTouchDueAt: lead.firstTouchDueAt }, { status: 201 });
+  return NextResponse.json(
+    { ok: true, firstTouchDueAt: lead.firstTouchDueAt },
+    { status: 201 },
+  );
 }
 
 /** Anything other than POST. Explicit so a stray GET gets a clear 405 rather
  *  than Next's generic 404, which would look like the endpoint is missing. */
 export async function GET() {
-  return NextResponse.json({ ok: false, error: 'method_not_allowed' }, { status: 405 });
+  return NextResponse.json(
+    { ok: false, error: 'method_not_allowed' },
+    { status: 405 },
+  );
 }

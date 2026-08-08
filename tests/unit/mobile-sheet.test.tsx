@@ -1,5 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react';
 
 const pathnameState = vi.hoisted(() => ({ value: '/' }));
 vi.mock('next/navigation', () => ({ usePathname: () => pathnameState.value }));
@@ -31,9 +37,15 @@ describe('MobileSheet', () => {
     expect(document.body.style.overflow).toBe('hidden');
     expect(dialog.contains(document.activeElement)).toBe(true);
 
-    expect(within(dialog).getByRole('heading', { name: 'LUXE AXIS' })).toBeDefined();
+    expect(
+      within(dialog).getByRole('heading', { name: 'LUXE AXIS' }),
+    ).toBeDefined();
     expect(within(dialog).getByRole('link', { name: 'Pricing' })).toBeDefined();
-    expect(within(dialog).getByRole('link', { name: 'Book Audit' }).getAttribute('href')).toBe('/book-audit');
+    expect(
+      within(dialog)
+        .getByRole('link', { name: 'Book Audit' })
+        .getAttribute('href'),
+    ).toBe('/book-audit');
   });
 
   it('Esc returns focus to the trigger immediately, and the dialog unmounts once its close transition ends', () => {

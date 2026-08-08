@@ -1,5 +1,5 @@
 import type { IconName } from '@/components/Icon';
-import type { SceneId } from '@/three/registry';
+import type { PosterId } from '@/lib/content/posters';
 
 /**
  * The content model (Build Backlog T-12, Spec §2.4).
@@ -55,7 +55,7 @@ export type IntelligenceFeature = {
   /** The scene reserved for this feature (Spec §5.3–5.5), so the page holds
    *  its slot for T-32 and upgrades poster → live with no layout change.
    *  Optional: Virtual Staging appears in the sitemap with no scene of its own. */
-  sceneId?: SceneId;
+  sceneId?: PosterId;
   /** A paragraph on what the capability actually is. */
   summary: string;
   /** The commercial argument the spec attaches to it — its "moat". Kept

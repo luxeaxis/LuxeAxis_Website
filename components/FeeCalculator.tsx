@@ -54,19 +54,22 @@ export function FeeCalculator({ config }: { config: CalculatorConfig }) {
   const result = bracketId ? estimate(config, bracketId) : null;
 
   return (
-    <div className="rounded-lg border border-border-subtle bg-surface-raised p-6">
+    <div className="rounded-2xl border border-accent/40 lx-liquid-glass p-6 sm:p-8 shadow-2xl">
       <Stack gap={6}>
         <fieldset>
-          <legend id={legendId} className="mb-3 text-small text-on-surface-2">
+          <legend
+            id={legendId}
+            className="mb-3 font-ui text-small uppercase tracking-wider font-semibold text-accent"
+          >
             What kind of home is it?
           </legend>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2.5">
             {config.brackets.map((bracket) => {
               const area = formatArea(bracket);
               return (
                 <label
                   key={bracket.id}
-                  className="relative inline-flex cursor-pointer flex-col gap-0.5 rounded-md border-hairline border-border-subtle px-4 py-3 text-small text-on-surface-2 transition-colors duration-micro ease-standard has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-accent-contrast has-[:focus-visible]:outline has-[:focus-visible]:outline-focus has-[:focus-visible]:outline-offset-focus has-[:focus-visible]:outline-focus-ring"
+                  className="relative inline-flex cursor-pointer flex-col gap-0.5 rounded-xl border border-accent/30 lx-liquid-glass-card px-4 py-3 text-small text-on-surface-2 transition-all duration-200 has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-surface-deep has-[:checked]:font-bold"
                 >
                   {/* sr-only, never display:none — the radio has to stay in the
                       tab order and the accessibility tree; the card around it is
@@ -93,18 +96,26 @@ export function FeeCalculator({ config }: { config: CalculatorConfig }) {
           </div>
         </fieldset>
 
-        <output id={resultId} htmlFor={legendId} className="block border-t-hairline border-border-subtle pt-5">
+        <output
+          id={resultId}
+          htmlFor={legendId}
+          className="block border-t border-border-subtle/50 pt-5"
+        >
           {result ? (
             <Stack gap={4}>
               <Stack gap={1}>
-                <span className="text-small text-on-surface-2">Whole project</span>
-                <span className="font-mono text-[length:var(--typography-price-font-size)] tabular-nums text-on-surface">
+                <span className="text-small text-on-surface-2 font-medium">
+                  Whole project
+                </span>
+                <span className="font-mono text-[length:var(--typography-price-font-size)] font-bold tabular-nums text-accent">
                   {formatBand(result.projectCost)}
                 </span>
               </Stack>
               <Stack gap={1}>
-                <span className="text-small text-on-surface-2">Our design fee, within that</span>
-                <span className="font-mono text-[length:var(--typography-h3-font-size)] tabular-nums text-on-surface-2">
+                <span className="text-small text-on-surface-2 font-medium">
+                  Our design fee, within that
+                </span>
+                <span className="font-mono text-[length:var(--typography-h3-font-size)] font-semibold tabular-nums text-on-surface">
                   {formatBand(result.designFee)}
                 </span>
               </Stack>
@@ -123,13 +134,21 @@ export function FeeCalculator({ config }: { config: CalculatorConfig }) {
 
         {/* Saying so is part of the transparency claim rather than a hedge
             against it. `info`, not `warning`: nothing has gone wrong. */}
-        <InlineAlert tone="info" title="These are published ranges, not a quote">
-          Where you land inside a range depends on your plan, the condition of the site and the
-          materials you choose. A designer confirms it at the audit.
+        <InlineAlert
+          tone="info"
+          title="These are published ranges, not a quote"
+        >
+          Where you land inside a range depends on your plan, the condition of
+          the site and the materials you choose. A designer confirms it at the
+          audit.
         </InlineAlert>
 
         <div>
-          <Button as="a" href={BOOK_AUDIT.href}>
+          <Button
+            as="a"
+            href={BOOK_AUDIT.href}
+            className="lx-liquid-btn justify-center font-bold text-surface-deep"
+          >
             {BOOK_AUDIT.label}
           </Button>
         </div>

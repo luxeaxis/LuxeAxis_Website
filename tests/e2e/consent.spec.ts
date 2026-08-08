@@ -10,9 +10,12 @@ import { expect, test } from '@playwright/test';
 
 /** Hosts that would indicate a tracker loaded. Deliberately broad — the point
  *  is to catch a provider being wired in later without the consent gate. */
-const TRACKER = /google-analytics|googletagmanager|posthog|segment|hotjar|facebook|doubleclick/i;
+const TRACKER =
+  /google-analytics|googletagmanager|posthog|segment|hotjar|facebook|doubleclick/i;
 
-test('no analytics request is made before consent is given', async ({ page }) => {
+test('no analytics request is made before consent is given', async ({
+  page,
+}) => {
   const requests: string[] = [];
   page.on('request', (request) => {
     if (TRACKER.test(request.url())) requests.push(request.url());
@@ -22,10 +25,15 @@ test('no analytics request is made before consent is given', async ({ page }) =>
   await page.getByRole('link', { name: 'Pricing' }).first().click();
   await page.waitForLoadState('networkidle');
 
-  expect(requests, `tracker requests before consent:\n${requests.join('\n')}`).toEqual([]);
+  expect(
+    requests,
+    `tracker requests before consent:\n${requests.join('\n')}`,
+  ).toEqual([]);
 });
 
-test('no analytics request is made after declining, either', async ({ page }) => {
+test('no analytics request is made after declining, either', async ({
+  page,
+}) => {
   const requests: string[] = [];
   page.on('request', (request) => {
     if (TRACKER.test(request.url())) requests.push(request.url());
@@ -50,7 +58,9 @@ test('the banner asks once and remembers the answer', async ({ page }) => {
   // Same cookie jar, fresh navigation: a banner that re-asks is a banner people
   // learn to click through without reading.
   await page.goto('/pricing');
-  await expect(page.getByRole('region', { name: 'Cookies and analytics' })).toHaveCount(0);
+  await expect(
+    page.getByRole('region', { name: 'Cookies and analytics' }),
+  ).toHaveCount(0);
 });
 
 test('declining is exactly as easy as accepting', async ({ page }) => {
@@ -75,7 +85,9 @@ test('the banner does not trap focus or block the page', async ({ page }) => {
   // blocked until the visitor answers, so there is nothing to protect by
   // holding the page hostage.
   await page.goto('/');
-  await expect(page.getByRole('region', { name: 'Cookies and analytics' })).toBeVisible();
+  await expect(
+    page.getByRole('region', { name: 'Cookies and analytics' }),
+  ).toBeVisible();
 
   // The page behind is fully usable with the banner still up.
   await page.getByRole('link', { name: 'Pricing' }).first().click();
@@ -83,18 +95,24 @@ test('the banner does not trap focus or block the page', async ({ page }) => {
 
   // And it did not steal focus on mount.
   await page.goto('/');
-  const focused = await page.evaluate(() => document.activeElement?.tagName ?? '');
+  const focused = await page.evaluate(
+    () => document.activeElement?.tagName ?? '',
+  );
   expect(['BODY', 'HTML']).toContain(focused);
 });
 
-test('the organisation and local-business nodes ship, with the real address', async ({ page }) => {
+test('the organisation and local-business nodes ship, with the real address', async ({
+  page,
+}) => {
   // This asserted the ABSENCE of a LocalBusiness node until the studio supplied
   // an address — an invented one is fed straight into Google's local index and
   // Maps, where it can send someone to the wrong building. With a real address
   // it is the highest-value markup on a local-services site, so the assertion
   // inverts and now checks the substance rather than the type name.
   await page.goto('/');
-  const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const blocks = await page
+    .locator('script[type="application/ld+json"]')
+    .allTextContents();
   const nodes = blocks.map((block) => JSON.parse(block));
   const types = nodes.map((node) => node['@type']);
 

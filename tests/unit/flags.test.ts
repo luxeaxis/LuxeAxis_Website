@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { FLAGS, isOn } from '@/lib/flags';
+import { isOn } from '@/lib/flags';
 
 /**
  * Feature flags (Build Backlog: every Phase 3/4 task ships "behind a flag,
@@ -10,14 +10,7 @@ import { FLAGS, isOn } from '@/lib/flags';
  * safety property, not a preference.
  */
 
-describe('FLAGS', () => {
-  it('defaults three_v1 to off', () => {
-    // T-25: "behind `three_v1` (default off in prod until T-27)". An empty rig
-    // has nothing to show, and mounting a WebGL canvas to render nothing costs
-    // a GPU context and a battery.
-    expect(FLAGS.three_v1).toBe(false);
-  });
-
+describe('isOn', () => {
   it('treats anything other than the string "true" as off', () => {
     // The subtle one, and the reason this is an explicit `=== 'true'` rather
     // than a truthiness check. An unset variable is `undefined`, a misspelt
@@ -29,7 +22,16 @@ describe('FLAGS', () => {
     // a mutated `process.env`: the module cache would hand back the same
     // evaluated object either way, so that version of this test would pass
     // whether or not the logic was right.
-    for (const value of ['false', '0', 'off', 'no', '', 'TRUE', 'True', undefined]) {
+    for (const value of [
+      'false',
+      '0',
+      'off',
+      'no',
+      '',
+      'TRUE',
+      'True',
+      undefined,
+    ]) {
       expect(isOn(value), String(value)).toBe(false);
     }
   });

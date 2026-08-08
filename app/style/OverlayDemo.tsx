@@ -27,21 +27,28 @@ export function OverlayDemo() {
   return (
     <Stack gap={5}>
       <Stack gap={3}>
-        <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Chips — selectable and removable</h3>
+        <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+          Chips — selectable and removable
+        </h3>
         <Cluster gap={2}>
           {filters.map((filter) => (
             <Chip
               key={filter}
               selected={selected === filter}
               onSelect={() => setSelected(filter)}
-              onRemove={() => setFilters((rest) => rest.filter((f) => f !== filter))}
+              onRemove={() =>
+                setFilters((rest) => rest.filter((f) => f !== filter))
+              }
               removeLabel={`Remove ${filter} filter`}
             >
               {filter}
             </Chip>
           ))}
           {filters.length === 0 && (
-            <Button variant="tertiary" onClick={() => setFilters(['Chennai', 'Villa', '3BHK'])}>
+            <Button
+              variant="tertiary"
+              onClick={() => setFilters(['Chennai', 'Villa', '3BHK'])}
+            >
               Reset the demo filters
             </Button>
           )}
@@ -49,22 +56,30 @@ export function OverlayDemo() {
       </Stack>
 
       <Stack gap={3}>
-        <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Toast</h3>
+        <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+          Toast
+        </h3>
         <p className="text-on-surface-2">
-          Status tones announce politely; the error tone announces assertively. Neither is ever the
-          only channel for information that matters.
+          Status tones announce politely; the error tone announces assertively.
+          Neither is ever the only channel for information that matters.
         </p>
         <Cluster gap={3}>
           <Button
             variant="secondary"
-            onClick={() => toast({ tone: 'success', title: 'Audit request received' })}
+            onClick={() =>
+              toast({ tone: 'success', title: 'Audit request received' })
+            }
           >
             Fire a success toast
           </Button>
           <Button
             variant="secondary"
             onClick={() =>
-              toast({ tone: 'error', title: 'We could not reach that number', durationMs: 8000 })
+              toast({
+                tone: 'error',
+                title: 'We could not reach that number',
+                durationMs: 8000,
+              })
             }
           >
             Fire an error toast
@@ -73,7 +88,9 @@ export function OverlayDemo() {
       </Stack>
 
       <Stack gap={3}>
-        <h3 className="font-display text-[length:var(--typography-h3-font-size)]">Modal</h3>
+        <h3 className="font-display text-[length:var(--typography-h3-font-size)]">
+          Modal
+        </h3>
         <Cluster gap={3}>
           <Button variant="secondary" onClick={() => setModalOpen(true)}>
             Open the modal
@@ -86,9 +103,10 @@ export function OverlayDemo() {
         >
           <Stack gap={4}>
             <p className="text-on-surface-2">
-              Focus is trapped here while it is open, <kbd>Esc</kbd> closes it, clicking the scrim
-              closes it, and focus returns to the button that opened it. The scrim is frosted rather
-              than opaque so the page stays faintly visible — that is orientation, not decoration.
+              Focus is trapped here while it is open, <kbd>Esc</kbd> closes it,
+              clicking the scrim closes it, and focus returns to the button that
+              opened it. The scrim is frosted rather than opaque so the page
+              stays faintly visible — that is orientation, not decoration.
             </p>
             <Cluster gap={3}>
               <Button variant="primary" onClick={() => setModalOpen(false)}>

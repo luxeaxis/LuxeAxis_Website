@@ -131,46 +131,19 @@ export default async function AboutPage() {
 
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  Chennai Born
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  South India Native
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  10 Yr
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Flat Warranty
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  0%
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Hidden Costs
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  Space OS
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  4K CCTV Feeds
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  4.9 ★
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Google Rating
-                </span>
-              </div>
+              {highlights.map((h) => (
+                <div
+                  key={h.title}
+                  className="p-4 rounded-xl lx-liquid-glass-card border border-accent/20"
+                >
+                  <strong className="block font-display text-h3 text-accent font-bold">
+                    {h.title}
+                  </strong>
+                  <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
+                    {h.desc}
+                  </span>
+                </div>
+              ))}
             </div>
           </Stack>
         </Container>

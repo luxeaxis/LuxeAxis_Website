@@ -38,7 +38,9 @@ const OUTSTANDING = [
 
 export default async function AccessibilityPage() {
   const faqs = await getFaqs();
-  const accessibilityFaqs = [...faqs].filter((f) => f.id === 'materials' || f.id === 'contractors');
+  const accessibilityFaqs = [...faqs].filter(
+    (f) => f.id === 'materials' || f.id === 'contractors',
+  );
 
   const highlights = [
     { title: 'WCAG 2.2 AA', desc: 'Target Conformance' },
@@ -55,7 +57,8 @@ export default async function AccessibilityPage() {
           '@context': 'https://schema.org',
           '@type': 'WebPage',
           name: 'Accessibility Statement — Luxe Axis',
-          description: 'What Luxe Axis commits to on digital accessibility and WCAG 2.2 AA standards.',
+          description:
+            'What Luxe Axis commits to on digital accessibility and WCAG 2.2 AA standards.',
           url: ROUTE,
         }}
       />
@@ -81,7 +84,9 @@ export default async function AccessibilityPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              We build to WCAG 2.2 Level AA guidelines. Accessibility is an automated blocking check in our codebase: any change introducing a serious or critical accessibility violation does not ship.
+              We build to WCAG 2.2 Level AA guidelines. Accessibility is an
+              automated blocking check in our codebase: any change introducing a
+              serious or critical accessibility violation does not ship.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -96,24 +101,44 @@ export default async function AccessibilityPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">WCAG 2.2</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Level AA Target</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  WCAG 2.2
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Level AA Target
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">100%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Keyboard Operable</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  100%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Keyboard Operable
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Axe Core</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Automated Checks</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Axe Core
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Automated Checks
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Reduced Motion</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">OS Preference</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Reduced Motion
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  OS Preference
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Compliance</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Compliance
+                </span>
               </div>
             </div>
           </Stack>
@@ -129,7 +154,9 @@ export default async function AccessibilityPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -146,8 +173,16 @@ export default async function AccessibilityPage() {
         <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/30 max-w-4xl mx-auto">
           <ul className="flex flex-col gap-4">
             {TESTED.map((item) => (
-              <li key={item} className="flex items-start gap-3 text-body text-on-surface-2 leading-relaxed">
-                <Icon name="check" size="sm" decorative className="mt-1 shrink-0 text-accent font-bold" />
+              <li
+                key={item}
+                className="flex items-start gap-3 text-body text-on-surface-2 leading-relaxed"
+              >
+                <Icon
+                  name="check"
+                  size="sm"
+                  decorative
+                  className="mt-1 shrink-0 text-accent font-bold"
+                />
                 <span>{item}</span>
               </li>
             ))}
@@ -170,7 +205,9 @@ export default async function AccessibilityPage() {
               </p>
             ))}
             <p className="text-body text-on-surface-2 leading-relaxed pt-2 border-t border-border-subtle/40">
-              If something on this site does not work for you, we would rather hear about it than not. Until a dedicated route is published, please use the{' '}
+              If something on this site does not work for you, we would rather
+              hear about it than not. Until a dedicated route is published,
+              please use the{' '}
               <Link href="/book-audit" variant="inline">
                 enquiry form
               </Link>{' '}

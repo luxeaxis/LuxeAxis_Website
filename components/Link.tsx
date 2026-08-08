@@ -31,7 +31,8 @@
 import NextLink from 'next/link';
 import type { AnchorHTMLAttributes, ReactNode } from 'react';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export type LinkVariant = 'inline' | 'standalone';
 
@@ -43,7 +44,10 @@ export type LinkProps = {
    *  detected from `href` when omitted — see `isExternalHref` below. */
   external?: boolean;
   className?: string;
-} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'children' | 'className'>;
+} & Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  'href' | 'children' | 'className'
+>;
 
 const VARIANT_CLASS: Record<LinkVariant, string> = {
   // No explicit decoration-colour class needed: an unset `text-decoration-
@@ -67,7 +71,16 @@ function isExternalHref(href: string): boolean {
   return /^[a-z][a-z0-9+.-]*:/i.test(href) && !href.startsWith('/');
 }
 
-export function Link({ href, children, variant = 'inline', external, className, target, rel, ...rest }: LinkProps) {
+export function Link({
+  href,
+  children,
+  variant = 'inline',
+  external,
+  className,
+  target,
+  rel,
+  ...rest
+}: LinkProps) {
   const isExternal = external ?? isExternalHref(href);
 
   const classes = cx(
@@ -93,7 +106,13 @@ export function Link({ href, children, variant = 'inline', external, className, 
   }
 
   return (
-    <NextLink href={href} target={target} rel={rel} className={classes} {...rest}>
+    <NextLink
+      href={href}
+      target={target}
+      rel={rel}
+      className={classes}
+      {...rest}
+    >
       {children}
     </NextLink>
   );

@@ -47,7 +47,9 @@ export async function generateMetadata({
   params: Promise<{ region: string }>;
 }): Promise<Metadata> {
   const { region: slug } = await params;
-  const region = (await getNriRegions()).find((candidate) => candidate.slug === slug);
+  const region = (await getNriRegions()).find(
+    (candidate) => candidate.slug === slug,
+  );
   if (!region) return {};
 
   return {
@@ -67,16 +69,25 @@ function timeIn(timeZone: string): string {
   }).format(new Date());
 }
 
-export default async function NriRegionPage({ params }: { params: Promise<{ region: string }> }) {
+export default async function NriRegionPage({
+  params,
+}: {
+  params: Promise<{ region: string }>;
+}) {
   const { region: slug } = await params;
-  const region = (await getNriRegions()).find((candidate) => candidate.slug === slug);
+  const region = (await getNriRegions()).find(
+    (candidate) => candidate.slug === slug,
+  );
   if (!region) notFound();
 
   return (
     <main id="main" tabIndex={-1}>
       <Container className="py-section-y">
         <Stack gap={6} className="max-w-measure">
-          <Breadcrumbs path={`/nri/${region.slug}`} labels={{ [region.slug]: region.name }} />
+          <Breadcrumbs
+            path={`/nri/${region.slug}`}
+            labels={{ [region.slug]: region.name }}
+          />
           <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent">
             {region.name}
           </p>
@@ -84,8 +95,8 @@ export default async function NriRegionPage({ params }: { params: Promise<{ regi
             Designing a Chennai home from {region.name}
           </h1>
           <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
-            The studio is on the ground in Chennai. You are not, and the process is built for that
-            rather than working around it.
+            The studio is on the ground in Chennai. You are not, and the process
+            is built for that rather than working around it.
           </p>
           <div>
             <Button as="a" href="/book-audit" size="lg">
@@ -131,7 +142,9 @@ export default async function NriRegionPage({ params }: { params: Promise<{ regi
               answered, and payment terms are precisely the wrong thing to
               guess at — a visitor could act on it. Named as outstanding. */}
           <InlineAlert tone="info" title="Payment routes are being confirmed">
-            <ToBePublished label={`Accepted payment methods from ${region.name}`} />
+            <ToBePublished
+              label={`Accepted payment methods from ${region.name}`}
+            />
           </InlineAlert>
         </div>
       </Section>

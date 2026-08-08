@@ -34,33 +34,54 @@ export function ProcessSteps() {
   ];
 
   return (
-    <section className="bg-surface-deep/40 py-section-y border-b border-border-subtle" aria-labelledby="process-heading">
+    <section
+      className="bg-surface-deep/40 py-section-y border-b border-border-subtle"
+      aria-labelledby="process-heading"
+    >
       <Container>
         <Stack gap={8}>
           <Stack gap={3} className="text-center max-w-measure mx-auto">
             <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent font-semibold">
               How We Work
             </p>
-            <h2 id="process-heading" className="font-display text-[length:var(--typography-h2-font-size)] leading-tight text-on-surface">
+            <h2
+              id="process-heading"
+              className="font-display text-[length:var(--typography-h2-font-size)] leading-tight text-on-surface"
+            >
               5 Steps from Brief to Guaranteed Handover
             </h2>
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
-              A structured, transparent journey designed to eliminate delays and budget surprises.
+              A structured, transparent journey designed to eliminate delays and
+              budget surprises.
             </p>
           </Stack>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-5">
             {steps.map((step, idx) => (
-              <div key={step.num} className="relative rounded-lg border border-border-subtle bg-surface-deep p-5">
+              <div
+                key={step.num}
+                className="relative rounded-xl lx-liquid-glass-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-lg"
+              >
                 <Stack gap={3}>
                   <div className="flex items-center justify-between">
-                    <span className="font-display text-h2 text-accent font-bold">{step.num}</span>
+                    <span className="font-display text-h2 text-accent font-bold drop-shadow-sm">
+                      {step.num}
+                    </span>
                     {idx < steps.length - 1 && (
-                      <span className="hidden md:inline text-border-subtle" aria-hidden="true">→</span>
+                      <span
+                        className="hidden md:inline text-accent/50 text-small"
+                        aria-hidden="true"
+                      >
+                        →
+                      </span>
                     )}
                   </div>
-                  <h3 className="font-display text-h3 text-on-surface">{step.title}</h3>
-                  <p className="font-ui text-small text-on-surface-2">{step.desc}</p>
+                  <h3 className="font-display text-h3 text-on-surface font-bold">
+                    {step.title}
+                  </h3>
+                  <p className="font-ui text-small text-on-surface-2">
+                    {step.desc}
+                  </p>
                 </Stack>
               </div>
             ))}

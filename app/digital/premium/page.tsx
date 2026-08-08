@@ -21,7 +21,9 @@ export const metadata: Metadata = {
 
 export default async function PremiumDigitalPage() {
   const faqs = await getFaqs();
-  const digitalFaqs = [...faqs].filter((f) => f.id === 'abroad' || f.id === 'materials');
+  const digitalFaqs = [...faqs].filter(
+    (f) => f.id === 'abroad' || f.id === 'materials',
+  );
 
   const inclusions = [
     'All Pro Package deliverables included',
@@ -50,7 +52,10 @@ export default async function PremiumDigitalPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/digital/premium" labels={{ 'premium': "Premium VIP" }} />
+          <Breadcrumbs
+            path="/digital/premium"
+            labels={{ premium: 'Premium VIP' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -66,7 +71,9 @@ export default async function PremiumDigitalPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Uncompromising remote architectural design: 360-degree VR walkthrough, a physical material sample box shipped to your door worldwide, and 1-year VIP Design Club membership.
+              Uncompromising remote architectural design: 360-degree VR
+              walkthrough, a physical material sample box shipped to your door
+              worldwide, and 1-year VIP Design Club membership.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -81,20 +88,36 @@ export default async function PremiumDigitalPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">₹75,000</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Per Room Rate</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  ₹75,000
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Per Room Rate
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">360 VR</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Virtual Walkthrough</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  360 VR
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Virtual Walkthrough
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Sample Box</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Shipped Worldwide</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Sample Box
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Shipped Worldwide
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">VIP Club</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">1-Year Included</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  VIP Club
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  1-Year Included
+                </span>
               </div>
             </div>
           </Stack>
@@ -129,8 +152,14 @@ export default async function PremiumDigitalPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell villa before Premium VIP design package' }}
-            afterImage={{ src: '/posters/portfolio.avif', alt: 'Completed luxury villa interior using Premium VIP 360 VR drawings' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Bare shell villa before Premium VIP design package',
+            }}
+            afterImage={{
+              src: '/posters/portfolio.avif',
+              alt: 'Completed luxury villa interior using Premium VIP 360 VR drawings',
+            }}
           />
         </div>
       </Section>
@@ -145,19 +174,39 @@ export default async function PremiumDigitalPage() {
         <Grid cols={2} gap={6}>
           <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
             <div>
-              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">Starter Package (₹25,000 / room)</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed mb-4">Essential 2D layout, color moodboard, Vastu compass check, and direct shopping links.</p>
+              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                Starter Package (₹25,000 / room)
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                Essential 2D layout, color moodboard, Vastu compass check, and
+                direct shopping links.
+              </p>
             </div>
-            <Button as="a" href="/digital/starter" variant="secondary" className="w-full justify-center">
+            <Button
+              as="a"
+              href="/digital/starter"
+              variant="secondary"
+              className="w-full justify-center"
+            >
               View Starter Package →
             </Button>
           </div>
           <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
             <div>
-              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">Pro Package (₹45,000 / room)</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed mb-4">Adds 4K 3D photorealistic interior renders, full 2D working drawings, and itemized BOQ.</p>
+              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                Pro Package (₹45,000 / room)
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                Adds 4K 3D photorealistic interior renders, full 2D working
+                drawings, and itemized BOQ.
+              </p>
             </div>
-            <Button as="a" href="/digital/pro" variant="secondary" className="w-full justify-center">
+            <Button
+              as="a"
+              href="/digital/pro"
+              variant="secondary"
+              className="w-full justify-center"
+            >
               View Pro Package →
             </Button>
           </div>

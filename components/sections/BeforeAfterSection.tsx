@@ -6,18 +6,25 @@ import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
  */
 export function BeforeAfterSection() {
   return (
-    <section className="bg-surface-deep/30 py-section-y border-b border-border-subtle" aria-labelledby="before-after-heading">
+    <section
+      className="bg-surface-deep/30 py-section-y border-b border-border-subtle"
+      aria-labelledby="before-after-heading"
+    >
       <Container>
         <Stack gap={8}>
           <Stack gap={3} className="text-center max-w-measure mx-auto">
             <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent font-semibold">
               The Transformation Effect
             </p>
-            <h2 id="before-after-heading" className="font-display text-[length:var(--typography-h2-font-size)] leading-tight text-on-surface">
+            <h2
+              id="before-after-heading"
+              className="font-display text-[length:var(--typography-h2-font-size)] leading-tight text-on-surface"
+            >
               Before & After: Real Chennai Transformations
             </h2>
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
-              Drag the golden divider handle or use left/right arrow keys to reveal the renovation transformation.
+              Drag the golden divider handle or use left/right arrow keys to
+              reveal the renovation transformation.
             </p>
           </Stack>
 

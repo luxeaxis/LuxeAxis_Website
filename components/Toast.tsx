@@ -38,9 +38,15 @@ import {
 } from 'react';
 import { Button } from './Button';
 import { Icon } from './Icon';
-import { ariaRoleFor, STATUS_ICON, STATUS_TEXT_CLASS, type StatusTone } from '@/lib/status';
+import {
+  ariaRoleFor,
+  STATUS_ICON,
+  STATUS_TEXT_CLASS,
+  type StatusTone,
+} from '@/lib/status';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export type ToastTone = StatusTone | 'neutral';
 
@@ -80,7 +86,13 @@ function nextId(): string {
   return `toast-${idCounter}`;
 }
 
-function ToastCard({ toast, onDismiss }: { toast: ToastRecord; onDismiss: (id: string) => void }) {
+function ToastCard({
+  toast,
+  onDismiss,
+}: {
+  toast: ToastRecord;
+  onDismiss: (id: string) => void;
+}) {
   const tone = toast.tone ?? 'neutral';
   const isStatusTone = tone !== 'neutral';
   // Two-phase entrance: mounts already off-position/transparent, then flips
@@ -182,7 +194,8 @@ function ToastCard({ toast, onDismiss }: { toast: ToastRecord; onDismiss: (id: s
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
       onTransitionEnd={(event) => {
-        if (event.target === event.currentTarget && exiting) onDismiss(toast.id);
+        if (event.target === event.currentTarget && exiting)
+          onDismiss(toast.id);
       }}
       className={cx(
         'lx-glass pointer-events-auto w-full max-w-sm rounded-md border border-border-subtle p-4 shadow-2',
@@ -196,13 +209,30 @@ function ToastCard({ toast, onDismiss }: { toast: ToastRecord; onDismiss: (id: s
     >
       <div className="flex items-start gap-3">
         {isStatusTone && (
-          <Icon name={STATUS_ICON[tone]} size="md" decorative className={cx('mt-0.5 shrink-0', STATUS_TEXT_CLASS[tone])} />
+          <Icon
+            name={STATUS_ICON[tone]}
+            size="md"
+            decorative
+            className={cx('mt-0.5 shrink-0', STATUS_TEXT_CLASS[tone])}
+          />
         )}
         <div className="min-w-0 flex-1">
-          <p className="font-ui text-small font-semibold text-on-surface">{toast.title}</p>
-          {toast.description && <p className="mt-1 text-small text-on-surface-2">{toast.description}</p>}
+          <p className="font-ui text-small font-semibold text-on-surface">
+            {toast.title}
+          </p>
+          {toast.description && (
+            <p className="mt-1 text-small text-on-surface-2">
+              {toast.description}
+            </p>
+          )}
         </div>
-        <Button variant="icon" size="sm" icon="close" aria-label="Dismiss notification" onClick={startExit} />
+        <Button
+          variant="icon"
+          size="sm"
+          icon="close"
+          aria-label="Dismiss notification"
+          onClick={startExit}
+        />
       </div>
     </li>
   );
@@ -214,7 +244,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const push = useCallback((input: ToastInput) => {
     setToasts((prev) => {
       const next = [...prev, { ...input, id: nextId() }];
-      return next.length > MAX_VISIBLE_TOASTS ? next.slice(next.length - MAX_VISIBLE_TOASTS) : next;
+      return next.length > MAX_VISIBLE_TOASTS
+        ? next.slice(next.length - MAX_VISIBLE_TOASTS)
+        : next;
     });
   }, []);
 

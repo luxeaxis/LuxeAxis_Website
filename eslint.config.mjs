@@ -13,54 +13,18 @@ import tseslint from 'typescript-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 
-// The one DOM→WebGL seam, extracted so every `no-restricted-imports` block
-// spreads the identical pattern object rather than repeating the literal.
-// Flat config REPLACES a rule's options wholesale when a later `files:`-scoped
-// block sets the same rule key — it does not merge `patterns` arrays across
-// blocks (confirmed via `eslint --print-config` on a components/ file: a
-// components/-scoped block that set only the features/ pattern silently
-// dropped this one for every file under components/, exactly where SceneSlot
-// lives). Every block below that touches `no-restricted-imports` MUST spread
-// SEAM into its `patterns` array, or the seam goes unenforced for that scope.
-// `tests/unit/eslint-seam.test.ts` lints a virtual components/ file
-// programmatically and fails if this ever lapses again.
+// Blocks three.js and @react-three/* from app code. The WebGL layer was
+// descoped; posters in lib/content/posters.ts replaced live scenes. Keeping
+// this rule prevents accidental reintroduction of a heavy dependency the
+// bundle no longer needs.
 const SEAM = {
   group: [
-    // Alias (`@/three/**`) and relative (`../three/**`, `./three/**`) forms
-    // reaching into the three/ directory from outside it. One pattern covers
-    // both: `ignore` matches on the "three" path *segment* wherever it
-    // occurs, not on how the specifier got there, so `@/three/x` and
-    // `../../three/x` both match `**/three/**`.
     '**/three/**',
-    // The two seam modules. Both are permitted from outside three/ because
-    // neither statically references `three` or `@react-three/*`: registry.ts is
-    // pure data (poster metadata, scene ids, types) and stage.tsx contains only
-    // a build-time-guarded dynamic import. Everything that actually touches
-    // WebGL sits behind them.
-    '!**/three/registry',
-    '!**/three/stage',
-    // The bare npm package (`import 'three'`) and any subpath import from it
-    // (`three/examples/...`), which would bypass the registry's budget/tier
-    // gating just as surely as reaching into our own three/ directory does.
-    // Anchored with a leading slash deliberately: an *unanchored* `three`
-    // pattern matches the directory named `three` at any depth (equivalent
-    // to `**/three`), and once `ignore` treats a path as an excluded
-    // directory, its gitignore semantics forbid re-including anything
-    // beneath it — including the `!**/three/registry` negation above,
-    // regardless of list order (confirmed empirically: with an unanchored
-    // `three` pattern anywhere in this group, `@/three/registry` came back
-    // blocked no matter where the negation was placed). Anchoring to the
-    // start of the specifier with `/three` avoids that trap, since npm
-    // package specifiers always start at position zero and never collide
-    // with our own three/ directory (which is only ever reached via `@/` or
-    // a relative prefix, never bare).
     '/three',
     '/three/**',
-    // Scoped packages built on top of three, e.g. @react-three/fiber,
-    // @react-three/drei — same bypass risk as importing `three` directly.
     '@react-three/*',
   ],
-  message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2.',
+  message: 'WebGL/three.js was descoped — do not import three or @react-three/*.',
 };
 
 // Mirrors SEAM for dynamic `import()`. `no-restricted-imports` only inspects
@@ -74,7 +38,7 @@ const SEAM = {
 // probe cases in tests/unit/eslint-seam.test.ts rather than by construction —
 // there is no library that understands both selector syntax.
 const SEAM_DYNAMIC_IMPORT_SELECTOR =
-  'ImportExpression[source.value=/^three$|(^|\\/)three\\/(?!(registry|stage)(?:$|\\/))|^@react-three\\//]';
+  'ImportExpression[source.value=/^three$|(^|\\/)three\\/|^@react-three\\//]';
 
 export default [
   {
@@ -141,7 +105,7 @@ export default [
       'no-restricted-imports': ['error', { patterns: [SEAM] }],
       'no-restricted-syntax': ['error', {
         selector: SEAM_DYNAMIC_IMPORT_SELECTOR,
-        message: 'three/registry.ts is the only DOM→WebGL seam — see spec §1.2. A dynamic import() of three/ internals, the `three` package, or @react-three/* bypasses it just as a static import would.',
+        message: 'WebGL/three.js was descoped — do not dynamically import three or @react-three/*.',
       }],
     },
   },

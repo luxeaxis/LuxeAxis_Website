@@ -36,11 +36,14 @@ import dynamic from 'next/dynamic';
  */
 const SmoothScroll =
   process.env.NEXT_PUBLIC_FLAG_SMOOTH_SCROLL === 'true'
-    ? dynamic(() => import('./SmoothScroll').then((module_) => module_.SmoothScroll), {
-        // Lenis measures and drives the real document; there is nothing for a
-        // server pass to produce, and asking for one costs a hydration mismatch.
-        ssr: false,
-      })
+    ? dynamic(
+        () => import('./SmoothScroll').then((module_) => module_.SmoothScroll),
+        {
+          // Lenis measures and drives the real document; there is nothing for a
+          // server pass to produce, and asking for one costs a hydration mismatch.
+          ssr: false,
+        },
+      )
     : null;
 
 export function SmoothScrollGate() {

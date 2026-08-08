@@ -46,7 +46,8 @@ import { Stack } from './layout';
 import { leadSchema, type Lead } from '@/lib/lead/schema';
 import { auditEmailHref, auditWhatsappHref } from '@/lib/lead/fallback';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 const STEP_ONE_FIELDS = ['propertyType', 'areaSqFt', 'tier', 'city'] as const;
 
@@ -92,7 +93,10 @@ function RadioRow<T extends string>({
   return (
     <fieldset>
       <legend className="mb-2 text-small text-on-surface-2">{legend}</legend>
-      <div className="flex flex-wrap gap-2" aria-describedby={error ? errorId : undefined}>
+      <div
+        className="flex flex-wrap gap-2"
+        aria-describedby={error ? errorId : undefined}
+      >
         {options.map((option) => (
           <label
             key={option.value}
@@ -113,7 +117,11 @@ function RadioRow<T extends string>({
         ))}
       </div>
       {error && (
-        <p id={errorId} role="alert" className="mt-2 flex items-center gap-2 text-small text-error">
+        <p
+          id={errorId}
+          role="alert"
+          className="mt-2 flex items-center gap-2 text-small text-error"
+        >
           <Icon name="alert-circle" size="sm" decorative />
           <span>{error}</span>
         </p>
@@ -124,7 +132,9 @@ function RadioRow<T extends string>({
 
 export function BookAuditForm() {
   const [step, setStep] = useState<0 | 1>(0);
-  const [submitState, setSubmitState] = useState<SubmitState>({ status: 'idle' });
+  const [submitState, setSubmitState] = useState<SubmitState>({
+    status: 'idle',
+  });
   const summaryRef = useRef<HTMLDivElement>(null);
   const [showSummary, setShowSummary] = useState(false);
 
@@ -151,7 +161,9 @@ export function BookAuditForm() {
     if (showSummary) summaryRef.current?.focus();
   }, [showSummary]);
 
-  const errorEntries = (Object.keys(errors) as (keyof Lead)[]).filter((key) => errors[key]);
+  const errorEntries = (Object.keys(errors) as (keyof Lead)[]).filter(
+    (key) => errors[key],
+  );
 
   async function goToStepTwo() {
     // Only step 1's fields — step 2 is untouched and must not report errors for
@@ -189,7 +201,9 @@ export function BookAuditForm() {
         setSubmitState({ status: 'success' });
         return;
       }
-      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      const payload = (await response.json().catch(() => null)) as {
+        error?: string;
+      } | null;
       setSubmitState({
         status: 'error',
         reason:
@@ -212,8 +226,8 @@ export function BookAuditForm() {
     return (
       <div role="status">
         <InlineAlert tone="success" title="Your audit request is in">
-          A designer will be in touch shortly to agree a time. Nothing is booked until you have
-          confirmed it with them.
+          A designer will be in touch shortly to agree a time. Nothing is booked
+          until you have confirmed it with them.
         </InlineAlert>
       </div>
     );
@@ -235,7 +249,8 @@ export function BookAuditForm() {
             the whole message, and a progress bar alone conveys it only to
             people who can see it. */}
         <p className="text-small text-on-surface-muted">
-          Step {step + 1} of 2 — {step === 0 ? 'about the space' : 'how to reach you'}
+          Step {step + 1} of 2 —{' '}
+          {step === 0 ? 'about the space' : 'how to reach you'}
         </p>
 
         {showSummary && errorEntries.length > 0 && (
@@ -246,8 +261,11 @@ export function BookAuditForm() {
             className="rounded-md border-hairline border-error bg-surface-raised p-4"
           >
             <p className="font-ui font-semibold text-on-surface">
-              There {errorEntries.length === 1 ? 'is one thing' : `are ${errorEntries.length} things`} to
-              fix before we can send this
+              There{' '}
+              {errorEntries.length === 1
+                ? 'is one thing'
+                : `are ${errorEntries.length} things`}{' '}
+              to fix before we can send this
             </p>
             <ul className="mt-2 flex flex-col gap-1">
               {errorEntries.map((key) => (
@@ -255,7 +273,10 @@ export function BookAuditForm() {
                   {/* A link, not just text: it moves focus to the field, which
                       is what makes a summary usable rather than merely
                       informative. */}
-                  <a href={`#${key}`} className="text-small text-error underline underline-offset-4">
+                  <a
+                    href={`#${key}`}
+                    className="text-small text-error underline underline-offset-4"
+                  >
                     {FIELD_LABEL[key]}: {errors[key]?.message}
                   </a>
                 </li>
@@ -282,7 +303,9 @@ export function BookAuditForm() {
                 { value: 'other', label: 'Something else' },
               ]}
               value={values.propertyType}
-              onChange={(value) => setValue('propertyType', value, { shouldValidate: true })}
+              onChange={(value) =>
+                setValue('propertyType', value, { shouldValidate: true })
+              }
               error={errors.propertyType?.message}
             />
             <Field
@@ -302,7 +325,9 @@ export function BookAuditForm() {
                 { value: 'undecided', label: 'Still deciding' },
               ]}
               value={values.tier}
-              onChange={(value) => setValue('tier', value, { shouldValidate: true })}
+              onChange={(value) =>
+                setValue('tier', value, { shouldValidate: true })
+              }
               error={errors.tier?.message}
             />
             <Field
@@ -313,7 +338,11 @@ export function BookAuditForm() {
             />
             <div>
               {/* type="button": inside a form, an unqualified button submits. */}
-              <Button type="button" onClick={goToStepTwo} iconTrailing="arrow-right">
+              <Button
+                type="button"
+                onClick={goToStepTwo}
+                iconTrailing="arrow-right"
+              >
                 Next
               </Button>
             </div>
@@ -322,7 +351,12 @@ export function BookAuditForm() {
 
         <div hidden={step !== 1}>
           <Stack gap={5}>
-            <Field label="Your name" required error={errors.name?.message} {...register('name')} />
+            <Field
+              label="Your name"
+              required
+              error={errors.name?.message}
+              {...register('name')}
+            />
             <Field
               label="Email"
               type="email"
@@ -349,7 +383,9 @@ export function BookAuditForm() {
                 { value: 'zoom', label: 'Video call' },
               ]}
               value={values.contactMethod}
-              onChange={(value) => setValue('contactMethod', value, { shouldValidate: true })}
+              onChange={(value) =>
+                setValue('contactMethod', value, { shouldValidate: true })
+              }
               error={errors.contactMethod?.message}
             />
             <RadioRow
@@ -362,7 +398,9 @@ export function BookAuditForm() {
                 { value: 'any', label: 'Any time' },
               ]}
               value={values.preferredTime}
-              onChange={(value) => setValue('preferredTime', value, { shouldValidate: true })}
+              onChange={(value) =>
+                setValue('preferredTime', value, { shouldValidate: true })
+              }
               error={errors.preferredTime?.message}
             />
             <Field
@@ -404,12 +442,22 @@ export function BookAuditForm() {
                       have just told them delivery failed. */}
                   <div className="flex flex-wrap gap-3">
                     {emailHref && (
-                      <Button as="a" href={emailHref} variant="secondary" size="sm">
+                      <Button
+                        as="a"
+                        href={emailHref}
+                        variant="secondary"
+                        size="sm"
+                      >
                         Send it by email instead
                       </Button>
                     )}
                     {whatsappLink && (
-                      <Button as="a" href={whatsappLink} variant="secondary" size="sm">
+                      <Button
+                        as="a"
+                        href={whatsappLink}
+                        variant="secondary"
+                        size="sm"
+                      >
                         Send it on WhatsApp
                       </Button>
                     )}
@@ -427,7 +475,10 @@ export function BookAuditForm() {
               >
                 Back
               </Button>
-              <Button type="submit" loading={submitState.status === 'submitting'}>
+              <Button
+                type="submit"
+                loading={submitState.status === 'submitting'}
+              >
                 Request my audit
               </Button>
             </div>

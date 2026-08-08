@@ -27,7 +27,8 @@ const GAP: Record<Space, string> = {
   10: 'gap-10',
 };
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 type BaseProps = {
   children: ReactNode;
@@ -36,8 +37,15 @@ type BaseProps = {
 };
 
 /** Vertical rhythm. The workhorse — most page sections are a Stack. */
-export function Stack({ children, className, as: Tag = 'div', gap = 4 }: BaseProps & { gap?: Space }) {
-  return <Tag className={cx('flex flex-col', GAP[gap], className)}>{children}</Tag>;
+export function Stack({
+  children,
+  className,
+  as: Tag = 'div',
+  gap = 4,
+}: BaseProps & { gap?: Space }) {
+  return (
+    <Tag className={cx('flex flex-col', GAP[gap], className)}>{children}</Tag>
+  );
 }
 
 /** Horizontal grouping that wraps rather than overflowing — nav items, chips,
@@ -49,14 +57,21 @@ export function Cluster({
   as: Tag = 'div',
   gap = 3,
   align = 'center',
-}: BaseProps & { gap?: Space; align?: 'start' | 'center' | 'end' | 'baseline' }) {
+}: BaseProps & {
+  gap?: Space;
+  align?: 'start' | 'center' | 'end' | 'baseline';
+}) {
   const alignment = {
     start: 'items-start',
     center: 'items-center',
     end: 'items-end',
     baseline: 'items-baseline',
   }[align];
-  return <Tag className={cx('flex flex-wrap', alignment, GAP[gap], className)}>{children}</Tag>;
+  return (
+    <Tag className={cx('flex flex-wrap', alignment, GAP[gap], className)}>
+      {children}
+    </Tag>
+  );
 }
 
 /** Responsive columns. `cols` is the desktop count; it steps down to 1 on
@@ -75,13 +90,19 @@ export function Grid({
     3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
     4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
   }[cols];
-  return <Tag className={cx('grid', columns, GAP[gap], className)}>{children}</Tag>;
+  return (
+    <Tag className={cx('grid', columns, GAP[gap], className)}>{children}</Tag>
+  );
 }
 
 /** Max content width with the fluid gutter. The gutter is `clamp(16px, 5vw,
  *  96px)`, so margins breathe on large screens without a media query. */
 export function Container({ children, className, as: Tag = 'div' }: BaseProps) {
-  return <Tag className={cx('mx-auto w-full max-w-container px-gutter', className)}>{children}</Tag>;
+  return (
+    <Tag className={cx('mx-auto w-full max-w-container px-gutter', className)}>
+      {children}
+    </Tag>
+  );
 }
 
 /** Full-viewport-width section whose inner content stays in the measure.
@@ -98,5 +119,9 @@ export function Bleed({ children, className, as: Tag = 'section' }: BaseProps) {
 /** Constrains to a readable line length (68ch). Prose that runs the full
  *  container width is the single most common readability failure. */
 export function Center({ children, className, as: Tag = 'div' }: BaseProps) {
-  return <Tag className={cx('mx-auto w-full max-w-measure', className)}>{children}</Tag>;
+  return (
+    <Tag className={cx('mx-auto w-full max-w-measure', className)}>
+      {children}
+    </Tag>
+  );
 }

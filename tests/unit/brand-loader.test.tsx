@@ -1,6 +1,10 @@
 import { act, cleanup, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { BrandLoader, MIN_DISPLAY_MS, TIMEOUT_MS } from '@/components/BrandLoader';
+import {
+  BrandLoader,
+  MIN_DISPLAY_MS,
+  TIMEOUT_MS,
+} from '@/components/BrandLoader';
 
 /**
  * The loader's whole behaviour is temporal, so these run on fake timers.
@@ -30,7 +34,10 @@ describe('the minimum-display guard', () => {
     expect(screen.getByRole('progressbar')).toBeTruthy();
 
     rerender(<BrandLoader value={100} done />);
-    expect(screen.queryByRole('progressbar'), 'released before the guard').toBeTruthy();
+    expect(
+      screen.queryByRole('progressbar'),
+      'released before the guard',
+    ).toBeTruthy();
 
     act(() => {
       vi.advanceTimersByTime(MIN_DISPLAY_MS);
@@ -106,15 +113,23 @@ describe('what it reports to assistive tech', () => {
   it('names the load once, not twice', () => {
     // The Progress bar carries the accessible name. The mark beside it is
     // decorative, so a screen reader is not told the brand as well.
-    const { container } = render(<BrandLoader value={40} label="Loading the scene" />);
-    expect(container.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true');
-    expect(screen.getByRole('progressbar').getAttribute('aria-label')).toBe('Loading the scene');
+    const { container } = render(
+      <BrandLoader value={40} label="Loading the scene" />,
+    );
+    expect(container.querySelector('svg')?.getAttribute('aria-hidden')).toBe(
+      'true',
+    );
+    expect(screen.getByRole('progressbar').getAttribute('aria-label')).toBe(
+      'Loading the scene',
+    );
   });
 
   it('reports the real percentage it was given', () => {
     // Determinate. A loading bar that invents its own ramp is the one dishonest
     // thing this component could do.
     render(<BrandLoader value={37} />);
-    expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe('37');
+    expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe(
+      '37',
+    );
   });
 });

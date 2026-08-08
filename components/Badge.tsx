@@ -20,7 +20,8 @@ import type { ReactNode } from 'react';
 import { Icon, type IconName } from './Icon';
 import { STATUS_ICON, STATUS_TEXT_CLASS, type StatusTone } from '@/lib/status';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export type BadgeTone = StatusTone | 'neutral' | 'accent';
 
@@ -34,7 +35,12 @@ const TONE_CLASS: Record<BadgeTone, string> = {
 };
 
 function isStatusTone(tone: BadgeTone): tone is StatusTone {
-  return tone === 'success' || tone === 'warning' || tone === 'error' || tone === 'info';
+  return (
+    tone === 'success' ||
+    tone === 'warning' ||
+    tone === 'error' ||
+    tone === 'info'
+  );
 }
 
 export type BadgeProps = {
@@ -46,8 +52,14 @@ export type BadgeProps = {
   className?: string;
 };
 
-export function Badge({ tone = 'neutral', children, icon, className }: BadgeProps) {
-  const resolvedIcon = icon ?? (isStatusTone(tone) ? STATUS_ICON[tone] : undefined);
+export function Badge({
+  tone = 'neutral',
+  children,
+  icon,
+  className,
+}: BadgeProps) {
+  const resolvedIcon =
+    icon ?? (isStatusTone(tone) ? STATUS_ICON[tone] : undefined);
 
   return (
     <span

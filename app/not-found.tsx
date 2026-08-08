@@ -41,8 +41,9 @@ export default function NotFound() {
                 with the studio's stated transparency — than implying they
                 mistyped something. */}
             <p className="text-on-surface-2">
-              The link may be out of date, or that part of the site may not have been published
-              yet. Everything already published is reachable from the footer below.
+              The link may be out of date, or that part of the site may not have
+              been published yet. Everything already published is reachable from
+              the footer below.
             </p>
           </Stack>
           <div>

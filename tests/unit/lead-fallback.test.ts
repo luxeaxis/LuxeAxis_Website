@@ -27,7 +27,9 @@ describe('the email fallback', () => {
   it('addresses the enquiries inbox, not support', () => {
     // An enquiry in the support inbox is an enquiry that waits behind existing
     // clients' problems.
-    expect(auditEmailHref(LEAD)!.startsWith('mailto:info@luxeaxis.in')).toBe(true);
+    expect(auditEmailHref(LEAD)!.startsWith('mailto:info@luxeaxis.in')).toBe(
+      true,
+    );
   });
 
   it('carries everything the studio needs to reply', () => {
@@ -47,7 +49,10 @@ describe('the email fallback', () => {
   it('percent-encodes the body, so a newline cannot truncate the link', () => {
     // A raw newline or ampersand in a mailto ends the parameter early, and the
     // rest of the enquiry silently disappears.
-    const href = auditEmailHref({ ...LEAD, notes: 'Line one\nLine two & more' })!;
+    const href = auditEmailHref({
+      ...LEAD,
+      notes: 'Line one\nLine two & more',
+    })!;
     expect(href).not.toContain('\n');
     expect(decodeURIComponent(href)).toContain('Line two & more');
   });
@@ -95,7 +100,9 @@ describe('both fallbacks', () => {
     // would move personal data to a destination they did not choose, on the one
     // path where the site has just told them delivery failed.
     for (const href of [auditEmailHref(LEAD)!, auditWhatsappHref(LEAD)!]) {
-      expect(href.startsWith('mailto:') || href.startsWith('https://wa.me/')).toBe(true);
+      expect(
+        href.startsWith('mailto:') || href.startsWith('https://wa.me/'),
+      ).toBe(true);
     }
   });
 });

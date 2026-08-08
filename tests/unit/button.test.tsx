@@ -16,7 +16,9 @@ afterEach(cleanup);
 describe('Button', () => {
   it('renders a real <button> by default', () => {
     render(<Button>Book a free design audit</Button>);
-    const button = screen.getByRole('button', { name: 'Book a free design audit' });
+    const button = screen.getByRole('button', {
+      name: 'Book a free design audit',
+    });
     expect(button.tagName).toBe('BUTTON');
   });
 
@@ -53,7 +55,9 @@ describe('Button', () => {
 
   it('the press animation transitions transform alongside colour, not transition-colors alone', () => {
     render(<Button>Book a free design audit</Button>);
-    const button = screen.getByRole('button', { name: 'Book a free design audit' });
+    const button = screen.getByRole('button', {
+      name: 'Book a free design audit',
+    });
     // `transition-colors` only ever animates color/background-color/
     // border-color/text-decoration-color/fill/stroke — transform is not in
     // that list, so `active:scale-press` would otherwise snap instantly.
@@ -77,7 +81,9 @@ describe('Button', () => {
         Book audit
       </Button>,
     );
-    const button = screen.getByRole('button', { name: 'Book audit' }) as HTMLButtonElement;
+    const button = screen.getByRole('button', {
+      name: 'Book audit',
+    }) as HTMLButtonElement;
     expect(button.disabled).toBe(true);
     fireEvent.click(button);
     expect(onClick).not.toHaveBeenCalled();
@@ -92,7 +98,9 @@ describe('Button', () => {
     );
     // The accessible name is still the original label — this query would
     // fail to find anything if loading had replaced it with "Working…".
-    const button = screen.getByRole('button', { name: 'Book a free design audit' }) as HTMLButtonElement;
+    const button = screen.getByRole('button', {
+      name: 'Book a free design audit',
+    }) as HTMLButtonElement;
     expect(button.getAttribute('aria-busy')).toBe('true');
     // `loading` is communicated via `aria-disabled`, NOT the native
     // `disabled` attribute — see the next test for why (native `disabled`
@@ -112,7 +120,9 @@ describe('Button', () => {
     // activates the button, and the app's response is to flip it into
     // `loading` (e.g. a controlled `loading` prop driven by submit state).
     const { rerender } = render(<Button>Book a free design audit</Button>);
-    const button = screen.getByRole('button', { name: 'Book a free design audit' }) as HTMLButtonElement;
+    const button = screen.getByRole('button', {
+      name: 'Book a free design audit',
+    }) as HTMLButtonElement;
     button.focus();
     expect(document.activeElement).toBe(button);
 
@@ -129,7 +139,9 @@ describe('Button', () => {
   it('a click on a loading button does not fire its handler, even though the element stays enabled', () => {
     const onClick = vi.fn();
     const { rerender } = render(<Button onClick={onClick}>Go</Button>);
-    const button = screen.getByRole('button', { name: 'Go' }) as HTMLButtonElement;
+    const button = screen.getByRole('button', {
+      name: 'Go',
+    }) as HTMLButtonElement;
     button.focus();
 
     rerender(

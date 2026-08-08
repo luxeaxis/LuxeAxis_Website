@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { estimate, formatArea, formatBand, formatRupees } from '@/lib/pricing/estimate';
+import {
+  estimate,
+  formatArea,
+  formatBand,
+  formatRupees,
+} from '@/lib/pricing/estimate';
 import { getCalculatorConfig, getTiers } from '@/lib/content/source';
 import type { CalculatorConfig } from '@/lib/content/types';
 
@@ -45,8 +50,12 @@ describe('estimate', () => {
     const config = (await getCalculatorConfig())!;
     for (const bracket of config.brackets) {
       const result = estimate(config, bracket.id)!;
-      expect(result.projectCost.high, bracket.id).toBeGreaterThan(result.projectCost.low);
-      expect(result.designFee.high, bracket.id).toBeGreaterThan(result.designFee.low);
+      expect(result.projectCost.high, bracket.id).toBeGreaterThan(
+        result.projectCost.low,
+      );
+      expect(result.designFee.high, bracket.id).toBeGreaterThan(
+        result.designFee.low,
+      );
     }
   });
 });
@@ -76,7 +85,9 @@ describe('the published price list', () => {
     // presents them as nested.
     return getCalculatorConfig().then((config) => {
       for (const bracket of config!.brackets) {
-        expect(bracket.designFee.high, bracket.label).toBeLessThan(bracket.projectCost.high);
+        expect(bracket.designFee.high, bracket.label).toBeLessThan(
+          bracket.projectCost.high,
+        );
       }
     });
   });

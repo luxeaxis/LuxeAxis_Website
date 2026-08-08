@@ -12,7 +12,8 @@
 
 import { formatRupees } from '@/lib/pricing/estimate';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export type PriceTagProps = {
   /** Amount in INR (rupees, not paise). */
@@ -37,7 +38,9 @@ export function PriceTag({ amount, period, className }: PriceTagProps) {
       <span className="font-mono text-[length:var(--typography-price-font-size)] tabular-nums text-on-surface">
         {formatted}
       </span>
-      {period && <span className="font-ui text-small text-on-surface-2">{period}</span>}
+      {period && (
+        <span className="font-ui text-small text-on-surface-2">{period}</span>
+      )}
     </p>
   );
 }

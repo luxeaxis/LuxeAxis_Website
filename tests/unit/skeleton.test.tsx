@@ -6,7 +6,9 @@ afterEach(cleanup);
 
 describe('Skeleton', () => {
   it('reserves the final dimensions via inline width/height, not layout that can collapse to 0', () => {
-    const { container } = render(<Skeleton variant="block" width="240px" height="120px" />);
+    const { container } = render(
+      <Skeleton variant="block" width="240px" height="120px" />,
+    );
     const bone = container.firstElementChild as HTMLElement;
     expect(bone.style.width).toBe('240px');
     expect(bone.style.height).toBe('120px');
@@ -44,7 +46,9 @@ describe('Skeleton', () => {
   });
 
   it('multi-line text renders `lines` bones, the last one narrower', () => {
-    const { container } = render(<Skeleton variant="text" lines={3} width="20rem" />);
+    const { container } = render(
+      <Skeleton variant="text" lines={3} width="20rem" />,
+    );
     const bones = container.querySelectorAll('[aria-hidden="true"]');
     expect(bones).toHaveLength(3);
     expect((bones[0] as HTMLElement).style.width).toBe('20rem');

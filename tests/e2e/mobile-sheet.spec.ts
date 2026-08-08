@@ -5,7 +5,9 @@ import { expect, test } from '@playwright/test';
 test.use({ viewport: { width: 390, height: 844 } });
 
 test.describe('MobileSheet — keyboard open/close/trap/Esc, focus return', () => {
-  test('the hamburger opens the sheet as a labelled, modal dialog', async ({ page }) => {
+  test('the hamburger opens the sheet as a labelled, modal dialog', async ({
+    page,
+  }) => {
     await page.goto('/');
     // The trigger's accessible name flips "Open menu" → "Close menu" once
     // open, and the in-panel close button then shares that same "Close
@@ -24,17 +26,23 @@ test.describe('MobileSheet — keyboard open/close/trap/Esc, focus return', () =
     await expect(trigger).toHaveAttribute('aria-expanded', 'true');
   });
 
-  test('opening the sheet moves focus inside it, not left behind on the trigger', async ({ page }) => {
+  test('opening the sheet moves focus inside it, not left behind on the trigger', async ({
+    page,
+  }) => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Open menu' }).click();
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
 
-    const focusIsInsideDialog = await dialog.evaluate((el) => el.contains(document.activeElement));
+    const focusIsInsideDialog = await dialog.evaluate((el) =>
+      el.contains(document.activeElement),
+    );
     expect(focusIsInsideDialog).toBe(true);
   });
 
-  test('Esc closes the sheet and returns focus to the trigger', async ({ page }) => {
+  test('Esc closes the sheet and returns focus to the trigger', async ({
+    page,
+  }) => {
     await page.goto('/');
     const trigger = page.getByRole('button', { name: 'Open menu' });
     await trigger.click();
@@ -54,11 +62,15 @@ test.describe('MobileSheet — keyboard open/close/trap/Esc, focus return', () =
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
 
-    const focusableCount = await dialog.locator('a[href], button:not([disabled])').count();
+    const focusableCount = await dialog
+      .locator('a[href], button:not([disabled])')
+      .count();
     expect(focusableCount).toBeGreaterThan(1);
 
     const firstFocusedLabel = await dialog.evaluate(
-      () => document.activeElement?.getAttribute('aria-label') ?? document.activeElement?.textContent,
+      () =>
+        document.activeElement?.getAttribute('aria-label') ??
+        document.activeElement?.textContent,
     );
 
     for (let i = 0; i < focusableCount; i += 1) {
@@ -66,31 +78,43 @@ test.describe('MobileSheet — keyboard open/close/trap/Esc, focus return', () =
     }
 
     const afterFullCycleLabel = await dialog.evaluate(
-      () => document.activeElement?.getAttribute('aria-label') ?? document.activeElement?.textContent,
+      () =>
+        document.activeElement?.getAttribute('aria-label') ??
+        document.activeElement?.textContent,
     );
     expect(afterFullCycleLabel).toBe(firstFocusedLabel);
 
     // Focus never escaped the panel at any point in the cycle either.
-    const stillInsideDialog = await dialog.evaluate((el) => el.contains(document.activeElement));
+    const stillInsideDialog = await dialog.evaluate((el) =>
+      el.contains(document.activeElement),
+    );
     expect(stillInsideDialog).toBe(true);
   });
 
-  test('Shift+Tab from the first focusable wraps backward to the last', async ({ page }) => {
+  test('Shift+Tab from the first focusable wraps backward to the last', async ({
+    page,
+  }) => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Open menu' }).click();
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
 
     await page.keyboard.press('Shift+Tab');
-    const stillInsideDialog = await dialog.evaluate((el) => el.contains(document.activeElement));
+    const stillInsideDialog = await dialog.evaluate((el) =>
+      el.contains(document.activeElement),
+    );
     expect(stillInsideDialog).toBe(true);
   });
 
-  test('the sticky Book Audit bar is reachable inside the open sheet', async ({ page }) => {
+  test('the sticky Book Audit bar is reachable inside the open sheet', async ({
+    page,
+  }) => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Open menu' }).click();
     const dialog = page.getByRole('dialog');
-    await expect(dialog.getByRole('link', { name: 'Book Audit' })).toBeVisible();
+    await expect(
+      dialog.getByRole('link', { name: 'Book Audit' }),
+    ).toBeVisible();
   });
 
   test('body scroll is locked while the sheet is open', async ({ page }) => {

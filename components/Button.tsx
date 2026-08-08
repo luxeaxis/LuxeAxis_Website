@@ -13,10 +13,16 @@
  * for why Button (unlike Icon) needs the directive.
  */
 
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react';
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  MouseEvent,
+  ReactNode,
+} from 'react';
 import { Icon, type IconName } from './Icon';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 /** Strips every prop this component models off a copy of `props`, leaving
  *  only genuine native attributes (href, onClick, type, form, name…) behind
@@ -25,7 +31,9 @@ const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean
  *  bound to an unused local, which `@typescript-eslint/no-unused-vars`
  *  (enabled repo-wide, `--max-warnings 0`) rejects without an ignore-pattern
  *  exemption that isn't configured here. */
-function omitKnownProps(props: Record<string, unknown>): Record<string, unknown> {
+function omitKnownProps(
+  props: Record<string, unknown>,
+): Record<string, unknown> {
   const rest = { ...props };
   for (const key of [
     'variant',
@@ -45,7 +53,12 @@ function omitKnownProps(props: Record<string, unknown>): Record<string, unknown>
   return rest;
 }
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'icon' | 'destructive';
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'icon'
+  | 'destructive';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 // Closed unions -> lookups, never a template class name (`h-control-${size}`
@@ -79,13 +92,15 @@ const ICON_HIT_PAD: Record<ButtonSize, string | false> = {
 };
 
 const VARIANT_CLASS: Record<ButtonVariant, string> = {
-  primary: 'lx-liquid-btn text-accent-contrast font-bold shadow-lg hover:shadow-xl',
+  primary:
+    'lx-liquid-btn text-accent-contrast font-bold shadow-lg hover:shadow-xl',
   secondary:
     'bg-surface-deep/85 backdrop-blur-md border border-accent/40 text-on-surface hover:bg-surface-raised hover:border-accent hover:shadow-[0_0_20px_rgba(255,193,7,0.25)] font-semibold transition-all duration-300',
   tertiary:
     'bg-transparent text-accent underline decoration-transparent decoration-[length:var(--border-width-regular)] underline-offset-4 hover:text-accent-hover hover:decoration-current focus-visible:decoration-current',
   icon: 'rounded-round border border-accent/30 bg-surface-deep/60 backdrop-blur-sm text-on-surface hover:border-accent hover:bg-accent/20 hover:text-accent transition-all duration-300',
-  destructive: 'bg-transparent border-regular border-error text-error hover:bg-error hover:text-accent-contrast',
+  destructive:
+    'bg-transparent border-regular border-error text-error hover:bg-error hover:text-accent-contrast',
 };
 
 /** The one persistent motion the spec allows outside skeleton shimmer (§3.1
@@ -104,8 +119,18 @@ function Spinner() {
       aria-hidden="true"
       className="h-icon-md w-icon-md animate-spin motion-reduce:animate-none [stroke-width:var(--border-width-regular)]"
     >
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.25" />
-      <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeLinecap="round" />
+      <circle
+        cx="12"
+        cy="12"
+        r="9"
+        stroke="currentColor"
+        strokeOpacity="0.25"
+      />
+      <path
+        d="M21 12a9 9 0 0 0-9-9"
+        stroke="currentColor"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -154,10 +179,18 @@ type ButtonAsAnchor = { as: 'a'; href: string } & Omit<
 
 type ButtonElementProps = ButtonAsButton | ButtonAsAnchor;
 
-export type ButtonProps = ButtonShared & ButtonVariantProps & ButtonElementProps;
+export type ButtonProps = ButtonShared &
+  ButtonVariantProps &
+  ButtonElementProps;
 
 export function Button(props: ButtonProps) {
-  const { size = 'md', loading = false, disabled = false, className, as = 'button' } = props;
+  const {
+    size = 'md',
+    loading = false,
+    disabled = false,
+    className,
+    as = 'button',
+  } = props;
   const variant: ButtonVariant = props.variant ?? 'primary';
   const isIconOnly = variant === 'icon';
   // "Loading" locks activation the same way "disabled" does (no double
@@ -211,42 +244,53 @@ export function Button(props: ButtonProps) {
   // union here — `props.icon`/`props.children` would otherwise still type
   // as possibly-undefined, since a derived local boolean carries no type
   // information back to the compiler.
-  const content = props.variant === 'icon' ? (
-    <>
-      <span className={cx('inline-flex', loading && 'opacity-0')}>
-        <Icon name={props.icon} size="md" decorative />
-      </span>
-      {loading && (
-        <span className="absolute inset-0 inline-flex items-center justify-center" aria-hidden="true">
-          <Spinner />
+  const content =
+    props.variant === 'icon' ? (
+      <>
+        <span className={cx('inline-flex', loading && 'opacity-0')}>
+          <Icon name={props.icon} size="md" decorative />
         </span>
-      )}
-    </>
-  ) : (
-    <>
-      <span className={cx('inline-flex items-center gap-2', loading && 'opacity-0')}>
-        {props.iconLeading && <Icon name={props.iconLeading} size="md" decorative />}
-        {props.children}
-        {props.iconTrailing && (
-          <Icon
-            name={props.iconTrailing}
-            size="md"
-            decorative
-            className="transition-transform duration-micro ease-standard group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-          />
+        {loading && (
+          <span
+            className="absolute inset-0 inline-flex items-center justify-center"
+            aria-hidden="true"
+          >
+            <Spinner />
+          </span>
         )}
-      </span>
-      {loading && (
+      </>
+    ) : (
+      <>
         <span
-          className="absolute inset-0 inline-flex items-center justify-center gap-2 truncate px-5"
-          aria-hidden="true"
+          className={cx(
+            'inline-flex items-center gap-2',
+            loading && 'opacity-0',
+          )}
         >
-          <Spinner />
-          <span className="truncate">Working…</span>
+          {props.iconLeading && (
+            <Icon name={props.iconLeading} size="md" decorative />
+          )}
+          {props.children}
+          {props.iconTrailing && (
+            <Icon
+              name={props.iconTrailing}
+              size="md"
+              decorative
+              className="transition-transform duration-micro ease-standard group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+            />
+          )}
         </span>
-      )}
-    </>
-  );
+        {loading && (
+          <span
+            className="absolute inset-0 inline-flex items-center justify-center gap-2 truncate px-5"
+            aria-hidden="true"
+          >
+            <Spinner />
+            <span className="truncate">Working…</span>
+          </span>
+        )}
+      </>
+    );
 
   const ariaLabel = props['aria-label'];
 
@@ -259,7 +303,10 @@ export function Button(props: ButtonProps) {
   const rest = omitKnownProps(props as unknown as Record<string, unknown>);
 
   if (as === 'a') {
-    const { href, onClick, ...anchorRest } = rest as { href?: string; onClick?: (event: MouseEvent<HTMLAnchorElement>) => void };
+    const { href, onClick, ...anchorRest } = rest as {
+      href?: string;
+      onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
+    };
     // Guards activation via `preventDefault` + skipping the caller's
     // `onClick` rather than removing `href`/going native-disabled — an
     // anchor has no native `disabled`, but dropping `href` has the same
@@ -288,7 +335,11 @@ export function Button(props: ButtonProps) {
     );
   }
 
-  const { type = 'button', onClick, ...buttonRest } = rest as {
+  const {
+    type = 'button',
+    onClick,
+    ...buttonRest
+  } = rest as {
     type?: 'button' | 'submit' | 'reset';
     onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   };

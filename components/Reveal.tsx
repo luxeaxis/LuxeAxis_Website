@@ -1,6 +1,13 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef, useState, type ElementType, type ReactNode } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ElementType,
+  type ReactNode,
+} from 'react';
 
 /**
  * `Reveal` and `Stagger` — the section rise-in pattern (Build Backlog T-22,
@@ -72,7 +79,12 @@ export function Reveal({
     // No node, no IntersectionObserver (old browsers, some test environments),
     // or a stated preference for less motion — all three mean "leave it alone",
     // and all three land on the same correct outcome: visible, unanimated.
-    if (!node || typeof IntersectionObserver === 'undefined' || prefersReducedMotion()) return;
+    if (
+      !node ||
+      typeof IntersectionObserver === 'undefined' ||
+      prefersReducedMotion()
+    )
+      return;
 
     // Already on screen: this is above-the-fold content. Do not touch it.
     const box = node.getBoundingClientRect();
@@ -118,7 +130,11 @@ export function Reveal({
     <Tag
       ref={ref}
       data-reveal={state === 'idle' ? undefined : state}
-      style={delayMs ? ({ '--reveal-delay': `${delayMs}ms` } as React.CSSProperties) : undefined}
+      style={
+        delayMs
+          ? ({ '--reveal-delay': `${delayMs}ms` } as React.CSSProperties)
+          : undefined
+      }
       className={className}
     >
       {children}

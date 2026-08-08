@@ -22,14 +22,20 @@ describe('Field', () => {
 
   it('wires aria-invalid and aria-describedby to the error message on error', () => {
     render(
-      <Field label="Phone" name="phone" error="Enter a phone number we can reach you on" />,
+      <Field
+        label="Phone"
+        name="phone"
+        error="Enter a phone number we can reach you on"
+      />,
     );
     const input = screen.getByLabelText('Phone') as HTMLInputElement;
     expect(input.getAttribute('aria-invalid')).toBe('true');
     const describedBy = input.getAttribute('aria-describedby');
     expect(describedBy).toBe('phone-error');
     const message = document.getElementById(describedBy!);
-    expect(message?.textContent).toContain('Enter a phone number we can reach you on');
+    expect(message?.textContent).toContain(
+      'Enter a phone number we can reach you on',
+    );
     expect(message?.getAttribute('role')).toBe('alert');
   });
 
@@ -42,10 +48,19 @@ describe('Field', () => {
   });
 
   it('shows a success message with an icon, not colour alone, and suppresses it when error is also set', () => {
-    const { rerender } = render(<Field label="Email" name="email" success="Looks good" />);
+    const { rerender } = render(
+      <Field label="Email" name="email" success="Looks good" />,
+    );
     expect(screen.getByText('Looks good')).toBeDefined();
 
-    rerender(<Field label="Email" name="email" success="Looks good" error="Enter a valid email" />);
+    rerender(
+      <Field
+        label="Email"
+        name="email"
+        success="Looks good"
+        error="Enter a valid email"
+      />,
+    );
     expect(screen.queryByText('Looks good')).toBeNull();
     expect(screen.getByText('Enter a valid email')).toBeDefined();
   });

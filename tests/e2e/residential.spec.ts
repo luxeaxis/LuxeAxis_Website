@@ -19,24 +19,37 @@ test('the home page persona router actually lands here', async ({ page }) => {
   );
 });
 
-test('every tier is reachable from the overview and prerendered', async ({ page }) => {
+test('every tier is reachable from the overview and prerendered', async ({
+  page,
+}) => {
   await page.goto('/residential');
   for (const tier of ['Essential', 'Signature', 'Elite']) {
     const link = page.getByRole('link', { name: new RegExp(tier) }).first();
-    await expect(link).toHaveAttribute('href', `/residential/${tier.toLowerCase()}`);
+    await expect(link).toHaveAttribute(
+      'href',
+      `/residential/${tier.toLowerCase()}`,
+    );
   }
 });
 
-test('a tier page states its scope and repeats the action', async ({ page }) => {
+test('a tier page states its scope and repeats the action', async ({
+  page,
+}) => {
   await page.goto('/residential/signature');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Signature');
-  await expect(page.getByRole('heading', { name: 'What is included' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'What is included' }),
+  ).toBeVisible();
   // TierSummary repeats the CTA so a visitor never has to scroll back up to act
   // on what they have just read.
-  await expect(page.getByRole('link', { name: 'Book Audit' }).first()).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'Book Audit' }).first(),
+  ).toBeVisible();
 });
 
-test('a tier outside the published set is a 404, not a blank page', async ({ request }) => {
+test('a tier outside the published set is a 404, not a blank page', async ({
+  request,
+}) => {
   // `dynamicParams = false` should make this a routing-layer 404 rather than
   // something the page body has to defend against.
   const response = await request.get('/residential/platinum');
@@ -66,7 +79,9 @@ test('the Fee Calculator renders the published list', async ({ page }) => {
   // around them can be styled, and keyboard-completeness is the binding
   // requirement.
   await page.goto('/residential');
-  await expect(page.getByRole('heading', { name: 'Estimate your project' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Estimate your project' }),
+  ).toBeVisible();
 
   const villa = page.getByRole('radio', { name: /Villa/ });
   await villa.focus();

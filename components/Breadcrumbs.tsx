@@ -67,11 +67,15 @@ export function Breadcrumbs({
   return (
     <>
       <JsonLd data={breadcrumbJsonLd(path, labels)} />
-      <nav aria-label="Breadcrumb">
+      <nav aria-label="Breadcrumb" className="py-2.5 mb-4 sm:mb-6">
         <ol className="flex flex-wrap items-center gap-2 text-small text-on-surface-muted">
           {trail.map((crumb) => (
             <li key={crumb.href} className="flex items-center gap-2">
-              <Link href={crumb.href} variant="standalone" className="text-small">
+              <Link
+                href={crumb.href}
+                variant="standalone"
+                className="text-small"
+              >
                 {crumb.label}
               </Link>
               <span aria-hidden="true">/</span>

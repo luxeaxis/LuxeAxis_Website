@@ -32,7 +32,9 @@ const setup = () => render(<FeeCalculator config={FIXTURE} />);
 describe('FeeCalculator', () => {
   it('asks for property type as a real radio group', () => {
     setup();
-    expect(screen.getByRole('group', { name: 'What kind of home is it?' })).toBeDefined();
+    expect(
+      screen.getByRole('group', { name: 'What kind of home is it?' }),
+    ).toBeDefined();
     expect(screen.getAllByRole('radio')).toHaveLength(2);
   });
 
@@ -43,7 +45,9 @@ describe('FeeCalculator', () => {
     for (const radio of screen.getAllByRole('radio')) {
       expect((radio as HTMLInputElement).checked).toBe(false);
     }
-    expect(document.querySelector('output')!.textContent).toMatch(/Pick a property type/);
+    expect(document.querySelector('output')!.textContent).toMatch(
+      /Pick a property type/,
+    );
   });
 
   it('shows the typical area against each option, for anyone unsure', () => {
@@ -65,7 +69,9 @@ describe('FeeCalculator', () => {
   it('names which tiers serve the choice', () => {
     setup();
     fireEvent.click(screen.getByRole('radio', { name: /Villa/ }));
-    expect(document.querySelector('output')!.textContent).toContain('Signature or Elite');
+    expect(document.querySelector('output')!.textContent).toContain(
+      'Signature or Elite',
+    );
   });
 
   it('announces the result politely, without stealing focus', () => {
@@ -79,7 +85,9 @@ describe('FeeCalculator', () => {
 
   it('says these are ranges rather than a quote', () => {
     setup();
-    expect(screen.getByText('These are published ranges, not a quote')).toBeDefined();
+    expect(
+      screen.getByText('These are published ranges, not a quote'),
+    ).toBeDefined();
   });
 
   it('is not a form, so Enter cannot reload the page', () => {
@@ -89,8 +97,8 @@ describe('FeeCalculator', () => {
 
   it('carries the audit CTA, where this journey ends', () => {
     setup();
-    expect(screen.getByRole('link', { name: 'Book Audit' }).getAttribute('href')).toBe(
-      '/book-audit',
-    );
+    expect(
+      screen.getByRole('link', { name: 'Book Audit' }).getAttribute('href'),
+    ).toBe('/book-audit');
   });
 });

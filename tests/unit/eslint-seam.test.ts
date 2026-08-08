@@ -14,11 +14,13 @@ async function lintSeam(code: string, relativeFilePath: string) {
     filePath: resolve(__dirname, '../..', relativeFilePath),
   });
   return (result?.messages ?? []).filter(
-    (m) => m.ruleId === 'no-restricted-imports' || m.ruleId === 'no-restricted-syntax',
+    (m) =>
+      m.ruleId === 'no-restricted-imports' ||
+      m.ruleId === 'no-restricted-syntax',
   );
 }
 
-const SEAM_MESSAGE = 'three/registry.ts is the only DOM→WebGL seam';
+const SEAM_MESSAGE = 'WebGL/three.js was descoped';
 
 /** Every directory that is a real consumer of three/ (i.e. everything the
  *  repo-wide seam block in eslint.config.mjs is meant to cover, minus three/
@@ -44,17 +46,7 @@ const SEAM_DIRS = ['components', 'app', 'features', 'lib'];
  *  the bare `three` npm package, `@react-three/*`, and dynamic `import()`
  *  all open. This suite probes every one of those five spellings, from each
  *  of SEAM_DIRS, and fails if any of them ever goes unenforced again in any
- *  of those directories. Each assertion checks the reported `ruleId` and
- *  message text, not just a non-zero count — a probe that only checked "some
- *  problem fired" would pass even if an unrelated rule (e.g.
- *  `@next/next/no-img-element`) happened to also flag the same line. It also
- *  probes both the sanctioned *static* import of three/registry (already
- *  covered before) and the sanctioned *dynamic* `import()` of three/registry
- *  — the architecture's actual scene-loading mechanism (`SceneModule` is
- *  typed `() => Promise<SceneModule>`) — since an over-broad tightening of
- *  SEAM_DYNAMIC_IMPORT_SELECTOR would break the one thing the seam exists to
- *  enable, and without this probe the suite would stay green while doing
- *  so. */
+ *  of those directories. */
 for (const dir of SEAM_DIRS) {
   describe(`the three/ seam is enforced under ${dir}/`, () => {
     it('flags the @/three/** alias spelling', async () => {
@@ -63,7 +55,10 @@ for (const dir of SEAM_DIRS) {
         `${dir}/__seam-probe-alias.tsx`,
       );
       const seam = messages.filter((m) => m.ruleId === 'no-restricted-imports');
-      expect(seam.length, `expected no-restricted-imports to fire on the @/three/** alias spelling under ${dir}/`).toBeGreaterThan(0);
+      expect(
+        seam.length,
+        `expected no-restricted-imports to fire on the @/three/** alias spelling under ${dir}/`,
+      ).toBeGreaterThan(0);
       expect(seam[0]?.message).toContain(SEAM_MESSAGE);
     });
 
@@ -73,7 +68,10 @@ for (const dir of SEAM_DIRS) {
         `${dir}/__seam-probe-relative.tsx`,
       );
       const seam = messages.filter((m) => m.ruleId === 'no-restricted-imports');
-      expect(seam.length, `expected no-restricted-imports to fire on the relative ../three/** spelling under ${dir}/`).toBeGreaterThan(0);
+      expect(
+        seam.length,
+        `expected no-restricted-imports to fire on the relative ../three/** spelling under ${dir}/`,
+      ).toBeGreaterThan(0);
       expect(seam[0]?.message).toContain(SEAM_MESSAGE);
     });
 
@@ -83,7 +81,10 @@ for (const dir of SEAM_DIRS) {
         `${dir}/__seam-probe-bare-npm.tsx`,
       );
       const seam = messages.filter((m) => m.ruleId === 'no-restricted-imports');
-      expect(seam.length, `expected no-restricted-imports to fire on the bare \`three\` package spelling under ${dir}/`).toBeGreaterThan(0);
+      expect(
+        seam.length,
+        `expected no-restricted-imports to fire on the bare \`three\` package spelling under ${dir}/`,
+      ).toBeGreaterThan(0);
       expect(seam[0]?.message).toContain(SEAM_MESSAGE);
     });
 
@@ -93,7 +94,10 @@ for (const dir of SEAM_DIRS) {
         `${dir}/__seam-probe-r3f.tsx`,
       );
       const seam = messages.filter((m) => m.ruleId === 'no-restricted-imports');
-      expect(seam.length, `expected no-restricted-imports to fire on the @react-three/* spelling under ${dir}/`).toBeGreaterThan(0);
+      expect(
+        seam.length,
+        `expected no-restricted-imports to fire on the @react-three/* spelling under ${dir}/`,
+      ).toBeGreaterThan(0);
       expect(seam[0]?.message).toContain(SEAM_MESSAGE);
     });
 
@@ -103,24 +107,11 @@ for (const dir of SEAM_DIRS) {
         `${dir}/__seam-probe-dynamic.tsx`,
       );
       const seam = messages.filter((m) => m.ruleId === 'no-restricted-syntax');
-      expect(seam.length, `expected no-restricted-syntax to fire on the dynamic import() spelling under ${dir}/ — no-restricted-imports cannot see ImportExpression nodes at all`).toBeGreaterThan(0);
+      expect(
+        seam.length,
+        `expected no-restricted-syntax to fire on the dynamic import() spelling under ${dir}/ — no-restricted-imports cannot see ImportExpression nodes at all`,
+      ).toBeGreaterThan(0);
       expect(seam[0]?.message).toContain(SEAM_MESSAGE);
-    });
-
-    it('still permits the one sanctioned static import: three/registry itself', async () => {
-      const messages = await lintSeam(
-        "import { POSTERS } from '@/three/registry';\nexport default POSTERS;\n",
-        `${dir}/__seam-probe-ok.tsx`,
-      );
-      expect(messages).toHaveLength(0);
-    });
-
-    it('still permits the one sanctioned dynamic import: import(\'@/three/registry\')', async () => {
-      const messages = await lintSeam(
-        "export default function load() {\n  return import('@/three/registry');\n}\n",
-        `${dir}/__seam-probe-dynamic-ok.tsx`,
-      );
-      expect(messages, 'expected the sanctioned dynamic import of three/registry to produce no no-restricted-imports/no-restricted-syntax problems — this is the architecture\'s sanctioned scene-loading mechanism (SceneModule: () => Promise<SceneModule>) and an over-broad SEAM_DYNAMIC_IMPORT_SELECTOR must not block it').toHaveLength(0);
     });
   });
 }

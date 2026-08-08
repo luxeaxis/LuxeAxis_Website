@@ -18,7 +18,7 @@ const ROUTE = '/commercial';
 export const metadata: Metadata = {
   title: 'Office Interior Designers in Chennai | Luxe Axis Commercial',
   description:
-    'Office interior designers in Chennai. IT parks, corporate HQs, startups, and professional clinics. 45-day fit-out guarantee, flat 10-year warranty, fixed price per sqft.',
+    'Office interior designers in Chennai. IT parks, corporate HQs, startups, and professional clinics. Written delivery commitment, flat 10-year warranty, fixed price per sqft.',
   alternates: canonicalFor(ROUTE),
 };
 
@@ -30,8 +30,8 @@ export default async function CommercialPage() {
       desc: 'Structured Cabling & Server Room Coordination',
     },
     {
-      title: '45-Day Fit-Out Guarantee',
-      desc: 'Contractually Locked Move-In Schedule',
+      title: 'Written Delivery Commitment',
+      desc: 'Contractually locked move-in milestones',
     },
     {
       title: 'Flat 10-Year Warranty',
@@ -100,7 +100,7 @@ export default async function CommercialPage() {
     {
       sector: 'SME / Startup',
       title: 'Big Ideas. Efficient Spaces.',
-      desc: 'Fast-growing companies need offices that scale with them. Budget-conscious fit-outs that look premium, built in 45 days.',
+      desc: 'Fast-growing companies need offices that scale with them. Budget-conscious fit-outs that look premium, on an agreed timeline.',
       specs: [
         'Flexible modular workstation systems',
         'Meeting pod and phone booth zones',
@@ -166,8 +166,8 @@ export default async function CommercialPage() {
     },
     {
       num: '04',
-      title: '45-Day Contractual Fit-Out Guarantee',
-      desc: 'Your business cannot wait. Our 45-day office handover is written into your project contract with a compensation clause.',
+      title: 'Contractual Delivery Commitment',
+      desc: 'Your business cannot wait. Handover milestones are written into your project contract, with delay compensation when we miss dates we control.',
     },
     {
       num: '05',
@@ -206,7 +206,7 @@ export default async function CommercialPage() {
         'Executive cabins with glass partitions',
         'Two conference rooms with AV integration',
         'Breakout lounge and pantry zone',
-        'Flat 10-year warranty & 45-day fit-out guarantee',
+        'Flat 10-year warranty & written delivery commitment',
       ],
       cta: 'Get Premium Quote',
       href: '/book-audit',
@@ -241,7 +241,7 @@ export default async function CommercialPage() {
     },
     {
       q: 'How long does a complete office interior fit-out take?',
-      a: 'Luxe Axis guarantees office handover in 45 days from design sign-off, backed by written delay compensation in your contract.',
+      a: 'Timelines depend on scope, approvals, and site readiness. Luxe Axis agrees milestone dates in your contract before work begins, with written delay compensation when we miss dates we control.',
     },
     {
       q: 'Does Luxe Axis’s flat 10-year warranty cover commercial office interiors?',
@@ -275,7 +275,7 @@ export default async function CommercialPage() {
         data={serviceJsonLd({
           name: 'Office Interior Designers in Chennai',
           description:
-            'Office interior designers in Chennai. IT parks, corporate HQs, startups, and professional clinics. 45-day fit-out guarantee, flat 10-year warranty.',
+            'Office interior designers in Chennai. IT parks, corporate HQs, startups, and professional clinics. Written delivery commitment, flat 10-year warranty.',
           url: ROUTE,
         })}
       />
@@ -306,7 +306,7 @@ export default async function CommercialPage() {
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
               Your office is the first thing clients read. IT firms, corporate
               HQs, clinics, and startups. Design every sq ft to reflect who you
-              are. 45-day delivery, flat 10-year warranty.
+              are. Agreed delivery milestones, flat 10-year warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -320,46 +320,19 @@ export default async function CommercialPage() {
 
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  500+
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Office Projects
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  45 Days
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Fit-Out Guarantee
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  10 Yr
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Flat Warranty
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  4.9 ★
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Google Rating
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  3+
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Chennai Studios
-                </span>
-              </div>
+              {highlights.map((h) => (
+                <div
+                  key={h.title}
+                  className="p-4 rounded-xl lx-liquid-glass-card border border-accent/20"
+                >
+                  <strong className="block font-display text-h3 text-accent font-bold">
+                    {h.title}
+                  </strong>
+                  <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
+                    {h.desc}
+                  </span>
+                </div>
+              ))}
             </div>
           </Stack>
         </Container>
@@ -481,7 +454,7 @@ export default async function CommercialPage() {
         id="gallery"
         eyebrow="Office Projects"
         title="500+ Offices. Every One Delivered."
-        lede="From compact clinics to 20,000 sqft IT parks. Handed over in 45 days with flat 10-year warranty."
+        lede="From compact clinics to 20,000 sqft IT parks. Handed over on agreed milestones with flat 10-year warranty."
       >
         <Grid cols={2} gap={6}>
           {galleryProjects.map((p) => (
@@ -571,7 +544,7 @@ export default async function CommercialPage() {
         id="pricing"
         eyebrow="Office Fit-Out Packages"
         title="Fixed-Price Offices. Per Sq Ft. No Surprises."
-        lede="Every package includes workplace strategy, 3D office design, 45-day delivery, and flat 10-year warranty."
+        lede="Every package includes workplace strategy, 3D office design, agreed delivery milestones, and flat 10-year warranty."
       >
         <Grid cols={3} gap={6}>
           {pricingTiers.map((tier) => (

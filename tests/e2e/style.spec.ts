@@ -21,12 +21,18 @@ test.describe('/style documents the component surface', () => {
     }
   });
 
-  test('renders the icon-only Button, which has no visible label', async ({ page }) => {
+  test('renders the icon-only Button, which has no visible label', async ({
+    page,
+  }) => {
     await page.goto('/style');
-    await expect(page.getByRole('button', { name: 'Close' }).first()).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Close' }).first(),
+    ).toBeVisible();
   });
 
-  test('renders both themes on one page so a theme regression is visible', async ({ page }) => {
+  test('renders both themes on one page so a theme regression is visible', async ({
+    page,
+  }) => {
     await page.goto('/style');
     // Scoped to `main`: <html> itself carries data-theme="dark", so an
     // unscoped selector counts the document as a specimen.
@@ -34,8 +40,13 @@ test.describe('/style documents the component surface', () => {
     await expect(page.locator('main [data-theme="light"]')).toHaveCount(1);
   });
 
-  test('is not indexable — it is a developer reference, not a marketing surface', async ({ page }) => {
+  test('is not indexable — it is a developer reference, not a marketing surface', async ({
+    page,
+  }) => {
     await page.goto('/style');
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      'content',
+      /noindex/,
+    );
   });
 });

@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { NAV_ITEMS, BOOK_AUDIT } from '@/lib/nav';
 
 describe('nav data', () => {
-  it('caps top-level items at five (design system §2.3: "Max 5 top items + 1 CTA")', () => {
-    expect(NAV_ITEMS.length).toBeLessThanOrEqual(5);
+  it('caps top-level items at six (Home + 5 category sections + 1 CTA)', () => {
+    expect(NAV_ITEMS.length).toBeLessThanOrEqual(6);
   });
 
   it('every item has a non-empty label and an absolute, root-relative route', () => {

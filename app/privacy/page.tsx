@@ -23,7 +23,9 @@ export const metadata: Metadata = {
 export default async function PrivacyPage() {
   const document = loadLegalDocument('LuxeAxis_PrivacyPolicy.md');
   const faqs = await getFaqs();
-  const privacyFaqs = [...faqs].filter((f) => f.id === 'contractors' || f.id === 'materials' || f.id === 'abroad');
+  const privacyFaqs = [...faqs].filter(
+    (f) => f.id === 'contractors' || f.id === 'materials' || f.id === 'abroad',
+  );
 
   const highlights = [
     { title: 'DPDP 2023', desc: 'Digital Data Act Compliant' },
@@ -59,7 +61,8 @@ export default async function PrivacyPage() {
           '@context': 'https://schema.org',
           '@type': 'WebPage',
           name: 'Privacy Policy — Luxe Axis',
-          description: 'How Luxe Axis collects, uses, shares and protects your personal data.',
+          description:
+            'How Luxe Axis collects, uses, shares and protects your personal data.',
           url: ROUTE,
         }}
       />
@@ -69,7 +72,7 @@ export default async function PrivacyPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/privacy" labels={{ 'privacy': "Privacy Policy" }} />
+          <Breadcrumbs path="/privacy" labels={{ privacy: 'Privacy Policy' }} />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -85,7 +88,9 @@ export default async function PrivacyPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              How Luxe Axis collects, uses, stores, and protects your personal and spatial data under the Digital Personal Data Protection Act, 2023. Transparent, secure, and respectful by default.
+              How Luxe Axis collects, uses, stores, and protects your personal
+              and spatial data under the Digital Personal Data Protection Act,
+              2023. Transparent, secure, and respectful by default.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -100,24 +105,44 @@ export default async function PrivacyPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">DPDP 2023</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Act Compliant</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  DPDP 2023
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Act Compliant
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">256-Bit</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">SSL Encryption</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  256-Bit
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  SSL Encryption
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">0%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Data Sales</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  0%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Data Sales
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Space OS</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Secure Portal</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Space OS
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Secure Portal
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">100%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Transparent</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  100%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Transparent
+                </span>
               </div>
             </div>
           </Stack>
@@ -133,7 +158,9 @@ export default async function PrivacyPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -149,9 +176,16 @@ export default async function PrivacyPage() {
       >
         <Grid cols={2} gap={6}>
           {dataPillars.map((pillar) => (
-            <div key={pillar.title} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30">
-              <h3 className="font-display text-h4 font-bold text-on-surface mb-2">{pillar.title}</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed">{pillar.desc}</p>
+            <div
+              key={pillar.title}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30"
+            >
+              <h3 className="font-display text-h4 font-bold text-on-surface mb-2">
+                {pillar.title}
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed">
+                {pillar.desc}
+              </p>
             </div>
           ))}
         </Grid>
@@ -170,7 +204,11 @@ export default async function PrivacyPage() {
       </Section>
 
       {/* 5. FAQ Accordion */}
-      <Section id="faq" eyebrow="Questions Answered" title="Privacy & Security FAQ">
+      <Section
+        id="faq"
+        eyebrow="Questions Answered"
+        title="Privacy & Security FAQ"
+      >
         <Faq items={privacyFaqs} />
       </Section>
 

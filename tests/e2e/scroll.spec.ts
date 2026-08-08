@@ -95,7 +95,9 @@ test('a reduced-motion visitor gets native scrolling', async ({ browser }) => {
   await context.close();
 });
 
-test('the shipping default loads no scroll library at all', async ({ page }) => {
+test('the shipping default loads no scroll library at all', async ({
+  page,
+}) => {
   // The flag is off by default, and the gate's literal env check lets webpack
   // drop the import entirely — so Lenis and GSAP (~135 kB across two chunks)
   // should never be requested. Before this they were fetched on every route,

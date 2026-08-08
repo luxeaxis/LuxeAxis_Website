@@ -1,5 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { act, render, screen, fireEvent, cleanup } from '@testing-library/react';
+import {
+  act,
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+} from '@testing-library/react';
 import { ToastProvider, useToast, type ToastInput } from '@/components/Toast';
 
 afterEach(() => {
@@ -128,7 +134,10 @@ describe('Toast', () => {
     act(() => {
       vi.advanceTimersByTime(500);
     });
-    expect(screen.queryByRole('status'), 'dismissed early — dwell was over-subtracted').not.toBeNull();
+    expect(
+      screen.queryByRole('status'),
+      'dismissed early — dwell was over-subtracted',
+    ).not.toBeNull();
 
     act(() => {
       vi.advanceTimersByTime(1_000);
@@ -158,7 +167,10 @@ describe('Toast', () => {
     act(() => {
       vi.advanceTimersByTime(30_000);
     });
-    expect(screen.queryByRole('status'), 'timed out while still focused').not.toBeNull();
+    expect(
+      screen.queryByRole('status'),
+      'timed out while still focused',
+    ).not.toBeNull();
 
     // Only once focus leaves too does the clock start again.
     fireEvent.blur(toast);
@@ -178,7 +190,9 @@ describe('Toast', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Push' }));
     const toast = screen.getByRole('status');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Dismiss notification' }));
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Dismiss notification' }),
+    );
     fireEvent.transitionEnd(toast);
     expect(screen.queryByRole('status')).toBeNull();
   });

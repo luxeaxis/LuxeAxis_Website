@@ -101,7 +101,8 @@ const INTELLIGENCE: readonly IntelligenceFeature[] = [
   {
     id: 'vastu-tech',
     name: 'Vastu-Tech',
-    claim: 'We check your plan against Vastu in seconds — then a human designer confirms it.',
+    claim:
+      'We check your plan against Vastu in seconds — then a human designer confirms it.',
     href: '/intelligence/vastu-tech',
     icon: 'compass',
     sceneId: 'vastu',
@@ -140,13 +141,15 @@ const INTELLIGENCE: readonly IntelligenceFeature[] = [
   {
     id: 'space-score',
     name: 'Space Score',
-    claim: 'A rating for any space across wellness, function, aesthetics and sustainability.',
+    claim:
+      'A rating for any space across wellness, function, aesthetics and sustainability.',
     href: '/intelligence/space-score',
     icon: 'gauge',
     sceneId: 'space-score',
     summary:
       'Four measures, scored independently and read together, so "is this a good room?" becomes a question with an answer you can compare, argue with and improve.',
-    proof: 'A proprietary metric the studio owns, rather than a rating borrowed from someone else.',
+    proof:
+      'A proprietary metric the studio owns, rather than a rating borrowed from someone else.',
     // The four arcs, from Spec §5.4 and the sitemap's own description of the
     // route. Named here rather than in the page so the scene and the DOM
     // cannot disagree about what the gauge measures.
@@ -169,7 +172,8 @@ const INTELLIGENCE: readonly IntelligenceFeature[] = [
   {
     id: 'space-os',
     name: 'Space OS',
-    claim: 'Your project live in one place — moodboard, build progress and the budget, visible.',
+    claim:
+      'Your project live in one place — moodboard, build progress and the budget, visible.',
     href: '/intelligence/space-os',
     icon: 'device',
     sceneId: 'space-os',
@@ -178,12 +182,18 @@ const INTELLIGENCE: readonly IntelligenceFeature[] = [
     proof:
       'Radical Transparency made structural: the budget is visible to you by default, not on request.',
     // Spec §5.5 enumerates exactly these four.
-    highlights: ['Moodboard', '3D progress tracker', 'Budget dashboard', 'AR preview'],
+    highlights: [
+      'Moodboard',
+      '3D progress tracker',
+      'Budget dashboard',
+      'AR preview',
+    ],
   },
   {
     id: 'virtual-staging',
     name: 'Virtual Staging',
-    claim: 'See a room furnished and finished before anything is bought or built.',
+    claim:
+      'See a room furnished and finished before anything is bought or built.',
     href: '/intelligence/virtual-staging',
     icon: 'layers',
     // No scene: Virtual Staging appears in the sitemap without one of its own
@@ -210,12 +220,17 @@ const TIERS: readonly Tier[] = [
     // the figure a visitor is deciding against — the design fee within it is
     // published separately on /pricing rather than folded in here.
     priceFrom: 350_000,
-    inclusions: ['Full design and drawings', 'Vastu-Tech check', 'Vetted execution partners'],
+    inclusions: [
+      'Full design and drawings',
+      'Vastu-Tech check',
+      'Vetted execution partners',
+    ],
   },
   {
     id: 'signature',
     name: 'Signature',
-    summary: 'Bespoke detailing and materials, with the studio running delivery.',
+    summary:
+      'Bespoke detailing and materials, with the studio running delivery.',
     // The lowest published row Signature appears on is the 2BHK (7L-15L,
     // Essential/Signature). Taken as the floor rather than the 3BHK's 12L,
     // because a 2BHK genuinely can be specified as Signature — quoting the
@@ -231,7 +246,8 @@ const TIERS: readonly Tier[] = [
   {
     id: 'elite',
     name: 'Elite',
-    summary: 'Villas, penthouses and landmark homes, designed and delivered end to end.',
+    summary:
+      'Villas, penthouses and landmark homes, designed and delivered end to end.',
     // Same reasoning: the lowest row Elite appears on is the villa
     // (25L-80L, Signature/Elite), not the penthouse's 60L.
     priceFrom: 2_500_000,
@@ -269,7 +285,6 @@ const PENDING_STAT_LABELS: readonly string[] = [
   'Net Promoter Score',
   'Referral rate',
 ];
-
 
 // The residential price list, exactly as the studio publishes it. Total project
 // cost and design fee are separate figures because they answer different
@@ -338,7 +353,8 @@ const SUBSCRIPTIONS: readonly Subscription[] = [
   {
     id: 'home-concierge',
     name: 'Home Concierge',
-    summary: 'Ongoing care for a finished home — the things that surface after you have lived in it.',
+    summary:
+      'Ongoing care for a finished home — the things that surface after you have lived in it.',
     monthly: 2_499,
     yearly: 24_999,
   },
@@ -375,7 +391,9 @@ export async function getPersonas(): Promise<readonly Persona[]> {
   return PERSONAS;
 }
 
-export async function getIntelligenceFeatures(): Promise<readonly IntelligenceFeature[]> {
+export async function getIntelligenceFeatures(): Promise<
+  readonly IntelligenceFeature[]
+> {
   return INTELLIGENCE;
 }
 
@@ -466,12 +484,14 @@ const GUARANTEES: readonly Guarantee[] = [
       Signature: '60-day handover',
       Elite: 'Milestone-based, agreed up front',
     },
-    terms: 'Every snag must be closed before handover — the date is not met until the list is empty.',
+    terms:
+      'Every snag must be closed before handover — the date is not met until the list is empty.',
   },
   {
     id: 'warranty',
     name: 'Post-handover warranty',
-    summary: 'Cover after you move in, with a response time attached rather than a promise to look into it.',
+    summary:
+      'Cover after you move in, with a response time attached rather than a promise to look into it.',
     byTier: {
       Essential: '30 days, snags',
       Signature: '90 days, snags',
@@ -491,7 +511,8 @@ const GUARANTEES: readonly Guarantee[] = [
   {
     id: 'quote-validity',
     name: 'How long a quote holds',
-    summary: 'A quote is good for a stated period, so you are not deciding against a number that moves.',
+    summary:
+      'A quote is good for a stated period, so you are not deciding against a number that moves.',
     byTier: {
       Essential: '14 days',
       Signature: '14 days',
@@ -501,7 +522,6 @@ const GUARANTEES: readonly Guarantee[] = [
       'Residential quotes hold for 14 days and commercial quotes for 21. NRI Elite quotes hold for 30, since a decision across time zones takes longer. If material costs rise by more than 8% between quote and order, the difference is passed through at cost and shown to you — we do not absorb it silently, and we do not mark it up.',
   },
 ];
-
 
 // Spec 2.2's sitemap lists exactly these six.
 const NRI_REGIONS: readonly NriRegion[] = [

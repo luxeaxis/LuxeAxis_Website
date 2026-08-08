@@ -1,7 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { loadLegalDocument, parseLegalMarkdown, slugify } from '@/lib/legal/document';
+import {
+  loadLegalDocument,
+  parseLegalMarkdown,
+  slugify,
+} from '@/lib/legal/document';
 import type { Block, Inline } from '@/lib/legal/document';
 
 /**
@@ -13,7 +17,10 @@ import type { Block, Inline } from '@/lib/legal/document';
  * So the central test is coverage of the source text, not a sample of outputs.
  */
 
-const FILES = ['LuxeAxis_PrivacyPolicy.md', 'LuxeAxis_TermsOfService.md'] as const;
+const FILES = [
+  'LuxeAxis_PrivacyPolicy.md',
+  'LuxeAxis_TermsOfService.md',
+] as const;
 
 function flatten(blocks: Block[]): string {
   const inline = (nodes: Inline[]): string =>
@@ -31,7 +38,9 @@ function flatten(blocks: Block[]): string {
         case 'list':
           return block.items.map(inline).join(' ');
         case 'table':
-          return block.rows.map((row) => `${inline(row.header)} ${inline(row.cells)}`).join(' ');
+          return block.rows
+            .map((row) => `${inline(row.header)} ${inline(row.cells)}`)
+            .join(' ');
         default:
           return '';
       }
@@ -50,7 +59,10 @@ function words(source: string): string {
 }
 
 describe.each(FILES)('%s', (file) => {
-  const source = readFileSync(join(process.cwd(), 'docs', 'Pages', file), 'utf8');
+  const source = readFileSync(
+    join(process.cwd(), 'docs', 'Pages', file),
+    'utf8',
+  );
   const document = parseLegalMarkdown(source);
   const rendered = words(flatten(document.blocks));
 
@@ -76,7 +88,9 @@ describe.each(FILES)('%s', (file) => {
       // rendered as a gap marker, so the line will not survive verbatim. Split
       // on the placeholders and require every prose fragment around them to
       // appear — that still catches a dropped clause, which is the point.
-      .flatMap((line) => line.split(/\[[^\]]+\]/).map((fragment) => fragment.trim()))
+      .flatMap((line) =>
+        line.split(/\[[^\]]+\]/).map((fragment) => fragment.trim()),
+      )
       .filter((fragment) => fragment.replace(/[\s,.]/g, '').length > 2)
       .filter((fragment) => !rendered.includes(fragment));
 
@@ -92,7 +106,8 @@ describe.each(FILES)('%s', (file) => {
 
   it('gives every section a heading id, so a clause can be linked to', () => {
     const headings = document.blocks.filter(
-      (block): block is Extract<Block, { kind: 'heading' }> => block.kind === 'heading',
+      (block): block is Extract<Block, { kind: 'heading' }> =>
+        block.kind === 'heading',
     );
     expect(headings.length).toBeGreaterThan(10);
     for (const heading of headings) {
@@ -117,7 +132,10 @@ describe('placeholders', () => {
         case 'list':
           return block.items.flatMap(fromInline);
         case 'table':
-          return block.rows.flatMap((row) => [...fromInline(row.header), ...fromInline(row.cells)]);
+          return block.rows.flatMap((row) => [
+            ...fromInline(row.header),
+            ...fromInline(row.cells),
+          ]);
         default:
           return [];
       }
@@ -181,7 +199,9 @@ describe('links out of the legal documents', () => {
               : block.kind === 'table'
                 ? block.rows.flatMap((row) => [...row.header, ...row.cells])
                 : [];
-        return nodes.filter((node) => node.kind === 'link').map((node) => node.href);
+        return nodes
+          .filter((node) => node.kind === 'link')
+          .map((node) => node.href);
       }),
     );
 
@@ -196,7 +216,9 @@ describe('links out of the legal documents', () => {
 
 describe('slugify', () => {
   it('drops the section number and keeps the name', () => {
-    expect(slugify('4. Personal data we collect')).toBe('personal-data-we-collect');
+    expect(slugify('4. Personal data we collect')).toBe(
+      'personal-data-we-collect',
+    );
     expect(slugify("11. Children's data")).toBe('children-s-data');
   });
 });

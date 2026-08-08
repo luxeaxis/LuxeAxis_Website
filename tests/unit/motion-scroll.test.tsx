@@ -64,7 +64,9 @@ describe('the smooth-scroll gate', () => {
     // three/stage.tsx documents the identical trap, and it caught us there
     // once already: next/dynamic alone defers code, it does not remove it.
     const source = readFileSync('components/SmoothScrollGate.tsx', 'utf8');
-    expect(source).toContain("process.env.NEXT_PUBLIC_FLAG_SMOOTH_SCROLL === 'true'");
+    expect(source).toContain(
+      "process.env.NEXT_PUBLIC_FLAG_SMOOTH_SCROLL === 'true'",
+    );
     expect(source).toContain('ssr: false');
   });
 

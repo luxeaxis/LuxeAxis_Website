@@ -49,7 +49,10 @@ export type LoaderPhase = 'loading' | 'timed-out';
  * temporal and this is what makes it testable without a DOM: given "the work
  * finished at 100 ms", does it stay up until 600?
  */
-export function useMinimumDisplay(done: boolean, minMs: number = MIN_DISPLAY_MS): boolean {
+export function useMinimumDisplay(
+  done: boolean,
+  minMs: number = MIN_DISPLAY_MS,
+): boolean {
   // Not state: the loader is on screen from the first render, and reading the
   // clock in a ref avoids a re-render that would do nothing but record a
   // timestamp.

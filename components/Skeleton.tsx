@@ -32,7 +32,8 @@
 
 import type { ReactNode } from 'react';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export type SkeletonVariant = 'text' | 'block' | 'circle';
 
@@ -42,11 +43,12 @@ const RADIUS: Record<SkeletonVariant, string> = {
   circle: 'rounded-round',
 };
 
-const DEFAULT_SIZE: Record<SkeletonVariant, { width: string; height: string }> = {
-  text: { width: '100%', height: '0.875em' },
-  block: { width: '100%', height: '8rem' },
-  circle: { width: '2.5rem', height: '2.5rem' },
-};
+const DEFAULT_SIZE: Record<SkeletonVariant, { width: string; height: string }> =
+  {
+    text: { width: '100%', height: '0.875em' },
+    block: { width: '100%', height: '8rem' },
+    circle: { width: '2.5rem', height: '2.5rem' },
+  };
 
 function Bone({
   width,
@@ -90,7 +92,14 @@ export type SkeletonProps = {
   className?: string;
 };
 
-export function Skeleton({ variant = 'block', width, height, lines = 1, label, className }: SkeletonProps) {
+export function Skeleton({
+  variant = 'block',
+  width,
+  height,
+  lines = 1,
+  label,
+  className,
+}: SkeletonProps) {
   const defaults = DEFAULT_SIZE[variant];
   const w = width ?? defaults.width;
   const h = height ?? defaults.height;
@@ -102,7 +111,12 @@ export function Skeleton({ variant = 'block', width, height, lines = 1, label, c
             spliced — these are placeholder lines, not identity-bearing
             data. */}
         {Array.from({ length: lines }, (_, index) => (
-          <Bone key={index} variant={variant} width={index === lines - 1 ? '75%' : w} height={h} />
+          <Bone
+            key={index}
+            variant={variant}
+            width={index === lines - 1 ? '75%' : w}
+            height={h}
+          />
         ))}
       </span>
     ) : (

@@ -13,7 +13,9 @@
  * the current consumer (§3.5: "240ms open delay, 0 close").
  */
 export function readDurationMs(varName: string, fallbackMs: number): number {
-  const raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+  const raw = getComputedStyle(document.documentElement)
+    .getPropertyValue(varName)
+    .trim();
   const parsed = Number.parseFloat(raw);
   return Number.isFinite(parsed) ? parsed : fallbackMs;
 }

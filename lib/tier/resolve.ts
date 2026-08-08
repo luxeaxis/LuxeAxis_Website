@@ -21,6 +21,7 @@ export function resolveTier(env: TierEnv): Tier {
   if (env.saveData) return 'T1';
   if (env.effectiveType && SLOW_CONNECTIONS.has(env.effectiveType)) return 'T1';
   if (env.deviceMemory !== undefined && env.deviceMemory < 4) return 'T2';
-  if (env.hardwareConcurrency !== undefined && env.hardwareConcurrency < 4) return 'T2';
+  if (env.hardwareConcurrency !== undefined && env.hardwareConcurrency < 4)
+    return 'T2';
   return 'T3';
 }

@@ -61,12 +61,20 @@ function formatNumber(value: number, decimals: number): string {
 // stylesheet loaded), so the animation degrades gracefully rather than
 // breaking.
 function readDurationMs(varName: string, fallbackMs: number): number {
-  const raw = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+  const raw = getComputedStyle(document.documentElement)
+    .getPropertyValue(varName)
+    .trim();
   const parsed = Number.parseFloat(raw);
   return Number.isFinite(parsed) ? parsed : fallbackMs;
 }
 
-export function StatCounter({ value, decimals = 0, prefix = '', suffix = '', className }: StatCounterProps) {
+export function StatCounter({
+  value,
+  decimals = 0,
+  prefix = '',
+  suffix = '',
+  className,
+}: StatCounterProps) {
   const finalText = `${prefix}${formatNumber(value, decimals)}${suffix}`;
   // Starts already ON the final text — correct with no JS at all (progressive
   // enhancement) and correct for the reduced-motion path, which never
@@ -79,7 +87,9 @@ export function StatCounter({ value, decimals = 0, prefix = '', suffix = '', cla
     const node = visualRef.current;
     if (!node) return;
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
     if (reduceMotion) return; // stays at finalText — no observer, no tick.
 
     const observer = new IntersectionObserver(
@@ -95,7 +105,9 @@ export function StatCounter({ value, decimals = 0, prefix = '', suffix = '', cla
         function tick(now: number) {
           const progress = Math.min(1, (now - start) / durationMs);
           if (progress < 1) {
-            setDisplay(`${prefix}${formatNumber(value * progress, decimals)}${suffix}`);
+            setDisplay(
+              `${prefix}${formatNumber(value * progress, decimals)}${suffix}`,
+            );
             requestAnimationFrame(tick);
           } else {
             setDisplay(finalText); // land exactly on the formatted final text

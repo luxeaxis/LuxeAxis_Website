@@ -75,7 +75,9 @@ describe('Link', () => {
       );
       const link = screen.getByRole('link', { name: 'Our portfolio' });
       expect(link.getAttribute('aria-current')).toBe('page');
-      expect(link.className).toMatch(/aria-\[current=page\]:decoration-accent\b/);
+      expect(link.className).toMatch(
+        /aria-\[current=page\]:decoration-accent\b/,
+      );
     });
   });
 });

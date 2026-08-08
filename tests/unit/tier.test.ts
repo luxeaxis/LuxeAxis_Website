@@ -46,6 +46,8 @@ describe('resolveTier', () => {
   });
 
   it('prefers the most restrictive signal when several apply', () => {
-    expect(resolveTier({ ...flagship, prefersReducedMotion: true, deviceMemory: 2 })).toBe('T1');
+    expect(
+      resolveTier({ ...flagship, prefersReducedMotion: true, deviceMemory: 2 }),
+    ).toBe('T1');
   });
 });

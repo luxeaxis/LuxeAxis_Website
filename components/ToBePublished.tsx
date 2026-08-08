@@ -38,7 +38,9 @@ export function ToBePublished({
   return (
     <span className={className}>
       {label && <span className="text-on-surface-2">{label}: </span>}
-      <span className="text-on-surface-muted">{children ?? 'To be published'}</span>
+      <span className="text-on-surface-muted">
+        {children ?? 'To be published'}
+      </span>
     </span>
   );
 }

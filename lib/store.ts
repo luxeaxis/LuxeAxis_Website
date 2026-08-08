@@ -1,17 +1,14 @@
 'use client';
 import { create } from 'zustand';
 import type { Tier } from '@/lib/tier/resolve';
-import type { SceneId } from '@/three/registry';
 
 type AppState = {
   tier: Tier;
   reducedMotion: boolean;
-  activeScene: SceneId | null;
   scrollProgress: number;
   scrollDirection: 'up' | 'down';
   setTier: (tier: Tier) => void;
   setReducedMotion: (value: boolean) => void;
-  setActiveScene: (scene: SceneId | null) => void;
   setScrollProgress: (progress: number, direction?: 'up' | 'down') => void;
 };
 
@@ -20,12 +17,10 @@ export const useAppStore = create<AppState>((set) => ({
   // default would flash live scenes onto devices that cannot hold 30fps.
   tier: 'T1',
   reducedMotion: true,
-  activeScene: null,
   scrollProgress: 0,
   scrollDirection: 'down',
   setTier: (tier) => set({ tier }),
   setReducedMotion: (reducedMotion) => set({ reducedMotion }),
-  setActiveScene: (activeScene) => set({ activeScene }),
   setScrollProgress: (scrollProgress, scrollDirection = 'down') =>
     set({ scrollProgress, scrollDirection }),
 }));

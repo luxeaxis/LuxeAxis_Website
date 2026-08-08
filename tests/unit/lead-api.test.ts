@@ -62,14 +62,23 @@ describe('the lead schema', () => {
     // Spec §2.1 makes the overseas diaspora a primary audience. A ten-digit
     // Indian-mobile rule would reject exactly the highest-value visitor, and a
     // lead lost to a false negative is invisible.
-    for (const phone of ['+44 7700 900123', '+1 (415) 555-0123', '+65 8123 4567', '9840000000']) {
-      expect(leadSchema.safeParse({ ...VALID, phone }).success, phone).toBe(true);
+    for (const phone of [
+      '+44 7700 900123',
+      '+1 (415) 555-0123',
+      '+65 8123 4567',
+      '9840000000',
+    ]) {
+      expect(leadSchema.safeParse({ ...VALID, phone }).success, phone).toBe(
+        true,
+      );
     }
   });
 
   it('rejects a phone number that is not one', () => {
     for (const phone of ['', 'call me', '123']) {
-      expect(leadSchema.safeParse({ ...VALID, phone }).success, phone).toBe(false);
+      expect(leadSchema.safeParse({ ...VALID, phone }).success, phone).toBe(
+        false,
+      );
     }
   });
 
@@ -82,9 +91,13 @@ describe('the lead schema', () => {
 
     expect(messages.length).toBeGreaterThan(0);
     for (const message of messages) {
-      expect(message, message).not.toMatch(/invalid|incorrect|wrong|failed|error/i);
+      expect(message, message).not.toMatch(
+        /invalid|incorrect|wrong|failed|error/i,
+      );
       // No forbidden superlatives anywhere in the product's copy.
-      expect(message, message).not.toMatch(/world-class|best-in-class|unbeatable|cheapest/i);
+      expect(message, message).not.toMatch(
+        /world-class|best-in-class|unbeatable|cheapest/i,
+      );
     }
   });
 });
@@ -93,14 +106,19 @@ describe('POST /api/lead', () => {
   it('rejects a body that is not JSON', async () => {
     const { POST } = await loadRoute();
     const response = await POST(
-      new Request('http://localhost/api/lead', { method: 'POST', body: 'not json' }) as never,
+      new Request('http://localhost/api/lead', {
+        method: 'POST',
+        body: 'not json',
+      }) as never,
     );
     expect(response.status).toBe(400);
   });
 
   it('rejects an incomplete lead with the field paths, never the values', async () => {
     const { POST } = await loadRoute();
-    const response = await POST(post({ ...VALID, email: 'nope', name: '' }) as never);
+    const response = await POST(
+      post({ ...VALID, email: 'nope', name: '' }) as never,
+    );
     expect(response.status).toBe(422);
 
     const payload = await response.json();
@@ -126,7 +144,9 @@ describe('POST /api/lead', () => {
 
   it('forwards a valid lead once a destination is configured', async () => {
     vi.stubEnv('LEAD_WEBHOOK_URL', 'https://leads.example.com/hook');
-    const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 200 }));
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(new Response(null, { status: 200 }));
     vi.stubGlobal('fetch', fetchMock);
 
     const { POST } = await loadRoute();
@@ -142,13 +162,19 @@ describe('POST /api/lead', () => {
 
   it('computes the first-touch deadline server-side, so a forged payload cannot backdate it', async () => {
     vi.stubEnv('LEAD_WEBHOOK_URL', 'https://leads.example.com/hook');
-    const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 200 }));
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(new Response(null, { status: 200 }));
     vi.stubGlobal('fetch', fetchMock);
 
     const { POST } = await loadRoute();
     // A client claiming the lead arrived last year, to dodge the SLA clock.
     const response = await POST(
-      post({ ...VALID, receivedAt: '2020-01-01T00:00:00.000Z', firstTouchDueAt: '2020-01-01T00:00:00.000Z' }) as never,
+      post({
+        ...VALID,
+        receivedAt: '2020-01-01T00:00:00.000Z',
+        firstTouchDueAt: '2020-01-01T00:00:00.000Z',
+      }) as never,
     );
     expect(response.status).toBe(201);
 
@@ -161,7 +187,10 @@ describe('POST /api/lead', () => {
 
   it('reports a failure rather than claiming success when the destination is down', async () => {
     vi.stubEnv('LEAD_WEBHOOK_URL', 'https://leads.example.com/hook');
-    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('ECONNREFUSED')));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockRejectedValue(new Error('ECONNREFUSED')),
+    );
 
     const { POST } = await loadRoute();
     const response = await POST(post(VALID) as never);
@@ -181,10 +210,14 @@ describe('error copy when a value is missing entirely', () => {
     // is "Invalid input". That is exactly what /book-audit surfaced while
     // components/Field.tsx was dropping react-hook-form's ref — the earlier
     // copy test passed because it always supplied a value.
-    const messages = leadSchema.safeParse({}).error!.issues.map((issue) => issue.message);
+    const messages = leadSchema
+      .safeParse({})
+      .error!.issues.map((issue) => issue.message);
     expect(messages.length).toBeGreaterThan(0);
     for (const message of messages) {
-      expect(message, message).not.toMatch(/invalid|required|expected|received/i);
+      expect(message, message).not.toMatch(
+        /invalid|required|expected|received/i,
+      );
     }
   });
 });

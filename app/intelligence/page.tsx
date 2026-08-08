@@ -233,46 +233,19 @@ export default async function IntelligencePage() {
 
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  4
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Proprietary Techs
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  100%
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  AI Compass Precision
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  4K VR
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  3D Walkthroughs
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  Real-time
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  BOQ Tracking
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  4.9 ★
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Google Rating
-                </span>
-              </div>
+              {highlights.map((h) => (
+                <div
+                  key={h.title}
+                  className="p-4 rounded-xl lx-liquid-glass-card border border-accent/20"
+                >
+                  <strong className="block font-display text-h3 text-accent font-bold">
+                    {h.title}
+                  </strong>
+                  <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
+                    {h.desc}
+                  </span>
+                </div>
+              ))}
             </div>
           </Stack>
         </Container>

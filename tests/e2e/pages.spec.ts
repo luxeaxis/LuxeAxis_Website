@@ -18,7 +18,9 @@ test('every footer link resolves — no dead ends left in the site chrome', asyn
   const hrefs = await page
     .getByRole('contentinfo')
     .getByRole('link')
-    .evaluateAll((links) => links.map((link) => link.getAttribute('href') ?? ''));
+    .evaluateAll((links) =>
+      links.map((link) => link.getAttribute('href') ?? ''),
+    );
 
   expect(hrefs.length).toBeGreaterThan(15);
   const dead: string[] = [];
@@ -36,7 +38,9 @@ test('pricing leads with the calculator, then the tiers', async ({ page }) => {
   // not asked yet.
   await page.goto('/pricing');
   const headings = await page.locator('main h2').allTextContents();
-  expect(headings.indexOf('Estimate your project')).toBeLessThan(headings.indexOf('Three tiers'));
+  expect(headings.indexOf('Estimate your project')).toBeLessThan(
+    headings.indexOf('Three tiers'),
+  );
 });
 
 test('pricing publishes the real price list', async ({ page }) => {
@@ -57,10 +61,7 @@ test('the calculator answers with both the project cost and the fee inside it', 
   // it; showing only the fee hides the number they need to budget. §5.7 calls
   // this the published-pricing trust signal, and the trust is in showing both.
   await page.goto('/pricing');
-  await page
-    .getByRole('radio', { name: /2BHK/ })
-    .locator('..')
-    .click();
+  await page.getByRole('radio', { name: /2BHK/ }).locator('..').click();
 
   const output = page.locator('#calculator output');
   await expect(output).toContainText('₹7L to ₹15L');
@@ -68,7 +69,9 @@ test('the calculator answers with both the project cost and the fee inside it', 
   await expect(output).toContainText('Essential or Signature');
 });
 
-test('guarantee terms are published, and differ by tier where they do', async ({ page }) => {
+test('guarantee terms are published, and differ by tier where they do', async ({
+  page,
+}) => {
   // This asserted the terms were named as OUTSTANDING, which was right while
   // none were written. Now that they are, the assertion that matters is that
   // the per-tier commitments are stated rather than flattened into one figure:
@@ -90,7 +93,9 @@ test('a genuinely unwritten term still shows as a gap', async ({ page }) => {
   await expect(page.getByText('Full terms:').first()).toBeVisible();
 });
 
-test('the FAQ works without JavaScript and is marked up for search', async ({ page }) => {
+test('the FAQ works without JavaScript and is marked up for search', async ({
+  page,
+}) => {
   await page.goto('/pricing');
   // Native <details>/<summary>: the disclosure behaviour is the platform's, so
   // it survives a failed JS bundle — which matters most for a pure
@@ -105,7 +110,9 @@ test('the FAQ works without JavaScript and is marked up for search', async ({ pa
   // `.first()` silently started returning the wrong one the moment a second was
   // added — which is exactly the kind of test that passes for years and then
   // asserts nothing.
-  const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const blocks = await page
+    .locator('script[type="application/ld+json"]')
+    .allTextContents();
   const parsed = blocks
     .map((block) => JSON.parse(block))
     .find((node) => node['@type'] === 'FAQPage');
@@ -130,20 +137,29 @@ test('process names the seven stages in the spec order', async ({ page }) => {
   ]);
 });
 
-test('the handover guarantee is attached to its own stage', async ({ page }) => {
+test('the handover guarantee is attached to its own stage', async ({
+  page,
+}) => {
   // Spec §5.8: "each node … with the relevant guarantee attached". A guarantee
   // means more where it applies than in a block at the bottom of the page.
   await page.goto('/process');
-  const handover = page.locator('#stages ol > li').filter({ hasText: 'Handover' }).first();
+  const handover = page
+    .locator('#stages ol > li')
+    .filter({ hasText: 'Handover' })
+    .first();
   await expect(handover.getByText('Timeline guarantee')).toBeVisible();
 });
 
-test('an NRI region page computes both clocks at request time', async ({ page }) => {
+test('an NRI region page computes both clocks at request time', async ({
+  page,
+}) => {
   // The only region-specific fact anyone has supplied is the region, so the
   // page earns its keep by computing something true from it. Baked-in times
   // would be wrong for half the year in several of these zones.
   await page.goto('/nri/singapore');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Singapore');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(
+    'Singapore',
+  );
   const times = await page.locator('#timing p.font-mono').allTextContents();
   expect(times).toHaveLength(2);
   for (const time of times) {
@@ -152,7 +168,14 @@ test('an NRI region page computes both clocks at request time', async ({ page })
 });
 
 test('all six NRI regions resolve', async ({ request }) => {
-  for (const region of ['singapore', 'uae', 'usa', 'uk', 'canada', 'australia']) {
+  for (const region of [
+    'singapore',
+    'uae',
+    'usa',
+    'uk',
+    'canada',
+    'australia',
+  ]) {
     expect((await request.get(`/nri/${region}`)).status(), region).toBe(200);
   }
   expect((await request.get('/nri/mars')).status()).toBe(404);
@@ -162,7 +185,9 @@ test('commercial asks for a consult, not a home audit', async ({ page }) => {
   // Spec §10.8 adapts the CTA per path. Using the residential wording here
   // would read as a studio that does not know which business it is in.
   await page.goto('/commercial/workplace');
-  await expect(page.getByRole('link', { name: 'Request a consult' }).first()).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'Request a consult' }).first(),
+  ).toBeVisible();
 });
 
 test('commercial publishes its rates, margin included', async ({ page }) => {
@@ -189,7 +214,9 @@ test('commercial publishes its rates, margin included', async ({ page }) => {
   await expect(retail).not.toContainText('execution');
 });
 
-test('about states positions and names the company facts as outstanding', async ({ page }) => {
+test('about states positions and names the company facts as outstanding', async ({
+  page,
+}) => {
   // An invented founding year or team size is a fabricated company record — the
   // kind of detail a journalist or a procurement form relies on.
   await page.goto('/about');
@@ -200,50 +227,72 @@ test('about states positions and names the company facts as outstanding', async 
   await expect(page.getByText('The team:')).toBeVisible();
 
   // Positions the studio supplied, so these are published as written.
-  await expect(page.getByRole('heading', { name: 'Technology Humility' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Technology Humility' }),
+  ).toBeVisible();
   await expect(page.getByText(/Radical Transparency/).first()).toBeVisible();
 
   // Inverted: the address and statutory identifiers WERE listed here as
   // outstanding while the footer printed them on the same screen. Both now come
   // from lib/content/studio.ts, so the assertion is that they are stated — and
   // that neither is still masquerading as a gap.
-  await expect(page.locator('main').getByText('U74102TN2026PTC194776')).toBeVisible();
+  await expect(
+    page.locator('main').getByText('U74102TN2026PTC194776'),
+  ).toBeVisible();
   await expect(page.locator('main').getByText('33AAGCL9614E1ZM')).toBeVisible();
   await expect(page.getByText('Studio address:')).toHaveCount(0);
   await expect(page.getByText('Registration details')).toHaveCount(0);
 });
 
-test('the legal documents render in full, with their gaps visible', async ({ page }) => {
+test('the legal documents render in full, with their gaps visible', async ({
+  page,
+}) => {
   // These replaced two pages that each said, in effect, "this is not the real
   // document". They are the only pages on the site whose exact wording is a
   // legal instrument, so this checks the clauses that would be worst to lose.
   await page.goto('/privacy');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Privacy Policy');
-  await expect(page.getByRole('heading', { name: /Your rights as a Data Principal/ })).toBeVisible();
-  await expect(page.getByText('Data Protection Board of India').first()).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'Privacy Policy',
+  );
+  await expect(
+    page.getByRole('heading', { name: /Your rights as a Data Principal/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByText('Data Protection Board of India').first(),
+  ).toBeVisible();
 
   // The statutory identifiers come from lib/content/studio.ts, so the policy
   // cannot drift from the footer.
   // Scoped to main: it also appears in the footer, which is the point — one
   // source, so a policy naming a different CIN from the footer cannot happen.
-  await expect(page.locator('main').getByText('U74102TN2026PTC194776')).toBeVisible();
+  await expect(
+    page.locator('main').getByText('U74102TN2026PTC194776'),
+  ).toBeVisible();
 
   // The grievance officer is a named individual nobody has supplied. It shows
   // as an explicit gap rather than a plausible name.
-  await expect(page.getByText(/Name of Grievance Officer: To be published/)).toBeVisible();
+  await expect(
+    page.getByText(/Name of Grievance Officer: To be published/),
+  ).toBeVisible();
 
   // Deep-linkable clauses: people cite these pages by section.
   await page.goto('/terms#warranties-and-post-handover-service');
-  await expect(page.locator('#warranties-and-post-handover-service')).toBeVisible();
+  await expect(
+    page.locator('#warranties-and-post-handover-service'),
+  ).toBeVisible();
   await expect(page.getByText(/Snags reported within 7 days/)).toBeVisible();
 
   // Both documents link to a Cookie Policy that does not exist. The words stay;
   // the anchor does not, so nothing here navigates to a 404.
   const hrefs = await page
     .locator('main a')
-    .evaluateAll((links) => links.map((link) => link.getAttribute('href') ?? ''));
+    .evaluateAll((links) =>
+      links.map((link) => link.getAttribute('href') ?? ''),
+    );
   expect(hrefs).not.toContain('/cookies');
-  await expect(page.getByText(/Cookie Policy \(To be published\)/).first()).toBeVisible();
+  await expect(
+    page.getByText(/Cookie Policy \(To be published\)/).first(),
+  ).toBeVisible();
 });
 
 test('the journal is honestly empty rather than absent', async ({ page }) => {
@@ -251,7 +300,9 @@ test('the journal is honestly empty rather than absent', async ({ page }) => {
   await expect(page.getByText('Nothing published yet')).toBeVisible();
 });
 
-test('nested pages carry breadcrumbs whose markup matches what is on screen', async ({ page }) => {
+test('nested pages carry breadcrumbs whose markup matches what is on screen', async ({
+  page,
+}) => {
   // Generated from one derived list, never two hand-kept copies — Google treats
   // structured data that disagrees with the visible page as a spam signal, and a
   // parallel list is exactly how that disagreement arrives.
@@ -267,16 +318,16 @@ test('nested pages carry breadcrumbs whose markup matches what is on screen', as
   );
   await expect(nav.locator('[aria-current="page"]')).toHaveText('Vastu-Tech');
 
-  const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const blocks = await page
+    .locator('script[type="application/ld+json"]')
+    .allTextContents();
   const crumbs = blocks
     .map((block) => JSON.parse(block))
     .find((node) => node['@type'] === 'BreadcrumbList');
   expect(crumbs, 'no BreadcrumbList on a nested page').toBeDefined();
-  expect(crumbs.itemListElement.map((item: { name: string }) => item.name)).toEqual([
-    'Home',
-    'Intelligence',
-    'Vastu-Tech',
-  ]);
+  expect(
+    crumbs.itemListElement.map((item: { name: string }) => item.name),
+  ).toEqual(['Home', 'Intelligence', 'Vastu-Tech']);
 });
 
 test('every breadcrumb link resolves', async ({ page, request }) => {
@@ -294,10 +345,14 @@ test('every breadcrumb link resolves', async ({ page, request }) => {
     const hrefs = await page
       .getByRole('navigation', { name: 'Breadcrumb' })
       .getByRole('link')
-      .evaluateAll((links) => links.map((link) => link.getAttribute('href') ?? ''));
+      .evaluateAll((links) =>
+        links.map((link) => link.getAttribute('href') ?? ''),
+      );
     expect(hrefs.length, `${path} has no breadcrumb links`).toBeGreaterThan(0);
     for (const href of hrefs) {
-      expect((await request.get(href)).status(), `${path} -> ${href}`).toBe(200);
+      expect((await request.get(href)).status(), `${path} -> ${href}`).toBe(
+        200,
+      );
     }
   }
 });
@@ -306,7 +361,9 @@ test('service pages describe themselves as a Service, without inventing an offer
   page,
 }) => {
   await page.goto('/residential/signature');
-  const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const blocks = await page
+    .locator('script[type="application/ld+json"]')
+    .allTextContents();
   const service = blocks
     .map((block) => JSON.parse(block))
     .find((node) => node['@type'] === 'Service');

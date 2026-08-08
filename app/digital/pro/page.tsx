@@ -21,7 +21,9 @@ export const metadata: Metadata = {
 
 export default async function ProDigitalPage() {
   const faqs = await getFaqs();
-  const digitalFaqs = [...faqs].filter((f) => f.id === 'abroad' || f.id === 'materials');
+  const digitalFaqs = [...faqs].filter(
+    (f) => f.id === 'abroad' || f.id === 'materials',
+  );
 
   const inclusions = [
     'All Starter Package deliverables included',
@@ -50,7 +52,7 @@ export default async function ProDigitalPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/digital/pro" labels={{ 'pro': "Pro Package" }} />
+          <Breadcrumbs path="/digital/pro" labels={{ pro: 'Pro Package' }} />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -66,14 +68,21 @@ export default async function ProDigitalPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Complete architectural remote design package equipped with 4K photorealistic 3D renders, full 2D working drawings, Vastu-Tech solar compass audit, and an itemized component BOQ estimate.
+              Complete architectural remote design package equipped with 4K
+              photorealistic 3D renders, full 2D working drawings, Vastu-Tech
+              solar compass audit, and an itemized component BOQ estimate.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
               <Button as="a" href="/book-audit" size="lg">
                 Book Pro Audit
               </Button>
-              <Button as="a" href="/digital/premium" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/digital/premium"
+                variant="secondary"
+                size="lg"
+              >
                 View Premium VIP (₹75k) →
               </Button>
             </div>
@@ -81,20 +90,36 @@ export default async function ProDigitalPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">₹45,000</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Per Room Rate</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  ₹45,000
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Per Room Rate
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4K 3D</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Photorealistic Visuals</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4K 3D
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Photorealistic Visuals
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Working CAD</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Full Drawings</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Working CAD
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Full Drawings
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">2 Calls</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Architect Reviews</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  2 Calls
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Architect Reviews
+                </span>
               </div>
             </div>
           </Stack>
@@ -129,8 +154,14 @@ export default async function ProDigitalPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell flat before Pro Digital package' }}
-            afterImage={{ src: '/posters/hero.avif', alt: 'Completed apartment interior using Pro Digital 4K 3D drawings' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Bare shell flat before Pro Digital package',
+            }}
+            afterImage={{
+              src: '/posters/hero.avif',
+              alt: 'Completed apartment interior using Pro Digital 4K 3D drawings',
+            }}
           />
         </div>
       </Section>
@@ -145,19 +176,39 @@ export default async function ProDigitalPage() {
         <Grid cols={2} gap={6}>
           <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
             <div>
-              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">Starter Package (₹25,000 / room)</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed mb-4">Essential 2D layout, color moodboard, Vastu compass check, and direct shopping links.</p>
+              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                Starter Package (₹25,000 / room)
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                Essential 2D layout, color moodboard, Vastu compass check, and
+                direct shopping links.
+              </p>
             </div>
-            <Button as="a" href="/digital/starter" variant="secondary" className="w-full justify-center">
+            <Button
+              as="a"
+              href="/digital/starter"
+              variant="secondary"
+              className="w-full justify-center"
+            >
               View Starter Package →
             </Button>
           </div>
           <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
             <div>
-              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">Premium VIP (₹75,000 / room)</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed mb-4">Adds 360 VR walkthrough, physical material sample box shipped to your door, and 3 video calls.</p>
+              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                Premium VIP (₹75,000 / room)
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                Adds 360 VR walkthrough, physical material sample box shipped to
+                your door, and 3 video calls.
+              </p>
             </div>
-            <Button as="a" href="/digital/premium" variant="secondary" className="w-full justify-center">
+            <Button
+              as="a"
+              href="/digital/premium"
+              variant="secondary"
+              className="w-full justify-center"
+            >
               View Premium VIP →
             </Button>
           </div>

@@ -1,5 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { act, render, screen, fireEvent, cleanup } from '@testing-library/react';
+import {
+  act,
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+} from '@testing-library/react';
 import { Tooltip } from '@/components/Tooltip';
 
 afterEach(() => {
@@ -30,7 +36,9 @@ describe('Tooltip', () => {
     advance(239);
     expect(screen.queryByRole('tooltip')).toBeNull();
     advance(1);
-    expect(screen.getByRole('tooltip').textContent).toBe('Book a 30-minute audit call');
+    expect(screen.getByRole('tooltip').textContent).toBe(
+      'Book a 30-minute audit call',
+    );
   });
 
   it('opens on focus as well as hover — not hover-only', () => {

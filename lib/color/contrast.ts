@@ -5,7 +5,13 @@ function parse(color: string): [number, number, number] {
   const hex = color.trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
   if (hex) {
     const h = hex[1]!;
-    const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+    const full =
+      h.length === 3
+        ? h
+            .split('')
+            .map((c) => c + c)
+            .join('')
+        : h;
     return [
       parseInt(full.slice(0, 2), 16),
       parseInt(full.slice(2, 4), 16),
@@ -49,7 +55,9 @@ export function compositeOver(overlay: string, backdrop: string): string {
 
 /** Alpha channel of an `rgba()` string; 1 for any opaque format. */
 function alphaOf(color: string): number {
-  const match = color.trim().match(/^rgba\(\s*\d+[,\s]+\d+[,\s]+\d+[,\s/]+([\d.]+)\s*\)$/i);
+  const match = color
+    .trim()
+    .match(/^rgba\(\s*\d+[,\s]+\d+[,\s]+\d+[,\s/]+([\d.]+)\s*\)$/i);
   return match ? Number(match[1]) : 1;
 }
 

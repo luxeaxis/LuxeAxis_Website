@@ -33,13 +33,14 @@ export const metadata: Metadata = {
 };
 
 export default async function PricingPage() {
-  const [tiers, calculatorConfig, guarantees, subscriptions, faqs] = await Promise.all([
-    getTiers(),
-    getCalculatorConfig(),
-    getGuarantees(),
-    getSubscriptions(),
-    getFaqs(),
-  ]);
+  const [tiers, calculatorConfig, guarantees, subscriptions, faqs] =
+    await Promise.all([
+      getTiers(),
+      getCalculatorConfig(),
+      getGuarantees(),
+      getSubscriptions(),
+      getFaqs(),
+    ]);
   const allPriced = tiers.every((tier) => tier.priceFrom !== null);
 
   const highlights = [
@@ -110,7 +111,10 @@ export default async function PricingPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              No quote-on-request and no discovery call before you can find out what a project costs. Estimate your project budget online, evaluate our three structured investment tiers, and review contractual guarantees.
+              No quote-on-request and no discovery call before you can find out
+              what a project costs. Estimate your project budget online,
+              evaluate our three structured investment tiers, and review
+              contractual guarantees.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -120,29 +124,21 @@ export default async function PricingPage() {
               <Button as="a" href="#tiers" variant="secondary" size="lg">
                 View Investment Tiers →
               </Button>
-            </div>
-
-            {/* Key Stats Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">₹1,800</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Essential / Sq.Ft</span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">₹2,800</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Signature / Sq.Ft</span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">100%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">BOQ Price Lock</span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">0%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Cost Escalation</span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+              {/* Key Stats Bar */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
+                {highlights.map((h) => (
+                  <div
+                    key={h.title}
+                    className="p-4 rounded-xl lx-liquid-glass-card border border-accent/20"
+                  >
+                    <strong className="block font-display text-h3 text-accent font-bold">
+                      {h.title}
+                    </strong>
+                    <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
+                      {h.desc}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </Stack>
@@ -158,7 +154,9 @@ export default async function PricingPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -174,10 +172,19 @@ export default async function PricingPage() {
       >
         <Grid cols={2} gap={6}>
           {subPages.map((sp) => (
-            <div key={sp.title} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
+            <div
+              key={sp.title}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between"
+            >
               <div>
                 <div className="relative rounded-xl overflow-hidden aspect-[16/10] mb-4 border border-border-subtle/60">
-                  <Image src={sp.image} alt={sp.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                  <Image
+                    src={sp.image}
+                    alt={sp.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
                   <span className="absolute top-2 left-2 px-2.5 py-1 rounded bg-accent text-surface-deep font-ui text-[10px] font-bold uppercase tracking-wider">
                     {sp.badge}
                   </span>
@@ -185,10 +192,19 @@ export default async function PricingPage() {
                     {sp.rate}
                   </span>
                 </div>
-                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">{sp.title}</h3>
-                <p className="text-small text-on-surface-2 leading-relaxed mb-4">{sp.desc}</p>
+                <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                  {sp.title}
+                </h3>
+                <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                  {sp.desc}
+                </p>
               </div>
-              <Button as="a" href={sp.href} variant="secondary" className="w-full justify-center">
+              <Button
+                as="a"
+                href={sp.href}
+                variant="secondary"
+                className="w-full justify-center"
+              >
                 Explore {sp.title} →
               </Button>
             </div>
@@ -238,7 +254,10 @@ export default async function PricingPage() {
                   name={tier.name}
                   price={{ amount: tier.priceFrom, period: 'onwards' }}
                   inclusions={tier.inclusions}
-                  cta={{ label: 'See ' + tier.name, href: `/residential/${tier.id}` }}
+                  cta={{
+                    label: 'See ' + tier.name,
+                    href: `/residential/${tier.id}`,
+                  }}
                   recommended={tier.recommended}
                 />
               ),
@@ -256,7 +275,9 @@ export default async function PricingPage() {
                     <h3 className="font-display text-[length:var(--typography-h3-font-size)] text-on-surface">
                       {tier.name}
                     </h3>
-                    <p className="text-small text-on-surface-2">{tier.summary}</p>
+                    <p className="text-small text-on-surface-2">
+                      {tier.summary}
+                    </p>
                   </Stack>
                   <p className="text-small">
                     <ToBePublished label="Fee band" />
@@ -301,7 +322,9 @@ export default async function PricingPage() {
                       guarantee.byTier?.[tier.name] ? (
                         <div key={tier.id} className="flex gap-2">
                           <dt className="text-on-surface-muted">{tier.name}</dt>
-                          <dd className="text-on-surface">{guarantee.byTier[tier.name]}</dd>
+                          <dd className="text-on-surface">
+                            {guarantee.byTier[tier.name]}
+                          </dd>
                         </div>
                       ) : null,
                     )}
@@ -335,14 +358,19 @@ export default async function PricingPage() {
                 </h3>
                 <p className="font-mono text-[length:var(--typography-h3-font-size)] tabular-nums text-on-surface">
                   {formatRupees(subscription.monthly)}
-                  <span className="font-ui text-small text-on-surface-2"> / month</span>
+                  <span className="font-ui text-small text-on-surface-2">
+                    {' '}
+                    / month
+                  </span>
                 </p>
                 {subscription.yearly !== null && (
                   <p className="text-small text-on-surface-muted">
                     or {formatRupees(subscription.yearly)} a year
                   </p>
                 )}
-                <p className="text-small text-on-surface-2">{subscription.summary}</p>
+                <p className="text-small text-on-surface-2">
+                  {subscription.summary}
+                </p>
               </Stack>
             </div>
           ))}
@@ -358,8 +386,14 @@ export default async function PricingPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell residence before fit-out' }}
-            afterImage={{ src: '/posters/hero.avif', alt: 'Completed luxury interior by Luxe Axis' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Bare shell residence before fit-out',
+            }}
+            afterImage={{
+              src: '/posters/hero.avif',
+              alt: 'Completed luxury interior by Luxe Axis',
+            }}
           />
         </div>
       </Section>

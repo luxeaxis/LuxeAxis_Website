@@ -13,12 +13,24 @@
  * generic Field component can enforce structurally.
  */
 
-import { forwardRef, type InputHTMLAttributes, type TextareaHTMLAttributes } from 'react';
+import {
+  forwardRef,
+  type InputHTMLAttributes,
+  type TextareaHTMLAttributes,
+} from 'react';
 import { Icon } from './Icon';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
-type FieldType = 'text' | 'email' | 'tel' | 'password' | 'number' | 'search' | 'url';
+type FieldType =
+  | 'text'
+  | 'email'
+  | 'tel'
+  | 'password'
+  | 'number'
+  | 'search'
+  | 'url';
 
 type FieldBaseProps = {
   label: string;
@@ -39,7 +51,14 @@ type FieldSingleLineProps = FieldBaseProps & {
   type?: FieldType;
 } & Omit<
     InputHTMLAttributes<HTMLInputElement>,
-    'id' | 'name' | 'type' | 'className' | 'aria-invalid' | 'aria-describedby' | 'aria-required' | 'placeholder'
+    | 'id'
+    | 'name'
+    | 'type'
+    | 'className'
+    | 'aria-invalid'
+    | 'aria-describedby'
+    | 'aria-required'
+    | 'placeholder'
   >;
 
 type FieldMultilineProps = FieldBaseProps & {
@@ -47,7 +66,13 @@ type FieldMultilineProps = FieldBaseProps & {
   rows?: number;
 } & Omit<
     TextareaHTMLAttributes<HTMLTextAreaElement>,
-    'id' | 'name' | 'className' | 'aria-invalid' | 'aria-describedby' | 'aria-required' | 'placeholder'
+    | 'id'
+    | 'name'
+    | 'className'
+    | 'aria-invalid'
+    | 'aria-describedby'
+    | 'aria-required'
+    | 'placeholder'
   >;
 
 export type FieldProps = FieldSingleLineProps | FieldMultilineProps;
@@ -57,9 +82,22 @@ export type FieldProps = FieldSingleLineProps | FieldMultilineProps;
  *  autoComplete, defaultValue…) to forward. See Button.tsx's
  *  `omitKnownProps` for why this is a delete-loop rather than a destructure
  *  of unused locals (`@typescript-eslint/no-unused-vars`, `--max-warnings 0`). */
-function omitKnownProps(props: Record<string, unknown>): Record<string, unknown> {
+function omitKnownProps(
+  props: Record<string, unknown>,
+): Record<string, unknown> {
   const rest = { ...props };
-  for (const key of ['label', 'name', 'help', 'error', 'success', 'required', 'className', 'multiline', 'type', 'rows']) {
+  for (const key of [
+    'label',
+    'name',
+    'help',
+    'error',
+    'success',
+    'required',
+    'className',
+    'multiline',
+    'type',
+    'rows',
+  ]) {
     delete rest[key];
   }
   return rest;
@@ -114,10 +152,10 @@ const LABEL_BASE = cx(
  * The ref type is the union of both elements this component can render. A
  * caller holding one narrows it themselves; RHF only ever calls it.
  */
-export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, FieldProps>(function Field(
-  props,
-  ref,
-) {
+export const Field = forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  FieldProps
+>(function Field(props, ref) {
   const { label, name, help, error, required, className } = props;
   // Error and success are mutually exclusive so the control never shows two
   // contradictory validation colours at once — the global states table
@@ -130,7 +168,9 @@ export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, FieldPro
   const errorId = `${name}-error`;
   const successId = `${name}-success`;
   const describedBy =
-    [help && helpId, error && errorId, success && successId].filter(Boolean).join(' ') || undefined;
+    [help && helpId, error && errorId, success && successId]
+      .filter(Boolean)
+      .join(' ') || undefined;
 
   const borderClass = error
     ? 'border-error'
@@ -139,7 +179,9 @@ export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, FieldPro
       : 'border-border focus:border-[length:var(--border-width-focus)] focus:border-field-border-focus';
 
   const controlClassName = cx(CONTROL_BASE, borderClass, className);
-  const nativeRest = omitKnownProps(props as unknown as Record<string, unknown>);
+  const nativeRest = omitKnownProps(
+    props as unknown as Record<string, unknown>,
+  );
   const commonA11y = {
     'aria-invalid': error ? (true as const) : undefined,
     'aria-describedby': describedBy,
@@ -205,13 +247,20 @@ export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, FieldPro
           </p>
         )}
         {error && (
-          <p id={errorId} role="alert" className="flex items-center gap-2 text-small text-error">
+          <p
+            id={errorId}
+            role="alert"
+            className="flex items-center gap-2 text-small text-error"
+          >
             <Icon name="alert-circle" size="sm" decorative />
             <span>{error}</span>
           </p>
         )}
         {success && (
-          <p id={successId} className="flex items-center gap-2 text-small text-success">
+          <p
+            id={successId}
+            className="flex items-center gap-2 text-small text-success"
+          >
             <Icon name="check" size="sm" decorative />
             <span>{success}</span>
           </p>

@@ -28,7 +28,8 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { Button } from './Button';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -42,7 +43,14 @@ export type ModalProps = {
   className?: string;
 };
 
-export function Modal({ open, onClose, title, children, closeLabel = 'Close', className }: ModalProps) {
+export function Modal({
+  open,
+  onClose,
+  title,
+  children,
+  closeLabel = 'Close',
+  className,
+}: ModalProps) {
   const [mounted, setMounted] = useState(open);
   const panelRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
@@ -121,7 +129,8 @@ export function Modal({ open, onClose, title, children, closeLabel = 'Close', cl
     const panel = panelRef.current;
     if (!panel) return;
 
-    const focusables = () => Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
+    const focusables = () =>
+      Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
@@ -194,7 +203,9 @@ export function Modal({ open, onClose, title, children, closeLabel = 'Close', cl
         className={cx(
           'lx-glass fixed inset-0 z-overlay block appearance-none border-0 p-0',
           'transition-opacity motion-reduce:transition-none',
-          open ? 'duration-ui ease-entrance opacity-100' : 'duration-ui ease-exit opacity-0',
+          open
+            ? 'duration-ui ease-entrance opacity-100'
+            : 'duration-ui ease-exit opacity-0',
         )}
       />
       {/* Centring wrapper — deliberately NOT the click-outside target
@@ -210,7 +221,8 @@ export function Modal({ open, onClose, title, children, closeLabel = 'Close', cl
           aria-modal="true"
           aria-labelledby={titleId}
           onTransitionEnd={(event) => {
-            if (event.target === event.currentTarget && !open) setMounted(false);
+            if (event.target === event.currentTarget && !open)
+              setMounted(false);
           }}
           className={cx(
             'pointer-events-auto w-full max-w-md rounded-lg bg-surface-raised p-6 shadow-2',
@@ -222,10 +234,19 @@ export function Modal({ open, onClose, title, children, closeLabel = 'Close', cl
           )}
         >
           <div className="mb-4 flex items-start justify-between gap-4">
-            <h2 id={titleId} className="font-display text-[length:var(--typography-h3-font-size)] text-on-surface">
+            <h2
+              id={titleId}
+              className="font-display text-[length:var(--typography-h3-font-size)] text-on-surface"
+            >
               {title}
             </h2>
-            <Button variant="icon" size="sm" icon="close" aria-label={closeLabel} onClick={onClose} />
+            <Button
+              variant="icon"
+              size="sm"
+              icon="close"
+              aria-label={closeLabel}
+              onClick={onClose}
+            />
           </div>
           {children}
         </div>

@@ -99,7 +99,8 @@ export const STUDIO: Studio = {
       'Thousand Lights West, Nungambakkam',
       'Chennai, Tamil Nadu 600006',
     ],
-    street: 'Awfis, Rajkamal Pinnacle, 8th Floor, New 2, No. 145, Nungambakkam High Rd, Thousand Lights West, Nungambakkam',
+    street:
+      'Awfis, Rajkamal Pinnacle, 8th Floor, New 2, No. 145, Nungambakkam High Rd, Thousand Lights West, Nungambakkam',
     locality: 'Chennai',
     region: 'Tamil Nadu',
     postalCode: '600006',
@@ -143,7 +144,9 @@ export function formatWindow(window: ResponseWindow): string {
     const [hours, minutes] = time.split(':').map(Number);
     const suffix = hours! < 12 ? 'am' : 'pm';
     const hour = hours! % 12 === 0 ? 12 : hours! % 12;
-    return minutes ? `${hour}.${String(minutes).padStart(2, '0')}${suffix}` : `${hour}${suffix}`;
+    return minutes
+      ? `${hour}.${String(minutes).padStart(2, '0')}${suffix}`
+      : `${hour}${suffix}`;
   };
   return `${twelveHour(window.start)} to ${twelveHour(window.end)}, ${window.days}`;
 }

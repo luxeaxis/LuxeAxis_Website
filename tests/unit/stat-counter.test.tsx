@@ -9,10 +9,20 @@ afterEach(cleanup);
 // jsdom implements neither API at all (confirmed: `window.matchMedia is not
 // a function` / no IntersectionObserver global) — both need stubbing before
 // mount, every test, or StatCounter's effect throws.
-function stubBrowserApis({ reduceMotion, observe }: { reduceMotion: boolean; observe?: () => void }) {
+function stubBrowserApis({
+  reduceMotion,
+  observe,
+}: {
+  reduceMotion: boolean;
+  observe?: () => void;
+}) {
   vi.stubGlobal(
     'matchMedia',
-    vi.fn().mockReturnValue({ matches: reduceMotion, addEventListener: vi.fn(), removeEventListener: vi.fn() }),
+    vi.fn().mockReturnValue({
+      matches: reduceMotion,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }),
   );
   class StubIntersectionObserver {
     observe() {

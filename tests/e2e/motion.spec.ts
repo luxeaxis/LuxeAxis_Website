@@ -18,7 +18,9 @@ async function headings(page: import('@playwright/test').Page) {
   return page.locator('main h2').allTextContents();
 }
 
-test('reduced motion produces the same content as full motion', async ({ browser }) => {
+test('reduced motion produces the same content as full motion', async ({
+  browser,
+}) => {
   const normal = await browser.newContext({ reducedMotion: 'no-preference' });
   const reduced = await browser.newContext({ reducedMotion: 'reduce' });
 
@@ -33,7 +35,9 @@ test('reduced motion produces the same content as full motion', async ({ browser
   await reduced.close();
 });
 
-test('reduced motion leaves nothing hidden or displaced', async ({ browser }) => {
+test('reduced motion leaves nothing hidden or displaced', async ({
+  browser,
+}) => {
   const context = await browser.newContext({ reducedMotion: 'reduce' });
   const page = await context.newPage();
   await page.goto(PAGE);
@@ -47,7 +51,10 @@ test('reduced motion leaves nothing hidden or displaced', async ({ browser }) =>
     for (const node of document.querySelectorAll('[data-reveal]')) {
       const style = getComputedStyle(node);
       if (style.opacity !== '1') bad.push(`opacity ${style.opacity}`);
-      if (style.transform !== 'none' && style.transform !== 'matrix(1, 0, 0, 1, 0, 0)') {
+      if (
+        style.transform !== 'none' &&
+        style.transform !== 'matrix(1, 0, 0, 1, 0, 0)'
+      ) {
         bad.push(`transform ${style.transform}`);
       }
     }
@@ -74,7 +81,10 @@ test('no section is left invisible once scrolled past', async ({ page }) => {
     Math.ceil(document.body.scrollHeight / window.innerHeight),
   );
   for (let step = 1; step <= steps; step += 1) {
-    await page.evaluate((index) => window.scrollTo(0, window.innerHeight * index), step);
+    await page.evaluate(
+      (index) => window.scrollTo(0, window.innerHeight * index),
+      step,
+    );
     await page.waitForTimeout(150);
   }
   // Room for the last 480ms transition to finish.
@@ -85,7 +95,10 @@ test('no section is left invisible once scrolled past', async ({ page }) => {
       .filter((node) => getComputedStyle(node).opacity !== '1')
       .map((node) => node.textContent?.slice(0, 40) ?? ''),
   );
-  expect(invisible, `still hidden after scrolling: ${invisible.join(' | ')}`).toEqual([]);
+  expect(
+    invisible,
+    `still hidden after scrolling: ${invisible.join(' | ')}`,
+  ).toEqual([]);
 });
 
 test('content above the fold is never animated', async ({ page }) => {
@@ -109,7 +122,9 @@ test('the page still works with JavaScript disabled', async ({ browser }) => {
   await page.goto(PAGE);
 
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Three tiers' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Three tiers' }),
+  ).toBeVisible();
   // No reveal state was ever applied, so nothing can be stuck hidden.
   expect(await page.locator('[data-reveal]').count()).toBe(0);
 

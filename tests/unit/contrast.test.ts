@@ -17,7 +17,10 @@ describe('contrastRatio', () => {
   });
 
   it('is symmetric', () => {
-    expect(contrastRatio('#C9A84C', '#0D2B4E')).toBeCloseTo(contrastRatio('#0D2B4E', '#C9A84C'), 4);
+    expect(contrastRatio('#C9A84C', '#0D2B4E')).toBeCloseTo(
+      contrastRatio('#0D2B4E', '#C9A84C'),
+      4,
+    );
   });
 
   it('pins the luminance coefficients: navy on ivory is 13.67', () => {
@@ -27,11 +30,17 @@ describe('contrastRatio', () => {
 
 describe('colour parsing', () => {
   it('expands 3-digit hex the same as its 6-digit equivalent (#fff vs #ffffff)', () => {
-    expect(contrastRatio('#fff', '#000000')).toBeCloseTo(contrastRatio('#ffffff', '#000000'), 6);
+    expect(contrastRatio('#fff', '#000000')).toBeCloseTo(
+      contrastRatio('#ffffff', '#000000'),
+      6,
+    );
   });
 
   it('expands 3-digit hex the same as its 6-digit equivalent for a non-grey colour', () => {
-    expect(contrastRatio('#0d2', '#FCFAF5')).toBeCloseTo(contrastRatio('#00dd22', '#FCFAF5'), 6);
+    expect(contrastRatio('#0d2', '#FCFAF5')).toBeCloseTo(
+      contrastRatio('#00dd22', '#FCFAF5'),
+      6,
+    );
   });
 
   it('parses rgb(...) — rgb(255, 255, 255) on #000000 gives 21', () => {
@@ -39,7 +48,10 @@ describe('colour parsing', () => {
   });
 
   it('parses rgba(...) and ignores its alpha channel', () => {
-    expect(contrastRatio('rgba(255, 255, 255, 0.3)', '#000000')).toBeCloseTo(21, 1);
+    expect(contrastRatio('rgba(255, 255, 255, 0.3)', '#000000')).toBeCloseTo(
+      21,
+      1,
+    );
   });
 
   it('throws on an unparseable colour', () => {
@@ -49,27 +61,42 @@ describe('colour parsing', () => {
 
 describe('verified pairings hold', () => {
   it('ivory body text on navy reaches AAA', () => {
-    expect(contrastRatio(onDark.primary.$value, brand.emerald.$value)).toBeGreaterThanOrEqual(7);
+    expect(
+      contrastRatio(onDark.primary.$value, brand.emerald.$value),
+    ).toBeGreaterThanOrEqual(7);
   });
 
   it('secondary text on emerald reaches AA', () => {
-    expect(contrastRatio(onDark.secondary.$value, brand.emerald.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(onDark.secondary.$value, brand.emerald.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('ink on gold reaches AAA — this is the primary button', () => {
-    expect(contrastRatio(brand.ink.$value, brand.gold.$value)).toBeGreaterThanOrEqual(7);
+    expect(
+      contrastRatio(brand.ink.$value, brand.gold.$value),
+    ).toBeGreaterThanOrEqual(7);
   });
 
   it('gold on navy reaches AA for large text and UI', () => {
-    expect(contrastRatio(brand.gold.$value, brand.emerald.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(brand.gold.$value, brand.emerald.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('teal-bright is the accessible teal for text on dark', () => {
-    expect(contrastRatio(brand['teal-bright'].$value, brand.emerald.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(brand['teal-bright'].$value, brand.emerald.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('the focus ring is distinguishable against navy', () => {
-    expect(contrastRatio(tokens.theme.dark['focus-ring'].$value, brand.emerald.$value)).toBeGreaterThanOrEqual(3);
+    expect(
+      contrastRatio(
+        tokens.theme.dark['focus-ring'].$value,
+        brand.emerald.$value,
+      ),
+    ).toBeGreaterThanOrEqual(3);
   });
 });
 
@@ -81,20 +108,30 @@ describe('verified pairings hold', () => {
 // in the other.
 describe('verified pairings hold on the light theme too', () => {
   it('navy body text on ivory reaches AAA', () => {
-    expect(contrastRatio(onLight.primary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(7);
+    expect(
+      contrastRatio(onLight.primary.$value, brand.ivory.$value),
+    ).toBeGreaterThanOrEqual(7);
   });
 
   it('secondary text on ivory reaches AAA', () => {
-    expect(contrastRatio(onLight.secondary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(7);
+    expect(
+      contrastRatio(onLight.secondary.$value, brand.ivory.$value),
+    ).toBeGreaterThanOrEqual(7);
   });
 
   it('muted text on ivory reaches AA — the role that used to fail here', () => {
-    expect(contrastRatio(onLight.tertiary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(onLight.tertiary.$value, brand.ivory.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('the muted role clears AA in BOTH themes, not just one', () => {
-    expect(contrastRatio(onDark.tertiary.$value, brand.emerald.$value)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(onLight.tertiary.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(onDark.tertiary.$value, brand.emerald.$value),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(onLight.tertiary.$value, brand.ivory.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 });
 
@@ -123,7 +160,10 @@ describe('the text ramp clears AA on every surface it can land on, not just the 
   for (const [name, bg] of Object.entries(darkSurfaces)) {
     it(`every dark-theme text role clears AA on ${name}`, () => {
       for (const role of ['primary', 'secondary', 'tertiary'] as const) {
-        expect(contrastRatio(onDark[role].$value, bg), `${role} on ${name}`).toBeGreaterThanOrEqual(4.5);
+        expect(
+          contrastRatio(onDark[role].$value, bg),
+          `${role} on ${name}`,
+        ).toBeGreaterThanOrEqual(4.5);
       }
     });
   }
@@ -131,7 +171,10 @@ describe('the text ramp clears AA on every surface it can land on, not just the 
   for (const [name, bg] of Object.entries(lightSurfaces)) {
     it(`every light-theme text role clears AA on ${name}`, () => {
       for (const role of ['primary', 'secondary', 'tertiary'] as const) {
-        expect(contrastRatio(onLight[role].$value, bg), `${role} on ${name}`).toBeGreaterThanOrEqual(4.5);
+        expect(
+          contrastRatio(onLight[role].$value, bg),
+          `${role} on ${name}`,
+        ).toBeGreaterThanOrEqual(4.5);
       }
     });
   }
@@ -144,31 +187,43 @@ describe('the text ramp clears AA on every surface it can land on, not just the 
 // any minimum.
 describe('the text ramp descends', () => {
   it('primary > secondary > tertiary on dark', () => {
-    const [p, s, t] = (['primary', 'secondary', 'tertiary'] as const).map((role) =>
-      contrastRatio(onDark[role].$value, brand.emerald.$value),
+    const [p, s, t] = (['primary', 'secondary', 'tertiary'] as const).map(
+      (role) => contrastRatio(onDark[role].$value, brand.emerald.$value),
     );
     expect(p).toBeGreaterThan(s!);
     expect(s).toBeGreaterThan(t!);
   });
 
   it('primary > secondary > tertiary on light', () => {
-    const [p, s, t] = (['primary', 'secondary', 'tertiary'] as const).map((role) =>
-      contrastRatio(onLight[role].$value, brand.ivory.$value),
+    const [p, s, t] = (['primary', 'secondary', 'tertiary'] as const).map(
+      (role) => contrastRatio(onLight[role].$value, brand.ivory.$value),
     );
     expect(p).toBeGreaterThan(s!);
     expect(s).toBeGreaterThan(t!);
   });
 
   it('teal is the accessible accent for text on ivory', () => {
-    expect(contrastRatio(brand.teal.$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(brand.teal.$value, brand.ivory.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('the accent hover state stays AA on ivory', () => {
-    expect(contrastRatio(tokens.theme.light['accent-hover'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(
+        tokens.theme.light['accent-hover'].$value,
+        brand.ivory.$value,
+      ),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('the light focus ring is distinguishable against ivory', () => {
-    expect(contrastRatio(tokens.theme.light['focus-ring'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(3);
+    expect(
+      contrastRatio(
+        tokens.theme.light['focus-ring'].$value,
+        brand.ivory.$value,
+      ),
+    ).toBeGreaterThanOrEqual(3);
   });
 });
 
@@ -192,19 +247,27 @@ describe('the promoted error/success roles clear AA on their own surface', () =>
   // `color.status.*` primitive tier they alias is the same check the built
   // CSS variable would embody, without needing the build step in this test.
   it('error on dark clears AA against navy', () => {
-    expect(contrastRatio(status['error-on-dark'].$value, brand.emerald.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(status['error-on-dark'].$value, brand.emerald.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('error on light clears AA against ivory', () => {
-    expect(contrastRatio(status['error-on-light'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(status['error-on-light'].$value, brand.ivory.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('success on dark clears AA against navy', () => {
-    expect(contrastRatio(status['success-on-dark'].$value, brand.emerald.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(status['success-on-dark'].$value, brand.emerald.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('success on light clears AA against ivory', () => {
-    expect(contrastRatio(status['success-on-light'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(status['success-on-light'].$value, brand.ivory.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 });
 
@@ -215,19 +278,27 @@ describe('the promoted error/success roles clear AA on their own surface', () =>
 // project repeats without one.
 describe('the promoted warning/info roles clear AA on their own surface', () => {
   it('warning on dark clears AA against navy', () => {
-    expect(contrastRatio(status['warning-on-dark'].$value, brand.emerald.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(status['warning-on-dark'].$value, brand.emerald.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('warning on light clears AA against ivory', () => {
-    expect(contrastRatio(status['warning-on-light'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(status['warning-on-light'].$value, brand.ivory.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('info on dark clears AA against navy', () => {
-    expect(contrastRatio(status['info-on-dark'].$value, brand.emerald.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(status['info-on-dark'].$value, brand.emerald.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('info on light clears AA against ivory', () => {
-    expect(contrastRatio(status['info-on-light'].$value, brand.ivory.$value)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(status['info-on-light'].$value, brand.ivory.$value),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 });
 
@@ -238,28 +309,46 @@ describe('the promoted warning/info roles clear AA on their own surface', () => 
 // muted role measured 4.51:1 on ivory but 4.27:1 on the composited field
 // background, and only axe on /style caught it. These close that gap.
 describe('text roles clear AA on composited surfaces, not just on surface', () => {
-  const darkField = compositeOver(tokens.theme.dark['field-bg'].$value, brand.emerald.$value);
-  const lightField = compositeOver(tokens.theme.light['field-bg'].$value, brand.ivory.$value);
+  const darkField = compositeOver(
+    tokens.theme.dark['field-bg'].$value,
+    brand.emerald.$value,
+  );
+  const lightField = compositeOver(
+    tokens.theme.light['field-bg'].$value,
+    brand.ivory.$value,
+  );
 
   it('composites a translucent overlay to the value the browser actually paints', () => {
     expect(lightField).toBe('rgb(226, 221, 212)');
   });
 
   it('primary text clears AAA on the field background in both themes', () => {
-    expect(contrastRatio(onDark.primary.$value, darkField)).toBeGreaterThanOrEqual(7);
-    expect(contrastRatio(onLight.primary.$value, lightField)).toBeGreaterThanOrEqual(7);
+    expect(
+      contrastRatio(onDark.primary.$value, darkField),
+    ).toBeGreaterThanOrEqual(7);
+    expect(
+      contrastRatio(onLight.primary.$value, lightField),
+    ).toBeGreaterThanOrEqual(7);
   });
 
   it('secondary text clears AA on the field background in both themes', () => {
     // Field's "(required)" marker uses this role precisely because muted does
     // not survive the composite on light.
-    expect(contrastRatio(onDark.secondary.$value, darkField)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(onLight.secondary.$value, lightField)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(onDark.secondary.$value, darkField),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(onLight.secondary.$value, lightField),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('the error role stays legible on the field background it borders', () => {
-    expect(contrastRatio(status['error-on-dark'].$value, darkField)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(status['error-on-light'].$value, lightField)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(status['error-on-dark'].$value, darkField),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(status['error-on-light'].$value, lightField),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 });
 
@@ -267,10 +356,14 @@ describe('forbidden pairings stay forbidden', () => {
   // These assertions document WHY the usage rules exist. If one starts
   // passing, a primitive moved and the rule needs revisiting — not deleting.
   it('gold text on ivory fails, which is why gold is never body text on light', () => {
-    expect(contrastRatio(brand.gold.$value, brand.ivory.$value)).toBeLessThan(4.5);
+    expect(contrastRatio(brand.gold.$value, brand.ivory.$value)).toBeLessThan(
+      4.5,
+    );
   });
 
   it('brand teal on navy fails, which is why teal-bright exists', () => {
-    expect(contrastRatio(brand.teal.$value, brand.emerald.$value)).toBeLessThan(4.5);
+    expect(contrastRatio(brand.teal.$value, brand.emerald.$value)).toBeLessThan(
+      4.5,
+    );
   });
 });

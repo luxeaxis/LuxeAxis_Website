@@ -37,9 +37,19 @@ export function TrustMarquee() {
           <div className="flex w-max animate-marquee space-x-6 sm:space-x-8 font-ui text-overline uppercase tracking-wider text-accent font-semibold">
             {[...items, ...items, ...items].map((item, index) => (
               <div key={index} className="flex items-center space-x-2 shrink-0">
-                <Icon name={item.icon} size="sm" decorative className="text-accent h-3 w-3 shrink-0" />
+                <Icon
+                  name={item.icon}
+                  size="sm"
+                  decorative
+                  className="text-accent h-3 w-3 shrink-0"
+                />
                 <span>{item.text}</span>
-                <span className="text-border-subtle pl-3 sm:pl-4" aria-hidden="true">•</span>
+                <span
+                  className="text-border-subtle pl-3 sm:pl-4"
+                  aria-hidden="true"
+                >
+                  •
+                </span>
               </div>
             ))}
           </div>

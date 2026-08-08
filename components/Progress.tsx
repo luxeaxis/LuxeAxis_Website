@@ -20,7 +20,8 @@
  * fires — the same delegation Field uses for validation copy.
  */
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export type ProgressProps = {
   /** 0–100. Values outside that range are clamped, not rejected — a caller
@@ -44,7 +45,10 @@ export function Progress({ value, label, helpText, className }: ProgressProps) {
     <div className={cx('w-full', className)}>
       <div className="mb-2 flex items-baseline justify-between gap-3">
         <span className="text-small text-on-surface-2">{label}</span>
-        <span className="font-mono text-small tabular-nums text-on-surface-muted" aria-hidden="true">
+        <span
+          className="font-mono text-small tabular-nums text-on-surface-muted"
+          aria-hidden="true"
+        >
           {rounded}%
         </span>
       </div>
@@ -61,7 +65,9 @@ export function Progress({ value, label, helpText, className }: ProgressProps) {
           style={{ width: `${clamped}%` }}
         />
       </div>
-      {helpText && <p className="mt-2 text-small text-on-surface-muted">{helpText}</p>}
+      {helpText && (
+        <p className="mt-2 text-small text-on-surface-muted">{helpText}</p>
+      )}
     </div>
   );
 }

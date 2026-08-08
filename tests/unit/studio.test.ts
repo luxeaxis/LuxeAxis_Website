@@ -26,7 +26,9 @@ describe('the phone number', () => {
     // the digits must be identical, whatever the grouping.
     for (const phone of [STUDIO.telephone, STUDIO.whatsapp]) {
       if (!phone) continue;
-      expect(phone.display.replace(/\D/g, '')).toBe(phone.e164.replace(/\D/g, ''));
+      expect(phone.display.replace(/\D/g, '')).toBe(
+        phone.e164.replace(/\D/g, ''),
+      );
     }
   });
 
@@ -138,15 +140,19 @@ describe('the statutory identifiers', () => {
 
 describe('the response window', () => {
   it('publishes when a message gets answered', () => {
-    expect(STUDIO.responseWindow).toEqual({ start: '07:00', end: '22:00', days: 'every day' });
+    expect(STUDIO.responseWindow).toEqual({
+      start: '07:00',
+      end: '22:00',
+      days: 'every day',
+    });
   });
 
   it('reads as a sentence rather than a timetable', () => {
     expect(formatWindow(STUDIO.responseWindow!)).toBe('7am to 10pm, every day');
     // Midnight and noon are where a naive modulo produces "0am" and "0pm".
-    expect(formatWindow({ start: '00:00', end: '12:30', days: 'weekdays' })).toBe(
-      '12am to 12.30pm, weekdays',
-    );
+    expect(
+      formatWindow({ start: '00:00', end: '12:30', days: 'weekdays' }),
+    ).toBe('12am to 12.30pm, weekdays');
   });
 
   it('is never published as opening hours', () => {

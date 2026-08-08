@@ -25,7 +25,9 @@ export const metadata: Metadata = {
 export default async function JournalPage() {
   const testimonials = await getTestimonials();
   const faqs = await getFaqs();
-  const journalFaqs = [...faqs].filter((f) => f.id === 'materials' || f.id === 'contractors' || f.id === 'abroad');
+  const journalFaqs = [...faqs].filter(
+    (f) => f.id === 'materials' || f.id === 'contractors' || f.id === 'abroad',
+  );
 
   const highlights = [
     { title: 'Spatial Design', desc: 'Ergonomics & Layout Principles' },
@@ -41,7 +43,8 @@ export default async function JournalPage() {
       category: 'Vastu Engineering',
       date: 'Aug 2026',
       readTime: '6 min read',
-      title: 'The Architectural Guide to Vastu-Tech: Solar Alignment for Chennai Homes',
+      title:
+        'The Architectural Guide to Vastu-Tech: Solar Alignment for Chennai Homes',
       excerpt:
         'How ancient Vastu orientation mapped to solar compass vectors eliminates dead zones and optimizes natural light in modern 3BHK and 4BHK apartments.',
       image: '/posters/hero.avif',
@@ -51,7 +54,8 @@ export default async function JournalPage() {
       category: 'Material Science',
       date: 'Jul 2026',
       readTime: '8 min read',
-      title: 'BWP Marine Plywood vs Commercial Ply: What Every Homeowner Must Know',
+      title:
+        'BWP Marine Plywood vs Commercial Ply: What Every Homeowner Must Know',
       excerpt:
         'Why IS:710 Boiling Water Proof marine plywood is essential for Chennai coastal humidity and preventing kitchen cabinet swelling.',
       image: '/posters/portfolio.avif',
@@ -61,7 +65,8 @@ export default async function JournalPage() {
       category: 'Pricing Transparency',
       date: 'Jul 2026',
       readTime: '7 min read',
-      title: 'How to Estimate Your Chennai Home Interior Budget (Essential vs Signature)',
+      title:
+        'How to Estimate Your Chennai Home Interior Budget (Essential vs Signature)',
       excerpt:
         'A comprehensive cost breakdown of carpet area rates, Blum soft-close joinery, acrylic finishes, and itemized BOQ contracts.',
       image: '/posters/pricing-axis.avif',
@@ -71,7 +76,8 @@ export default async function JournalPage() {
       category: 'NRI Remote',
       date: 'Jun 2026',
       readTime: '5 min read',
-      title: 'NRI Remote Home Design: How to Monitor Villa Construction Overseas',
+      title:
+        'NRI Remote Home Design: How to Monitor Villa Construction Overseas',
       excerpt:
         'Using 4K Space OS daily live feeds, timezone-matched video reviews, and digital escrow milestone releases for zero-leave execution.',
       image: '/posters/persona-router.avif',
@@ -81,7 +87,8 @@ export default async function JournalPage() {
       category: 'Spatial Design',
       date: 'May 2026',
       readTime: '6 min read',
-      title: 'The 45-Day Handover Guarantee: How Factory Manufacturing Prevents Delays',
+      title:
+        'The 45-Day Handover Guarantee: How Factory Manufacturing Prevents Delays',
       excerpt:
         'How precision German CNC joinery pre-fabrication cuts on-site civil disruption and guarantees on-time key handover.',
       image: '/posters/hero.avif',
@@ -91,7 +98,8 @@ export default async function JournalPage() {
       category: 'Chennai Living',
       date: 'Apr 2026',
       readTime: '7 min read',
-      title: 'Designing for Coastal Humidity: Anti-Rust Hardware & Mold-Resistant Finishes',
+      title:
+        'Designing for Coastal Humidity: Anti-Rust Hardware & Mold-Resistant Finishes',
       excerpt:
         'Selecting marine grade BWP cores, PU lacquers, and stainless steel fittings engineered for Chennai’s saline air.',
       image: '/posters/portfolio.avif',
@@ -128,7 +136,8 @@ export default async function JournalPage() {
           '@context': 'https://schema.org',
           '@type': 'Blog',
           name: 'Journal & Spatial Intelligence Insights | Luxe Axis Chennai',
-          description: 'Essays and architectural guides from our senior studio team.',
+          description:
+            'Essays and architectural guides from our senior studio team.',
           url: ROUTE,
         }}
       />
@@ -154,7 +163,9 @@ export default async function JournalPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Essays, material science analyses, and architectural guides from our senior studio team on designing, pricing, Vastu spatial planning, and building luxury interiors in Chennai.
+              Essays, material science analyses, and architectural guides from
+              our senior studio team on designing, pricing, Vastu spatial
+              planning, and building luxury interiors in Chennai.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -169,24 +180,44 @@ export default async function JournalPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">12+ Guides</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Published Essays</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  12+ Guides
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Published Essays
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Vastu-Tech</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Spatial Focus</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Vastu-Tech
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Spatial Focus
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Material Science</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">BWP & Hardware</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Material Science
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  BWP & Hardware
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">0% Fluff</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Architect Written</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  0% Fluff
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Architect Written
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Reader Rating</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  4.9 ★
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Reader Rating
+                </span>
               </div>
             </div>
           </Stack>
@@ -202,7 +233,9 @@ export default async function JournalPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -227,14 +260,21 @@ export default async function JournalPage() {
           </div>
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <Badge tone="accent" icon="check">Vastu Engineering</Badge>
-              <span className="text-small text-on-surface-muted">Aug 2026 • 6 min read</span>
+              <Badge tone="accent" icon="check">
+                Vastu Engineering
+              </Badge>
+              <span className="text-small text-on-surface-muted">
+                Aug 2026 • 6 min read
+              </span>
             </div>
             <h3 className="font-display text-h2 font-bold text-on-surface mb-3 leading-tight">
-              The Architectural Guide to Vastu-Tech: Solar Alignment for Chennai Homes
+              The Architectural Guide to Vastu-Tech: Solar Alignment for Chennai
+              Homes
             </h3>
             <p className="text-body text-on-surface-2 leading-relaxed mb-6">
-              Discover how our studio maps solar compass vectors onto 2D CAD floorplans to optimize natural light, ventilation, and spatial energy across living rooms, kitchens, and master bedrooms.
+              Discover how our studio maps solar compass vectors onto 2D CAD
+              floorplans to optimize natural light, ventilation, and spatial
+              energy across living rooms, kitchens, and master bedrooms.
             </p>
             <Button as="a" href="/book-audit">
               Read Guide & Book Audit →
@@ -266,7 +306,9 @@ export default async function JournalPage() {
                   />
                 </div>
                 <div className="flex items-center justify-between text-overline text-on-surface-muted mb-2">
-                  <span className="text-accent font-bold uppercase">{art.category}</span>
+                  <span className="text-accent font-bold uppercase">
+                    {art.category}
+                  </span>
                   <span>{art.readTime}</span>
                 </div>
                 <h3 className="font-display text-h4 font-bold text-on-surface mb-2 leading-snug">
@@ -276,7 +318,12 @@ export default async function JournalPage() {
                   {art.excerpt}
                 </p>
               </div>
-              <Button as="a" href="/book-audit" variant="secondary" className="w-full justify-center">
+              <Button
+                as="a"
+                href="/book-audit"
+                variant="secondary"
+                className="w-full justify-center"
+              >
                 Read Article →
               </Button>
             </div>
@@ -297,15 +344,23 @@ export default async function JournalPage() {
               <tr className="border-b border-border-subtle/60 text-accent font-display text-body font-bold">
                 <th className="py-3 px-4">Feature</th>
                 <th className="py-3 px-4">Generic Marketing Blogs</th>
-                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">Luxe Axis Journal</th>
+                <th className="py-3 px-4 text-accent bg-accent/10 rounded-t-lg">
+                  Luxe Axis Journal
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-subtle/40 text-on-surface-2">
               {comparisons.map((row) => (
                 <tr key={row.feature}>
-                  <td className="py-3 px-4 font-bold text-on-surface">{row.feature}</td>
-                  <td className="py-3 px-4 text-on-surface-muted">{row.generic}</td>
-                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">{row.luxeaxis}</td>
+                  <td className="py-3 px-4 font-bold text-on-surface">
+                    {row.feature}
+                  </td>
+                  <td className="py-3 px-4 text-on-surface-muted">
+                    {row.generic}
+                  </td>
+                  <td className="py-3 px-4 font-semibold text-accent bg-accent/5">
+                    {row.luxeaxis}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -322,8 +377,14 @@ export default async function JournalPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell 3BHK flat before interior fit-out' }}
-            afterImage={{ src: '/posters/hero.avif', alt: 'Completed luxury 3BHK residential interior in Chennai' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Bare shell 3BHK flat before interior fit-out',
+            }}
+            afterImage={{
+              src: '/posters/hero.avif',
+              alt: 'Completed luxury 3BHK residential interior in Chennai',
+            }}
           />
         </div>
       </Section>
@@ -332,7 +393,11 @@ export default async function JournalPage() {
       <TestimonialBand testimonials={testimonials} />
 
       {/* 8. FAQ Accordion */}
-      <Section id="faq" eyebrow="Questions Answered" title="Journal & Insights FAQ">
+      <Section
+        id="faq"
+        eyebrow="Questions Answered"
+        title="Journal & Insights FAQ"
+      >
         <Faq items={journalFaqs} />
       </Section>
 

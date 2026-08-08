@@ -16,7 +16,9 @@ describe('InlineAlert', () => {
 
   it('every non-error tone is role="status" (polite), not role="alert"', () => {
     for (const tone of ['success', 'warning', 'info'] as const) {
-      const { unmount } = render(<InlineAlert tone={tone} title={`${tone} title`} />);
+      const { unmount } = render(
+        <InlineAlert tone={tone} title={`${tone} title`} />,
+      );
       expect(screen.getByRole('status')).toBeDefined();
       expect(screen.queryByRole('alert')).toBeNull();
       unmount();
@@ -24,14 +26,20 @@ describe('InlineAlert', () => {
   });
 
   it('pairs the tone with an icon and text — never colour alone', () => {
-    const { container } = render(<InlineAlert tone="warning" title="Heads up" />);
+    const { container } = render(
+      <InlineAlert tone="warning" title="Heads up" />,
+    );
     expect(container.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
     expect(screen.getByText('Heads up')).toBeDefined();
   });
 
   it('renders an optional action slot the caller wires up itself', () => {
     render(
-      <InlineAlert tone="error" title="Upload failed" action={<button>Retry</button>}>
+      <InlineAlert
+        tone="error"
+        title="Upload failed"
+        action={<button>Retry</button>}
+      >
         The file was too large.
       </InlineAlert>,
     );

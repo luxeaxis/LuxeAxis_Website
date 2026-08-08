@@ -2,7 +2,11 @@ import { Fragment } from 'react';
 import { Link } from '@/components/Link';
 import { Stack } from '@/components/layout';
 import { ToBePublished } from '@/components/ToBePublished';
-import type { Block, Inline, LegalDocument as Document } from '@/lib/legal/document';
+import type {
+  Block,
+  Inline,
+  LegalDocument as Document,
+} from '@/lib/legal/document';
 
 /**
  * Renders a parsed legal document.
@@ -73,7 +77,10 @@ function Blocks({ blocks }: { blocks: Block[] }) {
             );
           case 'list':
             return (
-              <ul key={index} className="flex flex-col gap-2 pl-5 text-on-surface-2">
+              <ul
+                key={index}
+                className="flex flex-col gap-2 pl-5 text-on-surface-2"
+              >
                 {block.items.map((item, itemIndex) => (
                   <li key={itemIndex} className="list-disc">
                     <Inlines content={item} />
@@ -86,7 +93,10 @@ function Blocks({ blocks }: { blocks: Block[] }) {
               // Two-column label/value throughout, so a description list rather
               // than a table: there are no column headers to navigate by, and
               // <dt>/<dd> is what a screen reader announces as a pairing.
-              <dl key={index} className="flex flex-col gap-3 border-l-regular border-accent pl-5">
+              <dl
+                key={index}
+                className="flex flex-col gap-3 border-l-regular border-accent pl-5"
+              >
                 {block.rows.map((row, rowIndex) => (
                   <div key={rowIndex} className="flex flex-col gap-1">
                     <dt className="font-ui text-small text-on-surface-muted">
@@ -102,7 +112,13 @@ function Blocks({ blocks }: { blocks: Block[] }) {
           case 'rule':
             // Decorative: these separate sections that already have headings,
             // so announcing them adds nothing.
-            return <hr key={index} aria-hidden="true" className="border-border-subtle" />;
+            return (
+              <hr
+                key={index}
+                aria-hidden="true"
+                className="border-border-subtle"
+              />
+            );
           default:
             return (
               <p key={index} className="text-on-surface-2">
@@ -126,8 +142,14 @@ export function LegalDocument({ document }: { document: Document }) {
             needs. An unfilled revision date is shown as the gap it is rather
             than quietly omitted. */}
         <p className="font-ui text-small text-on-surface-muted">
-          Effective {document.effective || <ToBePublished>Effective date to be published</ToBePublished>} · Last
-          updated {document.updated || <ToBePublished>revision date to be published</ToBePublished>}
+          Effective{' '}
+          {document.effective || (
+            <ToBePublished>Effective date to be published</ToBePublished>
+          )}{' '}
+          · Last updated{' '}
+          {document.updated || (
+            <ToBePublished>revision date to be published</ToBePublished>
+          )}
         </p>
       </Stack>
       <Blocks blocks={document.blocks} />

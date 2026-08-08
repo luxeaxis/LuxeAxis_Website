@@ -23,7 +23,9 @@ export const metadata: Metadata = {
 export default async function TermsPage() {
   const document = loadLegalDocument('LuxeAxis_TermsOfService.md');
   const faqs = await getFaqs();
-  const termsFaqs = [...faqs].filter((f) => f.id === 'contractors' || f.id === 'materials' || f.id === 'abroad');
+  const termsFaqs = [...faqs].filter(
+    (f) => f.id === 'contractors' || f.id === 'materials' || f.id === 'abroad',
+  );
 
   const highlights = [
     { title: 'Fixed BOQ Lock', desc: 'Zero Cost Escalation Contract' },
@@ -59,7 +61,8 @@ export default async function TermsPage() {
           '@context': 'https://schema.org',
           '@type': 'WebPage',
           name: 'Terms of Service — Luxe Axis',
-          description: 'The terms governing Luxe Axis services, Space OS, and project execution.',
+          description:
+            'The terms governing Luxe Axis services, Space OS, and project execution.',
           url: ROUTE,
         }}
       />
@@ -69,7 +72,7 @@ export default async function TermsPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/terms" labels={{ 'terms': "Terms of Service" }} />
+          <Breadcrumbs path="/terms" labels={{ terms: 'Terms of Service' }} />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -85,7 +88,9 @@ export default async function TermsPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              The contractual terms governing the Luxe Axis website, Space OS client portal, project execution SLAs, itemized BOQ price locks, and 10-year flat structural warranty.
+              The contractual terms governing the Luxe Axis website, Space OS
+              client portal, project execution SLAs, itemized BOQ price locks,
+              and 10-year flat structural warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -100,24 +105,44 @@ export default async function TermsPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">10 Yr</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Flat Warranty</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  10 Yr
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Flat Warranty
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">0%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Price Escalation</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  0%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Price Escalation
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">45 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Handover SLA</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  45 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Handover SLA
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">Space OS</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Governance</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  Space OS
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Governance
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">100%</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Contractual</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  100%
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Contractual
+                </span>
               </div>
             </div>
           </Stack>
@@ -133,7 +158,9 @@ export default async function TermsPage() {
                 <strong className="block font-ui text-small font-bold text-accent uppercase tracking-wider">
                   {item.title}
                 </strong>
-                <span className="text-[12px] text-on-surface-muted mt-0.5 block">{item.desc}</span>
+                <span className="text-[12px] text-on-surface-muted mt-0.5 block">
+                  {item.desc}
+                </span>
               </div>
             ))}
           </div>
@@ -149,9 +176,16 @@ export default async function TermsPage() {
       >
         <Grid cols={2} gap={6}>
           {governancePillars.map((pillar) => (
-            <div key={pillar.title} className="lx-liquid-glass rounded-2xl p-6 border border-accent/30">
-              <h3 className="font-display text-h4 font-bold text-on-surface mb-2">{pillar.title}</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed">{pillar.desc}</p>
+            <div
+              key={pillar.title}
+              className="lx-liquid-glass rounded-2xl p-6 border border-accent/30"
+            >
+              <h3 className="font-display text-h4 font-bold text-on-surface mb-2">
+                {pillar.title}
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed">
+                {pillar.desc}
+              </p>
             </div>
           ))}
         </Grid>
@@ -170,7 +204,11 @@ export default async function TermsPage() {
       </Section>
 
       {/* 5. FAQ Accordion */}
-      <Section id="faq" eyebrow="Questions Answered" title="Terms & Governance FAQ">
+      <Section
+        id="faq"
+        eyebrow="Questions Answered"
+        title="Terms & Governance FAQ"
+      >
         <Faq items={termsFaqs} />
       </Section>
 

@@ -7,7 +7,9 @@ afterEach(cleanup);
 describe('Progress', () => {
   it('exposes a real, rounded aria-valuenow — never fake, never absent', () => {
     render(<Progress value={42.6} label="Uploading floor plan" />);
-    const bar = screen.getByRole('progressbar', { name: 'Uploading floor plan' });
+    const bar = screen.getByRole('progressbar', {
+      name: 'Uploading floor plan',
+    });
     expect(bar.getAttribute('aria-valuenow')).toBe('43');
     expect(bar.getAttribute('aria-valuemin')).toBe('0');
     expect(bar.getAttribute('aria-valuemax')).toBe('100');
@@ -15,9 +17,13 @@ describe('Progress', () => {
 
   it('clamps out-of-range values instead of reporting an impossible percentage', () => {
     const { rerender } = render(<Progress value={140} label="Uploading" />);
-    expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe('100');
+    expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe(
+      '100',
+    );
     rerender(<Progress value={-20} label="Uploading" />);
-    expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe('0');
+    expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe(
+      '0',
+    );
   });
 
   it('the visible percentage tracks aria-valuenow', () => {

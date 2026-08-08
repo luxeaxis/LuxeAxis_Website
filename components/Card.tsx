@@ -63,10 +63,11 @@ import { Icon, type IconName } from './Icon';
 import { Stack } from './layout';
 import { PriceTag } from './PriceTag';
 import { StatCounter } from './StatCounter';
-import type { SceneId } from '@/three/registry';
+import type { PosterId } from '@/lib/content/posters';
 import { SceneSlot } from './SceneSlot';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export type CardSurface = 'solid' | 'glass';
 
@@ -90,13 +91,13 @@ function frameClass({
   return cx(
     'relative rounded-xl p-6 shadow-1 transition-all duration-300',
     surface === 'glass'
-      ? 'lx-glass backdrop-blur-xl border border-accent/30'
-      : 'bg-surface-raised/90 backdrop-blur-md border border-border-subtle/80',
-    emphasized ? 'border-accent shadow-[0_0_24px_rgba(255,193,7,0.2)]' : '',
+      ? 'lx-liquid-glass-card border border-accent/30 shadow-[0_12px_36px_rgba(0,0,0,0.4)]'
+      : 'bg-surface-raised/90 backdrop-blur-md border border-border-subtle/80 hover:bg-surface-raised',
+    emphasized ? 'border-accent shadow-[0_0_24px_rgba(255,193,7,0.25)]' : '',
     interactive &&
       cx(
         'transition-all duration-300 ease-standard motion-reduce:transition-none',
-        'hover:-translate-y-[var(--motion-distance-lift)] hover:shadow-2 hover:border-accent/50 hover:bg-surface-raised',
+        'hover:-translate-y-[var(--motion-distance-lift)] hover:border-accent hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_35px_4px_rgba(255,193,7,0.45)]',
         'active:scale-press motion-reduce:active:scale-100',
         'focus-visible:outline focus-visible:outline-focus focus-visible:outline-offset-focus focus-visible:outline-focus-ring',
       ),
@@ -131,12 +132,11 @@ function TrailingArrow() {
 /* ------------------------------------------------------------------ */
 
 export type ProjectCardMedia =
-  // A scene registered in three/registry.ts — the upgrade path to a live
-  // 3D object (SceneSlot itself decides poster-vs-live; the card never
-  // branches on that). Only scenes that exist in SCENE_IDS can be passed —
-  // there is no per-project scene registered yet, so this is for the
-  // showcase/trailer scenes ('portfolio' etc.), not arbitrary project photos.
-  | { kind: 'scene'; sceneId: SceneId }
+  // A poster from lib/content/posters.ts — the catalogue that heads major
+  // sections. Only ids in POSTER_IDS can be passed; there is no per-project
+  // poster yet, so this is for showcase scenes ('portfolio' etc.), not
+  // arbitrary project photos.
+  | { kind: 'scene'; sceneId: PosterId }
   // An arbitrary case-study photo. `aspect` is required, not defaulted —
   // SceneSlot's own poster registry never defaults it either (every entry
   // states its aspect explicitly), so a card composing a real photo should
@@ -168,14 +168,21 @@ export function ProjectCard({
   return (
     <NextLink
       href={href}
-      className={cx('group block', frameClass({ surface, interactive: true }), className)}
+      className={cx(
+        'group block',
+        frameClass({ surface, interactive: true }),
+        className,
+      )}
     >
       <Stack gap={4}>
         <div className="-mx-6 -mt-6 overflow-hidden rounded-t-lg">
           {media.kind === 'scene' ? (
             <SceneSlot id={media.sceneId}>{null}</SceneSlot>
           ) : (
-            <div className="relative w-full" style={{ aspectRatio: media.aspect }}>
+            <div
+              className="relative w-full"
+              style={{ aspectRatio: media.aspect }}
+            >
               <Image
                 src={media.src}
                 alt={media.alt}
@@ -223,10 +230,19 @@ export type FeatureCardProps = {
   className?: string;
 };
 
-export function FeatureCard({ href, icon, title, body, surface = 'solid', className }: FeatureCardProps) {
+export function FeatureCard({
+  href,
+  icon,
+  title,
+  body,
+  surface = 'solid',
+  className,
+}: FeatureCardProps) {
   const content = (
     <Stack gap={4}>
-      {icon && <Icon name={icon} size="lg" decorative className="text-accent" />}
+      {icon && (
+        <Icon name={icon} size="lg" decorative className="text-accent" />
+      )}
       <div className="flex items-start justify-between gap-3">
         <h3 className="font-ui text-[length:var(--typography-h3-font-size)] font-semibold text-on-surface transition-colors duration-micro ease-standard group-hover:text-accent">
           {title}
@@ -241,7 +257,11 @@ export function FeatureCard({ href, icon, title, body, surface = 'solid', classN
     return (
       <NextLink
         href={href}
-        className={cx('group block', frameClass({ surface, interactive: true }), className)}
+        className={cx(
+          'group block',
+          frameClass({ surface, interactive: true }),
+          className,
+        )}
       >
         {content}
       </NextLink>
@@ -249,7 +269,13 @@ export function FeatureCard({ href, icon, title, body, surface = 'solid', classN
   }
 
   return (
-    <div className={cx('group block', frameClass({ surface, interactive: false }), className)}>
+    <div
+      className={cx(
+        'group block',
+        frameClass({ surface, interactive: false }),
+        className,
+      )}
+    >
       {content}
     </div>
   );
@@ -284,7 +310,12 @@ export function TierCard({
   className,
 }: TierCardProps) {
   return (
-    <div className={cx(frameClass({ surface, interactive: false, emphasized: recommended }), className)}>
+    <div
+      className={cx(
+        frameClass({ surface, interactive: false, emphasized: recommended }),
+        className,
+      )}
+    >
       <Stack gap={4}>
         {/* Real, perceivable text — not a colour-only badge — is what makes
             "recommended" announced rather than merely styled: a screen
@@ -297,17 +328,32 @@ export function TierCard({
             Recommended
           </p>
         )}
-        <h3 className="font-display text-[length:var(--typography-h3-font-size)] text-on-surface">{name}</h3>
+        <h3 className="font-display text-[length:var(--typography-h3-font-size)] text-on-surface">
+          {name}
+        </h3>
         <PriceTag amount={price.amount} period={price.period} />
         <ul className="flex flex-col gap-2">
           {inclusions.map((item) => (
-            <li key={item} className="flex items-start gap-2 text-small text-on-surface-2">
-              <Icon name="check" size="sm" decorative className="mt-0.5 shrink-0 text-accent" />
+            <li
+              key={item}
+              className="flex items-start gap-2 text-small text-on-surface-2"
+            >
+              <Icon
+                name="check"
+                size="sm"
+                decorative
+                className="mt-0.5 shrink-0 text-accent"
+              />
               <span>{item}</span>
             </li>
           ))}
         </ul>
-        <Button as="a" href={cta.href} variant={recommended ? 'primary' : 'secondary'} className="w-full">
+        <Button
+          as="a"
+          href={cta.href}
+          variant={recommended ? 'primary' : 'secondary'}
+          className="w-full"
+        >
           {cta.label}
         </Button>
       </Stack>
@@ -329,12 +375,25 @@ export type StatCardProps = {
   className?: string;
 };
 
-export function StatCard({ value, label, decimals, prefix, suffix, surface = 'solid', className }: StatCardProps) {
+export function StatCard({
+  value,
+  label,
+  decimals,
+  prefix,
+  suffix,
+  surface = 'solid',
+  className,
+}: StatCardProps) {
   return (
     <div className={cx(frameClass({ surface, interactive: false }), className)}>
       <Stack gap={2}>
         <p className="font-mono text-[length:var(--typography-display-font-size)] leading-tight tabular-nums text-on-surface">
-          <StatCounter value={value} decimals={decimals} prefix={prefix} suffix={suffix} />
+          <StatCounter
+            value={value}
+            decimals={decimals}
+            prefix={prefix}
+            suffix={suffix}
+          />
         </p>
         <p className="text-small text-on-surface-2">{label}</p>
       </Stack>

@@ -8,13 +8,19 @@ describe('Footer', () => {
   it('renders the sitemap as a labelled nav landmark with routes from the spec', () => {
     render(<Footer />);
     const nav = screen.getByRole('navigation', { name: 'Site map' });
-    expect(within(nav).getByRole('link', { name: 'Vastu-Tech' }).getAttribute('href')).toBe(
-      '/intelligence/vastu-tech',
-    );
     expect(
-      within(nav).getByRole('link', { name: 'Book a design audit' }).getAttribute('href'),
+      within(nav)
+        .getByRole('link', { name: 'Vastu-Tech' })
+        .getAttribute('href'),
+    ).toBe('/intelligence/vastu-tech');
+    expect(
+      within(nav)
+        .getByRole('link', { name: 'Book a design audit' })
+        .getAttribute('href'),
     ).toBe('/book-audit');
-    expect(within(nav).getByRole('link', { name: 'Privacy' }).getAttribute('href')).toBe('/privacy');
+    expect(
+      within(nav).getByRole('link', { name: 'Privacy' }).getAttribute('href'),
+    ).toBe('/privacy');
   });
 
   it('publishes the registered CIN and GST exactly as issued', () => {
@@ -56,7 +62,9 @@ describe('Footer', () => {
     // left in the footer that nobody has supplied. They stay explicit gaps
     // rather than quietly disappearing.
     render(<Footer />);
-    expect(screen.getByText(/privacy statement to be published/i)).toBeDefined();
+    expect(
+      screen.getByText(/privacy statement to be published/i),
+    ).toBeDefined();
     expect(screen.getByText(/coming soon/i)).toBeDefined();
   });
 

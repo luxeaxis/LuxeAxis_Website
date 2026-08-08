@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { COMMERCIAL_RATES, COMMERCIAL_VERTICALS, ratesFor } from '@/lib/content/commercial';
+import {
+  COMMERCIAL_RATES,
+  COMMERCIAL_VERTICALS,
+  ratesFor,
+} from '@/lib/content/commercial';
 
 /**
  * The commercial rate card.
@@ -12,20 +16,26 @@ import { COMMERCIAL_RATES, COMMERCIAL_VERTICALS, ratesFor } from '@/lib/content/
  */
 describe('commercial rates', () => {
   it('publishes the office bands as supplied', () => {
-    expect(COMMERCIAL_RATES.find((rate) => rate.id === 'small-office')).toMatchObject({
+    expect(
+      COMMERCIAL_RATES.find((rate) => rate.id === 'small-office'),
+    ).toMatchObject({
       area: { min: 500, max: 1_000 },
       perSqFt: { low: 100, high: 150 },
       executionMargin: 0.15,
       designFee: { low: 150_000, high: 450_000 },
       conceptFee: null,
     });
-    expect(COMMERCIAL_RATES.find((rate) => rate.id === 'mid-office')).toMatchObject({
+    expect(
+      COMMERCIAL_RATES.find((rate) => rate.id === 'mid-office'),
+    ).toMatchObject({
       area: { min: 1_000, max: 5_000 },
       perSqFt: { low: 120, high: 200 },
       executionMargin: 0.15,
       designFee: { low: 300_000, high: 2_000_000 },
     });
-    expect(COMMERCIAL_RATES.find((rate) => rate.id === 'large-office')).toMatchObject({
+    expect(
+      COMMERCIAL_RATES.find((rate) => rate.id === 'large-office'),
+    ).toMatchObject({
       area: { min: 5_000, max: 20_000 },
       perSqFt: { low: 150, high: 250 },
       executionMargin: 0.12,
@@ -37,21 +47,27 @@ describe('commercial rates', () => {
     // Retail, restaurants and clinics are quoted a fixed sum before per-area
     // work starts; offices are not. Getting this backwards would either invent
     // a charge or hide a real one.
-    expect(COMMERCIAL_RATES.find((rate) => rate.id === 'retail')).toMatchObject({
-      conceptFee: 200_000,
-      perSqFt: { low: 150, high: 250 },
-      designFee: { low: 300_000, high: 700_000 },
-    });
-    expect(COMMERCIAL_RATES.find((rate) => rate.id === 'restaurant')).toMatchObject({
+    expect(COMMERCIAL_RATES.find((rate) => rate.id === 'retail')).toMatchObject(
+      {
+        conceptFee: 200_000,
+        perSqFt: { low: 150, high: 250 },
+        designFee: { low: 300_000, high: 700_000 },
+      },
+    );
+    expect(
+      COMMERCIAL_RATES.find((rate) => rate.id === 'restaurant'),
+    ).toMatchObject({
       conceptFee: 300_000,
       perSqFt: { low: 200, high: 350 },
       designFee: { low: 500_000, high: 2_000_000 },
     });
-    expect(COMMERCIAL_RATES.find((rate) => rate.id === 'clinic')).toMatchObject({
-      conceptFee: 200_000,
-      perSqFt: { low: 150, high: 300 },
-      designFee: { low: 400_000, high: 1_800_000 },
-    });
+    expect(COMMERCIAL_RATES.find((rate) => rate.id === 'clinic')).toMatchObject(
+      {
+        conceptFee: 200_000,
+        perSqFt: { low: 150, high: 300 },
+        designFee: { low: 400_000, high: 1_800_000 },
+      },
+    );
 
     for (const rate of COMMERCIAL_RATES) {
       const isOffice = rate.vertical === 'workplace';
@@ -72,7 +88,9 @@ describe('commercial rates', () => {
 
   it('attaches every rate to a vertical that has a page', () => {
     // A rate pointing at a slug with no route is a rate nobody can read.
-    const slugs = new Set(COMMERCIAL_VERTICALS.map((vertical) => vertical.slug));
+    const slugs = new Set(
+      COMMERCIAL_VERTICALS.map((vertical) => vertical.slug),
+    );
     for (const rate of COMMERCIAL_RATES) {
       expect(slugs.has(rate.vertical)).toBe(true);
     }

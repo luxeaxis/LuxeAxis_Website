@@ -45,7 +45,9 @@ function lines(lead: Lead): string[] {
   ];
   if (lead.notes) {
     const notes =
-      lead.notes.length > MAX_NOTES ? `${lead.notes.slice(0, MAX_NOTES)}…` : lead.notes;
+      lead.notes.length > MAX_NOTES
+        ? `${lead.notes.slice(0, MAX_NOTES)}…`
+        : lead.notes;
     out.push(`Notes: ${notes}`);
   }
   return out;
@@ -54,7 +56,11 @@ function lines(lead: Lead): string[] {
 export function auditEmailHref(lead: Lead): string | null {
   if (!STUDIO.email) return null;
   const subject = `Design audit request — ${lead.name}`;
-  const body = ['I would like to book a design audit.', '', ...lines(lead)].join('\n');
+  const body = [
+    'I would like to book a design audit.',
+    '',
+    ...lines(lead),
+  ].join('\n');
   return `${mailtoHref(STUDIO.email.general)}?subject=${encodeURIComponent(
     subject,
   )}&body=${encodeURIComponent(body)}`;
@@ -62,6 +68,8 @@ export function auditEmailHref(lead: Lead): string | null {
 
 export function auditWhatsappHref(lead: Lead): string | null {
   if (!STUDIO.whatsapp) return null;
-  const text = ['I would like to book a design audit.', ...lines(lead)].join('\n');
+  const text = ['I would like to book a design audit.', ...lines(lead)].join(
+    '\n',
+  );
   return `${whatsappHref(STUDIO.whatsapp)}?text=${encodeURIComponent(text)}`;
 }

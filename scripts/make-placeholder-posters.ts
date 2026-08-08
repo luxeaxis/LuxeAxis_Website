@@ -1,6 +1,6 @@
 import sharp from 'sharp';
 import { mkdirSync } from 'node:fs';
-import { POSTERS, SCENE_IDS } from '../three/registry';
+import { POSTERS, POSTER_IDS } from '../lib/content/posters';
 
 const NAVY = { r: 13, g: 43, b: 78 };
 const LONG_EDGE = 1920;
@@ -8,7 +8,7 @@ const LONG_EDGE = 1920;
 async function main() {
   mkdirSync('public/posters', { recursive: true });
 
-  for (const id of SCENE_IDS) {
+  for (const id of POSTER_IDS) {
     const poster = POSTERS[id];
     const [w, h] = poster.aspect.split('/').map(Number) as [number, number];
     const scale = LONG_EDGE / Math.max(w, h);

@@ -15,9 +15,15 @@
 
 import type { ReactNode } from 'react';
 import { Icon } from './Icon';
-import { ariaRoleFor, STATUS_ICON, STATUS_TEXT_CLASS, type StatusTone } from '@/lib/status';
+import {
+  ariaRoleFor,
+  STATUS_ICON,
+  STATUS_TEXT_CLASS,
+  type StatusTone,
+} from '@/lib/status';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export type InlineAlertProps = {
   tone: StatusTone;
@@ -27,7 +33,13 @@ export type InlineAlertProps = {
   className?: string;
 };
 
-export function InlineAlert({ tone, title, children, action, className }: InlineAlertProps) {
+export function InlineAlert({
+  tone,
+  title,
+  children,
+  action,
+  className,
+}: InlineAlertProps) {
   return (
     <div
       role={ariaRoleFor(tone)}
@@ -40,10 +52,17 @@ export function InlineAlert({ tone, title, children, action, className }: Inline
         className,
       )}
     >
-      <Icon name={STATUS_ICON[tone]} size="md" decorative className={cx('mt-0.5 shrink-0', STATUS_TEXT_CLASS[tone])} />
+      <Icon
+        name={STATUS_ICON[tone]}
+        size="md"
+        decorative
+        className={cx('mt-0.5 shrink-0', STATUS_TEXT_CLASS[tone])}
+      />
       <div className="min-w-0 flex-1">
         <p className="font-ui font-semibold text-on-surface">{title}</p>
-        {children && <div className="mt-1 text-small text-on-surface-2">{children}</div>}
+        {children && (
+          <div className="mt-1 text-small text-on-surface-2">{children}</div>
+        )}
         {action && <div className="mt-3">{action}</div>}
       </div>
     </div>

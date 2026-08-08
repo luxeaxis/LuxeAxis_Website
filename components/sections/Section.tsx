@@ -42,7 +42,11 @@ export function Section({
     // `#calculator` passes vacuously by matching nothing. The
     // `scroll-padding-top` added in globals.css exists precisely so these
     // anchors clear the sticky header.
-    <section id={id} aria-labelledby={headingId} className="relative w-full py-section-y">
+    <section
+      id={id}
+      aria-labelledby={headingId}
+      className="relative w-full py-section-y"
+    >
       <Container>
         <Stack gap={8}>
           {/* The heading block and the body rise in as two beats rather than

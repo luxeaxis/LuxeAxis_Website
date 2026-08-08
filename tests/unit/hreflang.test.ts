@@ -10,7 +10,9 @@ import { canonicalFor, normalise } from '@/lib/seo/hreflang';
 
 describe('canonicalFor', () => {
   it('canonicalises a route against the site origin', () => {
-    expect(canonicalFor('/pricing').canonical).toBe('https://luxeaxis.in/pricing');
+    expect(canonicalFor('/pricing').canonical).toBe(
+      'https://luxeaxis.in/pricing',
+    );
   });
 
   it('canonicalises the root without doubling the slash', () => {
@@ -27,7 +29,9 @@ describe('canonicalFor', () => {
 describe('normalise', () => {
   it('collapses a trailing slash so one page cannot claim two canonicals', () => {
     expect(normalise('/pricing/')).toBe('/pricing');
-    expect(canonicalFor('/pricing/').canonical).toBe(canonicalFor('/pricing').canonical);
+    expect(canonicalFor('/pricing/').canonical).toBe(
+      canonicalFor('/pricing').canonical,
+    );
   });
 
   it('keeps the root as "/" rather than the empty string', () => {

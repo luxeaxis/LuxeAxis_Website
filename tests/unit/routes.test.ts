@@ -31,7 +31,10 @@ const APP_DIR = join(process.cwd(), 'app');
  * Catch-all segments (`[...rest]`) are still skipped: they match everything and
  * enumerate nothing, so they are never sitemap entries. There are none today.
  */
-async function routesOnDisk(dir: string = APP_DIR, prefix = ''): Promise<string[]> {
+async function routesOnDisk(
+  dir: string = APP_DIR,
+  prefix = '',
+): Promise<string[]> {
   const found: string[] = [];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.isFile() && entry.name === 'page.tsx') {
@@ -42,7 +45,12 @@ async function routesOnDisk(dir: string = APP_DIR, prefix = ''): Promise<string[
 
     const isDynamic = entry.name.startsWith('[');
     if (!isDynamic) {
-      found.push(...(await routesOnDisk(join(dir, entry.name), `${prefix}/${entry.name}`)));
+      found.push(
+        ...(await routesOnDisk(
+          join(dir, entry.name),
+          `${prefix}/${entry.name}`,
+        )),
+      );
       continue;
     }
     if (entry.name.startsWith('[...') || entry.name.startsWith('[[')) continue;
@@ -52,13 +60,17 @@ async function routesOnDisk(dir: string = APP_DIR, prefix = ''): Promise<string[
     // Imported by plain absolute path, not a file:// URL — pathToFileURL
     // percent-encodes the brackets (`%5Btier%5D`) and Vite's resolver then
     // cannot find the file.
-    const module_ = (await import(/* @vite-ignore */ pagePath.replace(/\\/g, '/'))) as {
+    const module_ = (await import(
+      /* @vite-ignore */ pagePath.replace(/\\/g, '/')
+    )) as {
       generateStaticParams?: () => Promise<Array<Record<string, string>>>;
     };
     // A dynamic route with no generateStaticParams cannot be prerendered and so
     // has no fixed URLs to advertise. Failing loudly beats silently dropping it.
     if (!module_.generateStaticParams) {
-      throw new Error(`${pagePath} is a dynamic route with no generateStaticParams`);
+      throw new Error(
+        `${pagePath} is a dynamic route with no generateStaticParams`,
+      );
     }
     for (const params of await module_.generateStaticParams()) {
       found.push(`${prefix}/${params[paramName]}`);
@@ -91,7 +103,10 @@ describe('the SEO route lists match the routes that actually exist', () => {
 
   it('never advertises a route with no page behind it', () => {
     for (const route of INDEXABLE_ROUTES) {
-      expect(onDisk, `${route} is in the sitemap but has no page.tsx`).toContain(route);
+      expect(
+        onDisk,
+        `${route} is in the sitemap but has no page.tsx`,
+      ).toContain(route);
     }
   });
 
@@ -127,7 +142,9 @@ describe('the SEO route lists match the routes that actually exist', () => {
     // today; they are different lists for different jobs, and conflating them
     // would break again the moment nav links ahead of the build once more.
     const { NAV_ITEMS, BOOK_AUDIT } = await import('@/lib/nav');
-    const missing = [...NAV_ITEMS, BOOK_AUDIT].filter((item) => !onDisk.includes(item.href));
+    const missing = [...NAV_ITEMS, BOOK_AUDIT].filter(
+      (item) => !onDisk.includes(item.href),
+    );
     expect(missing.map((item) => item.href)).toEqual([]);
   });
 });

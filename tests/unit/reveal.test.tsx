@@ -76,7 +76,11 @@ describe('Reveal', () => {
   it('leaves content untouched when IntersectionObserver is unavailable', () => {
     // The load-bearing case. If the element were hidden here it could never be
     // shown again, and the section would be permanently invisible.
-    stubEnvironment({ reducedMotion: false, hasObserver: false, inViewport: false });
+    stubEnvironment({
+      reducedMotion: false,
+      hasObserver: false,
+      inViewport: false,
+    });
     render(<Reveal>content</Reveal>);
     expect(screen.getByText('content').getAttribute('data-reveal')).toBeNull();
   });
@@ -93,7 +97,9 @@ describe('Reveal', () => {
   it('hides content that is below the fold, ready to rise in', () => {
     stubEnvironment({ reducedMotion: false, inViewport: false });
     render(<Reveal>content</Reveal>);
-    expect(screen.getByText('content').getAttribute('data-reveal')).toBe('hidden');
+    expect(screen.getByText('content').getAttribute('data-reveal')).toBe(
+      'hidden',
+    );
   });
 
   it('renders the final state on the server, before any client code runs', () => {

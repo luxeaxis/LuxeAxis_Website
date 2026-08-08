@@ -33,7 +33,7 @@ export function Faq({ items }: { items: readonly FaqItem[] }) {
       {items.map((item) => (
         <details
           key={item.id}
-          className="group border-b-hairline border-border-subtle py-5 [&_summary::-webkit-details-marker]:hidden"
+          className="group lx-liquid-glass-card rounded-xl p-5 mb-3.5 border border-accent/20 [&_summary::-webkit-details-marker]:hidden"
         >
           <summary className="flex cursor-pointer items-start justify-between gap-4 font-ui font-semibold text-on-surface focus-visible:outline focus-visible:outline-focus focus-visible:outline-offset-focus focus-visible:outline-focus-ring">
             {item.question}
@@ -50,7 +50,11 @@ export function Faq({ items }: { items: readonly FaqItem[] }) {
             <p className="text-on-surface-2">{item.answer}</p>
             {item.link && (
               <p className="mt-3">
-                <Link href={item.link.href} variant="inline" className="text-small">
+                <Link
+                  href={item.link.href}
+                  variant="inline"
+                  className="text-small"
+                >
                   {item.link.label}
                 </Link>
               </p>
@@ -88,6 +92,9 @@ export function FaqJsonLd({ items }: { items: readonly FaqItem[] }) {
   };
 
   return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
   );
 }

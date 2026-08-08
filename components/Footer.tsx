@@ -91,13 +91,18 @@ export function Footer() {
             <Stack gap={2}>
               <span className="flex items-center gap-4">
                 <Logo className="h-12 w-auto text-accent" />
-                <span className="font-display text-h2 tracking-[var(--font-tracking-wider)] font-bold">
-                  <span className="text-accent">LUXE</span>{' '}
-                  <span className="text-accent">AXIS</span>
+                <span className="flex flex-col justify-center leading-none">
+                  <span className="font-display text-h2 tracking-[var(--font-tracking-wider)] font-bold">
+                    <span className="text-accent">LUXE</span>{' '}
+                    <span className="text-accent">AXIS</span>
+                  </span>
+                  <span className="font-ui text-[10px] uppercase tracking-[0.25em] text-accent/85 font-bold mt-1">
+                    DESIGNING DREAMS
+                  </span>
                 </span>
               </span>
               <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted font-semibold">
-                Designing Dreams • Architectural Luxury & Vastu-Tech Studio
+                Architectural Luxury & Vastu-Tech Studio
               </p>
             </Stack>
 
@@ -114,14 +119,22 @@ export function Footer() {
 
           {/* Main Sitemap Grid */}
           <nav aria-label="Site map">
-            <Grid cols={4} gap={6} className="grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+            <Grid
+              cols={4}
+              gap={6}
+              className="grid-cols-2 sm:grid-cols-3 lg:grid-cols-6"
+            >
               {SITEMAP.map((group) => (
                 <Stack key={group.heading} gap={3} as="div">
                   <Heading>{group.heading}</Heading>
                   <Stack as="ul" gap={2} className="list-none">
                     {group.links.map((link) => (
                       <li key={link.href}>
-                        <Link href={link.href} variant="standalone" className="text-small text-on-surface-2 hover:text-accent transition-colors">
+                        <Link
+                          href={link.href}
+                          variant="standalone"
+                          className="text-small text-on-surface-2 hover:text-accent transition-colors"
+                        >
                           {link.label}
                         </Link>
                       </li>
@@ -139,26 +152,43 @@ export function Footer() {
               <Stack gap={2}>
                 <Heading>Design Club</Heading>
                 <p className="text-small text-on-surface-2 leading-relaxed">
-                  Private trade network & remote architectural packages — coming soon for newsletter opt-in.
+                  Private trade network & remote architectural packages — coming
+                  soon for newsletter opt-in.
                 </p>
                 <Stack as="ul" gap={2} className="list-none pt-2">
                   <li>
-                    <Link href="/digital" variant="standalone" className="text-small text-accent hover:underline">
+                    <Link
+                      href="/digital"
+                      variant="standalone"
+                      className="text-small text-accent hover:underline"
+                    >
                       Digital Hub & VIP Club →
                     </Link>
                   </li>
                   <li>
-                    <Link href="/digital/starter" variant="standalone" className="text-small text-on-surface-2 hover:text-accent">
+                    <Link
+                      href="/digital/starter"
+                      variant="standalone"
+                      className="text-small text-on-surface-2 hover:text-accent"
+                    >
                       Starter Package (₹25k)
                     </Link>
                   </li>
                   <li>
-                    <Link href="/digital/pro" variant="standalone" className="text-small text-on-surface-2 hover:text-accent">
+                    <Link
+                      href="/digital/pro"
+                      variant="standalone"
+                      className="text-small text-on-surface-2 hover:text-accent"
+                    >
                       Pro Package (₹45k)
                     </Link>
                   </li>
                   <li>
-                    <Link href="/digital/premium" variant="standalone" className="text-small text-on-surface-2 hover:text-accent">
+                    <Link
+                      href="/digital/premium"
+                      variant="standalone"
+                      className="text-small text-on-surface-2 hover:text-accent"
+                    >
                       Premium VIP (₹75k)
                     </Link>
                   </li>
@@ -171,11 +201,16 @@ export function Footer() {
               <Stack gap={3}>
                 <Heading>Talk to us</Heading>
                 <p className="text-small text-on-surface-2 leading-relaxed">
-                  Connect directly with our senior architectural team for immediate project enquiries and studio bookings.
+                  Connect directly with our senior architectural team for
+                  immediate project enquiries and studio bookings.
                 </p>
                 {STUDIO.telephone && (
                   <p className="text-small text-on-surface-2">
-                    <Link href={telHref(STUDIO.telephone)} variant="inline" className="text-small text-accent font-semibold">
+                    <Link
+                      href={telHref(STUDIO.telephone)}
+                      variant="inline"
+                      className="text-small text-accent font-semibold"
+                    >
                       {STUDIO.telephone.display}
                     </Link>
                   </p>
@@ -208,7 +243,9 @@ export function Footer() {
                     ))}
                   </address>
                 ) : (
-                  <p className="text-small text-on-surface-2">Address to be published.</p>
+                  <p className="text-small text-on-surface-2">
+                    Address to be published.
+                  </p>
                 )}
                 <div className="pt-2">
                   <span className="text-overline text-accent font-bold uppercase tracking-wider">
@@ -223,21 +260,34 @@ export function Footer() {
           <div className="border-t border-border-subtle/50 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <dl className="flex flex-wrap items-center gap-x-6 gap-y-2 text-small text-on-surface-muted">
               <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-raised/80 border border-border-subtle">
-                <dt className="text-overline font-bold uppercase text-accent">CIN</dt>
-                <dd className="font-mono text-on-surface font-semibold">{STUDIO.cin ?? 'to be published'}</dd>
+                <dt className="text-overline font-bold uppercase text-accent">
+                  CIN
+                </dt>
+                <dd className="font-mono text-on-surface font-semibold">
+                  {STUDIO.cin ?? 'to be published'}
+                </dd>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-raised/80 border border-border-subtle">
-                <dt className="text-overline font-bold uppercase text-accent">GST</dt>
-                <dd className="font-mono text-on-surface font-semibold">{STUDIO.gst ?? 'to be published'}</dd>
+                <dt className="text-overline font-bold uppercase text-accent">
+                  GST
+                </dt>
+                <dd className="font-mono text-on-surface font-semibold">
+                  {STUDIO.gst ?? 'to be published'}
+                </dd>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-raised/80 border border-border-subtle">
-                <dt className="text-overline font-bold uppercase text-accent">DPDPA</dt>
-                <dd className="text-on-surface-muted">privacy statement to be published</dd>
+                <dt className="text-overline font-bold uppercase text-accent">
+                  DPDPA
+                </dt>
+                <dd className="text-on-surface-muted">
+                  privacy statement to be published
+                </dd>
               </div>
             </dl>
 
             <p className="text-small text-on-surface-muted font-medium">
-              © {year} Luxe Axis Private Limited, Chennai, Tamil Nadu. All rights reserved.
+              © {year} Luxe Axis Private Limited, Chennai, Tamil Nadu. All
+              rights reserved.
             </p>
           </div>
         </Stack>

@@ -32,7 +32,10 @@ import { expect, test } from '@playwright/test';
  * keyboard user does tests the thing that actually has to hold, and needs no
  * geometry at all.
  */
-async function chooseOption(page: import('@playwright/test').Page, label: string) {
+async function chooseOption(
+  page: import('@playwright/test').Page,
+  label: string,
+) {
   const radio = page.getByRole('radio', { name: label, exact: true });
   await radio.focus();
   await page.keyboard.press('Space');
@@ -49,12 +52,20 @@ async function fillStepOne(page: import('@playwright/test').Page) {
 test('every primary CTA on the site now lands here', async ({ page }) => {
   // This route was the target of five CTAs and 404'd until now.
   await page.goto('/');
-  await page.getByRole('banner').getByRole('link', { name: 'Book Audit' }).first().click();
+  await page
+    .getByRole('banner')
+    .getByRole('link', { name: 'Book Audit' })
+    .first()
+    .click();
   await expect(page).toHaveURL(/\/book-audit$/);
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Book a free design audit');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'Book a free design audit',
+  );
 });
 
-test('advances to step two once the project basics are answered', async ({ page }) => {
+test('advances to step two once the project basics are answered', async ({
+  page,
+}) => {
   await page.goto('/book-audit');
   await expect(page.getByText('Step 1 of 2')).toBeVisible();
 
@@ -65,7 +76,9 @@ test('advances to step two once the project basics are answered', async ({ page 
   await expect(page.getByRole('textbox', { name: /^Your name/ })).toBeVisible();
 });
 
-test('refuses to advance with the basics missing, and says what is wrong', async ({ page }) => {
+test('refuses to advance with the basics missing, and says what is wrong', async ({
+  page,
+}) => {
   await page.goto('/book-audit');
   await page.getByRole('button', { name: 'Next' }).click();
 
@@ -80,7 +93,9 @@ test('refuses to advance with the basics missing, and says what is wrong', async
   await expect(summary).toBeFocused();
 });
 
-test('error copy tells the visitor what to do rather than blaming them', async ({ page }) => {
+test('error copy tells the visitor what to do rather than blaming them', async ({
+  page,
+}) => {
   await page.goto('/book-audit');
   await page.getByRole('button', { name: 'Next' }).click();
   const summary = page.getByRole('alert').first();
@@ -98,12 +113,16 @@ test('going back preserves everything already typed', async ({ page }) => {
   await page.getByRole('button', { name: 'Back' }).click();
 
   await expect(page.getByLabel('Approximate area (sq ft)')).toHaveValue('1200');
-  await expect(page.getByLabel('Where is the property?')).toHaveValue('Chennai');
+  await expect(page.getByLabel('Where is the property?')).toHaveValue(
+    'Chennai',
+  );
   await expect(page.getByRole('radio', { name: 'Apartment' })).toBeChecked();
 
   // And forward again — step 2's answer survived the round trip too.
   await page.getByRole('button', { name: 'Next' }).click();
-  await expect(page.getByRole('textbox', { name: /^Your name/ })).toHaveValue('A Visitor');
+  await expect(page.getByRole('textbox', { name: /^Your name/ })).toHaveValue(
+    'A Visitor',
+  );
 });
 
 test('the consent box is never pre-ticked', async ({ page }) => {
@@ -121,11 +140,15 @@ test('will not submit without consent', async ({ page }) => {
   await page.getByRole('button', { name: 'Next' }).click();
 
   await page.getByRole('textbox', { name: /^Your name/ }).fill('A Visitor');
-  await page.getByRole('textbox', { name: /^Email/ }).fill('visitor@example.com');
+  await page
+    .getByRole('textbox', { name: /^Email/ })
+    .fill('visitor@example.com');
   await page.getByRole('textbox', { name: /^Phone/ }).fill('+91 98400 00000');
   await page.getByRole('button', { name: 'Request my audit' }).click();
 
-  await expect(page.getByRole('alert').first()).toContainText('to fix before we can send this');
+  await expect(page.getByRole('alert').first()).toContainText(
+    'to fix before we can send this',
+  );
 });
 
 test('the form is completable by keyboard alone', async ({ page }) => {
@@ -144,7 +167,9 @@ test('the form is completable by keyboard alone', async ({ page }) => {
   await expect(page.getByRole('radio', { name: 'Apartment' })).toBeChecked();
 });
 
-test('says so honestly when the lead endpoint is not configured', async ({ page }) => {
+test('says so honestly when the lead endpoint is not configured', async ({
+  page,
+}) => {
   // LEAD_WEBHOOK_URL is unset in this environment, so /api/lead answers 503 and
   // the form must NOT claim success. A visitor told "we'll call you in 30
   // minutes" for an enquiry that reached nobody is worse off than one told it
@@ -154,12 +179,16 @@ test('says so honestly when the lead endpoint is not configured', async ({ page 
   await page.getByRole('button', { name: 'Next' }).click();
 
   await page.getByRole('textbox', { name: /^Your name/ }).fill('A Visitor');
-  await page.getByRole('textbox', { name: /^Email/ }).fill('visitor@example.com');
+  await page
+    .getByRole('textbox', { name: /^Email/ })
+    .fill('visitor@example.com');
   await page.getByRole('textbox', { name: /^Phone/ }).fill('+91 98400 00000');
   await page.getByRole('checkbox').check();
   await page.getByRole('button', { name: 'Request my audit' }).click();
 
-  await expect(page.getByText('We cannot take bookings through this form yet')).toBeVisible();
+  await expect(
+    page.getByText('We cannot take bookings through this form yet'),
+  ).toBeVisible();
   await expect(page.getByText('Nothing you typed has been sent')).toBeVisible();
   // Crucially, no success message.
   await expect(page.getByText('Your audit request is in')).toHaveCount(0);
@@ -176,7 +205,9 @@ test('a failed submission offers channels that actually work, carrying what was 
   await page.getByRole('button', { name: 'Next' }).click();
 
   await page.getByRole('textbox', { name: /^Your name/ }).fill('A Visitor');
-  await page.getByRole('textbox', { name: /^Email/ }).fill('visitor@example.com');
+  await page
+    .getByRole('textbox', { name: /^Email/ })
+    .fill('visitor@example.com');
   await page.getByRole('textbox', { name: /^Phone/ }).fill('+91 98400 00000');
   await page.getByRole('checkbox').check();
   await page.getByRole('button', { name: 'Request my audit' }).click();

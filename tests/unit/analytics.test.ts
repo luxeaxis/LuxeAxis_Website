@@ -56,23 +56,31 @@ describe('stripPii', () => {
   it('drops an email address', () => {
     // §10.7: "no PII in event payloads". The realistic failure is somebody
     // passing a whole form object into audit_submit because it was convenient.
-    expect(stripPii({ email: 'visitor@example.com', tier: 'Signature' })).toEqual({
+    expect(
+      stripPii({ email: 'visitor@example.com', tier: 'Signature' }),
+    ).toEqual({
       tier: 'Signature',
     });
   });
 
   it('drops phone numbers in the formats this site actually accepts', () => {
-    for (const phone of ['+91 98400 00000', '9840000000', '+1 (415) 555-0123']) {
+    for (const phone of [
+      '+91 98400 00000',
+      '9840000000',
+      '+1 (415) 555-0123',
+    ]) {
       expect(stripPii({ phone, ok: 'keep' }), phone).toEqual({ ok: 'keep' });
     }
   });
 
   it('keeps the non-identifying properties an event is actually for', () => {
-    expect(stripPii({ tier: 'Elite', areaSqFt: 1200, clamped: false })).toEqual({
-      tier: 'Elite',
-      areaSqFt: 1200,
-      clamped: false,
-    });
+    expect(stripPii({ tier: 'Elite', areaSqFt: 1200, clamped: false })).toEqual(
+      {
+        tier: 'Elite',
+        areaSqFt: 1200,
+        clamped: false,
+      },
+    );
   });
 
   it('does not mistake an ordinary number for a phone number', () => {
@@ -90,7 +98,13 @@ describe('structured data', () => {
     // Every one of these is a real Organization property and a real fact nobody
     // has supplied. Absent beats guessed — JSON-LD is machine-readable, so an
     // invented value here is fed straight into a search index.
-    for (const property of ['address', 'telephone', 'foundingDate', 'logo', 'sameAs']) {
+    for (const property of [
+      'address',
+      'telephone',
+      'foundingDate',
+      'logo',
+      'sameAs',
+    ]) {
       expect(org, property).not.toHaveProperty(property);
     }
   });
@@ -141,8 +155,12 @@ describe('structured data', () => {
       'Intelligence',
       'Vastu Tech',
     ]);
-    expect(crumbs.itemListElement.map((item) => item.position)).toEqual([1, 2, 3]);
-    expect(crumbs.itemListElement[1]!.item).toBe('https://luxeaxis.in/intelligence');
+    expect(crumbs.itemListElement.map((item) => item.position)).toEqual([
+      1, 2, 3,
+    ]);
+    expect(crumbs.itemListElement[1]!.item).toBe(
+      'https://luxeaxis.in/intelligence',
+    );
   });
 
   it('accepts a label override where a slug reads badly', () => {

@@ -52,18 +52,25 @@ export function ServicesGrid() {
   ];
 
   return (
-    <section className="py-section-y border-b border-border-subtle" aria-labelledby="services-heading">
+    <section
+      className="py-section-y border-b border-border-subtle"
+      aria-labelledby="services-heading"
+    >
       <Container>
         <Stack gap={8}>
           <Stack gap={3} className="text-center max-w-measure mx-auto">
             <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent font-semibold">
               What We Design
             </p>
-            <h2 id="services-heading" className="font-display text-[length:var(--typography-h2-font-size)] leading-tight text-on-surface">
+            <h2
+              id="services-heading"
+              className="font-display text-[length:var(--typography-h2-font-size)] leading-tight text-on-surface"
+            >
               Interior Design Services in Chennai
             </h2>
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
-              From turnkey residential packages to specialized modular kitchens and commercial spaces, backed by fixed transparent pricing.
+              From turnkey residential packages to specialized modular kitchens
+              and commercial spaces, backed by fixed transparent pricing.
             </p>
           </Stack>
 
@@ -71,7 +78,7 @@ export function ServicesGrid() {
             {services.map((svc) => (
               <div
                 key={svc.title}
-                className="group relative overflow-hidden rounded-lg border border-border-subtle bg-surface-deep transition-all duration-300 hover:border-accent/60 hover:shadow-xl"
+                className="group relative overflow-hidden rounded-xl lx-liquid-glass-card transition-all duration-500 hover:-translate-y-1.5 hover:border-accent/70 hover:shadow-[0_24px_48px_rgba(0,0,0,0.5),0_0_24px_rgba(255,193,7,0.15)]"
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden">
                   <Image
@@ -79,21 +86,27 @@ export function ServicesGrid() {
                     alt={svc.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-surface-deep via-surface-deep/40 to-transparent" />
-                  <span className="absolute top-4 left-4 font-display text-h3 text-accent font-bold">
+                  <span className="absolute top-4 left-4 font-display text-h3 text-accent font-bold drop-shadow-md">
                     {svc.num}
                   </span>
                 </div>
 
                 <div className="p-6">
                   <Stack gap={3}>
-                    <h3 className="font-display text-h3 text-on-surface group-hover:text-accent transition-colors">
+                    <h3 className="font-display text-h3 text-on-surface group-hover:text-accent transition-colors duration-300">
                       {svc.title}
                     </h3>
-                    <p className="font-ui text-small text-on-surface-2">{svc.desc}</p>
-                    <Link href={svc.href} variant="standalone" className="font-ui text-small font-semibold">
+                    <p className="font-ui text-small text-on-surface-2">
+                      {svc.desc}
+                    </p>
+                    <Link
+                      href={svc.href}
+                      variant="standalone"
+                      className="font-ui text-small font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1"
+                    >
                       Explore Service →
                     </Link>
                   </Stack>

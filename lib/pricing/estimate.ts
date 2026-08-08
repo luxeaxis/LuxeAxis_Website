@@ -27,8 +27,13 @@ export type Estimate = {
 /** Looks up a published row. Returns `null` for an id that is not on the list
  *  rather than guessing the nearest one — a visitor shown the wrong band has no
  *  way to tell. */
-export function estimate(config: CalculatorConfig, bracketId: string): Estimate | null {
-  const bracket = config.brackets.find((candidate) => candidate.id === bracketId);
+export function estimate(
+  config: CalculatorConfig,
+  bracketId: string,
+): Estimate | null {
+  const bracket = config.brackets.find(
+    (candidate) => candidate.id === bracketId,
+  );
   if (!bracket) return null;
   return {
     bracket,

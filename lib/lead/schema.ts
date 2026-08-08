@@ -34,7 +34,10 @@ export const projectBasicsSchema = z.object({
     .number({ message: 'Enter the approximate area in square feet.' })
     .int('Round to the nearest square foot.')
     .positive('Enter the approximate area in square feet.')
-    .max(1_000_000, 'That is larger than we can plan for here — talk to us directly.'),
+    .max(
+      1_000_000,
+      'That is larger than we can plan for here — talk to us directly.',
+    ),
   tier: z.enum(['Essential', 'Signature', 'Elite', 'undecided'], {
     message: 'Pick a tier, or choose "Still deciding".',
   }),
@@ -74,7 +77,10 @@ export const contactSchema = z.object({
     // all pass. The NRI persona (Spec §2.1) is a primary audience, so anything
     // that assumes a ten-digit Indian mobile would reject exactly the
     // highest-value visitor.
-    .regex(/^[+\d][\d\s\-()]{6,}$/, 'Enter a phone number we can reach you on.'),
+    .regex(
+      /^[+\d][\d\s\-()]{6,}$/,
+      'Enter a phone number we can reach you on.',
+    ),
   preferredTime: z.enum(['morning', 'afternoon', 'evening', 'any'], {
     message: 'Pick a time of day that suits you.',
   }),
@@ -120,7 +126,9 @@ export const leadSourceSchema = z.object({
 export type LeadSource = z.infer<typeof leadSourceSchema>;
 
 /** The full request body `/api/lead` accepts. */
-export const leadRequestSchema = leadSchema.extend({ attribution: leadSourceSchema.optional() });
+export const leadRequestSchema = leadSchema.extend({
+  attribution: leadSourceSchema.optional(),
+});
 
 export type LeadRequest = z.infer<typeof leadRequestSchema>;
 

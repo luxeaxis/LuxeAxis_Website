@@ -46,12 +46,19 @@ export const ConsentCheckbox = forwardRef<
           id={id}
           type="checkbox"
           aria-invalid={invalid || undefined}
-          aria-describedby={[describedBy, error ? errorId : undefined].filter(Boolean).join(' ') || undefined}
+          aria-describedby={
+            [describedBy, error ? errorId : undefined]
+              .filter(Boolean)
+              .join(' ') || undefined
+          }
           className="peer mt-1 h-icon-md w-icon-md shrink-0 cursor-pointer rounded-sm border-regular border-border-strong bg-field-bg accent-accent focus-visible:outline focus-visible:outline-focus focus-visible:outline-offset-focus focus-visible:outline-focus-ring"
         />
-        <label htmlFor={id} className="cursor-pointer text-small text-on-surface-2">
-          I agree that Luxe Axis may contact me about this enquiry by phone, WhatsApp or email.
-          You can withdraw this at any time. See our{' '}
+        <label
+          htmlFor={id}
+          className="cursor-pointer text-small text-on-surface-2"
+        >
+          I agree that Luxe Axis may contact me about this enquiry by phone,
+          WhatsApp or email. You can withdraw this at any time. See our{' '}
           <Link href="/privacy" variant="inline" className="text-small">
             privacy statement
           </Link>
@@ -59,7 +66,11 @@ export const ConsentCheckbox = forwardRef<
         </label>
       </div>
       {error && (
-        <p id={errorId} role="alert" className="mt-2 flex items-center gap-2 text-small text-error">
+        <p
+          id={errorId}
+          role="alert"
+          className="mt-2 flex items-center gap-2 text-small text-error"
+        >
           <Icon name="alert-circle" size="sm" decorative />
           <span>{error}</span>
         </p>

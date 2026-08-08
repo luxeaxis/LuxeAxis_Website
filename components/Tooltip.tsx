@@ -35,7 +35,8 @@ import {
 } from 'react';
 import { readDurationMs } from '@/lib/motion/readDurationMs';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 // §3.5: "240ms open delay, 0 close." 240ms happens to equal `duration.ui`
 // (tokens/luxe-axis.tokens.json — "Menus, toggles, tooltips"), so this reads
@@ -46,7 +47,10 @@ const OPEN_DELAY_FALLBACK_MS = 240;
 
 type Handler<E> = ((event: E) => void) | undefined;
 
-function compose<E>(existing: Handler<E>, added: () => void): (event: E) => void {
+function compose<E>(
+  existing: Handler<E>,
+  added: () => void,
+): (event: E) => void {
   return (event: E) => {
     existing?.(event);
     added();
@@ -107,9 +111,17 @@ export function Tooltip({ content, children }: TooltipProps) {
 
   const trigger = Children.only(children);
   const triggerProps: Record<string, unknown> = {
-    'aria-describedby': open ? tooltipId : (trigger.props['aria-describedby'] as string | undefined),
-    onMouseEnter: compose(trigger.props.onMouseEnter as Handler<MouseEvent>, show),
-    onMouseLeave: compose(trigger.props.onMouseLeave as Handler<MouseEvent>, hide),
+    'aria-describedby': open
+      ? tooltipId
+      : (trigger.props['aria-describedby'] as string | undefined),
+    onMouseEnter: compose(
+      trigger.props.onMouseEnter as Handler<MouseEvent>,
+      show,
+    ),
+    onMouseLeave: compose(
+      trigger.props.onMouseLeave as Handler<MouseEvent>,
+      hide,
+    ),
     onFocus: compose(trigger.props.onFocus as Handler<FocusEvent>, show),
     onBlur: compose(trigger.props.onBlur as Handler<FocusEvent>, hide),
   };

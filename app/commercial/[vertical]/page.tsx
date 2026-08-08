@@ -35,7 +35,7 @@ export async function generateMetadata({
 
   return {
     title: `${vertical.name} Interior Designers in Chennai | Luxe Axis Commercial`,
-    description: `${vertical.name} interiors in Chennai. ${vertical.summary} 45-day fit-out guarantee, flat 10-year warranty, fixed price per sqft.`,
+    description: `${vertical.name} interiors in Chennai. ${vertical.summary} Written delivery commitment, flat 10-year warranty, fixed price per sqft.`,
     alternates: canonicalFor(`/commercial/${vertical.slug}`),
   };
 }
@@ -133,7 +133,7 @@ export default async function CommercialVerticalPage({
     },
     {
       q: `How long does execution take for a ${vertical.name.toLowerCase()} project?`,
-      a: `Luxe Axis guarantees completion within 45 days of 3D design approval, backed by a written delay compensation clause in your contract.`,
+      a: `Timelines depend on scope, approvals, and site readiness. Luxe Axis agrees milestone dates in your contract before work begins, with written delay compensation when we miss dates we control.`,
     },
     {
       q: `Does Luxe Axis provide 3D visualisations for ${vertical.name.toLowerCase()} spaces?`,
@@ -182,7 +182,7 @@ export default async function CommercialVerticalPage({
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
               {vertical.summary} Designed against how the space performs, backed
-              by a 45-day fit-out guarantee and flat 10-year warranty.
+              by a written delivery commitment and flat 10-year warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -198,10 +198,10 @@ export default async function CommercialVerticalPage({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">
-                  45 Days
+                  Written
                 </strong>
                 <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Fit-Out Guarantee
+                  Delivery commitment
                 </span>
               </div>
               <div>

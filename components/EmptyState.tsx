@@ -18,7 +18,8 @@
 import type { ElementType, ReactNode } from 'react';
 import { Icon, type IconName } from './Icon';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export type EmptyStateProps = {
   icon: IconName;
@@ -33,7 +34,14 @@ export type EmptyStateProps = {
   className?: string;
 };
 
-export function EmptyState({ icon, title, body, action, headingAs: Heading = 'h3', className }: EmptyStateProps) {
+export function EmptyState({
+  icon,
+  title,
+  body,
+  action,
+  headingAs: Heading = 'h3',
+  className,
+}: EmptyStateProps) {
   return (
     <div
       className={cx(
@@ -41,7 +49,12 @@ export function EmptyState({ icon, title, body, action, headingAs: Heading = 'h3
         className,
       )}
     >
-      <Icon name={icon} size="lg" decorative className="text-on-surface-muted" />
+      <Icon
+        name={icon}
+        size="lg"
+        decorative
+        className="text-on-surface-muted"
+      />
       <div className="flex flex-col gap-2">
         <Heading className="font-ui text-[length:var(--typography-h3-font-size)] font-semibold text-on-surface">
           {title}

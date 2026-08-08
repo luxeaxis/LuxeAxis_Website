@@ -20,7 +20,9 @@ describe('local asset references resolve', () => {
   // Directory pathspecs rather than a glob, for the reason
   // tests/unit/content.test.ts gives: `app/**/*.tsx` requires an intermediate
   // directory and silently skips `app/page.tsx`.
-  const sources = execSync('git ls-files app components lib three', { encoding: 'utf8' })
+  const sources = execSync('git ls-files app components lib', {
+    encoding: 'utf8',
+  })
     .split('\n')
     .filter((file) => /\.tsx?$/.test(file));
 
@@ -32,17 +34,23 @@ describe('local asset references resolve', () => {
     // Quoted absolute paths that carry a file extension. A route like
     // `/residential/bedroom` has none, so this does not confuse links with
     // assets; `tests/unit/routes.test.ts` is what checks those.
-    const ASSET = /['"`](\/[A-Za-z0-9._\-/]+\.(?:jpg|jpeg|png|gif|webp|avif|svg|mp4|webm|woff2?|ico|json))['"`]/g;
+    const ASSET =
+      /['"`](\/[A-Za-z0-9._\-/]+\.(?:jpg|jpeg|png|gif|webp|avif|svg|mp4|webm|woff2?|ico|json))['"`]/g;
 
     const missing = sources.flatMap((file) => {
       const src = readFileSync(file, 'utf8');
-      return [...src.matchAll(ASSET)]
-        .map((match) => match[1]!)
-        // `/icon` and friends are Next.js route handlers, not files on disk.
-        .filter((path) => !existsSync(`public${path}`))
-        .map((path) => `${file} -> ${path}`);
+      return (
+        [...src.matchAll(ASSET)]
+          .map((match) => match[1]!)
+          // `/icon` and friends are Next.js route handlers, not files on disk.
+          .filter((path) => !existsSync(`public${path}`))
+          .map((path) => `${file} -> ${path}`)
+      );
     });
 
-    expect([...new Set(missing)], 'asset paths with no file in public/').toEqual([]);
+    expect(
+      [...new Set(missing)],
+      'asset paths with no file in public/',
+    ).toEqual([]);
   });
 });

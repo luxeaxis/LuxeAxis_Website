@@ -73,9 +73,11 @@ export function ClaimProof({ feature }: { feature: IntelligenceFeature }) {
         {feature.summary}
       </p>
       {feature.proof && (
-        <p className="border-l-regular border-accent pl-5 font-display text-[length:var(--typography-h3-font-size)] text-on-surface">
-          {feature.proof}
-        </p>
+        <div className="p-5 rounded-xl lx-liquid-glass border-l-4 border-accent">
+          <p className="font-display text-[length:var(--typography-h3-font-size)] font-bold text-on-surface">
+            {feature.proof}
+          </p>
+        </div>
       )}
       {feature.humanInTheLoop && (
         <Stack gap={3}>
@@ -84,7 +86,9 @@ export function ClaimProof({ feature }: { feature: IntelligenceFeature }) {
               Reviewed by a designer
             </Badge>
           </div>
-          <p className="text-small text-on-surface-2">{feature.humanInTheLoop}</p>
+          <p className="text-small text-on-surface-2">
+            {feature.humanInTheLoop}
+          </p>
         </Stack>
       )}
     </Stack>
@@ -119,18 +123,23 @@ export function Stepper({
   }
 
   return (
-    <ol className="flex max-w-measure flex-col gap-6">
+    <ol className="flex max-w-measure flex-col gap-4">
       {steps.map((step, index) => (
-        <li key={step.title} className="flex gap-4">
+        <li
+          key={step.title}
+          className="flex gap-4 p-4 rounded-xl lx-liquid-glass-card"
+        >
           <span
             aria-hidden="true"
-            className="flex h-icon-lg w-icon-lg shrink-0 items-center justify-center rounded-round border-hairline border-accent font-mono text-overline text-accent"
+            className="flex h-icon-lg w-icon-lg shrink-0 items-center justify-center rounded-full bg-accent/20 border border-accent/40 font-mono text-overline font-bold text-accent shadow-[0_0_12px_rgba(255,193,7,0.3)]"
           >
             {index + 1}
           </span>
           <Stack gap={1}>
-            <h3 className="font-ui font-semibold text-on-surface">{step.title}</h3>
-            <p className="text-on-surface-2">{step.body}</p>
+            <h3 className="font-ui font-semibold text-on-surface">
+              {step.title}
+            </h3>
+            <p className="text-on-surface-2 text-small">{step.body}</p>
           </Stack>
         </li>
       ))}

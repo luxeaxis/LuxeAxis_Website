@@ -46,6 +46,7 @@ export function PersonaRouter({ personas }: { personas: readonly Persona[] }) {
             href={persona.href}
             title={persona.label}
             body={persona.question}
+            surface="glass"
           />
         ))}
       </Grid>

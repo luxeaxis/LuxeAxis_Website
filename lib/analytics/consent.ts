@@ -34,7 +34,9 @@ export type ConsentState = 'granted' | 'denied' | 'unknown';
 
 export function readConsent(cookieString: string | undefined): ConsentState {
   if (!cookieString) return 'unknown';
-  const match = cookieString.match(new RegExp(`(?:^|;\\s*)${CONSENT_COOKIE}=([^;]+)`));
+  const match = cookieString.match(
+    new RegExp(`(?:^|;\\s*)${CONSENT_COOKIE}=([^;]+)`),
+  );
   const value = match?.[1];
   return value === 'granted' || value === 'denied' ? value : 'unknown';
 }

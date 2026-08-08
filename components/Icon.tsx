@@ -122,11 +122,15 @@ type IconBaseProps = {
 };
 
 type IconLabelledProps = IconBaseProps & { label: string; decorative?: false };
-type IconDecorativeProps = IconBaseProps & { label?: undefined; decorative: true };
+type IconDecorativeProps = IconBaseProps & {
+  label?: undefined;
+  decorative: true;
+};
 
 export type IconProps = IconLabelledProps | IconDecorativeProps;
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export function Icon(props: IconProps) {
   const { name, size = 'md', className } = props;
@@ -145,7 +149,11 @@ export function Icon(props: IconProps) {
       // stroke / default" — referenced via the CSS var it emits rather than
       // the bare number, through Tailwind's arbitrary-property syntax, so
       // this is still "tokens only" rather than a literal 1.5.
-      className={cx('[stroke-width:var(--border-width-regular)]', DIMENSION[size], className)}
+      className={cx(
+        '[stroke-width:var(--border-width-regular)]',
+        DIMENSION[size],
+        className,
+      )}
       {...a11y}
     >
       {PATHS[name]}

@@ -24,13 +24,17 @@ test('a path with no page answers 404, not 200', async ({ request }) => {
   expect(response.status()).toBe(404);
 });
 
-test('the 404 renders inside the app layout, not the framework fallback', async ({ page }) => {
+test('the 404 renders inside the app layout, not the framework fallback', async ({
+  page,
+}) => {
   await page.goto(ABSENT);
 
   // Next's own fallback renders above app/layout.tsx and has none of this.
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('We could not find that page');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'We could not find that page',
+  );
   await expect(page.getByRole('banner')).toBeVisible();
   await expect(page.getByRole('contentinfo')).toBeVisible();
   // SkipLink's target — it is rendered by the layout on every route, and is
@@ -50,7 +54,9 @@ test('the 404 offers a way out that actually resolves', async ({ page }) => {
   );
 });
 
-test('robots.txt points at a sitemap that lists only resolvable URLs', async ({ request }) => {
+test('robots.txt points at a sitemap that lists only resolvable URLs', async ({
+  request,
+}) => {
   const robots = await request.get('/robots.txt');
   expect(robots.status()).toBe(200);
   const robotsBody = await robots.text();
@@ -61,7 +67,9 @@ test('robots.txt points at a sitemap that lists only resolvable URLs', async ({ 
 
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.status()).toBe(200);
-  const urls = [...(await sitemap.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]!);
+  const urls = [...(await sitemap.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map(
+    (m) => m[1]!,
+  );
   expect(urls.length).toBeGreaterThan(0);
 
   // A sitemap is a promise that every URL in it resolves. Check the promise
@@ -69,7 +77,12 @@ test('robots.txt points at a sitemap that lists only resolvable URLs', async ({ 
   // deleted without updating lib/seo/routes.ts fails here rather than in Search
   // Console weeks later.
   for (const url of urls) {
-    const response = await request.get(new URL(url).pathname, { maxRedirects: 0 });
-    expect(response.status(), `${url} should resolve directly, without a redirect`).toBe(200);
+    const response = await request.get(new URL(url).pathname, {
+      maxRedirects: 0,
+    });
+    expect(
+      response.status(),
+      `${url} should resolve directly, without a redirect`,
+    ).toBe(200);
   }
 });

@@ -9,7 +9,7 @@ import {
   getTiers,
   getTrustPoints,
 } from '@/lib/content/source';
-import { SCENE_IDS } from '@/three/registry';
+import { POSTER_IDS } from '@/lib/content/posters';
 
 /**
  * The invariants a TypeScript type cannot state.
@@ -36,9 +36,15 @@ describe('personas', () => {
     // it far faster than by a segment name — so a persona without one cannot
     // do its job on the page.
     for (const persona of await getPersonas()) {
-      expect(persona.question.length, `${persona.id} has no question`).toBeGreaterThan(15);
+      expect(
+        persona.question.length,
+        `${persona.id} has no question`,
+      ).toBeGreaterThan(15);
       expect(persona.question).toMatch(/\?$/);
-      expect(persona.href.startsWith('/'), `${persona.id} href must be internal`).toBe(true);
+      expect(
+        persona.href.startsWith('/'),
+        `${persona.id} href must be internal`,
+      ).toBe(true);
     }
   });
 
@@ -51,7 +57,10 @@ describe('personas', () => {
 describe('intelligence features', () => {
   it('states a claim for each, not a feature bullet', async () => {
     for (const feature of await getIntelligenceFeatures()) {
-      expect(feature.claim.length, `${feature.id} has no claim`).toBeGreaterThan(30);
+      expect(
+        feature.claim.length,
+        `${feature.id} has no claim`,
+      ).toBeGreaterThan(30);
       expect(feature.href.startsWith('/intelligence/')).toBe(true);
     }
   });
@@ -64,15 +73,19 @@ describe('intelligence features', () => {
     for (const id of ['vastu-tech', 'space-score', 'space-os']) {
       expect(featureIds).toContain(id);
     }
-    expect(SCENE_IDS).toContain('vastu');
-    expect(SCENE_IDS).toContain('space-score');
-    expect(SCENE_IDS).toContain('space-os');
+    expect(POSTER_IDS).toContain('vastu');
+    expect(POSTER_IDS).toContain('space-score');
+    expect(POSTER_IDS).toContain('space-os');
   });
 });
 
 describe('tiers', () => {
   it('offers the three named tiers in ascending order', async () => {
-    expect((await getTiers()).map((t) => t.name)).toEqual(['Essential', 'Signature', 'Elite']);
+    expect((await getTiers()).map((t) => t.name)).toEqual([
+      'Essential',
+      'Signature',
+      'Elite',
+    ]);
   });
 
   it('recommends at most one tier', async () => {
@@ -84,7 +97,10 @@ describe('tiers', () => {
 
   it('gives every tier real inclusions', async () => {
     for (const tier of await getTiers()) {
-      expect(tier.inclusions.length, `${tier.name} has no inclusions`).toBeGreaterThan(0);
+      expect(
+        tier.inclusions.length,
+        `${tier.name} has no inclusions`,
+      ).toBeGreaterThan(0);
       for (const inclusion of tier.inclusions) {
         expect(inclusion.trim().length).toBeGreaterThan(0);
       }
@@ -99,7 +115,10 @@ describe('tiers', () => {
     // carry one, or a tier card silently falls back to "Fee band: To be
     // published" while its neighbours show prices.
     for (const tier of await getTiers()) {
-      expect(tier.priceFrom, `${tier.name} has no published floor`).toBeGreaterThan(0);
+      expect(
+        tier.priceFrom,
+        `${tier.name} has no published floor`,
+      ).toBeGreaterThan(0);
     }
   });
 
@@ -159,11 +178,17 @@ describe('the handover claim', () => {
     // "60-Day Handover Guarantee", and this guard could not see the file. A
     // site-wide strip is the single worst place for an unqualified number and
     // was the only place the guard was not looking.
-    const tracked = execSync('git ls-files app lib components', { encoding: 'utf8' })
+    const tracked = execSync('git ls-files app lib components', {
+      encoding: 'utf8',
+    })
       .split('\n')
       .filter((file) => /\.tsx?$/.test(file));
-    expect(tracked, 'nothing scanned — the pathspec is wrong').toContain('app/page.tsx');
-    expect(tracked, 'components/ is not being scanned').toContain('components/TrustMarquee.tsx');
+    expect(tracked, 'nothing scanned — the pathspec is wrong').toContain(
+      'app/page.tsx',
+    );
+    expect(tracked, 'components/ is not being scanned').toContain(
+      'components/TrustMarquee.tsx',
+    );
 
     // Only 60 is enforced here, and only for now. The rule that matters is
     // wider — a handover figure means nothing without the tier attached — but
@@ -198,22 +223,50 @@ describe('the handover claim', () => {
       const lines = readFileSync(file, 'utf8').split('\n');
       if (TIER.test(file)) return [];
 
-      return lines
-        .map((text, index) => ({ file, line: index + 1, text, index }))
-        .filter(({ text }) => FIGURE.test(text))
-        // Comments, including the ones explaining why a flat version was
-        // removed — they are not shipped copy.
-        .filter(({ text }) => !/^\s*(\/\/|\*|\/\*)/.test(text))
-        .filter(({ index }) => {
-          const window = lines.slice(Math.max(0, index - CONTEXT), index + CONTEXT + 1).join(' ');
-          return !TIER.test(window);
-        })
-        .map(({ file: f, line, text }) => ({ file: f, line, text }));
+      return (
+        lines
+          .map((text, index) => ({ file, line: index + 1, text, index }))
+          .filter(({ text }) => FIGURE.test(text))
+          // Comments, including the ones explaining why a flat version was
+          // removed — they are not shipped copy.
+          .filter(({ text }) => !/^\s*(\/\/|\*|\/\*)/.test(text))
+          .filter(({ index }) => {
+            const window = lines
+              .slice(Math.max(0, index - CONTEXT), index + CONTEXT + 1)
+              .join(' ');
+            return !TIER.test(window);
+          })
+          .map(({ file: f, line, text }) => ({ file: f, line, text }))
+      );
     });
 
     expect(
       offenders.map(({ file, line, text }) => `${file}:${line} ${text.trim()}`),
       'a handover figure is stated without the tier it belongs to',
+    ).toEqual([]);
+  });
+
+  it('does not publish flat handover-day figures on commercial routes', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { execSync } = await import('node:child_process');
+    const FIGURE = /\b(45|60)[-\s]day/i;
+    const commercial = execSync('git ls-files app/commercial', {
+      encoding: 'utf8',
+    })
+      .split('\n')
+      .filter((file) => /\.tsx?$/.test(file));
+
+    const offenders = commercial.flatMap((file) => {
+      const lines = readFileSync(file, 'utf8').split('\n');
+      return lines
+        .map((text, index) => ({ file, line: index + 1, text }))
+        .filter(({ text }) => FIGURE.test(text))
+        .filter(({ text }) => !/^\s*(\/\/|\*|\/\*)/.test(text));
+    });
+
+    expect(
+      offenders.map(({ file, line, text }) => `${file}:${line} ${text.trim()}`),
+      'commercial pages must not state a flat handover-day figure — no published commercial timeline exists',
     ).toEqual([]);
   });
 });
@@ -251,7 +304,9 @@ describe('guarantees', () => {
     // The supply-chain fee's conditions have not been published. `null` renders
     // as an explicit gap; inventing terms would commit the studio to an
     // obligation a visitor could later hold it to.
-    const fee = (await getGuarantees()).find((g) => g.id === 'supply-chain-fee')!;
+    const fee = (await getGuarantees()).find(
+      (g) => g.id === 'supply-chain-fee',
+    )!;
     expect(fee.terms).toBeNull();
   });
 });

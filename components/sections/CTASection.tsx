@@ -27,27 +27,41 @@ import type { Testimonial } from '@/lib/content/types';
  */
 export function CTASection() {
   return (
-    <section aria-labelledby="audit-heading" className="border-t-hairline border-border-subtle bg-surface-deep">
-      <Container className="py-section-y">
-        <Stack gap={6} className="max-w-measure">
-          <Stack gap={3}>
-            <h2
-              id="audit-heading"
-              className="font-display text-[length:var(--typography-h1-font-size)] leading-snug tracking-[var(--font-tracking-tight)] text-on-surface"
-            >
-              Let&rsquo;s talk about your space
-            </h2>
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
-              A free 45-minute audit with a real designer. No obligation, no hard sell.
+    <section
+      aria-labelledby="audit-heading"
+      className="border-t-hairline border-border-subtle bg-surface-deep/80 py-section-y relative overflow-hidden isolate"
+    >
+      <Container>
+        <div className="lx-liquid-glass rounded-2xl p-8 sm:p-12 md:p-16 relative overflow-hidden border border-accent/40 shadow-2xl backdrop-blur-2xl">
+          <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+          <Stack gap={6} className="max-w-measure relative z-10">
+            <Stack gap={3}>
+              <h2
+                id="audit-heading"
+                className="font-display text-[length:var(--typography-h1-font-size)] leading-snug tracking-[var(--font-tracking-tight)] text-on-surface font-bold"
+              >
+                Let&rsquo;s talk about your space
+              </h2>
+              <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium">
+                A free 45-minute audit with a real designer. No obligation, no
+                hard sell.
+              </p>
+            </Stack>
+            <div>
+              <Button
+                as="a"
+                href={BOOK_AUDIT.href}
+                size="lg"
+                className="lx-liquid-btn font-bold"
+              >
+                {BOOK_AUDIT.label}
+              </Button>
+            </div>
+            <p className="text-small text-on-surface-muted font-ui">
+              You&rsquo;ll speak to a designer, not a bot.
             </p>
           </Stack>
-          <div>
-            <Button as="a" href={BOOK_AUDIT.href} size="lg">
-              {BOOK_AUDIT.label}
-            </Button>
-          </div>
-          <p className="text-small text-on-surface-muted">You&rsquo;ll speak to a designer, not a bot.</p>
-        </Stack>
+        </div>
       </Container>
     </section>
   );
@@ -64,12 +78,19 @@ export function CTASection() {
  * in the content model requires attribution for the same reason: an
  * unattributed quote is indistinguishable from copywriting.
  */
-export function TestimonialBand({ testimonials }: { testimonials: readonly Testimonial[] }) {
+export function TestimonialBand({
+  testimonials,
+}: {
+  testimonials: readonly Testimonial[];
+}) {
   const featured = testimonials[0];
 
   if (!featured) {
     return (
-      <section aria-labelledby="testimonial-heading" className="w-full py-section-y">
+      <section
+        aria-labelledby="testimonial-heading"
+        className="w-full py-section-y"
+      >
         <Container>
           <Stack gap={3} className="max-w-measure">
             <h2
@@ -84,8 +105,8 @@ export function TestimonialBand({ testimonials }: { testimonials: readonly Testi
                 acceptable to render one here. */}
             <p className="text-on-surface-2">
               <ToBePublished>
-                Client quotes are published once the client has approved the wording and agreed to
-                be named. To be published.
+                Client quotes are published once the client has approved the
+                wording and agreed to be named. To be published.
               </ToBePublished>
             </p>
           </Stack>
@@ -95,7 +116,10 @@ export function TestimonialBand({ testimonials }: { testimonials: readonly Testi
   }
 
   return (
-    <section aria-labelledby="testimonial-heading" className="w-full py-section-y">
+    <section
+      aria-labelledby="testimonial-heading"
+      className="w-full py-section-y"
+    >
       <Container>
         <Stack gap={5} className="max-w-measure">
           <h2 id="testimonial-heading" className="sr-only">

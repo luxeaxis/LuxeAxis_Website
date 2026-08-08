@@ -126,46 +126,19 @@ export default async function ResidentialPage() {
 
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  ₹1,800
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Per Sq.Ft Base Rate
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  45 Days
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Handover Guarantee
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  10 Yr
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Flat Warranty
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  13
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Specializations
-                </span>
-              </div>
-              <div>
-                <strong className="block font-display text-h3 text-accent font-bold">
-                  4.9 ★
-                </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Google Rating
-                </span>
-              </div>
+              {highlights.map((h) => (
+                <div
+                  key={h.title}
+                  className="p-4 rounded-xl lx-liquid-glass-card border border-accent/20"
+                >
+                  <strong className="block font-display text-h3 text-accent font-bold">
+                    {h.title}
+                  </strong>
+                  <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
+                    {h.desc}
+                  </span>
+                </div>
+              ))}
             </div>
           </Stack>
         </Container>

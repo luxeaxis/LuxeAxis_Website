@@ -21,7 +21,9 @@ export const metadata: Metadata = {
 
 export default async function StarterDigitalPage() {
   const faqs = await getFaqs();
-  const digitalFaqs = [...faqs].filter((f) => f.id === 'abroad' || f.id === 'materials');
+  const digitalFaqs = [...faqs].filter(
+    (f) => f.id === 'abroad' || f.id === 'materials',
+  );
 
   const inclusions = [
     '2D CAD floorplan spatial optimization',
@@ -39,7 +41,8 @@ export default async function StarterDigitalPage() {
           '@context': 'https://schema.org',
           '@type': 'Service',
           name: 'Starter Digital Design Package (₹25,000/room)',
-          description: 'Essential remote interior design package for homeowners.',
+          description:
+            'Essential remote interior design package for homeowners.',
           url: ROUTE,
         }}
       />
@@ -49,7 +52,10 @@ export default async function StarterDigitalPage() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
 
         <Container>
-          <Breadcrumbs path="/digital/starter" labels={{ 'starter': "Starter Package" }} />
+          <Breadcrumbs
+            path="/digital/starter"
+            labels={{ starter: 'Starter Package' }}
+          />
 
           <Stack gap={6} className="max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
@@ -65,7 +71,9 @@ export default async function StarterDigitalPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Essential remote design guidance for homeowners who already have a trusted local contractor and need expert CAD spatial planning, color palettes, Vastu alignment, and direct shopping links.
+              Essential remote design guidance for homeowners who already have a
+              trusted local contractor and need expert CAD spatial planning,
+              color palettes, Vastu alignment, and direct shopping links.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -80,20 +88,36 @@ export default async function StarterDigitalPage() {
             {/* Key Stats Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">₹25,000</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Per Room Rate</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  ₹25,000
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Per Room Rate
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">7 Days</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Turnaround SLA</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  7 Days
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Turnaround SLA
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">2D CAD</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Layout Optimization</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  2D CAD
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Layout Optimization
+                </span>
               </div>
               <div>
-                <strong className="block font-display text-h3 text-accent font-bold">1 Call</strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">Video Review</span>
+                <strong className="block font-display text-h3 text-accent font-bold">
+                  1 Call
+                </strong>
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                  Video Review
+                </span>
               </div>
             </div>
           </Stack>
@@ -128,8 +152,14 @@ export default async function StarterDigitalPage() {
       >
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
-            beforeImage={{ src: '/posters/persona-router.avif', alt: 'Bare shell living room before Starter Digital design' }}
-            afterImage={{ src: '/posters/pricing-axis.avif', alt: 'Completed living room using Starter Digital floorplans' }}
+            beforeImage={{
+              src: '/posters/persona-router.avif',
+              alt: 'Bare shell living room before Starter Digital design',
+            }}
+            afterImage={{
+              src: '/posters/pricing-axis.avif',
+              alt: 'Completed living room using Starter Digital floorplans',
+            }}
           />
         </div>
       </Section>
@@ -144,19 +174,39 @@ export default async function StarterDigitalPage() {
         <Grid cols={2} gap={6}>
           <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
             <div>
-              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">Pro Package (₹45,000 / room)</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed mb-4">Adds 4K 3D photorealistic interior renders, full 2D working drawings, and itemized BOQ.</p>
+              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                Pro Package (₹45,000 / room)
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                Adds 4K 3D photorealistic interior renders, full 2D working
+                drawings, and itemized BOQ.
+              </p>
             </div>
-            <Button as="a" href="/digital/pro" variant="secondary" className="w-full justify-center">
+            <Button
+              as="a"
+              href="/digital/pro"
+              variant="secondary"
+              className="w-full justify-center"
+            >
               View Pro Package →
             </Button>
           </div>
           <div className="lx-liquid-glass rounded-2xl p-6 border border-accent/30 flex flex-col justify-between">
             <div>
-              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">Premium VIP (₹75,000 / room)</h3>
-              <p className="text-small text-on-surface-2 leading-relaxed mb-4">Adds 360 VR walkthrough, physical material sample box shipped to your door, and 3 video calls.</p>
+              <h3 className="font-display text-h3 font-bold text-on-surface mb-2">
+                Premium VIP (₹75,000 / room)
+              </h3>
+              <p className="text-small text-on-surface-2 leading-relaxed mb-4">
+                Adds 360 VR walkthrough, physical material sample box shipped to
+                your door, and 3 video calls.
+              </p>
             </div>
-            <Button as="a" href="/digital/premium" variant="secondary" className="w-full justify-center">
+            <Button
+              as="a"
+              href="/digital/premium"
+              variant="secondary"
+              className="w-full justify-center"
+            >
               View Premium VIP →
             </Button>
           </div>
@@ -164,7 +214,11 @@ export default async function StarterDigitalPage() {
       </Section>
 
       {/* 5. FAQ Accordion */}
-      <Section id="faq" eyebrow="Questions Answered" title="Starter Package FAQ">
+      <Section
+        id="faq"
+        eyebrow="Questions Answered"
+        title="Starter Package FAQ"
+      >
         <Faq items={digitalFaqs} />
       </Section>
 

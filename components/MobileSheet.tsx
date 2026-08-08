@@ -29,7 +29,8 @@ import { Stack } from './layout';
 import { usePathname } from 'next/navigation';
 import { NAV_ITEMS, BOOK_AUDIT } from '@/lib/nav';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -79,7 +80,8 @@ export function MobileSheet() {
     const panel = panelRef.current;
     if (!panel) return;
 
-    const focusables = () => Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
+    const focusables = () =>
+      Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
     focusables()[0]?.focus();
 
     function onKeyDown(event: KeyboardEvent) {
@@ -142,10 +144,11 @@ export function MobileSheet() {
           aria-modal="true"
           aria-labelledby={titleId}
           onTransitionEnd={(event) => {
-            if (event.target === event.currentTarget && !open) setMounted(false);
+            if (event.target === event.currentTarget && !open)
+              setMounted(false);
           }}
           className={cx(
-            'fixed inset-0 z-drawer flex flex-col bg-surface',
+            'fixed inset-0 z-drawer flex flex-col lx-liquid-glass bg-surface-deep/95 backdrop-blur-2xl border-l border-accent/40 shadow-2xl',
             // "Full-screen sheet slides up (enter, entrance)" (§3.3/N6).
             'transition-transform duration-enter ease-entrance motion-reduce:transition-none',
             open ? 'translate-y-0' : 'translate-y-full',
@@ -154,25 +157,40 @@ export function MobileSheet() {
           <div className="flex items-center justify-between border-b-hairline border-border-subtle p-4">
             <div className="flex items-center gap-3">
               <Logo className="h-icon-md w-auto text-accent" />
-              <h2
-                id={titleId}
-                className="font-display text-[length:var(--typography-h3-font-size)] font-bold text-accent tracking-[var(--font-tracking-wider)]"
-              >
-                LUXE AXIS
-              </h2>
+              <div className="flex flex-col leading-none">
+                <h2
+                  id={titleId}
+                  className="font-display text-[length:var(--typography-h3-font-size)] font-bold text-accent tracking-[var(--font-tracking-wider)]"
+                >
+                  LUXE AXIS
+                </h2>
+                <span className="font-ui text-[9px] uppercase tracking-[0.25em] text-accent/85 font-bold mt-0.5">
+                  DESIGNING DREAMS
+                </span>
+              </div>
             </div>
-            <Button variant="icon" icon="close" aria-label="Close menu" onClick={closeSheet} />
+            <Button
+              variant="icon"
+              icon="close"
+              aria-label="Close menu"
+              onClick={closeSheet}
+            />
           </div>
 
           <nav aria-label="Primary" className="flex-1 overflow-y-auto p-4">
             <Stack as="ul" gap={1} className="list-none">
               {NAV_ITEMS.map((item) => (
-                <li key={item.href} className="border-b border-border-subtle/40 pb-2">
+                <li
+                  key={item.href}
+                  className="border-b border-border-subtle/40 pb-2"
+                >
                   <div className="flex items-center justify-between">
                     <Link
                       href={item.href}
                       variant="standalone"
-                      aria-current={isActiveRoute(pathname, item.href) ? 'page' : undefined}
+                      aria-current={
+                        isActiveRoute(pathname, item.href) ? 'page' : undefined
+                      }
                       className="block py-3 text-[length:var(--typography-h3-font-size)] font-semibold"
                       onClick={closeSheet}
                     >
@@ -193,7 +211,11 @@ export function MobileSheet() {
                                 <Link
                                   href={sub.href}
                                   variant="standalone"
-                                  aria-current={isActiveRoute(pathname, sub.href) ? 'page' : undefined}
+                                  aria-current={
+                                    isActiveRoute(pathname, sub.href)
+                                      ? 'page'
+                                      : undefined
+                                  }
                                   className="flex items-center justify-between py-1 text-small text-on-surface-2 hover:text-accent"
                                   onClick={closeSheet}
                                 >
@@ -217,7 +239,11 @@ export function MobileSheet() {
                           <Link
                             href={sub.href}
                             variant="standalone"
-                            aria-current={isActiveRoute(pathname, sub.href) ? 'page' : undefined}
+                            aria-current={
+                              isActiveRoute(pathname, sub.href)
+                                ? 'page'
+                                : undefined
+                            }
                             className="block py-1.5 text-body text-on-surface-2 hover:text-accent"
                             onClick={closeSheet}
                           >
@@ -234,7 +260,12 @@ export function MobileSheet() {
 
           {/* Sticky Book Audit bar pinned to the bottom safe-area (§3.3). */}
           <div className="sticky bottom-0 border-t-hairline border-border-subtle bg-surface p-4 pb-[max(var(--space-4),env(safe-area-inset-bottom))]">
-            <Button as="a" href={BOOK_AUDIT.href} className="w-full" onClick={closeSheet}>
+            <Button
+              as="a"
+              href={BOOK_AUDIT.href}
+              className="w-full"
+              onClick={closeSheet}
+            >
               {BOOK_AUDIT.label}
             </Button>
           </div>

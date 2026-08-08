@@ -89,7 +89,11 @@ export function localBusinessJsonLd() {
 /** A service the studio offers. `areaServed` is Chennai, which the specs state
  *  throughout; `provider` points back at the Organization node so a crawler can
  *  join them up. No `offers` — that needs a price, and none is published. */
-export function serviceJsonLd(input: { name: string; description: string; url: string }) {
+export function serviceJsonLd(input: {
+  name: string;
+  description: string;
+  url: string;
+}) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -114,7 +118,10 @@ export function serviceJsonLd(input: { name: string; description: string; url: s
  * ("retail-hospitality" -> "Retail & Hospitality"), so the crumb matches the
  * page's own heading.
  */
-export function breadcrumbJsonLd(path: string, labels: Record<string, string> = {}) {
+export function breadcrumbJsonLd(
+  path: string,
+  labels: Record<string, string> = {},
+) {
   const segments = path.split('/').filter(Boolean);
   const items = [{ name: 'Home', url: SITE_ORIGIN }];
 

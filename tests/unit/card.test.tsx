@@ -1,6 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
-import { FeatureCard, ProjectCard, StatCard, TierCard } from '@/components/Card';
+import {
+  FeatureCard,
+  ProjectCard,
+  StatCard,
+  TierCard,
+} from '@/components/Card';
 
 // See tests/unit/button.test.tsx: no automatic RTL cleanup is registered.
 afterEach(cleanup);
@@ -10,7 +15,11 @@ afterEach(cleanup);
 function stubBrowserApis() {
   vi.stubGlobal(
     'matchMedia',
-    vi.fn().mockReturnValue({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }),
+    vi.fn().mockReturnValue({
+      matches: true,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }),
   );
   class NoopIntersectionObserver {
     observe() {}
@@ -24,7 +33,12 @@ const projectProps = {
   href: '/portfolio/example',
   title: 'Example project',
   neighbourhood: 'Adyar, Chennai',
-  media: { kind: 'photo' as const, src: '/posters/portfolio.avif', alt: '', aspect: '4/3' as const },
+  media: {
+    kind: 'photo' as const,
+    src: '/posters/portfolio.avif',
+    alt: '',
+    aspect: '4/3' as const,
+  },
 };
 
 const featureProps = {

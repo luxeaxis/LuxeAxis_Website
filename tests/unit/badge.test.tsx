@@ -11,8 +11,12 @@ describe('Badge', () => {
   });
 
   it('a status tone (success/warning/error/info) always pairs with an icon — never colour-only', () => {
-    const { container: success } = render(<Badge tone="success">Delivered</Badge>);
-    const { container: warning } = render(<Badge tone="warning">Delayed</Badge>);
+    const { container: success } = render(
+      <Badge tone="success">Delivered</Badge>,
+    );
+    const { container: warning } = render(
+      <Badge tone="warning">Delayed</Badge>,
+    );
     const { container: error } = render(<Badge tone="error">Failed</Badge>);
     const { container: info } = render(<Badge tone="info">Draft</Badge>);
     for (const container of [success, warning, error, info]) {
@@ -32,6 +36,8 @@ describe('Badge', () => {
       </Badge>,
     );
     // 'close' renders an "M6 6l12 12" path segment distinct from 'check's.
-    expect(container.querySelector('path')?.getAttribute('d')).toMatch(/^M6 6l12 12/);
+    expect(container.querySelector('path')?.getAttribute('d')).toMatch(
+      /^M6 6l12 12/,
+    );
   });
 });

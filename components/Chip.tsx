@@ -30,7 +30,8 @@
 
 import { Icon } from './Icon';
 
-const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
+const cx = (...parts: Array<string | false | undefined>) =>
+  parts.filter(Boolean).join(' ');
 
 export type ChipProps = {
   children: string;
@@ -49,7 +50,14 @@ export type ChipProps = {
   className?: string;
 };
 
-export function Chip({ children, selected = false, onSelect, onRemove, removeLabel, className }: ChipProps) {
+export function Chip({
+  children,
+  selected = false,
+  onSelect,
+  onRemove,
+  removeLabel,
+  className,
+}: ChipProps) {
   if (onRemove && !removeLabel) {
     // A compile-time union could make this impossible the way Button.tsx
     // does for `variant="icon"`, but Chip's `onSelect`/`onRemove` are
@@ -57,7 +65,9 @@ export function Chip({ children, selected = false, onSelect, onRemove, removeLab
     // to enumerate every combination. A loud runtime failure in development
     // keeps the same guarantee (no silent icon-only control) without that
     // blow-up.
-    throw new Error('Chip: `removeLabel` is required whenever `onRemove` is passed.');
+    throw new Error(
+      'Chip: `removeLabel` is required whenever `onRemove` is passed.',
+    );
   }
 
   const isSelectable = Boolean(onSelect);
@@ -69,7 +79,9 @@ export function Chip({ children, selected = false, onSelect, onRemove, removeLab
         onRemove ? 'pl-3 pr-1' : 'px-3',
         'font-ui text-overline uppercase tracking-[var(--font-tracking-wide)]',
         'transition-colors duration-micro ease-standard',
-        selected ? 'border-accent bg-accent text-accent-contrast' : 'border-border-subtle text-on-surface-2',
+        selected
+          ? 'border-accent bg-accent text-accent-contrast'
+          : 'border-border-subtle text-on-surface-2',
         className,
       )}
     >
