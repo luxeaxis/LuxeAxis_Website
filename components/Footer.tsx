@@ -1,3 +1,4 @@
+import { Icon } from './Icon';
 import { Link } from './Link';
 import { Logo } from './Logo';
 import { Container, Grid, Stack } from './layout';
@@ -106,7 +107,7 @@ export function Footer() {
               </p>
             </Stack>
 
-            {/* Quick Action Badges */}
+            {/* Quick Action Badges & Social Media Icons */}
             <div className="flex flex-wrap items-center gap-3">
               <span className="px-3 py-1 rounded-full text-overline uppercase tracking-wider bg-accent/10 border border-accent/30 text-accent font-bold">
                 100% Price-Lock SLA
@@ -114,6 +115,26 @@ export function Footer() {
               <span className="px-3 py-1 rounded-full text-overline uppercase tracking-wider bg-surface-raised border border-border-subtle text-on-surface-2 font-bold">
                 ISO 9001:2015 Studio
               </span>
+              <div className="flex items-center gap-2 pl-2 border-l border-border-subtle/60">
+                <a
+                  href="https://instagram.com/luxeaxis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="p-2 rounded-xl lx-liquid-glass border border-accent/30 text-accent hover:text-accent-bright hover:border-accent hover:shadow-[0_0_15px_rgba(255,193,7,0.4)] transition-all duration-200"
+                >
+                  <Icon name="instagram" size="sm" decorative />
+                </a>
+                <a
+                  href="https://linkedin.com/company/luxeaxis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="p-2 rounded-xl lx-liquid-glass border border-accent/30 text-accent hover:text-accent-bright hover:border-accent hover:shadow-[0_0_15px_rgba(255,193,7,0.4)] transition-all duration-200"
+                >
+                  <Icon name="linkedin" size="sm" decorative />
+                </a>
+              </div>
             </div>
           </div>
 

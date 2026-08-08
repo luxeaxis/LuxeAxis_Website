@@ -17,9 +17,15 @@ describe('Icon', () => {
     expect(svg?.getAttribute('role')).toBeNull();
   });
 
-  // Icon-only accessibility is enforced at the type level, not just at
-  // runtime: `IconProps` is `{ label: string } | { decorative: true }` with
-  // no default for either, so this is a compile-time check as much as a
-  // behavioural one — the two branches above are the only two ways to
-  // construct valid props at all.
+  it('renders social icons instagram and linkedin accurately', () => {
+    const { container: igContainer } = render(
+      <Icon name="instagram" decorative />,
+    );
+    expect(igContainer.querySelector('svg')).toBeDefined();
+
+    const { container: liContainer } = render(
+      <Icon name="linkedin" decorative />,
+    );
+    expect(liContainer.querySelector('svg')).toBeDefined();
+  });
 });

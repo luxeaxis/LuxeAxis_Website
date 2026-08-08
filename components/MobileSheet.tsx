@@ -21,6 +21,7 @@
  * bug.
  */
 
+import { Icon } from './Icon';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Button } from './Button';
 import { Link } from './Link';
@@ -259,7 +260,32 @@ export function MobileSheet() {
           </nav>
 
           {/* Sticky Book Audit bar pinned to the bottom safe-area (§3.3). */}
-          <div className="sticky bottom-0 border-t-hairline border-border-subtle bg-surface p-4 pb-[max(var(--space-4),env(safe-area-inset-bottom))]">
+          <div className="sticky bottom-0 border-t-hairline border-border-subtle bg-surface p-4 pb-[max(var(--space-4),env(safe-area-inset-bottom))] space-y-3">
+            <div className="flex items-center justify-between px-1">
+              <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
+                Follow Us
+              </span>
+              <div className="flex items-center gap-2">
+                <a
+                  href="https://instagram.com/luxeaxis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="p-2 rounded-xl lx-liquid-glass border border-accent/30 text-accent hover:text-accent-bright hover:border-accent transition-all duration-200"
+                >
+                  <Icon name="instagram" size="sm" decorative />
+                </a>
+                <a
+                  href="https://linkedin.com/company/luxeaxis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="p-2 rounded-xl lx-liquid-glass border border-accent/30 text-accent hover:text-accent-bright hover:border-accent transition-all duration-200"
+                >
+                  <Icon name="linkedin" size="sm" decorative />
+                </a>
+              </div>
+            </div>
             <Button
               as="a"
               href={BOOK_AUDIT.href}
