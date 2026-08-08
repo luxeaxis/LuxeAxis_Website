@@ -220,9 +220,9 @@ export function Hero({
 
             {/* Right column: the active slide, as a spotlight card. */}
             <div className="flex flex-col gap-4 sm:gap-5 lg:col-span-5 w-full">
-              {/* Active slide spotlight card */}
-              <div className="relative isolate overflow-hidden rounded-xl bg-surface-deep/95 border border-accent/20 p-4 shadow-2xl backdrop-blur-md group">
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg bg-surface-raised">
+              {/* Active slide spotlight card with high-visibility text */}
+              <div className="relative isolate overflow-hidden rounded-2xl lx-liquid-glass-card border border-accent/40 p-5 shadow-2xl backdrop-blur-xl group">
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-surface-raised">
                   <Image
                     src={activeSlide.posterUrl}
                     alt={activeSlide.title}
@@ -230,28 +230,39 @@ export function Hero({
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface-deep/90 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-deep/95 via-surface-deep/40 to-transparent" />
 
                   <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="rounded-full bg-accent px-2.5 py-0.5 text-overline font-bold text-accent-contrast uppercase tracking-wider shadow-md">
+                    <span className="rounded-full bg-accent px-3 py-1 text-xs font-bold text-surface-deep uppercase tracking-wider shadow-lg">
                       Featured Showcase {activeSlide.number}
                     </span>
                   </div>
+
+                  <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-3 text-on-surface">
+                    <div className="min-w-0 flex-1 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                      <h3 className="m-0 font-display text-body sm:text-h3 font-bold text-accent truncate">
+                        {activeSlide.title}
+                      </h3>
+                      <p className="m-0 font-ui text-small font-semibold text-white/90 truncate">
+                        {activeSlide.category} • {activeSlide.location}
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mt-3.5 flex items-center justify-between gap-3">
+                <div className="mt-4 flex items-center justify-between gap-3 pt-2 border-t border-accent/20">
                   <div className="min-w-0 flex-1">
-                    <h3 className="m-0 font-display text-small font-bold text-on-surface truncate">
-                      {activeSlide.title}
-                    </h3>
-                    <p className="m-0 font-ui text-overline text-on-surface-2 truncate">
-                      {activeSlide.category} • {activeSlide.location}
+                    <span className="font-ui text-overline uppercase tracking-widest text-accent font-bold">
+                      Architectural Showcase
+                    </span>
+                    <p className="m-0 font-display text-small font-bold text-on-surface">
+                      {activeSlide.title} — {activeSlide.location}
                     </p>
                   </div>
 
                   <a
                     href={activeSlide.href}
-                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/20 text-accent transition-all hover:bg-accent hover:text-accent-contrast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-surface-deep font-bold transition-all hover:scale-105 hover:bg-accent-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent shadow-lg"
                     aria-label={`Explore ${activeSlide.title}`}
                   >
                     <Icon name="arrow-right" size="sm" decorative />
