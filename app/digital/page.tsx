@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
@@ -146,30 +147,42 @@ export default async function DigitalPage() {
         }}
       />
 
-      {/* 1. Hero Stage & Breadcrumbs */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage & Breadcrumbs with Ken Burns Cinematic Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[80vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        {/* Full-Bleed Background Image with Ken Burns Cinematic Effect */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <Image
+            src="/posters/digital-hub-hero.png"
+            alt="Luxe Axis Remote Architectural Design Studio & VIP Design Club"
+            fill
+            priority
+            className="object-cover animate-ken-burns opacity-40 scale-105"
+          />
+          {/* Ambient Gradient Overlay for High-Contrast Text Legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-surface-deep via-surface-deep/90 to-surface-deep/60" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-surface-deep via-surface-deep/80 to-transparent" />
+        </div>
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs
             path="/digital"
             labels={{ digital: 'Digital & Design Club' }}
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Remote Architectural Design & VIP Club
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Luxe Axis Digital & <br />
               <span className="text-accent">Private Design Club</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Not everyone needs studio-managed execution. Luxe Axis Digital
               gives you complete, professional architectural design — 2D
               layouts, 4K 3D VR renders, Vastu-Tech compass scans, and an
@@ -178,17 +191,28 @@ export default async function DigitalPage() {
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="#digital-packages" size="lg">
+              <Button
+                as="a"
+                href="#digital-packages"
+                size="lg"
+                className="shadow-2xl"
+              >
                 Explore Digital Tiers
               </Button>
-              <Button as="a" href="#design-club" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="#design-club"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 Join Design Club →
               </Button>
             </div>
 
-            {/* Key Stats Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
-              <div>
+            {/* Key Stats Bar with Liquid Glass Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-accent/20">
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   100% Remote
                 </strong>
@@ -196,7 +220,7 @@ export default async function DigitalPage() {
                   Global Service
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   3 Packages
                 </strong>
@@ -204,7 +228,7 @@ export default async function DigitalPage() {
                   Starter / Pro / Premium
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   4K 3D VR
                 </strong>
@@ -212,7 +236,7 @@ export default async function DigitalPage() {
                   Photorealistic Visuals
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   Shop-It-Yourself
                 </strong>
@@ -220,7 +244,7 @@ export default async function DigitalPage() {
                   Itemized BOQ
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center col-span-2 sm:col-span-1">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   4.9 ★
                 </strong>
