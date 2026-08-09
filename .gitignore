@@ -34,3 +34,6 @@ graphify-out/
 
 # local env (secrets, local flag overrides)
 .env*.local
+
+# backups
+backups/
