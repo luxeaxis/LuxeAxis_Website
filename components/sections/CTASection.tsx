@@ -1,4 +1,5 @@
 import { Button } from '../Button';
+import GoogleRating from '../ui/GoogleRating';
 import { Container, Stack } from '../layout';
 import { ToBePublished } from '../ToBePublished';
 import { BOOK_AUDIT } from '@/lib/nav';
@@ -71,54 +72,40 @@ export function TestimonialBand({
 }) {
   const featured = testimonials[0];
 
-  if (!featured) {
-    return (
-      <section
-        aria-labelledby="testimonial-heading"
-        className="w-full py-section-y"
-      >
-        <Container>
-          <Stack gap={3} className="max-w-measure">
+  return (
+    <section
+      aria-labelledby="testimonial-heading"
+      className="w-full py-section-y relative"
+    >
+      <Container>
+        <Stack gap={6}>
+          <div className="space-y-2">
             <h2
               id="testimonial-heading"
               className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted"
             >
               What our clients say
             </h2>
-            {/* No quote, no name, no photograph. A testimonial with an invented
-                attribution is a fabricated review about a person who does not
-                exist — not a placeholder in any sense that would make it
-                acceptable to render one here. */}
-            <p className="text-on-surface-2">
-              <ToBePublished>
-                Client quotes are published once the client has approved the
-                wording and agreed to be named. To be published.
-              </ToBePublished>
-            </p>
-          </Stack>
-        </Container>
-      </section>
-    );
-  }
+            <h3 className="font-display text-2xl sm:text-3xl font-bold text-on-surface">
+              Verified Client Feedback &amp; Google Ratings
+            </h3>
+          </div>
 
-  return (
-    <section
-      aria-labelledby="testimonial-heading"
-      className="w-full py-section-y"
-    >
-      <Container>
-        <Stack gap={5} className="max-w-measure">
-          <h2 id="testimonial-heading" className="sr-only">
-            What our clients say
-          </h2>
-          <blockquote className="font-display text-[length:var(--typography-h2-font-size)] leading-snug text-on-surface">
-            {featured.quote}
-          </blockquote>
-          <p className="text-small text-on-surface-2">
-            {featured.attribution.name} · {featured.attribution.context}
-          </p>
+          <GoogleRating />
+
+          {featured && (
+            <div className="lx-liquid-glass rounded-2xl p-8 border border-border-subtle/50 bg-surface-deep/40 backdrop-blur-md space-y-4">
+              <blockquote className="font-display text-[length:var(--typography-h2-font-size)] leading-snug text-on-surface">
+                {featured.quote}
+              </blockquote>
+              <p className="text-small text-on-surface-2 font-medium">
+                {featured.attribution.name} · {featured.attribution.context}
+              </p>
+            </div>
+          )}
         </Stack>
       </Container>
     </section>
   );
 }
+

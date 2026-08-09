@@ -6,7 +6,7 @@ import type { Persona } from '@/lib/content/types';
 
 /**
  * "Six Ways In" (Cinematic §5.2, Spec §2.1) — route the six personas fast,
- * without a wall of text.
+ * without a wall of text. All cards are styled to equal height and proportion.
  */
 export function PersonaRouter({ personas }: { personas: readonly Persona[] }) {
   if (personas.length === 0) return null;
@@ -20,6 +20,7 @@ export function PersonaRouter({ personas }: { personas: readonly Persona[] }) {
     >
       <Stagger
         className="grid grid-cols-1 md:grid-cols-3 gap-5"
+        itemClassName="h-full"
         items={personas.map((persona) => (
           <FeatureCard
             key={persona.id}
@@ -27,6 +28,7 @@ export function PersonaRouter({ personas }: { personas: readonly Persona[] }) {
             title={persona.label}
             body={persona.question}
             surface="glass"
+            className="h-full flex flex-col justify-between"
           />
         ))}
       />

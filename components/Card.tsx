@@ -239,17 +239,19 @@ export function FeatureCard({
   className,
 }: FeatureCardProps) {
   const content = (
-    <Stack gap={4}>
+    <Stack gap={4} className="h-full flex flex-col justify-between">
       {icon && (
         <Icon name={icon} size="lg" decorative className="text-accent" />
       )}
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="font-ui text-[length:var(--typography-h3-font-size)] font-semibold text-on-surface transition-colors duration-micro ease-standard group-hover:text-accent">
-          {title}
-        </h3>
-        {href && <TrailingArrow />}
+      <div className="space-y-2">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="font-ui text-[length:var(--typography-h3-font-size)] font-semibold text-on-surface transition-colors duration-micro ease-standard group-hover:text-accent">
+            {title}
+          </h3>
+          {href && <TrailingArrow />}
+        </div>
+        {body && <p className="text-small text-on-surface-2">{body}</p>}
       </div>
-      {body && <p className="text-small text-on-surface-2">{body}</p>}
     </Stack>
   );
 
@@ -385,9 +387,15 @@ export function StatCard({
   className,
 }: StatCardProps) {
   return (
-    <div className={cx(frameClass({ surface, interactive: false }), className)}>
-      <Stack gap={2}>
-        <p className="font-mono text-[length:var(--typography-display-font-size)] leading-tight tabular-nums text-on-surface">
+    <div
+      className={cx(
+        frameClass({ surface, interactive: false }),
+        'overflow-hidden flex flex-col justify-between min-w-0 p-6 sm:p-7',
+        className
+      )}
+    >
+      <Stack gap={2} className="min-w-0 overflow-hidden">
+        <p className="font-mono text-3xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold leading-tight tabular-nums text-on-surface tracking-tight min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
           <StatCounter
             value={value}
             decimals={decimals}
@@ -395,8 +403,9 @@ export function StatCard({
             suffix={suffix}
           />
         </p>
-        <p className="text-small text-on-surface-2">{label}</p>
+        <p className="text-small text-on-surface-2 font-medium leading-snug">{label}</p>
       </Stack>
     </div>
   );
 }
+

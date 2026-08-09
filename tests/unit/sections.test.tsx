@@ -133,10 +133,10 @@ describe('sections waiting on content that does not exist yet', () => {
     expect(document.querySelector('img')).toBeNull();
   });
 
-  it('TestimonialBand says quotes are pending without inventing an attribution', () => {
+  it('TestimonialBand renders Google rating feedback when testimonials are empty', () => {
     render(<TestimonialBand testimonials={[]} />);
-    expect(screen.getByText(/To be published/)).toBeDefined();
-    // No blockquote: a quote with a made-up name is a fabricated review.
+    expect(screen.getByText(/Verified Client Feedback/)).toBeDefined();
+    // No static blockquote when testimonials are empty
     expect(document.querySelector('blockquote')).toBeNull();
   });
 

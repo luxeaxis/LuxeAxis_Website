@@ -76,9 +76,9 @@ export function StatCounter({
   className,
 }: StatCounterProps) {
   const finalText = `${prefix}${formatNumber(value, decimals)}${suffix}`;
-  // Starts already ON the final text — correct with no JS at all (progressive
-  // enhancement) and correct for the reduced-motion path, which never
-  // touches this state.
+  
+  // Starts on finalText for SSR parity & progressive enhancement.
+  // Visual node ticks up smoothly from 0 to target value once scrolled into view.
   const [display, setDisplay] = useState(finalText);
   const visualRef = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
@@ -99,23 +99,29 @@ export function StatCounter({
         hasAnimated.current = true;
         observer.disconnect();
 
-        const durationMs = readDurationMs('--duration-ui', 240);
+        const durationMs = 1200; // Smooth 1.2s running animation duration
         const start = performance.now();
 
+        // Start counting animation from 0
+        setDisplay(`${prefix}${formatNumber(0, decimals)}${suffix}`);
+
         function tick(now: number) {
-          const progress = Math.min(1, (now - start) / durationMs);
-          if (progress < 1) {
+          const rawProgress = Math.min(1, (now - start) / durationMs);
+          // Cubic ease-out: fast initial count, smoothly settling into target
+          const easedProgress = 1 - Math.pow(1 - rawProgress, 3);
+
+          if (rawProgress < 1) {
             setDisplay(
-              `${prefix}${formatNumber(value * progress, decimals)}${suffix}`,
+              `${prefix}${formatNumber(value * easedProgress, decimals)}${suffix}`,
             );
             requestAnimationFrame(tick);
           } else {
-            setDisplay(finalText); // land exactly on the formatted final text
+            setDisplay(finalText); // land exactly on formatted final text
           }
         }
         requestAnimationFrame(tick);
       },
-      { threshold: 0.4 },
+      { threshold: 0.2 },
     );
 
     observer.observe(node);
@@ -125,7 +131,7 @@ export function StatCounter({
   return (
     <span className={className}>
       <span className="sr-only">{finalText}</span>
-      <span ref={visualRef} aria-hidden="true">
+      <span ref={visualRef} aria-hidden="true" className="inline-block max-w-full overflow-hidden text-ellipsis">
         {display}
       </span>
     </span>
