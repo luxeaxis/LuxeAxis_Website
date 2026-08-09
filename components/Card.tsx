@@ -239,20 +239,20 @@ export function FeatureCard({
   className,
 }: FeatureCardProps) {
   const content = (
-    <Stack gap={4} className="h-full flex flex-col justify-between">
+    <div className="h-full flex flex-col justify-between space-y-4">
       {icon && (
         <Icon name={icon} size="lg" decorative className="text-accent" />
       )}
-      <div className="space-y-2">
+      <div className="space-y-2 flex-1 flex flex-col justify-between">
         <div className="flex items-start justify-between gap-3">
           <h3 className="font-ui text-[length:var(--typography-h3-font-size)] font-semibold text-on-surface transition-colors duration-micro ease-standard group-hover:text-accent">
             {title}
           </h3>
           {href && <TrailingArrow />}
         </div>
-        {body && <p className="text-small text-on-surface-2">{body}</p>}
+        {body && <p className="text-small text-on-surface-2 leading-relaxed">{body}</p>}
       </div>
-    </Stack>
+    </div>
   );
 
   if (href) {
@@ -260,7 +260,7 @@ export function FeatureCard({
       <NextLink
         href={href}
         className={cx(
-          'group block',
+          'group block h-full flex flex-col justify-between',
           frameClass({ surface, interactive: true }),
           className,
         )}
@@ -273,7 +273,7 @@ export function FeatureCard({
   return (
     <div
       className={cx(
-        'group block',
+        'group block h-full flex flex-col justify-between',
         frameClass({ surface, interactive: false }),
         className,
       )}

@@ -27,7 +27,8 @@ export function IntelligenceTeaser({
       lede="Four capabilities that do real work on your project — each one a claim we can show you, not a badge on a brochure."
     >
       <Stagger
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch"
+        itemClassName="h-full flex flex-col"
         items={features.map((feature) => (
           <FeatureCard
             key={feature.id}
@@ -36,6 +37,7 @@ export function IntelligenceTeaser({
             title={feature.name}
             body={feature.claim}
             surface="glass"
+            className="h-full flex flex-col justify-between"
           />
         ))}
       />

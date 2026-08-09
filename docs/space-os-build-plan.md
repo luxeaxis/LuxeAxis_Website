@@ -694,11 +694,54 @@ Four engineer-weeks, executed in S13–S14, per the cohort-cutover decision (§2
 | # | Obligation | Consumed by | Due |
 |---|---|---|---|
 | 1 | **Consume `@luxeaxis/design-tokens`** instead of the local `tokens/` pipeline | All Space OS surfaces | S0 |
-| 2 | **Lead capture posts to Space OS** `POST /api/v1/leads` with a scoped public API key, replacing the current direct-to-HubSpot path. Persist locally first, enqueue the sync — never lose a lead to a Space OS outage. | M02 | S3 |
+| 2 | **Lead capture posts to Space OS** `POST /api/v1/leads` with a scoped public API key, replacing the current direct-to-HubSpot path. Persist locally first, enqueue the sync — never lose a lead to a Space OS outage. | M02 | **✅ Endpoint ready** — see contract below |
 | 3 | **Fee calculator + Vastu micro-tool submit as leads** with `source_detail` identifying the tool and the captured inputs in `message`/`utm_*` | M02, M13 | S3 / S13 |
 | 4 | **Client portal link in the site header** once M04 is live, pointing at the Space OS portal domain | M04 | S8 |
 
 The website continues to own its own content, SEO, and performance budgets. Space OS never renders marketing pages, and the website never reads the Space OS database directly.
+
+### 14.1 Lead capture contract — ready now
+
+```http
+POST /api/v1/leads
+x-api-key: <issued via the Admin Console; local dev key in migration 009>
+content-type: application/json
+
+{
+  "source": "WEBSITE",              // or FEE_CALCULATOR, VASTU_TOOL, …
+  "source_detail": "contact-form",
+  "full_name": "Anjali Raman",      // required
+  "email": "anjali@example.com",    // email OR phone required
+  "phone": "+91 90000 12345",
+  "project_type": "3BHK apartment",
+  "budget_range": "20-30L",
+  "message": "…",
+  "utm_source": "google",
+  "utm_campaign": "chennai-interiors"
+}
+```
+
+```jsonc
+// 201
+{ "data": { "id": "019fe788-…", "type": "leads",
+            "attributes": { "status": "NEW",
+                            "sla_fire_at": "2026-08-10T03:30:54.750Z",
+                            "sla_deferred": true,
+                            "possible_duplicate_count": 1 } },
+  "meta": { "request_id": "req_019fe788-…" } }
+```
+
+| Response | Meaning |
+|---|---|
+| `201` | Captured. `sla_fire_at` is when escalation would fire; `sla_deferred` means it fell outside business hours. |
+| `400` | Validation failed — name missing, no contact method, or an unrecognised `source`. |
+| `401` | Missing, unknown, revoked, or expired key. Deliberately indistinguishable. |
+| `403` | Key lacks the `lead.create` scope. |
+| `429` | Per-key rate limit exceeded. |
+
+⚠ **The website must still persist locally before calling this.** A lead lost to a Space OS outage is a lost client, and the loss is invisible.
+
+⚠ `possible_duplicate_count` is a count, never a list of ids. Returning ids would let an unauthenticated caller probe whether a given email is already a client.
 
 ---
 

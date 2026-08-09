@@ -8,6 +8,7 @@ import { Footer } from '@/components/Footer';
 import { ToastProvider } from '@/components/Toast';
 import { ConsentBanner } from '@/components/ConsentBanner';
 import { SmoothScrollGate } from '@/components/SmoothScrollGate';
+import WhatsAppWidget from '@/components/ui/WhatsAppWidget';
 import { JsonLd } from '@/components/JsonLd';
 import { localBusinessJsonLd, organizationJsonLd } from '@/lib/seo/jsonLd';
 import { SITE_ORIGIN } from '@/lib/seo/origin';
@@ -117,6 +118,7 @@ export default function RootLayout({
           </div>
           {children}
           <Footer />
+          <WhatsAppWidget />
           {/* Last in the DOM deliberately: a keyboard user reaches the page's
               real content before the banner, which is the order of importance.
               It is positioned at the bottom of the viewport by CSS. */}
