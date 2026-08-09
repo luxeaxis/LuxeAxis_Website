@@ -51,7 +51,7 @@ describe('WhatsApp Integration & Widget', () => {
     
     // Select Sales channel
     fireEvent.click(screen.getByText('Design inquiries, pricing, & estimates'));
-    expect(screen.getByText('Enter details to start chat')).toBeDefined();
+    expect(screen.getByText('Provide details to personalize your chat')).toBeDefined();
     expect(screen.getByLabelText(/Full Name/i)).toBeDefined();
     expect(screen.getByLabelText(/Email Address/i)).toBeDefined();
     expect(screen.getByLabelText(/Mobile /i)).toBeDefined();
