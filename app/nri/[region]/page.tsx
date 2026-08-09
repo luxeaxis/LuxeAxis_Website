@@ -6,16 +6,37 @@ import { InlineAlert } from '@/components/InlineAlert';
 import { ToBePublished } from '@/components/ToBePublished';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Section } from '@/components/sections/Section';
-import { CTASection } from '@/components/sections/CTASection';
+import { CTASection, TestimonialBand } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
-import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq, FaqJsonLd } from '@/components/Faq';
-import { TestimonialBand } from '@/components/sections/CTASection';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { getFaqs, getNriRegions, getTestimonials } from '@/lib/content/source';
 import { STUDIO, whatsappHref } from '@/lib/content/studio';
-import { NriHeroBackground } from '@/components/sections/NriHeroBackground';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { NRI_HERO_SLIDES, heroSlidesForNriRegion } from '@/lib/content/heroSlides';
 
+/**
+ * `/nri/[region]` (Spec §2.2: `/nri/singapore /uae /usa /uk /canada
+ * /australia`).
+ *
+ * Six prerendered region pages. The only genuinely region-specific fact the
+ * studio has supplied is the region itself, so the page earns its existence by
+ * computing something real from it: the current time in Chennai next to the
+ * current time where the visitor is.
+ *
+ * That is not decoration. §2.1's NRI objection is "can I run a Chennai project
+ * from abroad?", and the concrete form of that worry is "will I be on calls at
+ * 3am". Showing both clocks answers it with arithmetic rather than reassurance.
+ *
+ * ## Why the times are computed at request time, not baked in
+ *
+ * `Intl.DateTimeFormat` with an IANA zone handles daylight saving on both
+ * sides; a stored UTC offset would be silently wrong for several of these
+ * regions for half of every year — and wrong in exactly the season a visitor
+ * checks it. `dynamic = 'force-dynamic'` is the cost of that: these six pages
+ * are server-rendered per request rather than prerendered, which is the right
+ * trade for a fact whose whole value is being currently true.
+ */
 export const dynamicParams = false;
 export const dynamic = 'force-dynamic';
 
@@ -73,11 +94,20 @@ export default async function NriRegionPage({
   );
 
   const highlights = [
-    { title: `${region.name} Timezone`, desc: 'Reviews Scheduled in Your Local Time' },
-    { title: 'Space OS 4K Portal', desc: 'Live Camera Streams & Spend Ledgers' },
+    {
+      title: `${region.name} Timezone`,
+      desc: 'Reviews Scheduled in Your Local Time',
+    },
+    {
+      title: 'Space OS 4K Portal',
+      desc: 'Live Camera Streams & Spend Ledgers',
+    },
     { title: 'Principal Lead', desc: 'Dedicated Senior Site Architect' },
     { title: 'Fixed BOQ Contract', desc: 'Zero Price Escalation Guarantee' },
-    { title: '10-Year Warranty', desc: 'Comprehensive Structural & Joinery Cover' },
+    {
+      title: '10-Year Warranty',
+      desc: 'Comprehensive Structural & Joinery Cover',
+    },
   ];
 
   const protocolPillars = [
@@ -123,13 +153,13 @@ export default async function NriRegionPage({
     {
       feature: 'Material Sourcing',
       traditional: 'Local shop visits required in person during short trips',
-      whiteglove:
-        `Physical material sample kits delivered to your door in ${region.name}`,
+      whiteglove: `Physical material sample kits delivered to your door in ${region.name}`,
     },
     {
       feature: 'Quality Assurance',
       traditional: 'Unchecked joinery finish & uneven tile alignment',
-      whiteglove: 'Laser-guided precision leveling & factory-controlled joinery',
+      whiteglove:
+        'Laser-guided precision leveling & factory-controlled joinery',
     },
     {
       feature: 'Handover State',
@@ -138,30 +168,6 @@ export default async function NriRegionPage({
     },
   ];
 
-  const regionSlides =
-    region.slug === 'singapore'
-      ? [
-          {
-            src: '/posters/nri-singapore-hero.png',
-            alt: 'Singapore Diaspora Luxury Villa Interior Architecture in Chennai',
-            label: 'Singapore Luxury Villa Fit-Out',
-            animationClass: 'animate-ken-burns-zoom-in',
-          },
-          {
-            src: '/posters/nri-singapore-slide-2.png',
-            alt: 'Singapore-Chennai Remote 3D VR Design Studio & Teak Joinery',
-            label: 'SGT Timezone VR Design Studio',
-            animationClass: 'animate-ken-burns-pan',
-          },
-          {
-            src: '/posters/nri-singapore-slide-3.png',
-            alt: 'Italian Marble & Custom Lighting Turnkey Fit-Out for Singapore NRIs',
-            label: 'Turnkey Luxury Interior Fit-Out',
-            animationClass: 'animate-ken-burns-zoom-out',
-          },
-        ]
-      : undefined;
-
   return (
     <main id="main" tabIndex={-1}>
       <FaqJsonLd items={nriFaqs} />
@@ -169,7 +175,7 @@ export default async function NriRegionPage({
       {/* 1. Hero Stage with Ken Burns Background */}
       <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
         {/* Full-Bleed Background Image with Ken Burns Effect */}
-        <NriHeroBackground slides={regionSlides} />
+        <HeroBackground slides={heroSlidesForNriRegion(region.slug)} overlay="dots" />
 
         <Container className="relative z-10">
           <Breadcrumbs
@@ -191,9 +197,11 @@ export default async function NriRegionPage({
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-              Remote luxury interior design and turnkey fit-outs built specifically for clients residing in {region.name}.
-              Design reviews happen over 3D VR video calls in your time zone, with live 4K site feeds,
-              digital and physical material sample kits, and spend ledgers in Space OS.
+              Remote luxury interior design and turnkey fit-outs built
+              specifically for clients residing in {region.name}. Design reviews
+              happen over 3D VR video calls in your time zone, with live 4K site
+              feeds, digital and physical material sample kits, and spend
+              ledgers in Space OS.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
@@ -391,7 +399,14 @@ export default async function NriRegionPage({
         lede="Transparent pricing with zero hidden currency surprises or escalation fees."
       >
         <div className="max-w-measure mx-auto">
-          <InlineAlert tone="info" title={`Accepted payment routes for ${region.name}`}>
+          {/* T-18 asks for a "multi-currency note". What the studio actually
+              accepts from each region is a finance question nobody has
+              answered, and payment terms are precisely the wrong thing to
+              guess at — a visitor could act on it. Named as outstanding. */}
+          <InlineAlert
+            tone="info"
+            title={`Accepted payment routes for ${region.name}`}
+          >
             <ToBePublished
               label={`Verified international bank wire & escrow routes for ${region.name}`}
             />
@@ -399,39 +414,27 @@ export default async function NriRegionPage({
         </div>
       </Section>
 
-      {/* 7. Transformation Showcase */}
-      <Section
-        id="transformation"
-        eyebrow="Remote Project Result"
-        title="Adyar Villa Remote Transformation"
-        lede={`Real NRI villa executed 100% remotely while client resided in ${region.name}.`}
-      >
-        <div className="max-w-4xl mx-auto">
-          <BeforeAfterSlider
-            beforeImage={{
-              src: '/posters/persona-router.avif',
-              alt: 'Bare villa shell before fit-out',
-            }}
-            afterImage={{
-              src: '/posters/portfolio.avif',
-              alt: 'Completed NRI villa in Adyar, Chennai',
-            }}
-          />
-        </div>
-      </Section>
+      {/* A "Remote Project Result" section stood here, captioned "Adyar Villa
+          Remote Transformation" and introduced as a real villa executed while
+          the client lived abroad. Its before/after slider pointed at
+          persona-router.avif and portfolio.avif — two of the 324-byte
+          solid-tone placeholders described in lib/content/posters.ts. A named
+          case study is the strongest claim on this page, and it cannot be the
+          one section rendered from stubs. It returns when the studio's own
+          photography of that project does. */}
 
-      {/* 8. Process Steps */}
+      {/* 7. Process Steps */}
       <ProcessSteps />
 
-      {/* 9. Diaspora Client Stories */}
+      {/* 8. Diaspora Client Stories */}
       <TestimonialBand testimonials={testimonials} />
 
-      {/* 10. FAQ Accordion */}
+      {/* 9. FAQ Accordion */}
       <Section id="faq" eyebrow="Before you ask" title="NRI Remote Design FAQ">
         <Faq items={nriFaqs} />
       </Section>
 
-      {/* 11. CTA Section */}
+      {/* 10. CTA Section */}
       <CTASection />
     </main>
   );

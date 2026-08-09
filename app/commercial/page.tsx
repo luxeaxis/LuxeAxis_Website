@@ -12,6 +12,8 @@ import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { COMMERCIAL_HERO_SLIDES } from '@/lib/content/heroSlides';
 
 const ROUTE = '/commercial';
 
@@ -84,7 +86,7 @@ export default async function CommercialPage() {
         'Structured cabling from day one',
         'Standing desks & ergonomic layouts',
       ],
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/commercial-it-office-hero.png',
     },
     {
       sector: 'Corporate / MNC',
@@ -95,7 +97,7 @@ export default async function CommercialPage() {
         'Executive cabin with acoustic privacy',
         'Brand identity in every surface',
       ],
-      image: '/posters/hero.avif',
+      image: '/posters/commercial-boardroom-hero.png',
     },
     {
       sector: 'SME / Startup',
@@ -106,7 +108,7 @@ export default async function CommercialPage() {
         'Meeting pod and phone booth zones',
         'Fixed price from Rs.900 per sqft',
       ],
-      image: '/posters/persona-router.avif',
+      image: '/posters/digital-hub-hero.png',
     },
     {
       sector: 'Professionals & Clinics',
@@ -117,7 +119,7 @@ export default async function CommercialPage() {
         'Acoustic private consultation rooms',
         'Compliance-aware healthcare design',
       ],
-      image: '/posters/portfolio.avif',
+      image: '/posters/commercial-reception-hero.png',
     },
   ];
 
@@ -126,25 +128,25 @@ export default async function CommercialPage() {
       title: 'Open Collaborative IT Campus',
       tag: 'IT Office',
       location: 'Sholinganallur, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/commercial-it-office-hero.png',
     },
     {
       title: 'Executive Conference Suite & Boardroom',
       tag: 'Boardroom',
       location: 'Nungambakkam, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/commercial-boardroom-hero.png',
     },
     {
       title: 'First Impressions Reception Lobby',
       tag: 'Reception Lobby',
       location: 'Guindy, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/commercial-reception-hero.png',
     },
     {
       title: 'Growth-Ready Startup HQ',
       tag: 'SME Office',
       location: 'OMR, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/digital-hub-hero.png',
     },
   ];
 
@@ -280,50 +282,54 @@ export default async function CommercialPage() {
         })}
       />
 
-      {/* 1. Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Section with Ken Burns & Grid Overlay */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={COMMERCIAL_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs
             path="/commercial"
             labels={{ commercial: 'Office Interiors' }}
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Chennai&apos;s Commercial Interior Specialists
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Office Interior Designers <br />
               <span className="text-accent">in Chennai</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Your office is the first thing clients read. IT firms, corporate
-              HQs, clinics, and startups. Design every sq ft to reflect who you
-              are. Agreed delivery milestones, flat 10-year warranty.
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+              Your office is the physical embodiment of your brand. We design and execute IT parks on OMR, corporate HQs in Guindy & Nungambakkam, startups, and medical clinics. Every square foot engineered for workplace productivity, with contractual delivery milestones and a flat 10-year warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Free Office Consultation
               </Button>
-              <Button as="a" href="/portfolio" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/portfolio"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 View Office Projects →
               </Button>
             </div>
 
             {/* Key Stats Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-accent/20">
               {highlights.map((h) => (
                 <div
                   key={h.title}
-                  className="p-4 rounded-xl lx-liquid-glass-card border border-accent/20"
+                  className="p-4 rounded-xl lx-liquid-glass-card border border-accent/20 text-center"
                 >
                   <strong className="block font-display text-h3 text-accent font-bold">
                     {h.title}

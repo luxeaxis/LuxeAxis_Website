@@ -15,6 +15,8 @@ import { canonicalFor } from '@/lib/seo/hreflang';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
 import { COMMERCIAL_VERTICALS, ratesFor } from '@/lib/content/commercial';
 import { formatBand, formatRupees } from '@/lib/pricing/estimate';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { heroSlidesForVertical } from '@/lib/content/heroSlides';
 
 export const dynamicParams = false;
 
@@ -59,22 +61,22 @@ export default async function CommercialVerticalPage({
           {
             title: 'Open Collaborative Workstations',
             desc: 'Ergonomic benching systems with integrated cable spines, acoustic divider screens, and power drop modules.',
-            image: '/posters/pricing-axis.avif',
+            image: '/posters/commercial-workplace-hero.png',
           },
           {
             title: 'Executive Cabins & Suite',
             desc: 'Acoustically isolated glass cabins with double-glazed partitions, custom veneer credenzas, and mood lighting.',
-            image: '/posters/hero.avif',
+            image: '/posters/commercial-it-office-hero.png',
           },
           {
             title: 'AV Boardrooms & Conference',
             desc: 'Integrated zoom room technology, ceiling-array microphones, sound-absorbing wall cladding, and dimmable scenes.',
-            image: '/posters/persona-router.avif',
+            image: '/posters/commercial-boardroom-hero.png',
           },
           {
             title: 'Breakout Lounges & Pantry',
             desc: 'High-top dining counters, collaborative booth seating, coffee bars, and sound-dampened ceiling baffles.',
-            image: '/posters/portfolio.avif',
+            image: '/posters/commercial-reception-hero.png',
           },
         ]
       : slug === 'retail-hospitality'
@@ -82,44 +84,44 @@ export default async function CommercialVerticalPage({
             {
               title: 'Flagship Retail Showrooms',
               desc: 'Calculated shopper circulation loops, high-CRI accent spotlighting, statement entrance portals, and display joinery.',
-              image: '/posters/persona-router.avif',
+              image: '/posters/commercial-reception-hero.png',
             },
             {
               title: 'Boutique Fashion & Luxury Stores',
               desc: 'Custom brass garment racks, velvet fitting rooms, frameless mirror walls, and integrated cash wrap counters.',
-              image: '/posters/hero.avif',
+              image: '/posters/commercial-boardroom-hero.png',
             },
             {
               title: 'Fine Dining & Specialty Restaurants',
               desc: 'Acoustic banquet seating, warm 2700K dimmable table lighting, commercial kitchen layout flow, and bar counters.',
-              image: '/posters/portfolio.avif',
+              image: '/posters/commercial-workplace-hero.png',
             },
             {
               title: 'Boutique Hotel Lobbies & Lounges',
               desc: 'Grand reception desks, concierge lounges, ambient acoustic ceiling treatments, and durable stone flooring.',
-              image: '/posters/pricing-axis.avif',
+              image: '/posters/commercial-it-office-hero.png',
             },
           ]
         : [
             {
               title: 'Polyclinics & Doctor Chambers',
               desc: 'Infection-resistant seamless vinyl flooring, anti-microbial laminate desks, and patient consultation privacy.',
-              image: '/posters/portfolio.avif',
+              image: '/posters/commercial-reception-hero.png',
             },
             {
               title: 'Dental Operatories & Suites',
               desc: 'Pre-plumbed suction lines, shadowless task lighting, sterilisable surfaces, and soothing patient visual zones.',
-              image: '/posters/pricing-axis.avif',
+              image: '/posters/commercial-it-office-hero.png',
             },
             {
               title: 'Diagnostic Labs & Sample Collection',
               desc: 'Cleanroom-compliant wall cladding, chemical-resistant resin counters, and organised technician workstations.',
-              image: '/posters/hero.avif',
+              image: '/posters/commercial-boardroom-hero.png',
             },
             {
               title: 'Patient Waiting Lounges & Reception',
               desc: 'Calming color palettes, barrier-free wheelchair clearance, acoustic privacy desk partitions, and clear signage.',
-              image: '/posters/persona-router.avif',
+              image: '/posters/commercial-workplace-hero.png',
             },
           ];
 
@@ -155,11 +157,11 @@ export default async function CommercialVerticalPage({
         })}
       />
 
-      {/* 1. Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Section with Ken Burns & CAD Grid Overlay */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={heroSlidesForVertical(vertical.slug)} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           {/* The vertical's own name, not the humanised slug —
               `retail-hospitality` should read "Retail & Hospitality". */}
           <Breadcrumbs
@@ -168,63 +170,69 @@ export default async function CommercialVerticalPage({
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Commercial Architecture & Interiors
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               {vertical.name} Interior Designers <br />
               <span className="text-accent">in Chennai</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               {vertical.summary} Designed against how the space performs, backed
               by a written delivery commitment and flat 10-year warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Request a Consult
               </Button>
-              <Button as="a" href="/portfolio" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/portfolio"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 View Commercial Projects →
               </Button>
             </div>
 
             {/* Key Stats Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
-              <div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-accent/20">
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   Written
                 </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
                   Delivery commitment
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   10 Yr
                 </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
                   Flat Warranty
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   100%
                 </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
                   Fixed BOQ Quote
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   4.9 ★
                 </strong>
-                <span className="text-overline text-on-surface-muted uppercase tracking-wider">
+                <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
                   Google Rating
                 </span>
               </div>

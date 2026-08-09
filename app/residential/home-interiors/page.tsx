@@ -401,10 +401,16 @@ export default async function HomeInteriorsPage() {
             </div>
           </Stack>
 
-          <div className="relative rounded-2xl overflow-hidden border border-accent/30 aspect-[4/3] shadow-2xl group">
+          {/* 16/9, not the 4/3 this slot used to be. The image is 889x486 and
+              `object-cover` in a 4/3 box crops ~27% off each side — which here
+              means losing the entryway on the left and the pooja mandap and
+              consultation desk on the right. Those are the parts that make the
+              picture argue "every room, one studio" rather than "a living
+              room", so the frame follows the photograph. */}
+          <div className="relative rounded-2xl overflow-hidden border border-accent/30 aspect-[16/9] shadow-2xl group">
             <Image
-              src="/posters/hero.avif"
-              alt="Complete home interior design by Luxe Axis"
+              src="/posters/home-interiors-every-room.png"
+              alt="Open-plan show home with the entryway, living room, dining area, kitchen, bedroom and a carved teak pooja mandap all visible in one view, while two designers review floor plans and material samples at a consultation desk."
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -626,12 +632,12 @@ export default async function HomeInteriorsPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
-              alt: 'Bare 3BHK apartment before interior design execution',
+              src: '/posters/home-transformation-before.png',
+              alt: 'Bare 3BHK apartment shell with raw concrete walls in Adyar, Chennai before interior execution',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
-              alt: 'Complete luxury 3BHK interior transformation after execution',
+              src: '/posters/home-transformation-after.png',
+              alt: 'Completed luxury 3BHK interior with statuario marble and false ceiling in Adyar, Chennai',
             }}
           />
           <p className="text-center text-small text-on-surface-muted mt-3">

@@ -29,7 +29,7 @@ const HERO_SLIDES: readonly HeroSlide[] = [
     category: 'Architectural Interiors & Vastu-Tech',
     location: 'Poes Garden',
     videoUrl: '/videos/hero-slide-1.mp4',
-    posterUrl: '/posters/hero.avif',
+    posterUrl: '/posters/hero-poes-garden.png',
     href: '/portfolio/villas',
   },
   {
@@ -39,7 +39,7 @@ const HERO_SLIDES: readonly HeroSlide[] = [
     category: 'Luxury Minimalist Residence',
     location: 'Adyar',
     videoUrl: '/videos/hero-slide-2.mp4',
-    posterUrl: '/posters/portfolio.avif',
+    posterUrl: '/posters/hero-adyar-penthouse.png',
     href: '/portfolio',
   },
   {
@@ -49,7 +49,7 @@ const HERO_SLIDES: readonly HeroSlide[] = [
     category: 'Commercial Architecture & Workspace OS',
     location: 'OMR IT Corridor',
     videoUrl: '/videos/hero-slide-3.mp4',
-    posterUrl: '/posters/space-os.avif',
+    posterUrl: '/posters/hero-omr-campus.png',
     href: '/commercial',
   },
   {
@@ -59,7 +59,7 @@ const HERO_SLIDES: readonly HeroSlide[] = [
     category: 'Sustainable Coastal Villa',
     location: 'East Coast Road',
     videoUrl: '/videos/hero-slide-4.mp4',
-    posterUrl: '/posters/journey.avif',
+    posterUrl: '/posters/hero-ecr-sanctuary.png',
     href: '/portfolio',
   },
 ];
@@ -237,6 +237,32 @@ export function Hero({
                       Featured Showcase {activeSlide.number}
                     </span>
                   </div>
+
+                  {/* The pause control the `paused` state above was written for
+                      but never given. Four slides advancing every ten seconds
+                      is exactly what WCAG 2.2.2 asks be stoppable, and the
+                      reduced-motion branch is not a substitute — it serves
+                      visitors whose OS already says so, not the one who simply
+                      wants to finish reading this card. */}
+                  {!reducedMotion && (
+                    <button
+                      type="button"
+                      onClick={() => setPaused((prev) => !prev)}
+                      aria-pressed={paused}
+                      aria-label={
+                        paused
+                          ? 'Resume featured project slideshow'
+                          : 'Pause featured project slideshow'
+                      }
+                      className="absolute top-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-surface-deep/80 text-accent border border-accent/40 backdrop-blur-sm shadow-lg transition-colors hover:bg-surface-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    >
+                      <Icon
+                        name={paused ? 'play' : 'pause'}
+                        size="sm"
+                        decorative
+                      />
+                    </button>
+                  )}
 
                   <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-3 text-on-surface">
                     <div className="min-w-0 flex-1 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">

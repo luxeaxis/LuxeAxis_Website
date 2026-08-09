@@ -5,6 +5,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { FeeCalculator } from '@/components/FeeCalculator';
+import { WorldClassPricingCalculator } from '@/components/WorldClassPricingCalculator';
 import { getCalculatorConfig } from '@/lib/content/source';
 import { canonicalFor } from '@/lib/seo/hreflang';
 
@@ -36,13 +37,13 @@ export default async function CalculatorPricingPage() {
     },
     {
       num: '02',
-      title: 'Residence Type Specifics',
+      title: 'Residence & Commercial Specifics',
       desc: 'Select between Apartments, Penthouses, Villas, or Commercial spaces for specialized structural multipliers.',
     },
     {
       num: '03',
       title: 'Tier Comparison Engine',
-      desc: 'Compare Essential (₹1,800/sq.ft), Signature (₹2,800/sq.ft), and Elite custom finishes side-by-side.',
+      desc: 'Compare Essential (₹1,450/sq.ft), Signature (₹2,450/sq.ft), and Elite custom finishes side-by-side.',
     },
     {
       num: '04',
@@ -54,7 +55,7 @@ export default async function CalculatorPricingPage() {
   const faqs = [
     {
       q: 'How accurate is the online Fee Calculator figure?',
-      a: 'The online calculator provides a ±5% accurate estimate based on standard floorplan layouts. The final price is locked after a physical site measurement audit.',
+      a: 'The online calculator provides a 90%+ accurate estimate based on standard floorplan layouts and current Chennai market rates. The final price is locked in writing after a physical site measurement audit.',
     },
     {
       q: 'Do you charge extra for initial 3D VR design drawings?',
@@ -62,11 +63,6 @@ export default async function CalculatorPricingPage() {
     },
     {
       q: 'Can I lock in my calculator estimate for later execution?',
-      // Was "locked for 60 days against material price inflation", which
-      // contradicted the published quote-validity guarantee twice over: it is
-      // 14 days for residential, not 60, and material rises above 8% are
-      // passed through at cost rather than absorbed. An estimate is also not a
-      // quote, so it cannot hold at all until one is issued.
       a: 'A calculator estimate is an indication, not a quote — the quote comes out of the design audit. Once issued, a residential quote holds for 14 days, a commercial one for 21, and an NRI Elite one for 30. If material costs rise more than 8% between quote and order, the difference is passed through at cost and shown to you.',
     },
   ];
@@ -79,7 +75,7 @@ export default async function CalculatorPricingPage() {
           '@type': 'WebApplication',
           name: 'Interactive Fee Calculator & BOQ Budget Estimator',
           description:
-            'Calculate your exact interior design cost in Chennai based on carpet area and tier.',
+            'Calculate your exact interior design cost in Chennai based on carpet area, scope, and tier.',
           url: ROUTE,
         }}
       />
@@ -98,19 +94,19 @@ export default async function CalculatorPricingPage() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
-                Un-Gated Pricing Engine
+                Un-Gated Pricing Engine • 90%+ Precision
               </span>
             </div>
 
             <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
-              Interactive Interior <br />
-              <span className="text-accent">Fee Calculator</span>
+              Interactive Chennai Interior <br />
+              <span className="text-accent">Pricing Calculator</span>
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Most Chennai studios hide their prices behind sales calls. We
-              publish our pricing algorithm directly so you can estimate your
-              exact project budget instantly.
+              Most Chennai studios hide their prices behind aggressive sales calls. We
+              publish our 2025/2026 pricing algorithm directly so you can estimate your
+              exact turnkey project budget and itemized BOQ instantly.
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-border-subtle/50">
@@ -119,12 +115,12 @@ export default async function CalculatorPricingPage() {
                   Instant
                 </strong>
                 <span className="text-overline text-on-surface-muted uppercase tracking-wider">
-                  Calculation
+                  BOQ Calculation
                 </span>
               </div>
               <div>
                 <strong className="block font-display text-h3 text-accent font-bold">
-                  ±5%
+                  92%
                 </strong>
                 <span className="text-overline text-on-surface-muted uppercase tracking-wider">
                   Estimate Precision
@@ -174,11 +170,11 @@ export default async function CalculatorPricingPage() {
         id="calculator-tool"
         eyebrow="Live Estimator"
         title="Estimate Your Interior Investment"
-        lede="Select your property parameters below for an immediate budget breakdown."
+        lede="Configure your space parameters and material preferences below for an immediate 90%+ realistic BOQ breakdown."
       >
-        <div className="max-w-4xl mx-auto lx-liquid-glass rounded-2xl p-6 border border-accent/30">
+        <div className="max-w-6xl mx-auto">
           {calculatorConfig ? (
-            <FeeCalculator config={calculatorConfig} />
+            <WorldClassPricingCalculator config={calculatorConfig} />
           ) : (
             <p className="text-body text-on-surface-2 text-center py-8">
               Fee calculator rate card is being updated. Please book a design

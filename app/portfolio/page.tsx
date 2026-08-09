@@ -11,6 +11,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { PORTFOLIO_HERO_SLIDES } from '@/lib/content/heroSlides';
 
 const ROUTE = '/portfolio';
 
@@ -36,21 +38,21 @@ export default async function PortfolioPage() {
       count: '15+ Projects',
       desc: 'Panoramic high-rise duplex transformations with double-height Italian marble walls and automated sky lounges.',
       href: '/portfolio/penthouses',
-      image: '/posters/hero.avif',
+      image: '/posters/residential-living-room-hero.png',
     },
     {
       title: 'Gated Estate Villas',
       count: '25+ Projects',
       desc: 'Sprawling private sanctuary architecture with Vastu-Tech solar alignment, central courtyards, and solid teakwood joinery.',
       href: '/portfolio/villas',
-      image: '/posters/persona-router.avif',
+      image: '/posters/residential-luxury-hero.png',
     },
     {
       title: 'Luxury Apartments',
       count: '150+ Projects',
       desc: 'Smart 2BHK, 3BHK, and 4BHK urban flat interiors featuring Blum soft-close BWP kitchens and sensor wardrobes.',
       href: '/portfolio/apartments',
-      image: '/posters/portfolio.avif',
+      image: '/posters/residential-apartments-hero.png',
     },
   ];
 
@@ -61,7 +63,7 @@ export default async function PortfolioPage() {
       location: 'Adyar, Chennai',
       area: '8,200 sq.ft',
       tier: 'Elite Tier',
-      image: '/posters/persona-router.avif',
+      image: '/posters/residential-luxury-hero.png',
       desc: '5BHK gated villa featuring central open-to-sky courtyard, Vastu-Tech brass mandap, and Calacatta marble flooring.',
     },
     {
@@ -70,7 +72,7 @@ export default async function PortfolioPage() {
       location: 'OMR, Chennai',
       area: '5,800 sq.ft',
       tier: 'Signature Tier',
-      image: '/posters/hero.avif',
+      image: '/posters/residential-living-room-hero.png',
       desc: 'Double-height living room with book-matched Calacatta marble wall, suspended brass chandelier, and automated sky lounge.',
     },
     {
@@ -79,7 +81,7 @@ export default async function PortfolioPage() {
       location: 'Nungambakkam, Chennai',
       area: '6,400 sq.ft',
       tier: 'Elite Tier',
-      image: '/posters/portfolio.avif',
+      image: '/posters/residential-apartments-hero.png',
       desc: 'Panoramic terrace apartment with Venetian plaster walls, motorized drapery, and integrated Bang & Olufsen soundscapes.',
     },
     {
@@ -88,7 +90,7 @@ export default async function PortfolioPage() {
       location: 'T. Nagar, Chennai',
       area: '1,850 sq.ft',
       tier: 'Signature Tier',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/home-interiors-hero.png',
       desc: 'Smart 3BHK apartment with fluted louvers, concealed pooja room mandap, and acrylic modular kitchen.',
     },
     {
@@ -97,7 +99,7 @@ export default async function PortfolioPage() {
       location: 'Besant Nagar, Chennai',
       area: '7,500 sq.ft',
       tier: 'Elite Tier',
-      image: '/posters/hero.avif',
+      image: '/posters/nri-hub-hero.png',
       desc: 'Contemporary beachside villa with teakwood ceiling rafters, sea-facing master suite lounge, and automated deck.',
     },
     {
@@ -106,7 +108,7 @@ export default async function PortfolioPage() {
       location: 'Velachery, Chennai',
       area: '2,400 sq.ft',
       tier: 'Signature Tier',
-      image: '/posters/portfolio.avif',
+      image: '/posters/residential-bedroom-hero.png',
       desc: 'Spacious 4BHK featuring Italian marble dining counter, floor-to-ceiling sliding wardrobes, and Gyproc false ceilings.',
     },
     {
@@ -115,7 +117,7 @@ export default async function PortfolioPage() {
       location: 'Sholinganallur, Chennai',
       area: '12,000 sq.ft',
       tier: 'Commercial Fit-Out',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/digital-hub-hero.png',
       desc: 'Activity-based workstations, collaborative tech hubs, quiet zones, and acoustic sound-masking ceiling baffles.',
     },
     {
@@ -124,7 +126,7 @@ export default async function PortfolioPage() {
       location: 'Anna Nagar, Chennai',
       area: '6,800 sq.ft',
       tier: 'Signature Tier',
-      image: '/posters/persona-router.avif',
+      image: '/posters/residential-pooja-room-hero.png',
       desc: 'Modernized traditional villa with carved solid teak main door, onyx lighted bar counter, and home theater suite.',
     },
   ];
@@ -186,44 +188,50 @@ export default async function PortfolioPage() {
         }}
       />
 
-      {/* 1. Hero Stage */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage with Animated Ken Burns Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={PORTFOLIO_HERO_SLIDES} />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs path="/portfolio" />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Curated Architectural & Interior Works
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Completed Projects <br />
               <span className="text-accent">Catalogue</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
-              Real photography of finished homes and commercial spaces in
-              Chennai. Explore our curated penthouse residences, gated estate
-              villas, luxury apartments, and corporate tech hubs.
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+              Real photography of finished luxury residences and commercial environments across Chennai.
+              Explore our curated penthouse sky villas, gated estate sanctuaries,
+              high-rise apartments, and corporate IT headquarters.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Free Design Audit
               </Button>
-              <Button as="a" href="/pricing" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/pricing"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 Calculate Project BOQ →
               </Button>
             </div>
 
-            {/* Key Stats Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
-              <div>
+            {/* Key Stats Bar with Liquid Glass Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-accent/20">
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   45+
                 </strong>
@@ -231,7 +239,7 @@ export default async function PortfolioPage() {
                   Delivered Works
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   100%
                 </strong>
@@ -239,7 +247,7 @@ export default async function PortfolioPage() {
                   On-Time Handover
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   10 Yr
                 </strong>
@@ -247,7 +255,7 @@ export default async function PortfolioPage() {
                   Flat Warranty
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   4.9 ★
                 </strong>
@@ -255,7 +263,7 @@ export default async function PortfolioPage() {
                   Google Rating
                 </span>
               </div>
-              <div>
+              <div className="lx-liquid-glass-card p-4 rounded-xl text-center col-span-2 sm:col-span-1">
                 <strong className="block font-display text-h3 text-accent font-bold">
                   3+
                 </strong>

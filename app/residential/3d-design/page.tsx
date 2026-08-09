@@ -11,7 +11,8 @@ import { JsonLd } from '@/components/JsonLd';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
-import { ThreeDHeroBackground } from '@/components/sections/ThreeDHeroBackground';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { THREE_D_HERO_SLIDES } from '@/lib/content/heroSlides';
 
 const ROUTE = '/residential/3d-design';
 
@@ -199,7 +200,7 @@ export default async function ThreeDDesignPage() {
       {/* 1. Hero Section with Ken Burns Cinematic Background */}
       <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
         {/* Full-Bleed Background with Ken Burns Animated 3D Interior Renders */}
-        <ThreeDHeroBackground />
+        <HeroBackground slides={THREE_D_HERO_SLIDES} overlay="grid" />
 
         <Container className="relative z-10">
           <Breadcrumbs
@@ -221,9 +222,10 @@ export default async function ThreeDDesignPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-              Walk through your new home in photorealistic V-Ray 3D before any work begins.
-              Approve every material, lighting cove, and custom joinery detail.
-              Free with every Luxe Axis project tier with a 45-day delivery guarantee.
+              Walk through your new home in photorealistic V-Ray 3D before any
+              work begins. Approve every material, lighting cove, and custom
+              joinery detail. Free with every Luxe Axis project tier with a
+              45-day delivery guarantee.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">

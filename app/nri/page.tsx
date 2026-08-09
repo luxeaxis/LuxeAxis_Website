@@ -12,7 +12,8 @@ import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { getFaqs, getNriRegions, getTestimonials } from '@/lib/content/source';
-import { NriHeroBackground } from '@/components/sections/NriHeroBackground';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { NRI_HERO_SLIDES } from '@/lib/content/heroSlides';
 
 const ROUTE = '/nri';
 
@@ -32,10 +33,16 @@ export default async function NriPage() {
 
   const highlights = [
     { title: 'Timezone-Flexible', desc: '3D VR Reviews in Your Local Time' },
-    { title: 'Space OS 4K Portal', desc: 'Live Camera Streams & Spend Ledgers' },
+    {
+      title: 'Space OS 4K Portal',
+      desc: 'Live Camera Streams & Spend Ledgers',
+    },
     { title: 'Principal Architect', desc: 'On-Ground Lead Supervision' },
     { title: 'Fixed BOQ Contract', desc: 'Zero Price Escalation Guarantee' },
-    { title: '10-Year Warranty', desc: 'Comprehensive Structural & Joinery Cover' },
+    {
+      title: '10-Year Warranty',
+      desc: 'Comprehensive Structural & Joinery Cover',
+    },
   ];
 
   const protocolPillars = [
@@ -87,7 +94,8 @@ export default async function NriPage() {
     {
       feature: 'Quality Assurance',
       traditional: 'Unchecked joinery finish & uneven tile alignment',
-      whiteglove: 'Laser-guided precision leveling & factory-controlled joinery',
+      whiteglove:
+        'Laser-guided precision leveling & factory-controlled joinery',
     },
     {
       feature: 'Handover State',
@@ -105,7 +113,7 @@ export default async function NriPage() {
       {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
       <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
         {/* Full-Bleed Animated Background with Ken Burns Effect */}
-        <NriHeroBackground />
+        <HeroBackground slides={NRI_HERO_SLIDES} overlay="dots" />
 
         <Container className="relative z-10">
           <Breadcrumbs path="/nri" labels={{ nri: 'NRI Remote Design' }} />
@@ -124,10 +132,11 @@ export default async function NriPage() {
             </h1>
 
             <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-              Bespoke interior design and turnkey fit-outs for overseas home-owners.
-              You do not need to take work leave or ask relatives to supervise a site.
-              Design reviews happen over 3D VR video calls in your timezone, with live 4K site feeds,
-              curated material sample kits sent abroad, and milestone spend tracking in Space OS.
+              Bespoke interior design and turnkey fit-outs for overseas
+              home-owners. You do not need to take work leave or ask relatives
+              to supervise a site. Design reviews happen over 3D VR video calls
+              in your timezone, with live 4K site feeds, curated material sample
+              kits sent abroad, and milestone spend tracking in Space OS.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">

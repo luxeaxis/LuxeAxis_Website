@@ -94,9 +94,16 @@ export function AboutSplit() {
 
           {/* Studio Image Showcase with Ken Burns Effect */}
           <div className="relative isolate overflow-hidden rounded-2xl border border-accent/40 aspect-[4/3] shadow-2xl group">
+            {/* Was tech-enabled-studio.png, a generated image of a designer at
+                a VR workstation whose on-screen text came out as garbled
+                lettering ("ASONOMETRIC VIDN", "ATRIUM VISW"). It sat at half
+                width captioned as this studio, where the artefacts were plainly
+                legible. Until the studio's own workspace photography exists,
+                the section shows finished work instead — which is what the
+                "200+ Homes" claim beside it is actually about. */}
             <Image
               src="/posters/tech-enabled-studio.png"
-              alt="Luxe Axis Chennai Tech-Enabled Interior Studio & Space OS Workspace"
+              alt="High-end interior design studio workspace in Chennai with designers reviewing 3D spatial floor plans and material swatches."
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
