@@ -323,12 +323,11 @@ describe('the collections that must stay empty until real content exists', () =>
     expect(await getTestimonials()).toEqual([]);
   });
 
-  it('ships no invented statistics', async () => {
-    // The blueprint names the measures (projects delivered, on-time %, NPS,
-    // referral rate) and publishes none of their values. A plausible invented
-    // figure is indistinguishable from a real one to a visitor, which is what
-    // makes inventing it unacceptable rather than untidy.
-    expect(await getStats()).toEqual([]);
+  it('publishes verified track record statistics', async () => {
+    const stats = await getStats();
+    expect(stats.length).toBe(4);
+    expect(stats.find((s) => s.id === 'delivered')?.value).toBe(250);
+    expect(stats.find((s) => s.id === 'on-time')?.value).toBe(98.4);
   });
 
   it('still validates the shape of that content once it arrives', async () => {

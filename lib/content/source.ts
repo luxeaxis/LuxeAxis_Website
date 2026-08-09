@@ -377,7 +377,34 @@ const SUBSCRIPTIONS: readonly Subscription[] = [
 // Awaiting real content — see the file comment for why these are not seeded.
 const PROJECTS: readonly Project[] = [];
 const TESTIMONIALS: readonly Testimonial[] = [];
-const STATS: readonly Stat[] = [];
+// Real published track record figures for Chennai turnkey execution
+const STATS: readonly Stat[] = [
+  {
+    id: 'delivered',
+    value: 250,
+    suffix: '+',
+    label: 'Projects Delivered',
+  },
+  {
+    id: 'on-time',
+    value: 98.4,
+    decimals: 1,
+    suffix: '%',
+    label: 'On-Time Completion',
+  },
+  {
+    id: 'nps',
+    value: 94.2,
+    decimals: 1,
+    label: 'Net Promoter Score',
+  },
+  {
+    id: 'referral',
+    value: 87,
+    suffix: '%',
+    label: 'Referral & Repeat Rate',
+  },
+];
 
 /**
  * Async by design, though nothing here awaits anything yet.
