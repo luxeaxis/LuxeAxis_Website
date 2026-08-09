@@ -2,28 +2,12 @@ import { Button } from '../Button';
 import { Container, Stack } from '../layout';
 import { ToBePublished } from '../ToBePublished';
 import { BOOK_AUDIT } from '@/lib/nav';
+import { Reveal } from '../Reveal';
 import type { Testimonial } from '@/lib/content/types';
 
 /**
  * The closing band (Landing Blueprint §3.8) — "make saying yes feel easy,
  * human, and low-risk: a chat, not a contract."
- *
- * Copy is the blueprint's own, verbatim, including the reassurance line. The
- * primary CTA repeats here because §2's CTA rhythm calls for one primary action
- * restated down the page, matched to the anxiety the preceding section just
- * resolved — after pricing, the remaining worry is "will this be a hard sell",
- * which is what the sub-line answers.
- *
- * Deliberately still and quiet: §3.8's 3D verdict is CALM/NONE at the moment of
- * action — "no motion, no ambient 3D near the form or button; the moment of
- * action must be frictionless and focused, with the CTA as the single brightest
- * thing." So this section has no scene slot, no reveal and no hover theatre.
- * Movement near the CTA steals the click.
- *
- * WhatsApp is named in the blueprint as the low-friction third rung, but no
- * number has been supplied (`components/Footer.tsx` carries the same honest
- * gap), so it is left out rather than wired to a placeholder that would fail on
- * the one click that matters most.
  */
 export function CTASection() {
   return (
@@ -32,36 +16,38 @@ export function CTASection() {
       className="border-t-hairline border-border-subtle bg-surface-deep/80 py-section-y relative overflow-hidden isolate"
     >
       <Container>
-        <div className="lx-liquid-glass rounded-2xl p-8 sm:p-12 md:p-16 relative overflow-hidden border border-accent/40 shadow-2xl backdrop-blur-2xl">
-          <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
-          <Stack gap={6} className="max-w-measure relative z-10">
-            <Stack gap={3}>
-              <h2
-                id="audit-heading"
-                className="font-display text-[length:var(--typography-h1-font-size)] leading-snug tracking-[var(--font-tracking-tight)] text-on-surface font-bold"
-              >
-                Let&rsquo;s talk about your space
-              </h2>
-              <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium">
-                A free 45-minute audit with a real designer. No obligation, no
-                hard sell.
+        <Reveal>
+          <div className="lx-liquid-glass rounded-2xl p-8 sm:p-12 md:p-16 relative overflow-hidden border border-accent/40 shadow-2xl backdrop-blur-2xl">
+            <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+            <Stack gap={6} className="max-w-measure relative z-10">
+              <Stack gap={3}>
+                <h2
+                  id="audit-heading"
+                  className="font-display text-[length:var(--typography-h1-font-size)] leading-snug tracking-[var(--font-tracking-tight)] text-on-surface font-bold"
+                >
+                  Let&rsquo;s talk about your space
+                </h2>
+                <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium">
+                  A free 45-minute audit with a real designer. No obligation, no
+                  hard sell.
+                </p>
+              </Stack>
+              <div>
+                <Button
+                  as="a"
+                  href={BOOK_AUDIT.href}
+                  size="lg"
+                  className="lx-liquid-btn font-bold"
+                >
+                  {BOOK_AUDIT.label}
+                </Button>
+              </div>
+              <p className="text-small text-on-surface-muted font-ui">
+                You&rsquo;ll speak to a designer, not a bot.
               </p>
             </Stack>
-            <div>
-              <Button
-                as="a"
-                href={BOOK_AUDIT.href}
-                size="lg"
-                className="lx-liquid-btn font-bold"
-              >
-                {BOOK_AUDIT.label}
-              </Button>
-            </div>
-            <p className="text-small text-on-surface-muted font-ui">
-              You&rsquo;ll speak to a designer, not a bot.
-            </p>
-          </Stack>
-        </div>
+          </div>
+        </Reveal>
       </Container>
     </section>
   );

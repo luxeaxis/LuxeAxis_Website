@@ -1,5 +1,6 @@
 import { Container, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
+import { Reveal, Stagger } from '@/components/Reveal';
 
 /**
  * ProcessSteps — 5-step workflow overview (Build Backlog HomeOne Layout Alignment).
@@ -35,32 +36,35 @@ export function ProcessSteps() {
 
   return (
     <section
-      className="bg-surface-deep/40 py-section-y border-b border-border-subtle"
+      className="bg-surface-deep/40 py-section-y border-b border-border-subtle overflow-hidden"
       aria-labelledby="process-heading"
     >
       <Container>
         <Stack gap={8}>
-          <Stack gap={3} className="text-center max-w-measure mx-auto">
-            <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent font-semibold">
-              How We Work
-            </p>
-            <h2
-              id="process-heading"
-              className="font-display text-[length:var(--typography-h2-font-size)] leading-tight text-on-surface"
-            >
-              5 Steps from Brief to Guaranteed Handover
-            </h2>
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
-              A structured, transparent journey designed to eliminate delays and
-              budget surprises.
-            </p>
-          </Stack>
+          <Reveal>
+            <Stack gap={3} className="text-center max-w-measure mx-auto">
+              <p className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-accent font-semibold">
+                How We Work
+              </p>
+              <h2
+                id="process-heading"
+                className="font-display text-[length:var(--typography-h2-font-size)] leading-tight text-on-surface"
+              >
+                5 Steps from Brief to Guaranteed Handover
+              </h2>
+              <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2">
+                A structured, transparent journey designed to eliminate delays and
+                budget surprises.
+              </p>
+            </Stack>
+          </Reveal>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-5">
-            {steps.map((step, idx) => (
+          <Stagger
+            className="grid grid-cols-1 gap-6 md:grid-cols-5"
+            items={steps.map((step, idx) => (
               <div
                 key={step.num}
-                className="relative rounded-xl lx-liquid-glass-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-lg"
+                className="relative rounded-xl lx-liquid-glass-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-lg h-full flex flex-col justify-between"
               >
                 <Stack gap={3}>
                   <div className="flex items-center justify-between">
@@ -85,13 +89,15 @@ export function ProcessSteps() {
                 </Stack>
               </div>
             ))}
-          </div>
+          />
 
-          <div className="text-center">
-            <Button as="a" href="/process" variant="primary">
-              View Detailed Process Guide
-            </Button>
-          </div>
+          <Reveal>
+            <div className="text-center">
+              <Button as="a" href="/process" variant="primary">
+                View Detailed Process Guide
+              </Button>
+            </div>
+          </Reveal>
         </Stack>
       </Container>
     </section>
