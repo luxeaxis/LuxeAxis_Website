@@ -51,7 +51,7 @@ export default async function HomeInteriorsPage() {
     {
       title: 'Curated Living Spaces',
       tag: 'Living Room',
-      image: '/posters/hero.avif',
+      image: '/posters/room-living-room.png',
       href: '/residential/living-room',
       specs: [
         'Gyproc false ceiling with magnetic LED cove lighting',
@@ -62,7 +62,7 @@ export default async function HomeInteriorsPage() {
     {
       title: 'Restful Master Suites',
       tag: 'Bedroom',
-      image: '/posters/portfolio.avif',
+      image: '/posters/room-master-bedroom.png',
       href: '/residential/bedroom',
       specs: [
         'Floor-to-ceiling sliding glass wardrobes with sensor LEDs',
@@ -73,7 +73,7 @@ export default async function HomeInteriorsPage() {
     {
       title: 'Precision-Built Kitchens',
       tag: 'Modular Kitchen',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/room-modular-kitchen.png',
       href: '/residential/modular-kitchen',
       specs: [
         'BWP boiling-water-proof marine plywood carcass',
@@ -84,7 +84,7 @@ export default async function HomeInteriorsPage() {
     {
       title: 'Sacred Spaces, Crafted',
       tag: 'Pooja Room',
-      image: '/posters/persona-router.avif',
+      image: '/posters/room-pooja-room.png',
       href: '/residential/pooja-room',
       specs: [
         'Vastu-Tech aligned brass & backlit onyx mandaps',
@@ -95,7 +95,7 @@ export default async function HomeInteriorsPage() {
     {
       title: 'Playful. Safe. Built to Grow.',
       tag: 'Kids Room',
-      image: '/posters/portfolio.avif',
+      image: '/posters/room-kids-room.png',
       href: '/residential/bedroom',
       specs: [
         'Non-toxic anti-scratch laminate & soft-edge joinery',
@@ -106,7 +106,7 @@ export default async function HomeInteriorsPage() {
     {
       title: 'Engineered to Store More',
       tag: 'Wardrobe & Storage',
-      image: '/posters/hero.avif',
+      image: '/posters/room-wardrobe-storage.png',
       href: '/residential/wardrobe',
       specs: [
         'Custom walk-in wardrobe suites & bi-fold glass doors',
