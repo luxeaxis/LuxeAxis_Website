@@ -118,25 +118,25 @@ export default async function ApartmentsPage() {
       title: 'Premium 3BHK Apartment Interior',
       tag: '3BHK Full Interior',
       location: 'Adyar, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/apt-project-3bhk-adyar.png',
     },
     {
       title: 'Contemporary 2BHK Space-Optimized Flat',
       tag: '2BHK Living Room',
       location: 'T. Nagar, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/project-2bhk-tnagar.png',
     },
     {
       title: 'Ergonomic Modular Kitchen in 2BHK',
       tag: 'Apartment Kitchen',
       location: 'Velachery, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/residential-modular-kitchen-hero.png',
     },
     {
       title: 'Luxury 4BHK Master Bedroom Suite',
       tag: '4BHK Master Suite',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/residential-bedroom-hero.png',
     },
   ];
 
