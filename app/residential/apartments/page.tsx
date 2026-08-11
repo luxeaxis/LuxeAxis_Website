@@ -509,11 +509,11 @@ export default async function ApartmentsPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/home-transformation-before.png',
+              src: '/posters/apt-before-matched.png',
               alt: 'Bare Chennai apartment before interior design execution',
             }}
             afterImage={{
-              src: '/posters/home-transformation-after.png',
+              src: '/posters/apt-after-matched.png',
               alt: 'Complete apartment interior design by Luxe Axis',
             }}
           />
