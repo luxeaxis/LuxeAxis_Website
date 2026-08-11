@@ -443,8 +443,8 @@ export default async function ApartmentsPage() {
 
           <div className="relative rounded-2xl overflow-hidden border border-accent/30 aspect-[4/5] shadow-2xl group">
             <Image
-              src="/posters/portfolio.avif"
-              alt="Apartment space optimization design by Luxe Axis"
+              src="/posters/apartment-expertise-chennai.png"
+              alt="Apartment space optimization design by Luxe Axis in Chennai"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover group-hover:scale-105 transition-transform duration-700"
