@@ -152,25 +152,25 @@ export default async function HomeInteriorsPage() {
       title: 'Full 3BHK Home Transformation',
       tag: 'Complete 3BHK',
       location: 'Adyar, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/project-3bhk-adyar.png',
     },
     {
       title: 'Modern 2BHK Full-Home Interior',
       tag: '2BHK Complete',
       location: 'T. Nagar, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/project-2bhk-tnagar.png',
     },
     {
       title: 'Luxury 4BHK Penthouse Interior',
       tag: '4BHK Luxury',
       location: 'OMR, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/project-4bhk-penthouse-omr.png',
     },
     {
       title: 'Sprawling Full Villa Interior',
       tag: 'Villa Project',
       location: 'Velachery, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/project-villa-velachery.png',
     },
   ];
 
