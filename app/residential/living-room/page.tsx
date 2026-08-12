@@ -517,12 +517,12 @@ export default async function LivingRoomPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/renovation-living-before.png',
-              alt: 'Plain living room before Luxe Axis transformation',
+              src: '/posters/living-room-before-new.png',
+              alt: 'Plain bare living room before Luxe Axis transformation',
             }}
             afterImage={{
-              src: '/posters/renovation-living-after.png',
-              alt: 'Luxury living room with feature wall after Luxe Axis transformation',
+              src: '/posters/living-room-after-new.png',
+              alt: 'Luxury living room with Gyproc false ceiling and cove lighting after Luxe Axis transformation',
             }}
           />
           <p className="text-center text-small text-on-surface-muted mt-3">
