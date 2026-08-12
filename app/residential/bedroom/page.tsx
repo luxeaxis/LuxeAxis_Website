@@ -58,7 +58,7 @@ export default async function BedroomPage() {
         'Concealed floating bedside storage units',
         'Flat 10-year warranty included',
       ],
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/residential-bedroom-hero.png',
     },
     {
       tag: 'Minimalist',
@@ -71,7 +71,7 @@ export default async function BedroomPage() {
         'Muted, serene monochromatic palette',
         'Flat 10-year warranty included',
       ],
-      image: '/posters/portfolio.avif',
+      image: '/posters/service-master-bedroom.png',
     },
     {
       tag: 'Traditional',
@@ -84,7 +84,7 @@ export default async function BedroomPage() {
         'Warm-toned ambient lighting channels',
         'Flat 10-year warranty included',
       ],
-      image: '/posters/persona-router.avif',
+      image: '/posters/room-master-bedroom.png',
     },
     {
       tag: 'Luxe Suite',
@@ -97,7 +97,7 @@ export default async function BedroomPage() {
         'Italian marble or veneer accent surfaces',
         'Flat 10-year warranty included',
       ],
-      image: '/posters/hero.avif',
+      image: '/posters/room-wardrobe-storage.png',
     },
   ];
 
@@ -145,25 +145,25 @@ export default async function BedroomPage() {
       title: 'Contemporary Master Suite with Walk-In Wardrobe',
       tag: 'Master Bedroom',
       location: 'Adyar, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/room-master-bedroom.png',
     },
     {
       title: 'Serene Minimalist Platform Bedroom',
       tag: 'Minimalist',
       location: 'T. Nagar, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/residential-bedroom-hero.png',
     },
     {
       title: 'Kids Bedroom with Loft & Study Zone',
       tag: 'Kids Bedroom',
       location: 'OMR, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/room-kids-room.png',
     },
     {
       title: 'Warm Caramel Neutral Guest Retreat',
       tag: 'Guest Bedroom',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/service-master-bedroom.png',
     },
   ];
 
@@ -592,11 +592,11 @@ export default async function BedroomPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/pricing-axis.avif',
+              src: '/posters/renovation-bedroom-before.png',
               alt: 'Plain master bedroom before Luxe Axis transformation',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
+              src: '/posters/renovation-bedroom-after.png',
               alt: 'Luxury master suite with wardrobe after Luxe Axis transformation',
             }}
           />
