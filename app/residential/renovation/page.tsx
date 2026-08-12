@@ -51,22 +51,22 @@ export default async function RenovationPage() {
       tag: 'Kitchen Renovation',
       title: 'Old Slab Kitchen to Modular',
       desc: 'Existing brick slab counter removed, full modular kitchen installed with soft-close drawers, Hettich hardware, and granite top in 14 days.',
-      beforeImg: '/posters/persona-router.avif',
-      afterImg: '/posters/pricing-axis.avif',
+      beforeImg: '/posters/renovation-kitchen-before.png',
+      afterImg: '/posters/renovation-kitchen-after.png',
     },
     {
       tag: 'Bedroom Renovation',
       title: 'Outdated Bedroom to Master Suite',
       desc: 'New wall panelling, integrated floor-to-ceiling wardrobe, false ceiling with cove lighting, and premium laminate flooring completed without family vacating.',
-      beforeImg: '/posters/pricing-axis.avif',
-      afterImg: '/posters/portfolio.avif',
+      beforeImg: '/posters/renovation-bedroom-before.png',
+      afterImg: '/posters/renovation-bedroom-after.png',
     },
     {
       tag: 'Living Room Renovation',
       title: 'Dated Living Space to Open Plan',
       desc: 'Sintered stone feature wall added, TV console redesigned, new Gyproc false ceiling, ambient cove lighting throughout. Transformed in 18 days.',
-      beforeImg: '/posters/portfolio.avif',
-      afterImg: '/posters/hero.avif',
+      beforeImg: '/posters/renovation-living-before.png',
+      afterImg: '/posters/renovation-living-after.png',
     },
   ];
 
@@ -538,12 +538,12 @@ export default async function RenovationPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
-              alt: 'Dated 15-year-old Chennai home before renovation',
+              src: '/posters/renovation-living-before.png',
+              alt: 'Dated 15-year-old Chennai home living room before renovation',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
-              alt: 'Completely renovated modern luxury home by Luxe Axis',
+              src: '/posters/renovation-living-after.png',
+              alt: 'Completely renovated modern luxury open-plan living room by Luxe Axis',
             }}
           />
           <p className="text-center text-small text-on-surface-muted mt-3">
