@@ -102,25 +102,25 @@ export default async function LivingRoomPage() {
       title: 'Contemporary Sintered Stone Feature Wall',
       tag: 'Full Living Room',
       location: 'Adyar, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/room-living-room.png',
     },
     {
       title: 'Open Plan Living and Dining Zone',
       tag: 'Open Plan',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/project-3bhk-adyar.png',
     },
     {
       title: 'Minimalist Clean-Line Living Space',
       tag: 'Minimalist',
       location: 'T. Nagar, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/residential-living-room-hero.png',
     },
     {
       title: 'Integrated Entertainment Wall & Magnetic Lighting',
       tag: 'TV + Ceiling',
       location: 'Velachery, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/residential-tv-unit-hero.png',
     },
   ];
 
