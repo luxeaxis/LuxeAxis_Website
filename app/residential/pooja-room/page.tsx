@@ -58,7 +58,7 @@ export default async function PoojaRoomPage() {
         'Integrated storage drawers for oil, cotton & pooja items',
         'Flat 10-year warranty included (Starting from Rs. 30,000)',
       ],
-      image: '/posters/service-vastu-tech-3d-staging.png',
+      image: '/posters/service-vastu-tech.png',
     },
     {
       tag: 'For Villas & Large Apartments',
@@ -84,7 +84,7 @@ export default async function PoojaRoomPage() {
         'Dome or vaulted ceiling with subtle gold leaf detailing',
         'Flat 10-year warranty included (Starting from Rs. 1,80,000)',
       ],
-      image: '/posters/hero-poes-garden-villa.png',
+      image: '/posters/hero-poes-garden.png',
     },
   ];
 
@@ -116,25 +116,25 @@ export default async function PoojaRoomPage() {
       title: 'Walk-In White Marble & Teak Mandir',
       tag: 'Walk-In Mandir',
       location: 'Adyar, Chennai',
-      image: '/posters/room-pooja-room.png',
+      image: '/posters/residential-pooja-room-hero.png',
     },
     {
       title: 'Compact Apartment Pooja Unit with LED Niches',
       tag: 'Compact Unit',
       location: 'T. Nagar, Chennai',
-      image: '/posters/service-vastu-tech-3d-staging.png',
+      image: '/posters/project-3bhk-adyar.png',
     },
     {
       title: 'Dedicated Pooja Room with Backlit Onyx Panel',
       tag: 'Dedicated Room',
       location: 'Velachery, Chennai',
-      image: '/posters/hero-poes-garden-villa.png',
+      image: '/posters/project-villa-velachery.png',
     },
     {
       title: 'Traditional Brass Jali & Teak Pooja Sanctum',
       tag: 'Brass Jali',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/room-pooja-room.png',
+      image: '/posters/apt-after-matched.png',
     },
   ];
 
