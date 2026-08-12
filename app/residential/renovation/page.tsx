@@ -108,25 +108,25 @@ export default async function RenovationPage() {
       title: '3BHK Complete Home Renovation Makeover',
       tag: 'Full Home Renovation',
       location: 'Adyar, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/project-3bhk-adyar.png',
     },
     {
       title: 'Old Slab Kitchen to Modern Modular',
       tag: 'Kitchen Renovation',
       location: 'T. Nagar, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/renovation-kitchen-after.png',
     },
     {
       title: 'Master Bedroom False Ceiling & Joinery Upgrade',
       tag: 'Bedroom Renovation',
       location: 'Velachery, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/renovation-bedroom-after.png',
     },
     {
       title: 'Living Room Feature Wall & Open Plan',
       tag: 'Living Room Renovation',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/renovation-living-after.png',
     },
   ];
 
