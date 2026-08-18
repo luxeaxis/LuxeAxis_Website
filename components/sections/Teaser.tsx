@@ -69,9 +69,15 @@ export function FeaturedProjects({
   }
 
   return (
-    <Section id="work" eyebrow="The work" title="Recent Chennai projects">
+    <Section
+      id="work"
+      eyebrow="The work"
+      title="Recent Chennai projects"
+      lede="Delivered turnkey residences across Chennai’s premier neighbourhoods — backed by 100% real photography and client consent."
+    >
       <Stagger
-        className="grid grid-cols-1 md:grid-cols-3 gap-5"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
+        itemClassName="h-full flex flex-col"
         items={projects.map((project) => (
           <ProjectCard
             key={project.slug}
@@ -81,6 +87,7 @@ export function FeaturedProjects({
             tier={project.tier}
             media={{ kind: 'photo', ...project.image }}
             surface="glass"
+            className="h-full flex flex-col justify-between"
           />
         ))}
       />

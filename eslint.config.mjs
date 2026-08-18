@@ -54,6 +54,8 @@ export default [
       '**/node_modules/**',
       '.claude/**',
       'styles/tokens*.css',
+      'tina/__generated__/**',
+      'public/admin/**',
     ],
   },
   // Dropping `eslint-config-next` for the ESLint 9 reason above also silently

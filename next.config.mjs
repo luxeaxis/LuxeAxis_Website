@@ -21,11 +21,9 @@
  * anything that does not.
  */
 const SECURITY_HEADERS = [
-  // Clickjacking. Nothing in this site is designed to be embedded, and a
-  // studio's booking CTA framed inside someone else's page is exactly the
-  // scenario worth refusing outright.
-  { key: 'Content-Security-Policy', value: "frame-ancestors 'none'" },
-  { key: 'X-Frame-Options', value: 'DENY' },
+  // Allow same-origin framing so TinaCMS admin can render visual previews in its admin iframe
+  { key: 'Content-Security-Policy', value: "frame-ancestors 'self'" },
+  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
   // Stops a browser second-guessing a declared Content-Type — the vector for
   // turning an uploaded or user-supplied file into executable script.
   { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -50,6 +48,14 @@ const nextConfig = {
   // Volunteers the exact framework and therefore its CVE list to anyone
   // running `curl -I`. It buys nothing in return.
   poweredByHeader: false,
+  async rewrites() {
+    return [
+      {
+        source: '/admin',
+        destination: '/admin/index.html',
+      },
+    ];
+  },
   async headers() {
     return [{ source: '/:path*', headers: SECURITY_HEADERS }];
   },

@@ -6,7 +6,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { LegalDocument } from '@/components/LegalDocument';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { HeroBackground } from '@/components/sections/HeroBackground';
 import { PRIVACY_HERO_SLIDES } from '@/lib/content/heroSlides';
@@ -16,10 +16,30 @@ import { getFaqs } from '@/lib/content/source';
 const ROUTE = '/privacy';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — Luxe Axis',
+  title: 'Privacy Policy & DPDP Act Compliance | Luxe Axis Chennai',
   description:
-    'How Luxe Axis collects, uses, shares and protects your personal data under the Digital Personal Data Protection Act, 2023.',
+    'How Luxe Axis handles personal data under the Digital Personal Data Protection Act, 2023. Strict zero-sharing policy for client architectural floorplans and contact details.',
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Privacy Policy & DPDP Compliance | Luxe Axis',
+    description:
+      'Digital Personal Data Protection Act 2023 compliance and privacy policy.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/hero-privacy.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Privacy Policy',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Privacy Policy | Luxe Axis Chennai',
+    description: 'Data privacy and DPDP Act 2023 compliance.',
+    images: ['/posters/hero-privacy.png'],
+  },
 };
 
 export default async function PrivacyPage() {
@@ -68,6 +88,7 @@ export default async function PrivacyPage() {
           url: ROUTE,
         }}
       />
+      <FaqJsonLd items={privacyFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
       <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">

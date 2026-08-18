@@ -47,6 +47,7 @@ const SITEMAP: readonly FooterGroup[] = [
       { label: 'Process', href: '/process' },
       { label: 'About', href: '/about' },
       { label: 'Journal', href: '/journal' },
+      { label: 'Careers', href: '/careers' },
     ],
   },
   {

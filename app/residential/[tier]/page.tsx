@@ -10,7 +10,7 @@ import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
 import { getFaqs, getTiers, getTestimonials } from '@/lib/content/source';
@@ -30,10 +30,38 @@ export async function generateMetadata({
   const tier = (await getTiers()).find((candidate) => candidate.id === tierId);
   if (!tier) return {};
 
+  const pageTitle = `${tier.name} — Luxury Residential Interior Design in Chennai | Luxe Axis`;
+  const pageDesc = `${tier.summary} Turnkey execution with BWP marine plywood, German hardware, 45-day guaranteed handover, and a 10-year flat warranty.`;
+
   return {
-    title: `${tier.name} — Residential Interior Design in Chennai | Luxe Axis`,
-    description: `${tier.summary} Backed by our 10-year flat structural warranty and contractual handover guarantee.`,
+    title: pageTitle,
+    description: pageDesc,
+    keywords: [
+      `${tier.name.toLowerCase()} interior design chennai`,
+      'turnkey residential interiors chennai',
+      'luxury home interior packages',
+      'modular kitchen and wardrobe',
+    ],
     alternates: canonicalFor(`/residential/${tier.id}`),
+    openGraph: {
+      title: pageTitle,
+      description: pageDesc,
+      url: canonicalFor(`/residential/${tier.id}`).canonical,
+      images: [
+        {
+          url: '/posters/residential-hub-hero.png',
+          width: 1200,
+          height: 630,
+          alt: `${tier.name} Luxe Axis Luxury Interior Design Chennai`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: pageTitle,
+      description: pageDesc,
+      images: ['/posters/residential-hub-hero.png'],
+    },
   };
 }
 
@@ -133,6 +161,7 @@ export default async function TierPage({
           url: `/residential/${tier.id}`,
         })}
       />
+      <FaqJsonLd items={faqs} />
 
       {/* 1. Hero Stage */}
       <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">

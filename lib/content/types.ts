@@ -107,6 +107,7 @@ export type Project = {
    *  less trustworthy than a photograph — Landing Blueprint §3.3 is explicit
    *  that photography beats 3D for this exact content. */
   image: { src: string; alt: string; aspect: `${number}/${number}` };
+  beforeImage?: { src: string; alt: string; aspect?: `${number}/${number}` };
 };
 
 /** A client quote (Spec §2.4 Testimonial). */

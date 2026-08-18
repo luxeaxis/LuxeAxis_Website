@@ -28,10 +28,39 @@ import { formatRupees } from '@/lib/pricing/estimate';
 const ROUTE = '/pricing';
 
 export const metadata: Metadata = {
-  title: 'Pricing & Transparent Investment Tiers | Luxe Axis',
+  title: 'Interior Design Cost in Chennai | Transparent BOQ Pricing Packages | Luxe Axis',
   description:
-    'Most Chennai studios hide the price. We publish it: Essential (₹1,800/sq.ft), Signature (₹2,800/sq.ft), Elite commissions, interactive fee calculator, and 10-year warranty.',
+    'No hidden costs. We publish our turnkey interior design rates: Essential (₹1,800/sq.ft), Signature (₹2,800/sq.ft), Elite bespoke villas, interactive BOQ cost calculator, and 10-year warranty in Chennai.',
+  keywords: [
+    'interior design cost in chennai',
+    'interior design price per sq ft chennai',
+    'transparent boq interior pricing',
+    '2bhk interior cost chennai',
+    '3bhk interior design cost chennai',
+    'luxury villa interior pricing chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Interior Design Cost in Chennai | Transparent BOQ Pricing | Luxe Axis',
+    description:
+      'Publishing upfront interior design costs: Essential (₹1,800/sq.ft), Signature (₹2,800/sq.ft), and interactive real-time cost calculator.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/hero-pricing.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Transparent Interior Pricing Packages Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Interior Design Cost & Packages in Chennai | Luxe Axis',
+    description:
+      'Turnkey interior rates starting ₹1,800/sq.ft. Interactive BOQ calculator & 10-year warranty.',
+    images: ['/posters/hero-pricing.png'],
+  },
 };
 
 export default async function PricingPage() {

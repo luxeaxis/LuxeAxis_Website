@@ -1,0 +1,17 @@
+fragment JournalParts on Journal {
+  __typename
+  title
+  slug
+  category
+  date
+  readTime
+  excerpt
+  image
+  featured
+  author {
+    __typename
+    name
+    role
+  }
+  body
+}

@@ -16,10 +16,39 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/bedroom';
 
 export const metadata: Metadata = {
-  title: 'Bedroom Interior Designers in Chennai | Luxe Axis',
+  title: 'Master Bedroom Interior Designers in Chennai | Luxe Axis',
   description:
-    'Premium bedroom interior design in Chennai. Master suites, walk-in wardrobes, Gyproc false ceilings, ambient lighting. 45-day delivery, flat 10-year warranty.',
+    'Premium bedroom interior design in Chennai. Custom master bedroom suites, walk-in closets, Gyproc acoustic false ceilings, ambient circadian lighting, 45-day handover, and 10-year warranty.',
+  keywords: [
+    'bedroom interior designers in chennai',
+    'master bedroom design chennai',
+    'luxury bedroom interiors',
+    'kids bedroom interior design chennai',
+    'headboard and accent wall design',
+    'bedroom false ceiling lighting',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Master Bedroom Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Master suites, walk-in closets, acoustic false ceilings, and ambient circadian lighting with 45-day guaranteed delivery in Chennai.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-bedroom-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Luxury Master Bedroom Design Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Master Bedroom Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Master suites, walk-in wardrobes, and ambient lighting with 10-year warranty.',
+    images: ['/posters/residential-bedroom-hero.png'],
+  },
 };
 
 export default async function BedroomPage() {

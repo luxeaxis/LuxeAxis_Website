@@ -28,10 +28,38 @@ const REGION_FLAGS: Record<string, { flagSrc: string; flagEmoji: string }> = {
 };
 
 export const metadata: Metadata = {
-  title: 'Design Your Chennai Home From Anywhere | NRI Remote Interior Design',
+  title: 'NRI Interior Design Services in Chennai | Turnkey Remote Management | Luxe Axis',
   description:
-    'Remote design for the Indian diaspora: video reviews in your local time zone, live site camera feeds & spend tracking in Space OS, and 100% turnkey execution in Chennai.',
+    'Complete turnkey interior design in Chennai for NRIs in Singapore, UAE, USA, UK, Canada & Australia. Live 4K site cameras, time-zone aligned video audits, itemized BOQ, and 10-year warranty.',
+  keywords: [
+    'nri interior design chennai',
+    'remote turnkey home interiors chennai',
+    'nri house interior renovation south india',
+    'interior designers in chennai for nri',
+    'remote property management and interiors chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'NRI Interior Design Services in Chennai | Turnkey Remote Management | Luxe Axis',
+    description:
+      'Design and build your dream Chennai home from anywhere in the world. 4K live site feeds, time-zone aligned reviews, and 45-day guaranteed handover.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/nri-hub-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis NRI Remote Turnkey Interior Design Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'NRI Turnkey Interior Design in Chennai | Luxe Axis',
+    description:
+      'Turnkey home interiors in Chennai for global NRIs with live 4K site cameras & 10-year warranty.',
+    images: ['/posters/nri-hub-hero.png'],
+  },
 };
 
 export default async function NriPage() {

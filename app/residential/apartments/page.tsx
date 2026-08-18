@@ -16,10 +16,39 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/apartments';
 
 export const metadata: Metadata = {
-  title: 'Interior Design for Apartments in Chennai | Luxe Axis',
+  title: 'Apartment Interior Designers in Chennai | 2BHK, 3BHK & 4BHK Flats | Luxe Axis',
   description:
-    'Expert apartment interior design in Chennai. 2BHK to 4BHK flat interiors, space-optimised layouts, fixed transparent pricing, 45-day move-in guarantee, and flat 10-year warranty.',
+    'Chennai’s specialist apartment interior designers. Space-optimised modular layouts for 2BHK, 3BHK, and 4BHK flats with itemized BOQ pricing, 45-day handover, and 10-year warranty.',
+  keywords: [
+    'apartment interior designers in chennai',
+    '2bhk interior design cost in chennai',
+    '3bhk flat interior design chennai',
+    '4bhk luxury apartment interiors',
+    'compact apartment space optimization chennai',
+    'gated community flat interiors chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Apartment Interior Designers in Chennai | 2BHK, 3BHK & 4BHK Flats',
+    description:
+      'Precision apartment interior architecture for 2BHK to 4BHK flats with 45-day guaranteed handover and un-gated BOQ pricing.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-apartments-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Apartment Interior Designers Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Apartment Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Complete 2BHK/3BHK/4BHK flat interiors with 45-day delivery and 10-year warranty.',
+    images: ['/posters/residential-apartments-hero.png'],
+  },
 };
 
 export default async function ApartmentsPage() {

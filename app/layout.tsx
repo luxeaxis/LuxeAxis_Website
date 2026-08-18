@@ -10,7 +10,7 @@ import { ConsentBanner } from '@/components/ConsentBanner';
 import { SmoothScrollGate } from '@/components/SmoothScrollGate';
 import WhatsAppWidget from '@/components/ui/WhatsAppWidget';
 import { JsonLd } from '@/components/JsonLd';
-import { localBusinessJsonLd, organizationJsonLd } from '@/lib/seo/jsonLd';
+import { localBusinessJsonLd, organizationJsonLd, websiteJsonLd } from '@/lib/seo/jsonLd';
 import { SITE_ORIGIN } from '@/lib/seo/origin';
 import '@/styles/globals.css';
 
@@ -27,27 +27,58 @@ import '@/styles/globals.css';
 
 export const metadata: Metadata = {
   title: {
-    // Pages set their own full title; this is the fallback and the suffix for
-    // anything that does not.
-    default: 'Luxe Axis',
-    template: '%s',
+    default: 'Luxe Axis | Luxury Interior Design & Vastu-Tech Studio Chennai',
+    template: '%s | Luxe Axis',
   },
-  // Lets pages express OpenGraph/alternate URLs relatively and still emit
-  // absolute ones. Shares lib/seo/origin.ts with the sitemap and robots.txt so
-  // all three agree on the host.
+  description:
+    'Chennai’s premier luxury interior design & Vastu-Tech studio. Turnkey residences, un-gated itemized BOQs, 45-day guaranteed handover, and 10-year warranty.',
+  keywords: [
+    'luxury interior designers chennai',
+    'vastu compliant interior design',
+    'turnkey home interiors chennai',
+    'modular kitchen chennai',
+    'luxury villa interior design poes garden',
+    'luxury apartment interiors boat club chennai',
+    'nri interior design services chennai',
+    'modern architectural interiors',
+    'space intelligence',
+    'german cnc joinery chennai',
+  ],
   metadataBase: new URL(SITE_ORIGIN),
-  // Site-wide OpenGraph defaults. Each page's own `title`/`description` flow
-  // into these automatically, so a shared card shape is defined once.
-  //
-  // No `images`: an OG image has to be an actual asset, and the only brand
-  // asset in the repo is an unvectorised logo raster that Header and Footer are
-  // both still standing in for. A card pointing at a missing image is worse
-  // than no card — the platforms render a broken thumbnail rather than falling
-  // back cleanly.
   openGraph: {
     type: 'website',
     siteName: 'Luxe Axis',
     locale: 'en_IN',
+    url: SITE_ORIGIN,
+    title: 'Luxe Axis | Luxury Interior Design & Vastu-Tech Studio Chennai',
+    description:
+      'Chennai’s premier luxury interior design & Vastu-Tech studio. Turnkey residences, un-gated itemized BOQs, 45-day guaranteed handover, and 10-year warranty.',
+    images: [
+      {
+        url: '/posters/home-interiors-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Luxury Interiors Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Luxe Axis — Chennai Luxury Interior Design & Vastu-Tech Architecture',
+    description:
+      'AI-assisted space planning, Vastu-smart, delivered on a guaranteed handover date with transparent BOQ pricing.',
+    images: ['/posters/home-interiors-hero.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   icons: {
     icon: [
@@ -90,10 +121,8 @@ export default function RootLayout({
       className={`${display.variable} ${ui.variable}`}
     >
       <body className="lx-grain bg-surface text-on-surface">
-        {/* Organization and LocalBusiness, site-wide rather than repeated per
-            page. LocalBusiness renders only once a real address exists — see
-            lib/seo/jsonLd.ts for why an invented one would be worse than an
-            absent node. */}
+        {/* Global Structured Data: WebSite, Organization, and LocalBusiness */}
+        <JsonLd data={websiteJsonLd()} />
         <JsonLd data={organizationJsonLd()} />
         {localBusiness && <JsonLd data={localBusiness} />}
         {/* Resolves the device's motion preference into the store, which

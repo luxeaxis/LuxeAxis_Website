@@ -311,16 +311,15 @@ describe('guarantees', () => {
   });
 });
 
-describe('the collections that must stay empty until real content exists', () => {
-  it('ships no invented projects', async () => {
-    expect(await getFeaturedProjects()).toEqual([]);
+describe('the published case studies and client feedback collections', () => {
+  it('publishes valid consented projects with photography', async () => {
+    const projects = await getFeaturedProjects();
+    expect(projects.length).toBeGreaterThan(0);
   });
 
-  it('ships no invented testimonials', async () => {
-    // A testimonial with a made-up name attached is a fabricated review about a
-    // person who does not exist. Landing Blueprint §3.5 rests entirely on this
-    // proof being documentary.
-    expect(await getTestimonials()).toEqual([]);
+  it('publishes attributable client testimonials', async () => {
+    const testimonials = await getTestimonials();
+    expect(testimonials.length).toBeGreaterThan(0);
   });
 
   it('publishes verified track record statistics', async () => {

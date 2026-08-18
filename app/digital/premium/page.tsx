@@ -6,17 +6,43 @@ import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { getFaqs } from '@/lib/content/source';
 
 const ROUTE = '/digital/premium';
 
 export const metadata: Metadata = {
-  title: 'Premium VIP Digital Package (₹75,000/room) | Luxe Axis Digital',
+  title: 'Premium VIP E-Design Package (₹75,000/room) | Luxe Axis Digital',
   description:
     'Ultra-luxury remote design package: 360-degree VR walkthrough, physical material sample box shipped globally, custom joinery sheets, and 1-year Design Club VIP membership.',
+  keywords: [
+    'vip online interior design package',
+    'remote luxury interior architect',
+    'global material sample box interior design',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Premium VIP E-Design Package (₹75,000/room) | Luxe Axis',
+    description:
+      '360-degree VR walkthrough, physical material sample box shipped globally, and 1-year VIP Design Club membership.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/digital-hub-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Premium VIP Digital Design Package',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Premium VIP E-Design Package (₹75,000/room) | Luxe Axis',
+    description:
+      'Ultra-luxury remote design with 360 VR walkthrough and global material sample box.',
+    images: ['/posters/digital-hub-hero.png'],
+  },
 };
 
 export default async function PremiumDigitalPage() {
@@ -46,6 +72,7 @@ export default async function PremiumDigitalPage() {
           url: ROUTE,
         }}
       />
+      <FaqJsonLd items={digitalFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs */}
       <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">

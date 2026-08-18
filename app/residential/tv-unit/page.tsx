@@ -17,10 +17,38 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/tv-unit';
 
 export const metadata: Metadata = {
-  title: 'TV Unit Design in Chennai | Luxe Axis',
+  title: 'Custom TV Unit & Entertainment Wall Designers in Chennai | Luxe Axis',
   description:
-    'Custom TV unit design in Chennai. Floating panels, backlit media walls, floor-to-ceiling modular units. BWR marine ply, Hettich hardware. 45-day delivery, flat 10-year warranty.',
+    'Custom TV unit and media wall design in Chennai. Floating consoles, fluted charcoal louvers, backlit acoustic panels, Italian marble backdrops, and 10-year warranty.',
+  keywords: [
+    'tv unit interior design in chennai',
+    'modern floating tv unit chennai',
+    'fluted panel tv unit design',
+    'backlit onyx tv wall chennai',
+    'living room entertainment center designers',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Custom TV Unit & Entertainment Wall Designers in Chennai | Luxe Axis',
+    description:
+      'Floating consoles, fluted louvers, backlit panels, and Italian marble backdrops with 45-day guaranteed delivery.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-tv-unit-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Custom TV Unit Design Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Custom TV Unit Designers in Chennai | Luxe Axis',
+    description:
+      'Floating consoles, backlit acoustic panels, and Italian marble TV walls.',
+    images: ['/posters/residential-tv-unit-hero.png'],
+  },
 };
 
 export default async function TvUnitPage() {

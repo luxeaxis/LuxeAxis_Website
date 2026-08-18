@@ -17,10 +17,38 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/home-interiors';
 
 export const metadata: Metadata = {
-  title: 'Home Interior Designers in Chennai | Luxe Axis Complete Interiors',
+  title: 'Complete Home Interior Designers in Chennai | Luxe Axis Turnkey Interiors',
   description:
-    "Chennai's top home interior designers. Turnkey 2BHK, 3BHK, 4BHK villa & penthouse interiors. Flat 10-year warranty, 45-day move-in guarantee, post-install care, and fixed transparent pricing.",
+    "Chennai's top home interior designers. Turnkey 2BHK, 3BHK, 4BHK apartments, villas & penthouse interiors. Flat 10-year warranty, 45-day move-in guarantee, and un-gated BOQ pricing.",
+  keywords: [
+    'home interior designers in chennai',
+    'complete home interiors chennai',
+    'house interior design company chennai',
+    'turnkey residential interior contractors',
+    'best interior designers in chennai for home',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Complete Home Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Turnkey residential interior architecture for apartments and villas in Chennai with 45-day guaranteed handover.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/home-interiors-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Complete Home Interiors Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Home Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Turnkey 2BHK, 3BHK, 4BHK and villa interiors with 45-day delivery guarantee.',
+    images: ['/posters/home-interiors-hero.png'],
+  },
 };
 
 export default async function HomeInteriorsPage() {

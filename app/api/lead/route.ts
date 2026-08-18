@@ -114,6 +114,18 @@ export async function POST(request: NextRequest) {
         { status: 502 },
       );
     }
+
+    // Trigger Resend emails asynchronously without blocking lead response
+    if (process.env.RESEND_API_KEY) {
+      Promise.allSettled([
+        import('@/lib/email/resend').then(({ sendLeadNotificationEmail, sendLeadConfirmationEmail }) =>
+          Promise.allSettled([
+            sendLeadNotificationEmail(lead),
+            sendLeadConfirmationEmail(lead),
+          ]),
+        ),
+      ]).catch((e) => console.error('[lead] Error dispatching Resend emails:', e));
+    }
   } catch (cause) {
     // The message only — never the lead body.
     console.error(

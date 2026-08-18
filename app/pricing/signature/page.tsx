@@ -7,15 +7,45 @@ import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { SIGNATURE_HERO_SLIDES } from '@/lib/content/heroSlides';
 import { canonicalFor } from '@/lib/seo/hreflang';
 
 const ROUTE = '/pricing/signature';
 
 export const metadata: Metadata = {
-  title: 'Signature Bespoke Tier (₹2,800/sqft) | Luxe Axis Pricing',
+  title: 'Signature Luxury Interior Package (₹2,800/sq.ft) | Luxe Axis Chennai',
   description:
-    'Complete specifications and breakdown of the Signature Bespoke Tier at ₹2,800/sq.ft. Italian PU lacquer, Hafele hardware, home automation & 10-year warranty.',
+    'Complete specifications of the Signature Bespoke tier at ₹2,800/sq.ft. Italian PU lacquer finishes, Hafele premium fittings, smart home automation, and 10-year warranty in Chennai.',
+  keywords: [
+    'signature luxury interior design package',
+    'interior cost 2800 per sq ft chennai',
+    'italian pu lacquer interior chennai',
+    'smart home automation interior chennai',
+    '3bhk luxury signature interiors',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Signature Luxury Interior Package (₹2,800/sq.ft) | Luxe Axis',
+    description:
+      'Italian PU lacquer, Hafele hardware, smart lighting automation, and 10-year structural warranty in Chennai.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/pricing-tier-signature.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Signature Luxury Interior Package Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Signature Interior Design Package (₹2,800/sq.ft) | Luxe Axis',
+    description:
+      'Italian PU lacquer, Hafele hardware, and smart home automation with 10-year warranty.',
+    images: ['/posters/pricing-tier-signature.png'],
+  },
 };
 
 export default function SignaturePricingPage() {
@@ -121,37 +151,37 @@ export default function SignaturePricingPage() {
         }}
       />
 
-      {/* 1. Hero Stage */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage with Ken Burns Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={SIGNATURE_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs
             path="/pricing/signature"
             labels={{ signature: 'Signature Tier' }}
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Most Popular Tier
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Signature Bespoke Tier <br />
               <span className="text-accent">₹2,800 / sq.ft</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Bespoke luxury interior transformation for villas, penthouses, and
               premium apartments in Chennai. Italian PU lacquer finishes, Hafele
               hardware, smart lighting automation, and 10-year flat warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Signature Audit
               </Button>
               <Button
@@ -159,6 +189,7 @@ export default function SignaturePricingPage() {
                 href="/pricing/calculator"
                 variant="secondary"
                 size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
               >
                 Calculate Exact Budget →
               </Button>

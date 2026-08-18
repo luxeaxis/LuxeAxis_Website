@@ -7,8 +7,8 @@
     "node": ">=20.11"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "npm run tokens && next build",
+    "dev": "tinacms dev -c \"next dev\"",
+    "build": "tinacms build --local --skip-cloud-checks && npm run tokens && next build",
     "start": "next start",
     "tokens": "tsx scripts/build-tokens.ts",
     "typecheck": "tsc --noEmit",
@@ -21,12 +21,14 @@
   },
   "dependencies": {
     "@hookform/resolvers": "5.6.0",
+    "gray-matter": "^4.0.3",
     "gsap": "^3.15.0",
     "lenis": "^1.3.25",
     "next": "14.2.20",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-hook-form": "7.84.0",
+    "tinacms": "^3.12.0",
     "zod": "4.4.3",
     "zustand": "5.0.2"
   },
@@ -37,6 +39,7 @@
     "@size-limit/preset-app": "11.1.6",
     "@testing-library/dom": "10.4.0",
     "@testing-library/react": "16.1.0",
+    "@tinacms/cli": "^2.6.0",
     "@types/node": "22.10.2",
     "@types/react": "18.3.17",
     "@types/react-dom": "18.3.5",

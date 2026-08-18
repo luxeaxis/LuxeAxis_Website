@@ -57,10 +57,45 @@ export async function generateMetadata({
   );
   if (!region) return {};
 
+  const pageTitle = `Turnkey Chennai Interior Design from ${region.name} | Luxe Axis NRI Studio`;
+  const pageDesc = `Remote luxury interior design in Chennai for homeowners in ${region.name}. 3D VR audits in your local time zone, live 4K site cameras, un-gated BOQs, and 10-year warranty.`;
+
   return {
-    title: `Designing a Chennai Home from ${region.name} | Remote Interior Design`,
-    description: `Remote luxury interior design for Chennai, operated for clients in ${region.name}: 3D VR reviews in your time zone, live 4K camera streams, and turnkey handover.`,
+    title: pageTitle,
+    description: pageDesc,
+    keywords: [
+      `nri interior design chennai from ${region.name.toLowerCase()}`,
+      `chennai home interiors ${region.name.toLowerCase()} nri`,
+      'remote turnkey interior design chennai',
+      'nri villa construction management chennai',
+    ],
     alternates: canonicalFor(`/nri/${region.slug}`),
+    openGraph: {
+      title: pageTitle,
+      description: pageDesc,
+      url: canonicalFor(`/nri/${region.slug}`).canonical,
+      images: [
+        {
+          url:
+            region.slug === 'singapore'
+              ? '/posters/nri-singapore-hero.png'
+              : '/posters/nri-hub-hero.png',
+          width: 1200,
+          height: 630,
+          alt: `Luxe Axis NRI Turnkey Interior Design from ${region.name}`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: pageTitle,
+      description: pageDesc,
+      images: [
+        region.slug === 'singapore'
+          ? '/posters/nri-singapore-hero.png'
+          : '/posters/nri-hub-hero.png',
+      ],
+    },
   };
 }
 

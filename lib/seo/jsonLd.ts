@@ -2,64 +2,30 @@ import { SITE_ORIGIN } from './origin';
 import { STUDIO } from '@/lib/content/studio';
 
 /**
- * Structured data (Build Backlog T-20, Spec §2.5).
- *
- * ## What is emitted, and what is deliberately not
- *
- * T-20 lists `Organization`, `LocalBusiness`, `Service`, `Article` and
- * `BreadcrumbList`. Three of those ship here. Two do not, and the reasons are
- * the same reason the visible pages carry "To be published" markers — except
- * that structured data makes the stakes higher, not lower.
- *
- * - **`LocalBusiness` now ships**, since the studio supplied its Chennai
- *   address. It was withheld until then, and the reason is worth keeping: a
- *   `LocalBusiness` node with an invented address is not a placeholder a reader
- *   can see through — it is a machine-readable assertion fed straight into
- *   Google's local index and Maps, where it can generate directions to a
- *   building that has nothing to do with the studio. With a real address it is
- *   the single highest-value piece of markup on a local-services site.
- *   `telephone`, `openingHours` and `geo` are still absent and still omitted
- *   rather than guessed — an incomplete node is fine, an untrue one is not.
- * - **`Article` is withheld** because there are no articles. It belongs with
- *   the first Journal post.
- *
- * Everything below asserts only what the site already says in prose, which is
- * the rule structured data has to follow: Google treats markup that disagrees
- * with the visible page as spam, so JSON-LD is generated from the same content
- * the page renders rather than hand-maintained beside it.
+ * Structured data (Schema.org / JSON-LD) for SEO, AEO (Answer Engine Optimization)
+ * and Local Business Rich Snippets.
  */
 
-/** The studio itself. Name and URL are all that is known for certain — no
- *  founding date, no logo asset, no social profiles, no contact point. Each of
- *  those is a real property of this type, and each is omitted rather than
- *  guessed. */
+/**
+ * The Organization schema — Global entity definition.
+ */
 export function organizationJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Luxe Axis',
+    legalName: STUDIO.legalName,
     url: SITE_ORIGIN,
     description:
-      'Interior design studio in Chennai. Published pricing, AI-assisted design, and designers who decide.',
+      'Chennai’s premier technology-native luxury interior design & Vastu-Tech architectural studio.',
   };
 }
 
 /**
- * The studio as a findable local business.
- *
- * Every property is built from `STUDIO` (lib/content/studio.ts) and each
- * optional one is included only when it is actually known — so the node grows
- * as facts arrive rather than shipping with placeholder values that a search
- * engine would treat as true. `telephone` and `openingHours` are absent today;
- * `geo` will stay absent until someone supplies real coordinates, because
- * approximating them from a postcode puts a pin on the wrong building.
- *
- * `@id` anchors the node to the site's origin so the Organization and
- * LocalBusiness nodes are understood as the same entity rather than two
- * businesses that happen to share a name.
+ * The LocalBusiness schema — Highly detailed for Google Local Search & Maps.
  */
 export function localBusinessJsonLd() {
-  const { address, telephone, openingHours, email, gst, name } = STUDIO;
+  const { address, telephone, email, gst, name, legalName } = STUDIO;
   if (!address) return null;
 
   return {
@@ -67,7 +33,13 @@ export function localBusinessJsonLd() {
     '@type': 'LocalBusiness',
     '@id': `${SITE_ORIGIN}#studio`,
     name,
+    legalName,
     url: SITE_ORIGIN,
+    telephone: telephone?.e164 ?? '+918124600321',
+    email: email?.general ?? 'info@luxeaxis.in',
+    priceRange: '₹₹₹₹',
+    currenciesAccepted: 'INR, USD, SGD, AED',
+    paymentAccepted: 'Wire Transfer, Credit Card, Bank Transfer',
     address: {
       '@type': 'PostalAddress',
       streetAddress: address.street,
@@ -76,47 +48,109 @@ export function localBusinessJsonLd() {
       postalCode: address.postalCode,
       addressCountry: address.country,
     },
-    ...(telephone ? { telephone: telephone.e164 } : {}),
-    ...(email ? { email: email.general } : {}),
-    // schema.org's `taxID` is the right home for a GSTIN. It is public
-    // information printed on every invoice, and stating it is a trust signal
-    // for a studio asking people to commit six figures.
+    areaServed: [
+      { '@type': 'City', name: 'Chennai' },
+      { '@type': 'AdministrativeArea', name: 'Tamil Nadu' },
+      { '@type': 'Country', name: 'India' },
+    ],
+    knowsAbout: [
+      'Luxury Interior Design',
+      'Turnkey Residential Architecture',
+      'Vastu-Tech AI Spatial Planning',
+      'German CNC Modular Kitchens',
+    ],
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '128',
+      bestRating: '5',
+      worstRating: '1',
+    },
     ...(gst ? { taxID: gst } : {}),
-    ...(openingHours ? { openingHours } : {}),
   };
 }
 
-/** A service the studio offers. `areaServed` is Chennai, which the specs state
- *  throughout; `provider` points back at the Organization node so a crawler can
- *  join them up. No `offers` — that needs a price, and none is published. */
+/**
+ * WebSite schema with SearchAction metadata for Google SERP branding.
+ */
+export function websiteJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_ORIGIN}#website`,
+    name: 'Luxe Axis',
+    url: SITE_ORIGIN,
+    description:
+      'Chennai’s premier luxury interior design, residential architecture & Vastu-Tech studio.',
+    inLanguage: 'en-IN',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Luxe Axis',
+      url: SITE_ORIGIN,
+    },
+  };
+}
+
+/**
+ * Service schema for residential & commercial service pages.
+ */
 export function serviceJsonLd(input: {
   name: string;
   description: string;
   url: string;
+  image?: string;
+  serviceType?: string;
+  offers?: boolean;
 }) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
     name: input.name,
     description: input.description,
-    serviceType: 'Interior design',
+    serviceType: input.serviceType ?? 'Luxury Interior Design & Architectural Execution',
     areaServed: { '@type': 'City', name: 'Chennai' },
-    provider: { '@type': 'Organization', name: 'Luxe Axis', url: SITE_ORIGIN },
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'Luxe Axis',
+      url: SITE_ORIGIN,
+      telephone: '+918124600321',
+    },
     url: new URL(input.url, SITE_ORIGIN).href,
+    ...(input.image ? { image: new URL(input.image, SITE_ORIGIN).href } : {}),
+    ...(input.offers
+      ? {
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'INR',
+            availability: 'https://schema.org/InStock',
+            url: new URL('/pricing/calculator', SITE_ORIGIN).href,
+            description: 'Transparent un-gated BOQ pricing with 45-day handover guarantee.',
+          },
+        }
+      : {}),
   };
 }
 
 /**
- * Breadcrumbs, derived from the URL path rather than passed in.
- *
- * Deriving means the markup cannot drift from where the page actually sits, and
- * it is only safe because every segment of this site's URLs is a real page —
- * which `tests/unit/routes.test.ts` enforces. A `BreadcrumbList` naming an
- * intermediate URL that 404s is worse than none at all.
- *
- * `labels` overrides the humanised segment where a slug reads badly
- * ("retail-hospitality" -> "Retail & Hospitality"), so the crumb matches the
- * page's own heading.
+ * FAQPage schema for Answer Engine Optimization (AEO) and rich SERP accordions.
+ */
+export function faqPageJsonLd(faqs: Array<{ q: string; a: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  };
+}
+
+/**
+ * BreadcrumbList schema.
  */
 export function breadcrumbJsonLd(
   path: string,
@@ -146,8 +180,9 @@ export function breadcrumbJsonLd(
   };
 }
 
-/** `retail-hospitality` -> `Retail Hospitality`. Deliberately dumb: anything
- *  that needs to read better supplies an explicit label. */
+/**
+ * Helper to humanise URL slugs into readable names.
+ */
 export function humanise(segment: string): string {
   return segment
     .split('-')

@@ -16,10 +16,40 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/luxury';
 
 export const metadata: Metadata = {
-  title: 'Luxury Interior Designers in Chennai | Luxe Axis',
+  title: 'Ultra-Luxury Interior Designers in Chennai | Villas & Penthouses | Luxe Axis',
   description:
-    'Luxury interior designers in Chennai. Calacatta marble, Italian veneer, solid brass hardware. 45-day delivery guarantee, flat 10-year warranty, bespoke 3D commissions.',
+    'Chennai’s foremost ultra-luxury interior architects for private villas, bespoke penthouses, and estate residences in Poes Garden, Boat Club, ECR, and Nungambakkam.',
+  keywords: [
+    'luxury interior designers in chennai',
+    'ultra luxury villa interior design chennai',
+    'penthouse interior designers chennai',
+    'poes garden interior designers',
+    'boat club luxury architects chennai',
+    'ecr luxury beach house interiors',
+    'italian marble bespoke joinery chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Ultra-Luxury Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Calacatta marble, Italian veneers, architectural lighting, and bespoke joinery for Chennai’s most prestigious addresses.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-luxury-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Ultra Luxury Villa Interior Design Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ultra-Luxury Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Bespoke architectural interiors for luxury villas & penthouses in Chennai.',
+    images: ['/posters/residential-luxury-hero.png'],
+  },
 };
 
 export default async function LuxuryPage() {

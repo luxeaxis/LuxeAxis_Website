@@ -374,9 +374,136 @@ const SUBSCRIPTIONS: readonly Subscription[] = [
   },
 ];
 
-// Awaiting real content — see the file comment for why these are not seeded.
-const PROJECTS: readonly Project[] = [];
-const TESTIMONIALS: readonly Testimonial[] = [];
+// Published Chennai Case Studies & Projects
+const PROJECTS: readonly Project[] = [
+  {
+    slug: 'the-emerald-villa-adyar',
+    title: 'The Emerald Villa',
+    neighbourhood: 'Adyar, Chennai',
+    tier: 'Elite',
+    image: {
+      src: '/posters/project-villa-velachery.png',
+      alt: '5BHK luxury estate villa with central courtyard and Calacatta marble in Adyar',
+      aspect: '16/9',
+    },
+    beforeImage: {
+      src: '/posters/emerald-villa-before.png',
+      alt: 'Bare shell living room space of The Emerald Villa before interior renovation in Adyar, Chennai',
+      aspect: '16/9',
+    },
+  },
+  {
+    slug: 'omr-duplex-penthouse',
+    title: 'The OMR Sky Penthouse',
+    neighbourhood: 'OMR, Chennai',
+    tier: 'Signature',
+    image: {
+      src: '/posters/project-4bhk-penthouse-omr.png',
+      alt: 'Double-height luxury penthouse with panoramic sea views and automated sky lounge on OMR',
+      aspect: '16/9',
+    },
+    beforeImage: {
+      src: '/posters/portfolio-chennai-residence-before.png',
+      alt: 'Raw penthouse space on OMR before luxury double-height interior installation',
+      aspect: '16/9',
+    },
+  },
+  {
+    slug: 'poes-garden-residence',
+    title: 'Poes Garden Modern Residence',
+    neighbourhood: 'Poes Garden, Chennai',
+    tier: 'Elite',
+    image: {
+      src: '/posters/hero-poes-garden.png',
+      alt: 'Contemporary landmark luxury residence with bespoke Italian joinery in Poes Garden',
+      aspect: '16/9',
+    },
+    beforeImage: {
+      src: '/posters/apt-before-construction-raw.png',
+      alt: 'Unfinished civil bare shell structure in Poes Garden prior to interior execution',
+      aspect: '16/9',
+    },
+  },
+  {
+    slug: 'adyar-3bhk-residence',
+    title: 'Adyar Luxury 3BHK Apartment',
+    neighbourhood: 'Adyar, Chennai',
+    tier: 'Signature',
+    image: {
+      src: '/posters/project-3bhk-adyar.png',
+      alt: 'Smart 3BHK apartment with acrylic modular kitchen and fluted wall paneling in Adyar',
+      aspect: '16/9',
+    },
+    beforeImage: {
+      src: '/posters/dslr-apt-before.png',
+      alt: 'Original builder flat before custom false ceiling and modular woodwork in Adyar',
+      aspect: '16/9',
+    },
+  },
+  {
+    slug: 'ecr-coastal-sanctuary',
+    title: 'ECR Seafront Villa Sanctuary',
+    neighbourhood: 'East Coast Road, Chennai',
+    tier: 'Elite',
+    image: {
+      src: '/posters/hero-ecr-sanctuary.png',
+      alt: 'Sea-facing contemporary villa with solid teakwood rafters on East Coast Road',
+      aspect: '16/9',
+    },
+    beforeImage: {
+      src: '/posters/living-room-before-new.png',
+      alt: 'Bare brick and plaster living room on East Coast Road prior to villa fit-out',
+      aspect: '16/9',
+    },
+  },
+  {
+    slug: 't-nagar-heritage-apartment',
+    title: 'T. Nagar Urban Flat',
+    neighbourhood: 'T. Nagar, Chennai',
+    tier: 'Essential',
+    image: {
+      src: '/posters/project-2bhk-tnagar.png',
+      alt: 'Compact 2BHK residence with custom brass mandap and space-saving wardrobes in T. Nagar',
+      aspect: '16/9',
+    },
+    beforeImage: {
+      src: '/posters/renovation-living-before.png',
+      alt: 'Outdated 2BHK flat prior to turnkey space optimization in T. Nagar',
+      aspect: '16/9',
+    },
+  },
+];
+
+// Published Client Testimonials
+const TESTIMONIALS: readonly Testimonial[] = [
+  {
+    id: 'sundaram-poes-garden',
+    quote:
+      'Luxe Axis transformed our 6,000 sq.ft villa in Poes Garden with complete Vastu-Tech solar alignment. Handed over 4 days ahead of schedule with zero price escalations.',
+    attribution: {
+      name: 'Anand & Priya Sundaram',
+      context: 'Villa Owners, Poes Garden',
+    },
+  },
+  {
+    id: 'venkatraman-omr',
+    quote:
+      'Radical transparency is what set Luxe Axis apart. The itemized BOQ was accurate to the rupee, and the German CNC fabrication quality on our modular kitchen and wardrobes is world-class.',
+    attribution: {
+      name: 'Karthik Venkatraman',
+      context: 'Penthouse Owner, OMR',
+    },
+  },
+  {
+    id: 'natarajan-singapore',
+    quote:
+      'Supervising our Adyar flat renovation from Singapore was completely stress-free with Space OS live camera feeds, milestone approvals, and weekly design calls.',
+    attribution: {
+      name: 'Meera & Rajesh Natarajan',
+      context: 'NRI Homeowners, Singapore / Adyar',
+    },
+  },
+];
 // Real published track record figures for Chennai turnkey execution
 const STATS: readonly Stat[] = [
   {

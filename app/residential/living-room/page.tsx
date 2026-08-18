@@ -16,10 +16,39 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/living-room';
 
 export const metadata: Metadata = {
-  title: 'Living Room Interior Designers in Chennai | Luxe Axis',
+  title: 'Luxury Living Room Interior Designers in Chennai | Luxe Axis',
   description:
-    'Expert living room interior designers in Chennai. Feature walls, false ceilings, TV units, ambient magnetic lighting. 45-day delivery, flat 10-year warranty.',
+    'Expert living room interior designers in Chennai. Italian marble feature walls, architectural false ceilings, custom TV consoles, ambient magnetic track lighting, and 45-day guaranteed delivery.',
+  keywords: [
+    'living room interior designers in chennai',
+    'luxury living room interiors chennai',
+    'modern hall interior design chennai',
+    'tv unit feature wall design',
+    'italian marble wall paneling chennai',
+    'magnetic track lighting living room',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Luxury Living Room Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Italian marble feature walls, architectural ceilings, custom TV units, and magnetic track lighting with 45-day guaranteed handover.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-living-room-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Luxury Living Room Interiors Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Luxury Living Room Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Feature walls, architectural false ceilings, and ambient magnetic lighting with 10-year warranty.',
+    images: ['/posters/residential-living-room-hero.png'],
+  },
 };
 
 export default async function LivingRoomPage() {

@@ -16,10 +16,40 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/pooja-room';
 
 export const metadata: Metadata = {
-  title: 'Pooja Room Interior Designers in Chennai | Luxe Axis',
+  title: 'Vastu-Compliant Pooja Room Interior Designers in Chennai | Luxe Axis',
   description:
-    'Sacred pooja room designs in Chennai. White Makrana marble, teakwood, backlit onyx, compact to walk-in mandirs. Flat 10-year warranty, 45-day delivery. Free consultation.',
+    'Sacred pooja room designs in Chennai. White Makrana marble mandirs, seasoned Burma teakwood, backlit onyx stone, CNC brass jali, 100% Vastu orientation, and 10-year warranty.',
+  keywords: [
+    'pooja room interior designers in chennai',
+    'vastu pooja room designs chennai',
+    'makrana marble pooja mandir chennai',
+    'teakwood mandir designs for home',
+    'backlit onyx pooja room',
+    'brass cnc jali pooja door',
+    'ishan kon pooja room alignment',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Vastu-Compliant Pooja Room Interior Designers in Chennai | Luxe Axis',
+    description:
+      'White Makrana marble, teakwood, backlit onyx, and 100% Ishan-kon Vastu solar alignment in Chennai.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-pooja-room-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Vastu Compliant Pooja Room Design Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Vastu Pooja Room Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Makrana marble mandirs, teakwood joinery, and 100% Vastu compliance in Chennai.',
+    images: ['/posters/residential-pooja-room-hero.png'],
+  },
 };
 
 export default async function PoojaRoomPage() {

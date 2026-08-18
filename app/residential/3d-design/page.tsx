@@ -17,10 +17,38 @@ import { THREE_D_HERO_SLIDES } from '@/lib/content/heroSlides';
 const ROUTE = '/residential/3d-design';
 
 export const metadata: Metadata = {
-  title: '3D Interior Design in Chennai | Photorealistic VR Walkthroughs',
+  title: '3D Interior Design & 4K VR Walkthroughs in Chennai | Luxe Axis',
   description:
-    '3D interior design in Chennai. Walk through your new home in photorealistic 3D before any work begins. Free with every project, 45-day delivery, flat 10-year warranty.',
+    'Photorealistic 3D interior design and immersive 4K VR walkthroughs in Chennai. Preview lighting, textures, materials, and spatial scale with 100% CAD precision before building.',
+  keywords: [
+    '3d interior design in chennai',
+    '3d interior rendering services chennai',
+    'photorealistic vr walkthrough home interiors',
+    '3d architectural visualization chennai',
+    'virtual reality interior preview',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: '3D Interior Design & 4K VR Walkthroughs in Chennai | Luxe Axis',
+    description:
+      'Immersive 4K VR walkthroughs and photorealistic 3D simulations before construction begins.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-3d-design-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis 3D VR Interior Design Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '3D Interior Design & VR Walkthroughs in Chennai | Luxe Axis',
+    description:
+      'Photorealistic 3D rendering and 4K virtual reality walkthroughs for Chennai homes.',
+    images: ['/posters/residential-3d-design-hero.png'],
+  },
 };
 
 export default async function ThreeDDesignPage() {

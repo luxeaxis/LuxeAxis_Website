@@ -9,19 +9,49 @@ import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { HeroBackground } from '@/components/sections/HeroBackground';
 import { JOURNAL_HERO_SLIDES } from '@/lib/content/heroSlides';
 import { getFaqs, getTestimonials } from '@/lib/content/source';
 
+import { getAllJournalArticles, getFeaturedJournalArticle } from '@/lib/content/journal';
+
 const ROUTE = '/journal';
 
 export const metadata: Metadata = {
-  title: 'Journal & Spatial Intelligence Insights | Luxe Axis Chennai',
+  title: 'Interior Design Journal & Spatial Architecture Insights | Luxe Axis Chennai',
   description:
-    'Essays and architectural guides from our senior studio team on designing, pricing, Vastu spatial planning, and building luxury interiors in Chennai.',
+    'Authoritative guides, cost breakdowns, Vastu spatial planning rules, and material science essays by Chennai’s leading luxury interior architecture studio.',
+  keywords: [
+    'interior design blog chennai',
+    'vastu design guide for flats',
+    'plywood vs mdf interior guide',
+    'modular kitchen cost guide chennai',
+    'interior design tips chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Interior Design Journal & Spatial Architecture Insights | Luxe Axis',
+    description:
+      'Authoritative guides on luxury interior design, cost breakdowns, and Vastu engineering in Chennai.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/hero-journal.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Interior Design Journal Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Interior Design Journal | Luxe Axis Chennai',
+    description:
+      'Expert essays on luxury interior design, pricing BOQs, and Vastu spatial engineering.',
+    images: ['/posters/hero-journal.png'],
+  },
 };
 
 export default async function JournalPage() {
@@ -31,81 +61,15 @@ export default async function JournalPage() {
     (f) => f.id === 'materials' || f.id === 'contractors' || f.id === 'abroad',
   );
 
+  const articles = await getAllJournalArticles();
+  const featuredArticle = (await getFeaturedJournalArticle()) || articles[0];
+
   const highlights = [
     { title: 'Spatial Design', desc: 'Ergonomics & Layout Principles' },
     { title: 'Vastu Engineering', desc: 'Solar Compass Alignment' },
     { title: 'Material Science', desc: 'BWP Ply & Blum Hardware' },
     { title: 'Pricing BOQ', desc: 'Transparent Cost Guides' },
     { title: 'Chennai Living', desc: 'Coastal Climate Durability' },
-  ];
-
-  const articles = [
-    {
-      slug: 'vastu-tech-spatial-guide',
-      category: 'Vastu Engineering',
-      date: 'Aug 2026',
-      readTime: '6 min read',
-      title:
-        'The Architectural Guide to Vastu-Tech: Solar Alignment for Chennai Homes',
-      excerpt:
-        'How ancient Vastu orientation mapped to solar compass vectors eliminates dead zones and optimizes natural light in modern 3BHK and 4BHK apartments.',
-      image: '/posters/intel-hero-vastu-tech.png',
-    },
-    {
-      slug: 'bwp-plywood-vs-commercial-ply',
-      category: 'Material Science',
-      date: 'Jul 2026',
-      readTime: '8 min read',
-      title:
-        'BWP Marine Plywood vs Commercial Ply: What Every Homeowner Must Know',
-      excerpt:
-        'Why IS:710 Boiling Water Proof marine plywood is essential for Chennai coastal humidity and preventing kitchen cabinet swelling.',
-      image: '/posters/kitchen-layout-lshape.png',
-    },
-    {
-      slug: 'chennai-interior-cost-breakdown',
-      category: 'Pricing Transparency',
-      date: 'Jul 2026',
-      readTime: '7 min read',
-      title:
-        'How to Estimate Your Chennai Home Interior Budget (Essential vs Signature)',
-      excerpt:
-        'A comprehensive cost breakdown of carpet area rates, Blum soft-close joinery, acrylic finishes, and itemized BOQ contracts.',
-      image: '/posters/residential-spotlight.png',
-    },
-    {
-      slug: 'nri-remote-home-supervision',
-      category: 'NRI Remote',
-      date: 'Jun 2026',
-      readTime: '5 min read',
-      title:
-        'NRI Remote Home Design: How to Monitor Villa Construction Overseas',
-      excerpt:
-        'Using 4K Space OS daily live feeds, timezone-matched video reviews, and digital escrow milestone releases for zero-leave execution.',
-      image: '/posters/digital-hub-hero.png',
-    },
-    {
-      slug: '45-day-handover-factory-prefabrication',
-      category: 'Spatial Design',
-      date: 'May 2026',
-      readTime: '6 min read',
-      title:
-        'The 45-Day Handover Guarantee: How Factory Manufacturing Prevents Delays',
-      excerpt:
-        'How precision German CNC joinery pre-fabrication cuts on-site civil disruption and guarantees on-time key handover.',
-      image: '/posters/hero-process.png',
-    },
-    {
-      slug: 'coastal-humidity-interior-finishes',
-      category: 'Chennai Living',
-      date: 'Apr 2026',
-      readTime: '7 min read',
-      title:
-        'Designing for Coastal Humidity: Anti-Rust Hardware & Mold-Resistant Finishes',
-      excerpt:
-        'Selecting marine grade BWP cores, PU lacquers, and stainless steel fittings engineered for Chennai’s saline air.',
-      image: '/posters/residential-living-room-hero.png',
-    },
   ];
 
   const comparisons = [
@@ -143,6 +107,7 @@ export default async function JournalPage() {
           url: ROUTE,
         }}
       />
+      <FaqJsonLd items={journalFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
       <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
@@ -251,45 +216,49 @@ export default async function JournalPage() {
       </section>
 
       {/* 3. Featured Article Spotlight Card */}
-      <Section
-        id="featured-articles"
-        eyebrow="Editor's Choice"
-        title="Featured Architectural Guide"
-        lede="Our flagship essay on balancing ancient Vastu spatial wisdom with modern apartment ergonomics."
-      >
-        <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/30 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
-          <div className="relative aspect-video rounded-xl overflow-hidden border border-accent/20">
-            <Image
-              src="/posters/intel-hero-vastu-tech.png"
-              alt="Featured Vastu-Tech Architectural Journal Guide"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div>
-            <div className="flex items-center gap-3 mb-3">
-              <Badge tone="accent" icon="check">
-                Vastu Engineering
-              </Badge>
-              <span className="text-small text-on-surface-muted">
-                Aug 2026 • 6 min read
-              </span>
+      {featuredArticle && (
+        <Section
+          id="featured-articles"
+          eyebrow="Editor's Choice"
+          title="Featured Architectural Guide"
+          lede="Our flagship essay on balancing ancient Vastu spatial wisdom with modern apartment ergonomics."
+        >
+          <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/30 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
+            <div className="relative aspect-video rounded-xl overflow-hidden border border-accent/20">
+              <Image
+                src={featuredArticle.image}
+                alt={featuredArticle.title}
+                fill
+                className="object-cover"
+              />
             </div>
-            <h3 className="font-display text-h2 font-bold text-on-surface mb-3 leading-tight">
-              The Architectural Guide to Vastu-Tech: Solar Alignment for Chennai
-              Homes
-            </h3>
-            <p className="text-body text-on-surface-2 leading-relaxed mb-6">
-              Discover how our studio maps solar compass vectors onto 2D CAD
-              floorplans to optimize natural light, ventilation, and spatial
-              energy across living rooms, kitchens, and master bedrooms.
-            </p>
-            <Button as="a" href="/book-audit">
-              Read Guide & Book Audit →
-            </Button>
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <Badge tone="accent" icon="check">
+                  {featuredArticle.category}
+                </Badge>
+                <span className="text-small text-on-surface-muted">
+                  {featuredArticle.date} • {featuredArticle.readTime}
+                </span>
+              </div>
+              <h3 className="font-display text-h2 font-bold text-on-surface mb-3 leading-tight">
+                {featuredArticle.title}
+              </h3>
+              <p className="text-body text-on-surface-2 leading-relaxed mb-6">
+                {featuredArticle.excerpt}
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Button as="a" href={`/journal/${featuredArticle.slug}`}>
+                  Read Full Guide →
+                </Button>
+                <Button as="a" href="/book-audit" variant="secondary">
+                  Book Free Audit
+                </Button>
+              </div>
+            </div>
           </div>
-        </div>
-      </Section>
+        </Section>
+      )}
 
       {/* 4. Articles Catalogue Grid */}
       <Section
@@ -328,7 +297,7 @@ export default async function JournalPage() {
               </div>
               <Button
                 as="a"
-                href="/book-audit"
+                href={`/journal/${art.slug}`}
                 variant="secondary"
                 className="w-full justify-center"
               >

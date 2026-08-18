@@ -26,10 +26,42 @@ import {
 } from '@/lib/content/source';
 
 export const metadata: Metadata = {
-  title: 'Luxe Axis — Premium Chennai Interiors & Tech Intelligence',
+  title: 'Luxury Interior Designers in Chennai | Vastu-Tech Architecture | Luxe Axis',
   description:
-    'AI-assisted design, Vastu-smart, delivered on a guaranteed handover date. Real designers, honest pricing.',
+    'Chennai’s premier luxury interior design studio. Turnkey residences, Vastu-Tech computational planning, 45-day guaranteed handover, un-gated itemized BOQs, and 10-year warranty.',
+  keywords: [
+    'luxury interior designers in chennai',
+    'turnkey home interiors chennai',
+    'vastu compliant interior design chennai',
+    'modern villa interior designers poes garden',
+    'luxury apartment interiors boat club chennai',
+    'modular kitchen chennai',
+    'best interior designers in chennai',
+    'un-gated boq interior pricing',
+    'nri home interior design chennai',
+  ],
   alternates: canonicalFor('/'),
+  openGraph: {
+    title: 'Luxe Axis | Luxury Interior Design & Vastu-Tech Architecture in Chennai',
+    description:
+      'Turnkey luxury residences, AI-assisted spatial planning, 45-day guaranteed handover, and un-gated itemized BOQ pricing.',
+    url: canonicalFor('/').canonical,
+    images: [
+      {
+        url: '/posters/home-interiors-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Luxury Architectural Interiors in Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Luxe Axis | Luxury Interior Design & Vastu-Tech Architecture in Chennai',
+    description:
+      'Turnkey luxury residences, 45-day guaranteed handover, and un-gated BOQ pricing in Chennai.',
+    images: ['/posters/home-interiors-hero.png'],
+  },
 };
 
 /**

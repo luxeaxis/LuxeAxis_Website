@@ -16,10 +16,39 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/renovation';
 
 export const metadata: Metadata = {
-  title: 'Home Renovation in Chennai | Luxe Axis Interiors',
+  title: 'Luxury Home Renovation & Remodeling Contractors in Chennai | Luxe Axis',
   description:
-    'Complete home renovation in Chennai. Old home to new in 45 days. Fixed price, live-in structural & interior renovation, flat 10-year warranty. Free site visit.',
+    'Complete residential home renovation and structural interior remodeling in Chennai. Fixed-price BOQ, turnkey execution, 45-day handover guarantee, and flat 10-year warranty.',
+  keywords: [
+    'home renovation contractors in chennai',
+    'house remodeling services chennai',
+    'apartment renovation interior designers',
+    'old house renovation chennai cost',
+    'civil and interior renovation packages',
+    'turnkey home remodeling chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Luxury Home Renovation & Remodeling in Chennai | Luxe Axis',
+    description:
+      'Complete home remodeling with fixed-price BOQs, structural upgrades, and 45-day guaranteed handover.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-renovation-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Luxury Home Renovation Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Home Renovation Contractors in Chennai | Luxe Axis',
+    description:
+      'Full home remodeling with fixed-price BOQs and 10-year warranty.',
+    images: ['/posters/residential-renovation-hero.png'],
+  },
 };
 
 export default async function RenovationPage() {

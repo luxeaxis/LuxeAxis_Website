@@ -7,15 +7,45 @@ import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { ELITE_HERO_SLIDES } from '@/lib/content/heroSlides';
 import { canonicalFor } from '@/lib/seo/hreflang';
 
 const ROUTE = '/pricing/elite';
 
 export const metadata: Metadata = {
-  title: 'Elite Private Commission Tier | Luxe Axis Pricing',
+  title: 'Elite Private Architectural Commission Tier | Luxe Axis Chennai',
   description:
-    'Custom architect-designed private luxury commissions for large villas and estate homes in Chennai. Imported Italian marble, liquid metal joinery & dedicated master team.',
+    'Custom architect-designed private luxury commissions for large villas, estate homes, and penthouses in Chennai. Imported Italian marble, liquid metal joinery, and dedicated master team.',
+  keywords: [
+    'elite luxury interior commission chennai',
+    'bespoke villa interior architect chennai',
+    'private residence architecture chennai',
+    'italian marble interior decoration chennai',
+    'high end luxury interior contractors',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Elite Private Architectural Commission Tier | Luxe Axis',
+    description:
+      'Custom architectural luxury commissions for Chennai estates and penthouses with Italian marble and artisan joinery.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/pricing-tier-elite.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Elite Luxury Interior Commission Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Elite Private Interior Commission | Luxe Axis Chennai',
+    description:
+      'Architect-designed private commissions for villas and estates with 10-year warranty.',
+    images: ['/posters/pricing-tier-elite.png'],
+  },
 };
 
 export default function ElitePricingPage() {
@@ -121,27 +151,27 @@ export default function ElitePricingPage() {
         }}
       />
 
-      {/* 1. Hero Stage */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage with Ken Burns Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={ELITE_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs path="/pricing/elite" labels={{ elite: 'Elite Tier' }} />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Bespoke Private Architecture
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Elite Private Commission <br />
               <span className="text-accent">Custom Valuation</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Custom architect-designed private luxury commissions for large
               estate villas, sky mansions, and legacy homes in Chennai. Imported
               Italian marble, liquid metal joinery, and dedicated principal
@@ -149,7 +179,7 @@ export default function ElitePricingPage() {
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Elite Private Audit
               </Button>
               <Button
@@ -157,6 +187,7 @@ export default function ElitePricingPage() {
                 href="/pricing/calculator"
                 variant="secondary"
                 size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
               >
                 Calculate Project Budget →
               </Button>

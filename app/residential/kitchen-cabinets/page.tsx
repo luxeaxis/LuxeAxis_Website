@@ -16,10 +16,38 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/kitchen-cabinets';
 
 export const metadata: Metadata = {
-  title: 'Modular Kitchen Cabinets in Chennai | Luxe Axis',
+  title: 'Modular Kitchen Cabinets in Chennai | CNC Precision Storage | Luxe Axis',
   description:
-    'CNC-cut modular kitchen cabinets in Chennai. BWR marine ply carcass, Hettich soft-close hardware, 40+ finishes. Flat 10-year warranty, 45-day delivery guarantee. Free quote.',
+    'CNC precision modular kitchen cabinets in Chennai. BWP marine ply carcass, Hettich German soft-close drawers, anti-termite treatment, 45-day delivery guarantee, and flat 10-year warranty.',
+  keywords: [
+    'modular kitchen cabinets chennai',
+    'kitchen cabinet manufacturers chennai',
+    'bwp marine ply kitchen shutter',
+    'acrylic kitchen cabinets chennai',
+    'hettich drawer system kitchen',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Modular Kitchen Cabinets in Chennai | Luxe Axis',
+    description:
+      'CNC-cut kitchen cabinets with BWP marine ply, Hettich soft-close fittings, and 10-year warranty.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-kitchen-cabinets-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Modular Kitchen Cabinets Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Modular Kitchen Cabinets in Chennai | Luxe Axis',
+    description:
+      'CNC precision kitchen cabinets with BWP marine ply and German hardware.',
+    images: ['/posters/residential-kitchen-cabinets-hero.png'],
+  },
 };
 
 export default async function KitchenCabinetsPage() {

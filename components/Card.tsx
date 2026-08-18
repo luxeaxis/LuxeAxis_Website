@@ -169,44 +169,48 @@ export function ProjectCard({
     <NextLink
       href={href}
       className={cx(
-        'group block',
+        'group flex flex-col h-full overflow-hidden justify-between',
         frameClass({ surface, interactive: true }),
         className,
       )}
     >
-      <Stack gap={4}>
-        <div className="-mx-6 -mt-6 overflow-hidden rounded-t-lg">
-          {media.kind === 'scene' ? (
-            <SceneSlot id={media.sceneId}>{null}</SceneSlot>
-          ) : (
-            <div
-              className="relative w-full"
-              style={{ aspectRatio: media.aspect }}
-            >
-              <Image
-                src={media.src}
-                alt={media.alt}
-                fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          )}
-        </div>
-        <Stack gap={2}>
-          {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="font-ui text-[length:var(--typography-h3-font-size)] font-semibold text-on-surface transition-colors duration-micro ease-standard group-hover:text-accent">
-              {title}
-            </h3>
-            <TrailingArrow />
+      <div className="flex flex-col h-full justify-between">
+        <div>
+          <div className="-mx-6 -mt-6 mb-4 overflow-hidden rounded-t-lg relative">
+            {media.kind === 'scene' ? (
+              <SceneSlot id={media.sceneId}>{null}</SceneSlot>
+            ) : (
+              <div className="relative w-full aspect-[16/10] overflow-hidden">
+                <Image
+                  src={media.src}
+                  alt={media.alt}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                />
+                {tier && (
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded bg-surface-deep/85 border border-accent/40 text-accent font-ui text-[11px] font-bold tracking-wider backdrop-blur-md shadow-md">
+                    {tier} Tier
+                  </span>
+                )}
+              </div>
+            )}
           </div>
-          <p className="text-small text-on-surface-2">
-            {neighbourhood}
-            {tier && <span> · {tier}</span>}
-          </p>
-        </Stack>
-      </Stack>
+          <div className="space-y-2">
+            {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+            <div className="flex items-start justify-between gap-3">
+              <h3 className="font-ui text-[length:var(--typography-h3-font-size)] font-semibold text-on-surface transition-colors duration-micro ease-standard group-hover:text-accent">
+                {title}
+              </h3>
+              <TrailingArrow />
+            </div>
+          </div>
+        </div>
+        <div className="pt-3 mt-3 border-t border-border-subtle/50 flex items-center justify-between text-small text-on-surface-2">
+          <span>{neighbourhood}</span>
+          {tier && <span className="font-medium text-accent">{tier}</span>}
+        </div>
+      </div>
     </NextLink>
   );
 }

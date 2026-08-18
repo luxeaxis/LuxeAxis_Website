@@ -6,17 +6,43 @@ import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { getFaqs } from '@/lib/content/source';
 
 const ROUTE = '/digital/starter';
 
 export const metadata: Metadata = {
-  title: 'Starter Digital Design Package (₹25,000/room) | Luxe Axis Digital',
+  title: 'Starter Online E-Design Package (₹25,000/room) | Luxe Axis Digital',
   description:
     'Essential remote interior design package: 2D CAD floorplan layout, curated color moodboard, Vastu compass check, and itemized shop-it-yourself procurement list.',
+  keywords: [
+    'starter online interior design package',
+    'e-design room package cost',
+    'remote interior decorator india',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Starter Online E-Design Package (₹25,000/room) | Luxe Axis',
+    description:
+      '2D CAD floorplan, curated moodboard, Vastu check, and shop-it-yourself shopping list.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/digital-hub-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Starter Digital Design Package',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Starter Online E-Design Package (₹25,000/room) | Luxe Axis',
+    description:
+      'Essential remote interior design: 2D CAD layout and shopping list.',
+    images: ['/posters/digital-hub-hero.png'],
+  },
 };
 
 export default async function StarterDigitalPage() {
@@ -46,6 +72,7 @@ export default async function StarterDigitalPage() {
           url: ROUTE,
         }}
       />
+      <FaqJsonLd items={digitalFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs */}
       <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">

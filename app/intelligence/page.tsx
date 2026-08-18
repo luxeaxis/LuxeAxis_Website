@@ -17,10 +17,38 @@ import { INTELLIGENCE_HERO_SLIDES } from '@/lib/content/heroSlides';
 const ROUTE = '/intelligence';
 
 export const metadata: Metadata = {
-  title: 'Applied Spatial Intelligence & Vastu-Tech | Luxe Axis',
+  title: 'Applied Spatial Intelligence, Space OS & Vastu-Tech™ | Luxe Axis Chennai',
   description:
-    'Vastu-Tech, Space Score™, Space OS and Virtual Staging. Four proprietary technologies that predict space performance, eliminate guesswork, and track budgets in real-time.',
+    'Vastu-Tech™ computational alignment, Space Score™, Space OS live site tracking, and 3D Virtual Staging: proprietary technologies that eliminate interior design guesswork in Chennai.',
+  keywords: [
+    'vastu-tech spatial architecture',
+    'space os interior portal',
+    'ai interior spatial design',
+    'vastu compass solar alignment chennai',
+    'virtual 3d staging chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Applied Spatial Intelligence & Vastu-Tech™ | Luxe Axis',
+    description:
+      'Proprietary technologies merging Vedic solar energy grids with modern CAD spatial precision and Space OS live site tracking.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/intel-hero-main.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Applied Spatial Intelligence and Vastu-Tech',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Spatial Intelligence & Vastu-Tech | Luxe Axis',
+    description:
+      'Vastu-Tech computational alignment and Space OS live site tracking.',
+    images: ['/posters/intel-hero-main.png'],
+  },
 };
 
 export default async function IntelligencePage() {

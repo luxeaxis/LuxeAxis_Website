@@ -12,7 +12,7 @@ import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
 import {
@@ -25,10 +25,39 @@ import {
 const ROUTE = '/residential';
 
 export const metadata: Metadata = {
-  title: 'Turnkey Residential Interior Design in Chennai | Luxe Axis',
+  title: 'Turnkey Residential Interior Design in Chennai | Luxury Home Interiors | Luxe Axis',
   description:
-    'Three transparent investment tiers and 13 specialized service disciplines for complete home interiors, modular kitchens, wardrobes, and luxury villas in Chennai.',
+    'Complete turnkey home interior design in Chennai. 3 transparent tiers (Essential, Signature, Elite), German modular kitchens, custom wardrobes, 45-day guaranteed handover, and 10-year warranty.',
+  keywords: [
+    'residential interior designers chennai',
+    'turnkey home interiors chennai',
+    'luxury residential interior design',
+    'apartment interior designers chennai',
+    'villa interior design chennai',
+    'modular kitchen and wardrobe packages',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Turnkey Residential Interior Design in Chennai | Luxe Axis',
+    description:
+      'Complete home interiors, German modular kitchens, custom wardrobes, 45-day guaranteed handover, and un-gated BOQ pricing.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-hub-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Residential Luxury Interiors Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Turnkey Residential Interior Design in Chennai | Luxe Axis',
+    description:
+      'Turnkey luxury home interiors in Chennai. 45-day handover, 10-year warranty, and un-gated BOQ pricing.',
+    images: ['/posters/residential-hub-hero.png'],
+  },
 };
 
 export default async function ResidentialPage() {
@@ -87,6 +116,7 @@ export default async function ResidentialPage() {
           url: ROUTE,
         })}
       />
+      <FaqJsonLd items={faqs} />
 
       {/* 1. Hero Stage & Breadcrumbs with Ken Burns Cinematic Background */}
       <section className="relative overflow-hidden pt-12 pb-16 min-h-[80vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">

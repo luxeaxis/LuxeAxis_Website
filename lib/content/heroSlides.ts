@@ -436,3 +436,110 @@ export const PRICING_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
   },
 ];
 
+/**
+ * Essential Tier pricing page (`/pricing/essential`).
+ */
+export const ESSENTIAL_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/pricing-tier-essential.png',
+    alt: 'Essential Luxury Tier interior specification with acrylic modular kitchen and Blum soft-close hardware.',
+    label: 'Essential Luxury Standard (₹1,800/sq.ft)',
+  },
+  {
+    src: '/posters/kitchen-hero-bg.png',
+    alt: 'High-gloss acrylic modular kitchen fit-out with marine BWP plywood carcass.',
+    label: '45-Day Handover Guaranteed Kitchen',
+  },
+  {
+    src: '/posters/hero-pricing.png',
+    alt: 'Itemized BOQ specification and rate card breakdown for Essential Tier.',
+    label: 'Zero Hidden Fine-Print Pricing',
+  },
+];
+
+/**
+ * Signature Tier pricing page (`/pricing/signature`).
+ */
+export const SIGNATURE_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/pricing-tier-signature.png',
+    alt: 'Signature Bespoke Tier villa interior featuring Italian PU lacquer finish and Hafele hardware.',
+    label: 'Signature Bespoke Tier (₹2,800/sq.ft)',
+  },
+  {
+    src: '/posters/intel-hero-virtual-staging.png',
+    alt: 'Smart home automation lighting and sensor walk-in wardrobes.',
+    label: 'Smart Automation & Acoustic Panelling',
+  },
+  {
+    src: '/posters/residential-spotlight.png',
+    alt: 'Bespoke material sample board featuring tinted glass and HDMR finishes.',
+    label: 'Italian Material Sophistication & Finish',
+  },
+];
+
+/**
+ * Elite Tier pricing page (`/pricing/elite`).
+ */
+export const ELITE_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/pricing-tier-elite.png',
+    alt: 'Elite Private Commission estate interior with book-matched Calacatta Italian marble and liquid metal joinery.',
+    label: 'Elite Private Architectural Commission',
+  },
+  {
+    src: '/posters/intel-hero-main.png',
+    alt: 'Private sky lounge villa engineering with custom architectural joinery.',
+    label: 'Direct Italian Quarry Marble Selection',
+  },
+  {
+    src: '/posters/hero-poes-garden.png',
+    alt: 'Legacy private estate residence in Poes Garden, Chennai.',
+    label: 'Dedicated Principal Architect Oversight',
+  },
+];
+
+/**
+ * Calculator pricing page (`/pricing/calculator`).
+ */
+export const CALCULATOR_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/pricing-tier-calculator.png',
+    alt: 'Interactive un-gated fee calculator and BOQ budget estimation engine dashboard.',
+    label: 'Real-Time Interactive BOQ Estimator',
+  },
+  {
+    src: '/posters/digital-hub-hero.png',
+    alt: 'Digital project budget ledger and itemized rate cards on tablet display.',
+    label: '90%+ Precision Un-Gated Cost Engine',
+  },
+  {
+    src: '/posters/hero-pricing.png',
+    alt: 'Radical financial transparency BOQ cost engine visualization.',
+    label: 'Instant Carpet-Area Financial Clarity',
+  },
+];
+
+/**
+ * Careers page (`/careers`).
+ */
+export const CAREERS_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/hero-about.png',
+    alt: 'Luxe Axis architectural studio design team collaborating over CAD blueprints and 3D spatial models in Chennai.',
+    label: 'Architectural Excellence & Studio Life',
+  },
+  {
+    src: '/posters/hero-omr-campus.png',
+    alt: 'Modern high-tech architectural research studio environment with Vastu-Tech workstations.',
+    label: 'State-of-the-Art Innovation Hub',
+  },
+  {
+    src: '/posters/commercial-workplace-hero.png',
+    alt: 'Collaborative luxury interior design workspace and material sample laboratory.',
+    label: 'High-Impact Creative Culture',
+  },
+];
+
+
+

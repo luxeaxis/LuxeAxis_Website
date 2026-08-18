@@ -9,17 +9,45 @@ import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { getFaqs, getTestimonials } from '@/lib/content/source';
 
 const ROUTE = '/digital';
 
 export const metadata: Metadata = {
-  title: 'Luxe Axis Digital & Design Club | Remote Architectural Design',
+  title: 'Digital Interior Design Packages & Online E-Design | Luxe Axis',
   description:
-    'Complete, professional architectural interior design delivered remotely: 2D layouts, 4K 3D VR renders, Vastu-Tech compass scans, and shop-it-yourself itemized BOQs.',
+    'Complete online architectural interior design delivered globally: 2D CAD layouts, 4K 3D VR renders, Vastu-Tech compass scans, and shop-it-yourself itemized BOQs.',
+  keywords: [
+    'online interior design india',
+    'e-design packages chennai',
+    'virtual interior designer',
+    'remote 3d architectural design',
+    'digital boq shopping list interior',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Digital Interior Design Packages & Online E-Design | Luxe Axis',
+    description:
+      'Professional architectural interior design delivered 100% online with 4K 3D VR renders and itemized shopping BOQs.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/digital-hub-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Digital Interior Design Services',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Digital Interior Design Packages | Luxe Axis',
+    description:
+      'Online e-design with 4K 3D renders, CAD floorplans, and shop-it-yourself BOQs.',
+    images: ['/posters/digital-hub-hero.png'],
+  },
 };
 
 export default async function DigitalPage() {
@@ -146,6 +174,7 @@ export default async function DigitalPage() {
           url: ROUTE,
         }}
       />
+      <FaqJsonLd items={digitalFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs with Ken Burns Cinematic Background */}
       <section className="relative overflow-hidden pt-12 pb-16 min-h-[80vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">

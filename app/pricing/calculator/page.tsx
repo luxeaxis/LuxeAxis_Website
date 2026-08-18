@@ -6,15 +6,46 @@ import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { WorldClassPricingCalculator } from '@/components/WorldClassPricingCalculator';
 import { getCalculatorConfig } from '@/lib/content/source';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { CALCULATOR_HERO_SLIDES } from '@/lib/content/heroSlides';
 import { canonicalFor } from '@/lib/seo/hreflang';
 
 const ROUTE = '/pricing/calculator';
 
 export const metadata: Metadata = {
-  title: 'Interactive Fee Calculator & BOQ Budget Estimator | Luxe Axis',
+  title: 'Interior Design Cost Calculator Chennai | Instant BOQ Estimator | Luxe Axis',
   description:
-    'Calculate your exact interior design cost in Chennai. Select carpet area, residence type, and tier to generate an instant, un-gated budget estimate.',
+    'Calculate your exact home interior design cost in Chennai. Real-time, un-gated budget estimator for 2BHK, 3BHK, 4BHK apartments, villas, and commercial spaces with itemized BOQ breakdowns.',
+  keywords: [
+    'interior design cost calculator chennai',
+    'interior estimate calculator',
+    '2bhk interior cost calculator',
+    '3bhk interior design cost calculator',
+    'boq interior estimation tool',
+    'interior price per square foot calculator',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Interior Design Cost Calculator Chennai | Luxe Axis',
+    description:
+      'Instant un-gated budget estimator for Chennai home interiors. Calculate exact carpet area costs with itemized BOQ breakdowns.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/pricing-tier-calculator.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Interactive Interior Cost Calculator',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Interior Design Cost Calculator Chennai | Luxe Axis',
+    description:
+      'Instant, un-gated interior design budget estimator for apartments and villas in Chennai.',
+    images: ['/posters/pricing-tier-calculator.png'],
+  },
 };
 
 export default async function CalculatorPricingPage() {
@@ -79,30 +110,30 @@ export default async function CalculatorPricingPage() {
         }}
       />
 
-      {/* 1. Hero Stage */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage with Ken Burns Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={CALCULATOR_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs
             path="/pricing/calculator"
             labels={{ calculator: 'Fee Calculator' }}
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Un-Gated Pricing Engine • 90%+ Precision
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Interactive Chennai Interior <br />
               <span className="text-accent">Pricing Calculator</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Most Chennai studios hide their prices behind aggressive sales calls. We
               publish our 2025/2026 pricing algorithm directly so you can estimate your
               exact turnkey project budget and itemized BOQ instantly.

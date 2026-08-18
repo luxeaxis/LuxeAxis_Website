@@ -16,10 +16,40 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/wardrobe';
 
 export const metadata: Metadata = {
-  title: 'Wardrobe Interior Designers in Chennai | Luxe Axis',
+  title: 'Bespoke Luxury Wardrobe Interior Designers in Chennai | Luxe Axis',
   description:
-    'Custom sliding, walk-in, and hinged wardrobes in Chennai. BWR marine ply carcass, soft-close hardware, 40+ finishes. Flat 10-year warranty, 45-day delivery guarantee. Free quote.',
+    'Custom sliding, walk-in, and hinged luxury wardrobes in Chennai. BWP marine ply carcass, Blum & Hafele soft-close hardware, 40+ finishes, 45-day delivery guarantee, and flat 10-year warranty.',
+  keywords: [
+    'wardrobe interior designers in chennai',
+    'walk in wardrobe design chennai',
+    'sliding wardrobe designers chennai',
+    'hinged wardrobe cost chennai',
+    'custom closet design chennai',
+    'acrylic wardrobe shutters chennai',
+    'fluted glass wardrobe chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Bespoke Luxury Wardrobe Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Custom sliding, walk-in, and hinged wardrobes with BWP marine ply, German hardware, and a 10-year warranty in Chennai.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-wardrobe-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Bespoke Luxury Wardrobe Design Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bespoke Wardrobe Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Custom sliding & walk-in wardrobes with German soft-close hardware and 10-year warranty.',
+    images: ['/posters/residential-wardrobe-hero.png'],
+  },
 };
 
 export default async function WardrobePage() {

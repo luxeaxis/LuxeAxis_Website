@@ -8,17 +8,37 @@ import { JsonLd } from '@/components/JsonLd';
 import { ToBePublished } from '@/components/ToBePublished';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { getFaqs } from '@/lib/content/source';
 
 const ROUTE = '/accessibility';
 
 export const metadata: Metadata = {
-  title: 'Accessibility Statement — Luxe Axis',
+  title: 'Accessibility Statement & WCAG 2.2 Level AA Standards | Luxe Axis',
   description:
-    'What this site commits to on accessibility, what is tested automatically, and what is still outstanding under WCAG 2.2 Level AA.',
+    'Our commitment to digital accessibility under WCAG 2.2 Level AA guidelines: keyboard operability, contrast ratios, and screen reader compatibility.',
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Accessibility Statement & Standards | Luxe Axis',
+    description:
+      'Digital accessibility standards under WCAG 2.2 Level AA.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/hero-about.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Accessibility Commitment',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Accessibility Statement | Luxe Axis',
+    description: 'WCAG 2.2 Level AA digital accessibility standards.',
+    images: ['/posters/hero-about.png'],
+  },
 };
 
 const TESTED = [
@@ -62,6 +82,7 @@ export default async function AccessibilityPage() {
           url: ROUTE,
         }}
       />
+      <FaqJsonLd items={accessibilityFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs */}
       <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">

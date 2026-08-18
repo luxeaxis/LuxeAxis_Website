@@ -72,10 +72,12 @@ export default async function PortfolioSlugPage({
                 Before & After Transformation
               </h2>
               <BeforeAfterSlider
-                beforeImage={{
-                  src: '/posters/hero.avif',
-                  alt: `Original space of ${project.title} before renovation`,
-                }}
+                beforeImage={
+                  project.beforeImage ?? {
+                    src: '/posters/portfolio-chennai-residence-before.png',
+                    alt: `Original space of ${project.title} before renovation in ${project.neighbourhood}`,
+                  }
+                }
                 afterImage={{ src: project.image.src, alt: project.image.alt }}
                 aspect={project.image.aspect}
               />

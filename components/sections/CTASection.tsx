@@ -77,32 +77,34 @@ export function TestimonialBand({
       className="w-full py-section-y relative"
     >
       <Container>
-        <Stack gap={6}>
-          <div className="space-y-2">
-            <h2
-              id="testimonial-heading"
-              className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted"
-            >
-              What our clients say
-            </h2>
-            <h3 className="font-display text-2xl sm:text-3xl font-bold text-on-surface">
-              Verified Client Feedback &amp; Google Ratings
-            </h3>
-          </div>
-
-          <GoogleRating />
-
-          {featured && (
-            <div className="lx-liquid-glass rounded-2xl p-8 border border-border-subtle/50 bg-surface-deep/40 backdrop-blur-md space-y-4">
-              <blockquote className="font-display text-[length:var(--typography-h2-font-size)] leading-snug text-on-surface">
-                {featured.quote}
-              </blockquote>
-              <p className="text-small text-on-surface-2 font-medium">
-                {featured.attribution.name} · {featured.attribution.context}
-              </p>
+        <Reveal>
+          <Stack gap={6}>
+            <div className="space-y-2">
+              <h2
+                id="testimonial-heading"
+                className="font-ui text-overline uppercase tracking-[var(--font-tracking-wider)] text-on-surface-muted"
+              >
+                What our clients say
+              </h2>
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-on-surface">
+                Verified Client Feedback &amp; Google Ratings
+              </h3>
             </div>
-          )}
-        </Stack>
+
+            <GoogleRating />
+
+            {featured && (
+              <div className="lx-liquid-glass rounded-2xl p-8 border border-border-subtle/50 bg-surface-deep/40 backdrop-blur-md space-y-4">
+                <blockquote className="font-display text-[length:var(--typography-h2-font-size)] leading-snug text-on-surface">
+                  {featured.quote}
+                </blockquote>
+                <p className="text-small text-on-surface-2 font-medium">
+                  {featured.attribution.name} · {featured.attribution.context}
+                </p>
+              </div>
+            )}
+          </Stack>
+        </Reveal>
       </Container>
     </section>
   );

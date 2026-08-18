@@ -6,7 +6,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { LegalDocument } from '@/components/LegalDocument';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { loadLegalDocument } from '@/lib/legal/document';
 import { getFaqs } from '@/lib/content/source';
@@ -14,10 +14,30 @@ import { getFaqs } from '@/lib/content/source';
 const ROUTE = '/terms';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service — Luxe Axis',
+  title: 'Terms of Service & Handover SLA Guarantees | Luxe Axis Chennai',
   description:
-    'The terms governing the Luxe Axis website, Space OS, and our design, execution, subscription and marketplace services.',
+    'Terms of service, 45-day handover contractual guarantees, 10-year structural warranty terms, and transparent BOQ price-lock policies governing Luxe Axis studio projects.',
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Terms of Service & Handover Guarantees | Luxe Axis',
+    description:
+      'Contractual handover SLA guarantees, 10-year structural warranty terms, and transparent BOQ price-locks.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/hero-privacy.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Terms of Service',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Terms of Service & Guarantees | Luxe Axis Chennai',
+    description: 'Contractual handover SLAs and 10-year warranty terms.',
+    images: ['/posters/hero-privacy.png'],
+  },
 };
 
 export default async function TermsPage() {
@@ -66,6 +86,7 @@ export default async function TermsPage() {
           url: ROUTE,
         }}
       />
+      <FaqJsonLd items={termsFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs */}
       <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">

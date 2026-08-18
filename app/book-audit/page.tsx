@@ -8,7 +8,7 @@ import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { JsonLd } from '@/components/JsonLd';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { getFaqs, getTrustPoints, getTestimonials } from '@/lib/content/source';
@@ -16,10 +16,38 @@ import { getFaqs, getTrustPoints, getTestimonials } from '@/lib/content/source';
 const ROUTE = '/book-audit';
 
 export const metadata: Metadata = {
-  title: 'Book a Free Design Audit | Luxe Axis Chennai',
+  title: 'Book a Free Luxury Design & Vastu Audit | Luxe Axis Chennai',
   description:
-    'A free 60-minute spatial design audit with a senior interior architect. CAD layout assessment, Vastu-Tech compass check, and itemized BOQ cost estimate. No obligation.',
+    'Schedule a 60-minute spatial design audit with a senior interior architect. CAD layout assessment, Vastu-Tech compass check, and itemized BOQ cost estimate in Chennai.',
+  keywords: [
+    'book interior design consultation chennai',
+    'free interior design audit',
+    'vastu floorplan consultation chennai',
+    'luxury interior cost estimate chennai',
+    'boq interior estimation',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Book a Free Luxury Design & Vastu Audit | Luxe Axis Chennai',
+    description:
+      'Schedule a 60-minute spatial design audit with a senior interior architect. CAD layout assessment, Vastu-Tech compass check, and itemized BOQ cost estimate.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/home-interiors-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Book a Free Design Audit with Luxe Axis',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Book a Free Luxury Design & Vastu Audit | Luxe Axis Chennai',
+    description:
+      '60-minute design audit: CAD layout analysis, Vastu-Tech compass scan, and itemized BOQ estimate.',
+    images: ['/posters/home-interiors-hero.png'],
+  },
 };
 
 export default async function BookAuditPage() {
@@ -97,6 +125,7 @@ export default async function BookAuditPage() {
           url: ROUTE,
         }}
       />
+      <FaqJsonLd items={auditFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs */}
       <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
@@ -336,12 +365,12 @@ export default async function BookAuditPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
-              alt: 'Bare shell flat before design audit',
+              src: '/posters/apt-before-construction-raw.png',
+              alt: 'Bare shell flat in T. Nagar before design audit',
             }}
             afterImage={{
-              src: '/posters/pricing-axis.avif',
-              alt: 'Completed 3BHK home after Luxe Axis audit',
+              src: '/posters/home-interiors-hero.png',
+              alt: 'Completed 3BHK home interior in T. Nagar after Luxe Axis audit',
             }}
           />
         </div>

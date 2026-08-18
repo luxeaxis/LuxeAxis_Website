@@ -17,10 +17,38 @@ import { PORTFOLIO_HERO_SLIDES } from '@/lib/content/heroSlides';
 const ROUTE = '/portfolio';
 
 export const metadata: Metadata = {
-  title: 'Portfolio & Completed Projects Catalogue | Luxe Axis',
+  title: 'Luxury Interior Design Portfolio & Completed Projects | Luxe Axis Chennai',
   description:
-    'Curated interior projects in Chennai. Penthouses, gated estate villas, luxury apartments, and commercial workplaces. Real photography, 10-year flat warranty.',
+    'Explore curated interior projects across Chennai: luxury penthouses in Boat Club, gated estate villas in ECR, 3BHK/4BHK flats in Nungambakkam, and commercial corporate HQs.',
+  keywords: [
+    'interior design portfolio chennai',
+    'luxury home projects photos chennai',
+    'completed apartment interiors chennai',
+    'villa interior projects gallery',
+    'real interior design photography chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Luxury Interior Design Portfolio | Luxe Axis Chennai',
+    description:
+      'Curated interior projects in Chennai: penthouses, private villas, luxury apartments, and corporate offices.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/portfolio-chennai-residence-after.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Completed Luxury Interior Projects Portfolio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Luxury Interior Design Portfolio | Luxe Axis Chennai',
+    description:
+      'Curated interior projects across Chennai: penthouses, estate villas, and luxury apartments.',
+    images: ['/posters/portfolio-chennai-residence-after.png'],
+  },
 };
 
 export default async function PortfolioPage() {

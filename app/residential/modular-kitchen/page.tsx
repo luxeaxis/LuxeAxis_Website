@@ -17,10 +17,40 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/modular-kitchen';
 
 export const metadata: Metadata = {
-  title: 'Modular Kitchen Interior Designers in Chennai | Luxe Axis',
+  title: 'German Modular Kitchen Interior Designers in Chennai | Luxe Axis',
   description:
-    'Chennai’s top modular kitchen designers. German Hettich & Hafele hardware, BWR marine ply, custom layouts. 45-day delivery guarantee, flat 10-year warranty. Free quote.',
+    'Chennai’s top modular kitchen designers. German Hettich & Hafele hardware, BWP marine ply, custom layouts, 45-day delivery guarantee, and flat 10-year warranty.',
+  keywords: [
+    'modular kitchen interior designers in chennai',
+    'german modular kitchen chennai',
+    'bwp marine ply modular kitchen',
+    'hettich modular kitchen chennai',
+    'modular kitchen cost per sq ft chennai',
+    'l-shaped modular kitchen chennai',
+    'island modular kitchen designers',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'German Modular Kitchen Interior Designers in Chennai | Luxe Axis',
+    description:
+      'German Hettich & Hafele hardware, 100% BWP marine plywood, 45-day guaranteed handover, and flat 10-year warranty in Chennai.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-modular-kitchen-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis German Modular Kitchen Interiors Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'German Modular Kitchen Designers Chennai | Luxe Axis',
+    description:
+      'German Hettich hardware, BWP marine ply, 45-day handover, and 10-year warranty.',
+    images: ['/posters/residential-modular-kitchen-hero.png'],
+  },
 };
 
 export default async function ModularKitchenPage() {

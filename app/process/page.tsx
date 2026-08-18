@@ -9,7 +9,7 @@ import { ToBePublished } from '@/components/ToBePublished';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { HeroBackground } from '@/components/sections/HeroBackground';
 import { PROCESS_HERO_SLIDES } from '@/lib/content/heroSlides';
@@ -25,10 +25,38 @@ import {
 const ROUTE = '/process';
 
 export const metadata: Metadata = {
-  title: 'Seven Stages of Architectural Execution & Guarantees | Luxe Axis',
+  title: 'Our Turnkey 7-Stage Architectural Execution Process & Guarantees | Luxe Axis',
   description:
-    'Discover our 7-stage master interior execution sequence from CAD spatial audit to 10-year concierge care. Backed by contractual handover SLAs and zero-escalation BOQ pricing.',
+    'Discover our 7-stage master interior execution sequence from CAD spatial audit to 10-year concierge care. Backed by 45-day contractual handover SLAs and zero-escalation BOQ pricing in Chennai.',
+  keywords: [
+    'turnkey interior execution process chennai',
+    'interior project management steps',
+    '45 day interior handover guarantee',
+    'vastu tech interior workflow',
+    'interior quality control checklist chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Our 7-Stage Turnkey Interior Execution Process | Luxe Axis',
+    description:
+      'Rigorous 7-stage engineering methodology with 45-day guaranteed handover, daily 4K site logs, and 10-year warranty.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/hero-process.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis 7-Stage Architectural Interior Execution Process',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '7-Stage Interior Execution Process | Luxe Axis',
+    description:
+      'Turnkey interior execution sequence with 45-day delivery guarantee and 10-year warranty.',
+    images: ['/posters/hero-process.png'],
+  },
 };
 
 export default async function ProcessPage() {
@@ -104,6 +132,7 @@ export default async function ProcessPage() {
           url: ROUTE,
         })}
       />
+      <FaqJsonLd items={processFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
       <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">

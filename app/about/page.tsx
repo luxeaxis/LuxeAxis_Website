@@ -9,7 +9,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
-import { Faq } from '@/components/Faq';
+import { Faq, FaqJsonLd } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { HeroBackground } from '@/components/sections/HeroBackground';
 import { ABOUT_HERO_SLIDES } from '@/lib/content/heroSlides';
@@ -19,10 +19,37 @@ import { getFaqs, getTestimonials } from '@/lib/content/source';
 const ROUTE = '/about';
 
 export const metadata: Metadata = {
-  title: 'About Luxe Axis | Chennai’s Intelligent Interior Design Studio',
+  title: 'About Luxe Axis | Chennai’s Intelligent Interior Design & Vastu-Tech Studio',
   description:
-    'Luxe Axis is a technology-native interior design studio in Chennai. Combining AI spatial precision with boutique craftsmanship and radical BOQ transparency.',
+    'Luxe Axis is Chennai’s technology-native luxury interior design studio. Combining AI spatial precision, Vedic Vastu-Tech alignment, and radical BOQ transparency.',
+  keywords: [
+    'about luxe axis chennai',
+    'luxury interior architecture studio',
+    'vastu interior designers chennai',
+    'intelligent interior design south india',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'About Luxe Axis | Chennai’s Intelligent Interior Design Studio',
+    description:
+      'Combining AI spatial precision, Vedic Vastu-Tech alignment, boutique craftsmanship, and radical BOQ transparency in Chennai.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/hero-about.png',
+        width: 1200,
+        height: 630,
+        alt: 'About Luxe Axis Studio Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Luxe Axis | Chennai’s Intelligent Interior Design Studio',
+    description:
+      'AI spatial precision, boutique craftsmanship, and un-gated BOQ transparency in Chennai.',
+    images: ['/posters/hero-about.png'],
+  },
 };
 
 const VALUES = [
@@ -95,6 +122,7 @@ export default async function AboutPage() {
           url: ROUTE,
         }}
       />
+      <FaqJsonLd items={aboutFaqs} />
 
       {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
       <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
@@ -368,6 +396,57 @@ export default async function AboutPage() {
               </Button>
             </div>
           </Stack>
+        </div>
+      </Section>
+
+      {/* 8. Careers & Studio Talent */}
+      <Section
+        id="careers"
+        eyebrow="Join Our Studio"
+        title="Build the Future of Luxury Architecture & Vastu-Tech"
+        lede="We are always looking for visionary principal architects, computational engineers, 3D artists, and project execution leaders to join our Chennai studio."
+      >
+        <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/40 shadow-2xl relative overflow-hidden">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+            <Stack gap={4} className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 text-accent font-ui text-overline uppercase tracking-wider font-bold">
+                ⚡ Hiring Active • 8 Open Roles
+              </div>
+              <h3 className="font-display text-h2 font-bold text-on-surface">
+                Craft Exceptional Spaces with India’s Premier Vastu-Tech Team
+              </h3>
+              <p className="text-body text-on-surface-2 leading-relaxed">
+                At Luxe Axis, we pair boutique architectural craftsmanship with cutting-edge spatial software, M3 Max workstations, and radical financial clarity. We offer top 10% CTCs, zero-crunch policies, comprehensive medical insurance, and ₹1.5L annual learning stipends.
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+                <div className="p-3 rounded-xl bg-surface-deep border border-accent/20">
+                  <strong className="block font-display text-h3 text-accent font-bold">4.9 ★</strong>
+                  <span className="text-[11px] text-on-surface-muted uppercase tracking-wider font-semibold">Glassdoor Rating</span>
+                </div>
+                <div className="p-3 rounded-xl bg-surface-deep border border-accent/20">
+                  <strong className="block font-display text-h3 text-accent font-bold">Top 10%</strong>
+                  <span className="text-[11px] text-on-surface-muted uppercase tracking-wider font-semibold">Industry CTC</span>
+                </div>
+                <div className="p-3 rounded-xl bg-surface-deep border border-accent/20">
+                  <strong className="block font-display text-h3 text-accent font-bold">₹1.5L</strong>
+                  <span className="text-[11px] text-on-surface-muted uppercase tracking-wider font-semibold">Annual Stipend</span>
+                </div>
+                <div className="p-3 rounded-xl bg-surface-deep border border-accent/20">
+                  <strong className="block font-display text-h3 text-accent font-bold">0%</strong>
+                  <span className="text-[11px] text-on-surface-muted uppercase tracking-wider font-semibold">Crunch Policy</span>
+                </div>
+              </div>
+            </Stack>
+
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-4 shrink-0 w-full lg:w-auto">
+              <Button as="a" href="/careers#open-roles" size="lg" className="justify-center shadow-xl">
+                Explore Open Positions ↓
+              </Button>
+              <Button as="a" href="/careers" variant="secondary" size="lg" className="justify-center bg-surface-raised/90 border border-accent/30">
+                View Culture & Perks →
+              </Button>
+            </div>
+          </div>
         </div>
       </Section>
 

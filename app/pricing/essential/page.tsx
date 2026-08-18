@@ -7,15 +7,45 @@ import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { ESSENTIAL_HERO_SLIDES } from '@/lib/content/heroSlides';
 import { canonicalFor } from '@/lib/seo/hreflang';
 
 const ROUTE = '/pricing/essential';
 
 export const metadata: Metadata = {
-  title: 'Essential Luxury Tier (₹1,800/sqft) | Luxe Axis Pricing',
+  title: 'Essential Interior Design Package (₹1,800/sq.ft) | Luxe Axis Chennai',
   description:
-    'Complete specifications and breakdown of the Essential Luxury Tier at ₹1,800/sq.ft. Blum hardware, marine BWP plywood, 45-day guaranteed handover & 10-year warranty.',
+    'Full specifications of the Essential interior tier at ₹1,800/sq.ft. Century Club Prime BWP plywood, Blum German hardware, 45-day guaranteed handover, and 10-year warranty.',
+  keywords: [
+    'essential interior design package chennai',
+    'interior cost 1800 per sq ft',
+    '2bhk essential interior chennai',
+    '3bhk turnkey interior package',
+    'blum hardware modular kitchen package',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Essential Interior Design Package (₹1,800/sq.ft) | Luxe Axis',
+    description:
+      'Complete home interiors at ₹1,800/sq.ft with BWP marine plywood, Blum fittings, and 45-day handover guarantee.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/pricing-tier-essential.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Essential Interior Design Package Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Essential Interior Design Tier (₹1,800/sq.ft) | Luxe Axis',
+    description:
+      'Turnkey luxury interiors with German hardware, 45-day handover, and 10-year warranty.',
+    images: ['/posters/pricing-tier-essential.png'],
+  },
 };
 
 export default function EssentialPricingPage() {
@@ -121,37 +151,37 @@ export default function EssentialPricingPage() {
         }}
       />
 
-      {/* 1. Hero Stage */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage with Ken Burns Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={ESSENTIAL_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs
             path="/pricing/essential"
             labels={{ essential: 'Essential Tier' }}
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Turnkey Luxury Standard
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Essential Luxury Tier <br />
               <span className="text-accent">₹1,800 / sq.ft</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Curated premium interior fit-out for apartments and modern homes
               in Chennai. German Blum hardware, 100% BWP marine plywood, 45-day
               guaranteed handover, and 10-year flat warranty.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Essential Tier Audit
               </Button>
               <Button
@@ -159,6 +189,7 @@ export default function EssentialPricingPage() {
                 href="/pricing/calculator"
                 variant="secondary"
                 size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
               >
                 Calculate Exact Budget →
               </Button>

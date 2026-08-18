@@ -23,10 +23,37 @@ import { CONTACT_HERO_SLIDES } from '@/lib/content/heroSlides';
 const ROUTE = '/contact';
 
 export const metadata: Metadata = {
-  title: 'Contact & Design Experience Studio | Luxe Axis Chennai',
+  title: 'Contact Luxe Axis | Luxury Interior Design Studio & Office in Chennai',
   description:
-    'Talk to a senior interior designer in Chennai. Book a free design audit, visit our Nungambakkam experience studio, or message our principal team on WhatsApp.',
+    'Talk to our senior interior architects in Chennai. Visit our Nungambakkam design experience studio, call +91 81246 00321, or book a free 60-minute CAD layout audit.',
+  keywords: [
+    'contact luxe axis chennai',
+    'interior design studio nungambakkam chennai',
+    'interior designer phone number chennai',
+    'book interior architect consultation',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Contact Luxe Axis | Luxury Interior Design Studio in Chennai',
+    description:
+      'Visit our Nungambakkam design studio or connect directly with our senior interior architects.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/hero-contact.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Experience Studio Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact Luxe Axis Interior Design Studio Chennai',
+    description:
+      'Experience studio in Nungambakkam, Chennai. Free 60-min CAD & Vastu audit.',
+    images: ['/posters/hero-contact.png'],
+  },
 };
 
 export default async function ContactPage() {

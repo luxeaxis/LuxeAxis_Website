@@ -17,10 +17,39 @@ import { serviceJsonLd } from '@/lib/seo/jsonLd';
 const ROUTE = '/residential/false-ceiling';
 
 export const metadata: Metadata = {
-  title: 'False Ceiling Interior Designers in Chennai | Luxe Axis',
+  title: 'Architectural False Ceiling Designers in Chennai | Luxe Axis',
   description:
-    'False ceiling interior designers in Chennai. Cove, coffered, tray, and stretch ceiling systems with integrated LED lighting. 45-day installation, flat 10-year warranty.',
+    'Modern false ceiling design in Chennai. Saint-Gobain Gyproc moisture-resistant boards, perimeter cove lighting, magnetic track lights, wooden rafters, and 10-year warranty.',
+  keywords: [
+    'false ceiling designers in chennai',
+    'modern false ceiling designs living room',
+    'gyproc false ceiling cost chennai',
+    'cove lighting ceiling designs',
+    'wooden rafter ceiling chennai',
+    'acoustic false ceiling chennai',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Architectural False Ceiling Designers in Chennai | Luxe Axis',
+    description:
+      'Saint-Gobain Gyproc ceilings, cove lighting, magnetic tracks, and wooden rafters with 10-year structural warranty in Chennai.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/residential-false-ceiling-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Architectural False Ceiling Design Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Architectural False Ceiling Designers in Chennai | Luxe Axis',
+    description:
+      'Saint-Gobain Gyproc ceilings and integrated lighting with 10-year warranty.',
+    images: ['/posters/residential-false-ceiling-hero.png'],
+  },
 };
 
 export default async function FalseCeilingPage() {

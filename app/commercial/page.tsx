@@ -18,10 +18,39 @@ import { COMMERCIAL_HERO_SLIDES } from '@/lib/content/heroSlides';
 const ROUTE = '/commercial';
 
 export const metadata: Metadata = {
-  title: 'Office Interior Designers in Chennai | Luxe Axis Commercial',
+  title: 'Commercial & Corporate Office Interior Designers in Chennai | Luxe Axis',
   description:
-    'Office interior designers in Chennai. IT parks, corporate HQs, startups, and professional clinics. Written delivery commitment, flat 10-year warranty, fixed price per sqft.',
+    'Turnkey commercial interior design in Chennai for IT parks, corporate headquarters, coworking studios, retail flagship stores, and clinics. Fixed-price BOQ, fast-track delivery, and 10-year warranty.',
+  keywords: [
+    'office interior designers in chennai',
+    'commercial interior designers chennai',
+    'corporate office interior fitouts chennai',
+    'it park office interiors omr chennai',
+    'retail store interior designers chennai',
+    'hospitality and clinic interior design',
+  ],
   alternates: canonicalFor(ROUTE),
+  openGraph: {
+    title: 'Commercial & Corporate Office Interior Designers in Chennai | Luxe Axis',
+    description:
+      'High-performance workplace design, structured cabling, ergonomic workstations, and fixed-price fitouts.',
+    url: canonicalFor(ROUTE).canonical,
+    images: [
+      {
+        url: '/posters/commercial-workplace-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luxe Axis Commercial Office Interior Designers Chennai',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Commercial Office Interior Designers in Chennai | Luxe Axis',
+    description:
+      'Turnkey corporate fitouts and workspace architecture with 10-year warranty.',
+    images: ['/posters/commercial-workplace-hero.png'],
+  },
 };
 
 export default async function CommercialPage() {

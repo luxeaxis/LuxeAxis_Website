@@ -54,27 +54,27 @@
 }
 
 @layer components {
-  /* Section rise-in (Spec §9.1 S1) — the CSS half of components/Reveal.tsx.
-     Read that file first: an element only ever carries `data-reveal` once the
-     client has confirmed it can also remove it, so nothing here can leave
-     content permanently invisible if JavaScript fails.
-
-     Values are tokens, not literals: `motion.distance.rise` is the 16px S1
-     names, `duration.enter` is its `--dur-3`, `easing.entrance` is its
-     "settling" curve. */
+  /* Section rise-in & scroll entrance (Cinematic Experience & Luxury Motion).
+     Elements smoothly fade, rise, and sharpen into focus as they scroll into view.
+     Reduced-motion users receive instant, static rendering. */
   [data-reveal='hidden'] {
     opacity: 0;
-    transform: translateY(var(--motion-distance-rise));
+    transform: translateY(28px) scale(0.985);
+    filter: blur(4px);
+    will-change: opacity, transform, filter;
   }
 
   [data-reveal='shown'] {
     opacity: 1;
-    transform: none;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
     transition:
-      opacity var(--duration-enter) var(--easing-entrance),
-      transform var(--duration-enter) var(--easing-entrance);
+      opacity 650ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 650ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 650ms cubic-bezier(0.16, 1, 0.3, 1);
     /* Set by Stagger; absent means no delay rather than an invalid value. */
     transition-delay: var(--reveal-delay, 0ms);
+    will-change: auto;
   }
 
   /* Belt and braces with the global reduced-motion net below, and with
