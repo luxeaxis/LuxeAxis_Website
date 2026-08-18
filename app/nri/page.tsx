@@ -1,9 +1,10 @@
+import NextLink from 'next/link';
+import Image from 'next/image';
 import { TestimonialBand } from '@/components/sections/CTASection';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import type { Metadata } from 'next';
 import { Container, Grid, Stack } from '@/components/layout';
 import { Button } from '@/components/Button';
-import { FeatureCard } from '@/components/Card';
 import { STUDIO, whatsappHref } from '@/lib/content/studio';
 import { Faq, FaqJsonLd } from '@/components/Faq';
 import { Section } from '@/components/sections/Section';
@@ -16,6 +17,15 @@ import { HeroBackground } from '@/components/sections/HeroBackground';
 import { NRI_HERO_SLIDES } from '@/lib/content/heroSlides';
 
 const ROUTE = '/nri';
+
+const REGION_FLAGS: Record<string, { flagSrc: string; flagEmoji: string }> = {
+  singapore: { flagSrc: '/flags/singapore.svg', flagEmoji: '🇸🇬' },
+  uae: { flagSrc: '/flags/uae.svg', flagEmoji: '🇦🇪' },
+  usa: { flagSrc: '/flags/usa.svg', flagEmoji: '🇺🇸' },
+  uk: { flagSrc: '/flags/uk.svg', flagEmoji: '🇬🇧' },
+  canada: { flagSrc: '/flags/canada.svg', flagEmoji: '🇨🇦' },
+  australia: { flagSrc: '/flags/australia.svg', flagEmoji: '🇦🇺' },
+};
 
 export const metadata: Metadata = {
   title: 'Design Your Chennai Home From Anywhere | NRI Remote Interior Design',
@@ -234,14 +244,44 @@ export default async function NriPage() {
         lede="Select your region to view timezone-matched review schedules and regional client case studies."
       >
         <Grid cols={3} gap={6}>
-          {regions.map((region) => (
-            <FeatureCard
-              key={region.slug}
-              href={`/nri/${region.slug}`}
-              title={region.name}
-              body={`Remote Chennai interior design tailored for ${region.name} timezones.`}
-            />
-          ))}
+          {regions.map((region) => {
+            const flagInfo = REGION_FLAGS[region.slug];
+            return (
+              <NextLink
+                key={region.slug}
+                href={`/nri/${region.slug}`}
+                className="group relative overflow-hidden rounded-2xl border border-accent/30 lx-liquid-glass p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent hover:shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(255,193,7,0.3)] flex flex-col justify-between h-full min-h-[210px]"
+              >
+                {/* Background Country Flag with subtle overlay */}
+                {flagInfo && (
+                  <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-20 group-hover:opacity-35 group-hover:scale-105 transition-all duration-500">
+                    <Image
+                      src={flagInfo.flagSrc}
+                      alt={`${region.name} flag background`}
+                      fill
+                      className="object-cover object-center filter saturate-[1.2]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-surface-deep via-surface-deep/80 to-surface-deep/40" />
+                  </div>
+                )}
+
+                <div className="relative z-10 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-3xl filter drop-shadow-md">{flagInfo?.flagEmoji}</span>
+                    <span className="text-accent text-h4 group-hover:translate-x-1 transition-transform duration-300">
+                      →
+                    </span>
+                  </div>
+                  <h3 className="font-display text-h3 font-bold text-on-surface group-hover:text-accent transition-colors">
+                    {region.name}
+                  </h3>
+                  <p className="text-small text-on-surface-2 leading-relaxed">
+                    Remote Chennai interior design & 3D VR reviews tailored for {region.name} local timezones.
+                  </p>
+                </div>
+              </NextLink>
+            );
+          })}
         </Grid>
       </Section>
 
@@ -321,12 +361,12 @@ export default async function NriPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: 'Bare villa shell before fit-out',
             }}
             afterImage={{
-              src: '/posters/portfolio.avif',
-              alt: 'Completed NRI villa in Adyar, Chennai',
+              src: '/posters/hero-poes-garden.png',
+              alt: 'Completed luxury NRI villa in Adyar, Chennai',
             }}
           />
         </div>

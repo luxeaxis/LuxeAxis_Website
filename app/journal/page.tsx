@@ -11,6 +11,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { JOURNAL_HERO_SLIDES } from '@/lib/content/heroSlides';
 import { getFaqs, getTestimonials } from '@/lib/content/source';
 
 const ROUTE = '/journal';
@@ -47,7 +49,7 @@ export default async function JournalPage() {
         'The Architectural Guide to Vastu-Tech: Solar Alignment for Chennai Homes',
       excerpt:
         'How ancient Vastu orientation mapped to solar compass vectors eliminates dead zones and optimizes natural light in modern 3BHK and 4BHK apartments.',
-      image: '/posters/hero.avif',
+      image: '/posters/intel-hero-vastu-tech.png',
     },
     {
       slug: 'bwp-plywood-vs-commercial-ply',
@@ -58,7 +60,7 @@ export default async function JournalPage() {
         'BWP Marine Plywood vs Commercial Ply: What Every Homeowner Must Know',
       excerpt:
         'Why IS:710 Boiling Water Proof marine plywood is essential for Chennai coastal humidity and preventing kitchen cabinet swelling.',
-      image: '/posters/portfolio.avif',
+      image: '/posters/kitchen-layout-lshape.png',
     },
     {
       slug: 'chennai-interior-cost-breakdown',
@@ -69,7 +71,7 @@ export default async function JournalPage() {
         'How to Estimate Your Chennai Home Interior Budget (Essential vs Signature)',
       excerpt:
         'A comprehensive cost breakdown of carpet area rates, Blum soft-close joinery, acrylic finishes, and itemized BOQ contracts.',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/residential-spotlight.png',
     },
     {
       slug: 'nri-remote-home-supervision',
@@ -80,7 +82,7 @@ export default async function JournalPage() {
         'NRI Remote Home Design: How to Monitor Villa Construction Overseas',
       excerpt:
         'Using 4K Space OS daily live feeds, timezone-matched video reviews, and digital escrow milestone releases for zero-leave execution.',
-      image: '/posters/persona-router.avif',
+      image: '/posters/digital-hub-hero.png',
     },
     {
       slug: '45-day-handover-factory-prefabrication',
@@ -91,7 +93,7 @@ export default async function JournalPage() {
         'The 45-Day Handover Guarantee: How Factory Manufacturing Prevents Delays',
       excerpt:
         'How precision German CNC joinery pre-fabrication cuts on-site civil disruption and guarantees on-time key handover.',
-      image: '/posters/hero.avif',
+      image: '/posters/hero-process.png',
     },
     {
       slug: 'coastal-humidity-interior-finishes',
@@ -102,7 +104,7 @@ export default async function JournalPage() {
         'Designing for Coastal Humidity: Anti-Rust Hardware & Mold-Resistant Finishes',
       excerpt:
         'Selecting marine grade BWP cores, PU lacquers, and stainless steel fittings engineered for Chennai’s saline air.',
-      image: '/posters/portfolio.avif',
+      image: '/posters/residential-living-room-hero.png',
     },
   ];
 
@@ -142,37 +144,43 @@ export default async function JournalPage() {
         }}
       />
 
-      {/* 1. Hero Stage & Breadcrumbs */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={JOURNAL_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs path="/journal" />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Architectural Insights & Design Intelligence
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Journal & Spatial <br />
               <span className="text-accent">Intelligence Insights</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Essays, material science analyses, and architectural guides from
               our senior studio team on designing, pricing, Vastu spatial
               planning, and building luxury interiors in Chennai.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="#featured-articles" size="lg">
+              <Button as="a" href="#featured-articles" size="lg" className="shadow-2xl">
                 Explore Articles
               </Button>
-              <Button as="a" href="/book-audit" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/book-audit"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 Book Free Design Audit →
               </Button>
             </div>
@@ -252,7 +260,7 @@ export default async function JournalPage() {
         <div className="lx-liquid-glass rounded-2xl p-8 border border-accent/30 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
           <div className="relative aspect-video rounded-xl overflow-hidden border border-accent/20">
             <Image
-              src="/posters/pricing-axis.avif"
+              src="/posters/intel-hero-vastu-tech.png"
               alt="Featured Vastu-Tech Architectural Journal Guide"
               fill
               className="object-cover"
@@ -378,11 +386,11 @@ export default async function JournalPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: 'Bare shell 3BHK flat before interior fit-out',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
+              src: '/posters/service-vastu-tech.png',
               alt: 'Completed luxury 3BHK residential interior in Chennai',
             }}
           />

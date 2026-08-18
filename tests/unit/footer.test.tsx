@@ -58,12 +58,10 @@ describe('Footer', () => {
   });
 
   it('still marks the genuinely outstanding facts as pending', () => {
-    // The DPDPA privacy statement and the Design Club opt-in are the two things
-    // left in the footer that nobody has supplied. They stay explicit gaps
-    // rather than quietly disappearing.
+    // The DPDPA privacy statement links to privacy policy (/privacy) and Design Club opt-in stays pending.
     render(<Footer />);
     expect(
-      screen.getByText(/privacy statement to be published/i),
+      screen.getByText(/act 2023 compliant/i),
     ).toBeDefined();
     expect(screen.getByText(/coming soon/i)).toBeDefined();
   });

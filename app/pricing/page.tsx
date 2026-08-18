@@ -14,6 +14,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { PRICING_HERO_SLIDES } from '@/lib/content/heroSlides';
 import {
   getCalculatorConfig,
   getFaqs,
@@ -57,7 +59,7 @@ export default async function PricingPage() {
       rate: '₹1,800 / sq.ft',
       desc: 'Complete specifications for modern homes. Blum soft-close hardware, BWP marine plywood, 45-day guaranteed handover.',
       href: '/pricing/essential',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/pricing-tier-essential.png',
       badge: 'Turnkey',
     },
     {
@@ -65,7 +67,7 @@ export default async function PricingPage() {
       rate: '₹2,800 / sq.ft',
       desc: 'Bespoke luxury for penthouses & villas. Italian PU lacquer, Hafele hardware, smart home lighting automation, Signature tier timeline handover.',
       href: '/pricing/signature',
-      image: '/posters/hero.avif',
+      image: '/posters/pricing-tier-signature.png',
       badge: 'Popular',
     },
     {
@@ -73,7 +75,7 @@ export default async function PricingPage() {
       rate: 'Custom BOQ',
       desc: 'Architect-designed private luxury. Imported Calacatta Italian marble, liquid metal joinery, and dedicated principal team.',
       href: '/pricing/elite',
-      image: '/posters/persona-router.avif',
+      image: '/posters/pricing-tier-elite.png',
       badge: 'Elite',
     },
     {
@@ -81,7 +83,7 @@ export default async function PricingPage() {
       rate: 'Instant Tool',
       desc: 'Calculate your exact interior design cost in Chennai based on carpet area, residence type, and material finishes.',
       href: '/pricing/calculator',
-      image: '/posters/portfolio.avif',
+      image: '/posters/pricing-tier-calculator.png',
       badge: 'Tool',
     },
   ];
@@ -90,27 +92,27 @@ export default async function PricingPage() {
     <main id="main" tabIndex={-1}>
       <FaqJsonLd items={faqs} />
 
-      {/* 1. Hero Stage & Breadcrumbs */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={PRICING_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs path="/pricing" />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Radical Financial Transparency
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Most Chennai Studios Hide the Price. <br />
               <span className="text-accent">We Publish It Stated Plainly.</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               No quote-on-request and no discovery call before you can find out
               what a project costs. Estimate your project budget online,
               evaluate our three structured investment tiers, and review
@@ -118,28 +120,35 @@ export default async function PricingPage() {
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="#calculator" size="lg">
+              <Button as="a" href="#calculator" size="lg" className="shadow-2xl">
                 Estimate Project Budget
               </Button>
-              <Button as="a" href="#tiers" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="#tiers"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 View Investment Tiers →
               </Button>
-              {/* Key Stats Bar */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-border-subtle/50">
-                {highlights.map((h) => (
-                  <div
-                    key={h.title}
-                    className="p-4 rounded-xl lx-liquid-glass-card border border-accent/20"
-                  >
-                    <strong className="block font-display text-h3 text-accent font-bold">
-                      {h.title}
-                    </strong>
-                    <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
-                      {h.desc}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            </div>
+
+            {/* Key Stats Bar with Liquid Glass Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-8 border-t border-accent/20">
+              {highlights.map((h) => (
+                <div
+                  key={h.title}
+                  className="p-4 rounded-xl lx-liquid-glass-card border border-accent/20"
+                >
+                  <strong className="block font-display text-h3 text-accent font-bold">
+                    {h.title}
+                  </strong>
+                  <span className="text-overline text-on-surface-muted uppercase tracking-wider font-semibold">
+                    {h.desc}
+                  </span>
+                </div>
+              ))}
             </div>
           </Stack>
         </Container>
@@ -387,12 +396,12 @@ export default async function PricingPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
-              alt: 'Bare shell residence before fit-out',
+              src: '/posters/portfolio-chennai-residence-before.png',
+              alt: 'Bare shell residence living room before interior fit-out',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
-              alt: 'Completed luxury interior by Luxe Axis',
+              src: '/posters/portfolio-chennai-residence-after.png',
+              alt: 'Completed luxury interior by Luxe Axis under fixed BOQ pricing',
             }}
           />
         </div>

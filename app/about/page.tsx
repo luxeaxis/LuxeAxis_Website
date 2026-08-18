@@ -11,6 +11,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { ABOUT_HERO_SLIDES } from '@/lib/content/heroSlides';
 import { STUDIO, addressOneLine } from '@/lib/content/studio';
 import { getFaqs, getTestimonials } from '@/lib/content/source';
 
@@ -94,37 +96,43 @@ export default async function AboutPage() {
         }}
       />
 
-      {/* 1. Hero Stage & Breadcrumbs */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={ABOUT_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs path="/about" labels={{ about: 'About Us' }} />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 South India’s Space Intelligence Studio
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               We Believe the Spaces You Inhabit <br />
               <span className="text-accent">Shape Who You Become</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Designing spaces with spatial intelligence, radical honesty, and
               South Indian cultural care. Powered by AI precision and executed
               with boutique craftsmanship in Chennai.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Free Design Audit
               </Button>
-              <Button as="a" href="/contact" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/contact"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 Visit Experience Studio →
               </Button>
             </div>
@@ -373,11 +381,11 @@ export default async function AboutPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: 'Bare shell residence before interior fit-out',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
+              src: '/posters/hero-poes-garden.png',
               alt: 'Completed luxury residential interior in Chennai',
             }}
           />

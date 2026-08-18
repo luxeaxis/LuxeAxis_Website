@@ -1,4 +1,3 @@
-import { Grid } from '../layout';
 import { FeatureCard } from '../Card';
 import { Section } from './Section';
 import { Stagger } from '../Reveal';

@@ -17,6 +17,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { JsonLd } from '@/components/JsonLd';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { CONTACT_HERO_SLIDES } from '@/lib/content/heroSlides';
 
 const ROUTE = '/contact';
 
@@ -120,34 +122,34 @@ export default async function ContactPage() {
         }}
       />
 
-      {/* 1. Hero Stage & Breadcrumbs */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={CONTACT_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs path="/contact" />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Direct Studio Access
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Connect With Our <br />
               <span className="text-accent">Architectural & Design Studio</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Talk directly to a senior interior designer. Book a free 60-minute
               site audit, visit our Flagship Experience Studio in Nungambakkam,
               or message our principal team on WhatsApp.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Free Design Audit
               </Button>
               {STUDIO.whatsapp && (
@@ -156,6 +158,7 @@ export default async function ContactPage() {
                   href={whatsappHref(STUDIO.whatsapp)}
                   variant="secondary"
                   size="lg"
+                  className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
                 >
                   Message Us on WhatsApp →
                 </Button>

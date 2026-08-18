@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useId } from 'react';
+import { useState } from 'react';
 import { Button } from './Button';
-import { Stack, Grid } from './layout';
+import { Stack } from './layout';
 import { InlineAlert } from './InlineAlert';
 import { FeeCalculator } from './FeeCalculator';
 import type { CalculatorConfig } from '@/lib/content/types';
@@ -11,8 +11,6 @@ import {
   formatChennaiCurrency,
   DEFAULT_CALCULATOR_INPUTS,
   type CalculatorInputs,
-  type DomainSector,
-  type QualityTier,
   type KitchenLayout,
   type CountertopMaterial,
   type CarcassMaterial,
@@ -272,8 +270,9 @@ Calculated live at https://luxeaxis.in/pricing/calculator`;
                     {inputs.includeKitchen && (
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-border-subtle/40 text-xs">
                         <div>
-                          <label className="text-on-surface-muted block mb-1">Layout</label>
+                          <label htmlFor="kitchen-layout-select" className="text-on-surface-muted block mb-1">Layout</label>
                           <select
+                            id="kitchen-layout-select"
                             value={inputs.kitchenLayout}
                             onChange={(e) => handleInputChange('kitchenLayout', e.target.value as KitchenLayout)}
                             className="w-full px-2.5 py-1.5 rounded-lg bg-surface-deep border border-accent/30 text-on-surface"
@@ -286,8 +285,9 @@ Calculated live at https://luxeaxis.in/pricing/calculator`;
                         </div>
 
                         <div>
-                          <label className="text-on-surface-muted block mb-1">Countertop</label>
+                          <label htmlFor="countertop-select" className="text-on-surface-muted block mb-1">Countertop</label>
                           <select
+                            id="countertop-select"
                             value={inputs.countertop}
                             onChange={(e) => handleInputChange('countertop', e.target.value as CountertopMaterial)}
                             className="w-full px-2.5 py-1.5 rounded-lg bg-surface-deep border border-accent/30 text-on-surface"
@@ -299,8 +299,9 @@ Calculated live at https://luxeaxis.in/pricing/calculator`;
                         </div>
 
                         <div>
-                          <label className="text-on-surface-muted block mb-1">Carcass Material</label>
+                          <label htmlFor="carcass-select" className="text-on-surface-muted block mb-1">Carcass Material</label>
                           <select
+                            id="carcass-select"
                             value={inputs.carcass}
                             onChange={(e) => handleInputChange('carcass', e.target.value as CarcassMaterial)}
                             className="w-full px-2.5 py-1.5 rounded-lg bg-surface-deep border border-accent/30 text-on-surface"

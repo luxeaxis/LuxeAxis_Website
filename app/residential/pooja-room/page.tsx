@@ -58,7 +58,7 @@ export default async function PoojaRoomPage() {
         'Integrated storage drawers for oil, cotton & pooja items',
         'Flat 10-year warranty included (Starting from Rs. 30,000)',
       ],
-      image: '/posters/service-vastu-tech.png',
+      image: '/posters/pooja-compact-unit.png',
     },
     {
       tag: 'For Villas & Large Apartments',
@@ -71,7 +71,7 @@ export default async function PoojaRoomPage() {
         'Solid teakwood main cabinet with traditional carvings',
         'Flat 10-year warranty included (Starting from Rs. 80,000)',
       ],
-      image: '/posters/room-pooja-room.png',
+      image: '/posters/pooja-dedicated-room.png',
     },
     {
       tag: 'For Premium Luxury Villas',
@@ -84,7 +84,7 @@ export default async function PoojaRoomPage() {
         'Dome or vaulted ceiling with subtle gold leaf detailing',
         'Flat 10-year warranty included (Starting from Rs. 1,80,000)',
       ],
-      image: '/posters/hero-poes-garden.png',
+      image: '/posters/pooja-walkin-mandir.png',
     },
   ];
 
@@ -116,25 +116,25 @@ export default async function PoojaRoomPage() {
       title: 'Walk-In White Marble & Teak Mandir',
       tag: 'Walk-In Mandir',
       location: 'Adyar, Chennai',
-      image: '/posters/residential-pooja-room-hero.png',
+      image: '/posters/pooja-adyar-walkin.png',
     },
     {
       title: 'Compact Apartment Pooja Unit with LED Niches',
       tag: 'Compact Unit',
       location: 'T. Nagar, Chennai',
-      image: '/posters/project-3bhk-adyar.png',
+      image: '/posters/pooja-tnagar-compact.png',
     },
     {
       title: 'Dedicated Pooja Room with Backlit Onyx Panel',
       tag: 'Dedicated Room',
       location: 'Velachery, Chennai',
-      image: '/posters/project-villa-velachery.png',
+      image: '/posters/pooja-velachery-onyx.png',
     },
     {
       title: 'Traditional Brass Jali & Teak Pooja Sanctum',
       tag: 'Brass Jali',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/apt-after-matched.png',
+      image: '/posters/pooja-annanagar-brass.png',
     },
   ];
 
@@ -275,7 +275,7 @@ export default async function PoojaRoomPage() {
         {/* Full-Bleed Background Image with Ken Burns Cinematic Effect */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <Image
-            src="/posters/residential-pooja-room-hero.png"
+            src="/posters/pooja-hero-bg.png"
             alt="Luxe Axis Sacred Mandir & Pooja Room Interior Designers in Chennai"
             fill
             priority
@@ -545,11 +545,11 @@ export default async function PoojaRoomPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/renovation-living-before.png',
+              src: '/posters/pooja-before-corner.png',
               alt: 'Plain room corner before pooja room installation',
             }}
             afterImage={{
-              src: '/posters/room-pooja-room.png',
+              src: '/posters/pooja-dedicated-room.png',
               alt: 'Completed dedicated pooja room with marble and teak by Luxe Axis',
             }}
           />

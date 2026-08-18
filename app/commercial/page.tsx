@@ -531,11 +531,11 @@ export default async function CommercialPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: 'Bare shell office space before commercial fit-out',
             }}
             afterImage={{
-              src: '/posters/pricing-axis.avif',
+              src: '/posters/commercial-it-office-hero.png',
               alt: 'Completed premium IT office interior by Luxe Axis in OMR',
             }}
           />

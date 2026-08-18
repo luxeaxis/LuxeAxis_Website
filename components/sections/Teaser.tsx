@@ -1,4 +1,4 @@
-import { Cluster, Grid } from '../layout';
+import { Cluster } from '../layout';
 import { Button } from '../Button';
 import { EmptyState } from '../EmptyState';
 import { FeatureCard, ProjectCard, TierCard } from '../Card';

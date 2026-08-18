@@ -59,7 +59,7 @@ export default async function WardrobePage() {
         'Full internal fitting customization',
         'Flat 10-year warranty included',
       ],
-      image: '/posters/persona-router.avif',
+      image: '/posters/residential-wardrobe-hero.png',
     },
     {
       tag: 'Walk-In Wardrobe',
@@ -73,7 +73,7 @@ export default async function WardrobePage() {
         'Optional central island unit with mirror',
         'Integrated warm LED wardrobe lighting',
       ],
-      image: '/posters/portfolio.avif',
+      image: '/posters/service-master-bedroom.png',
     },
     {
       tag: 'Hinged Wardrobe',
@@ -87,7 +87,7 @@ export default async function WardrobePage() {
         'Complete internal fitting selection',
         'Flat 10-year warranty included',
       ],
-      image: '/posters/hero.avif',
+      image: '/posters/room-wardrobe-storage.png',
     },
     {
       tag: 'Modular Wardrobe',
@@ -101,7 +101,7 @@ export default async function WardrobePage() {
         'Same internal fittings as fixed wardrobes',
         'Flat 10-year warranty included',
       ],
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/room-master-bedroom.png',
     },
   ];
 
@@ -143,25 +143,25 @@ export default async function WardrobePage() {
       title: 'Contemporary 4-Door Sliding Wardrobe Suite',
       tag: 'Sliding Wardrobe',
       location: 'Adyar, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/residential-wardrobe-hero.png',
     },
     {
       title: '3-Wall Walk-In Wardrobe Suite',
       tag: 'Walk-In Suite',
       location: 'T. Nagar, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/service-master-bedroom.png',
     },
     {
       title: 'Full-Depth Veneer Hinged Wardrobe',
       tag: 'Hinged Wardrobe',
       location: 'OMR, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/room-wardrobe-storage.png',
     },
     {
       title: 'Modular White Laminate Wardrobe System',
       tag: 'Modular Wardrobe',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/renovation-bedroom-after.png',
     },
   ];
 
@@ -569,11 +569,11 @@ export default async function WardrobePage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/renovation-bedroom-before.png',
               alt: 'Bare bedroom wall before wardrobe installation',
             }}
             afterImage={{
-              src: '/posters/portfolio.avif',
+              src: '/posters/renovation-bedroom-after.png',
               alt: 'Completed full-height sliding wardrobe by Luxe Axis in T. Nagar',
             }}
           />

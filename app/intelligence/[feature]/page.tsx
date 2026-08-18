@@ -10,6 +10,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { canonicalFor } from '@/lib/seo/hreflang';
 import { getIntelligenceFeatures } from '@/lib/content/source';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { heroSlidesForIntelligenceFeature } from '@/lib/content/heroSlides';
 
 export const dynamicParams = false;
 
@@ -172,11 +174,14 @@ export default async function IntelligenceFeaturePage({
         }}
       />
 
-      {/* 1. Hero Stage */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage with Ken Burns & Grid Overlay */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground
+          slides={heroSlidesForIntelligenceFeature(feature.id)}
+          overlay="grid"
+        />
 
-        <Container>
+        <Container className="relative z-10">
           {/* The feature's own name, not the humanised slug — `space-score`
               should read "Space Score™". */}
           <Breadcrumbs
@@ -185,27 +190,33 @@ export default async function IntelligenceFeaturePage({
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Proprietary Applied Spatial Technology
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               {feature.name} <br />
               <span className="text-accent">Spatial Engine</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               {feature.claim} {feature.summary}
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Launch Free {feature.name} Scan
               </Button>
-              <Button as="a" href="/pricing" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/pricing"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 View BOQ Cost Engine →
               </Button>
             </div>
@@ -324,11 +335,11 @@ export default async function IntelligenceFeaturePage({
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: `Un-optimized floor plan layout before ${feature.name}`,
             }}
             afterImage={{
-              src: '/posters/hero.avif',
+              src: '/posters/service-vastu-tech.png',
               alt: `Completed ${feature.name} optimized space by Luxe Axis`,
             }}
           />

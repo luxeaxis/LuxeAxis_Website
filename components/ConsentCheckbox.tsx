@@ -57,10 +57,9 @@ export const ConsentCheckbox = forwardRef<
           htmlFor={id}
           className="cursor-pointer text-small text-on-surface-2"
         >
-          I agree that Luxe Axis may contact me about this enquiry by phone,
-          WhatsApp or email. You can withdraw this at any time. See our{' '}
+          I agree that Luxe Axis may process my personal data to contact me about this enquiry as per the DPDP Act 2023. You can withdraw this consent at any time. See our{' '}
           <Link href="/privacy" variant="inline" className="text-small">
-            privacy statement
+            DPDPA privacy statement
           </Link>
           .
         </label>

@@ -4,7 +4,6 @@ import { Container, Grid, Stack } from '@/components/layout';
 import { JsonLd } from '@/components/JsonLd';
 import { Section } from '@/components/sections/Section';
 import { CTASection } from '@/components/sections/CTASection';
-import { FeeCalculator } from '@/components/FeeCalculator';
 import { WorldClassPricingCalculator } from '@/components/WorldClassPricingCalculator';
 import { getCalculatorConfig } from '@/lib/content/source';
 import { canonicalFor } from '@/lib/seo/hreflang';

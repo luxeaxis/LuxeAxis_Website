@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Container, Grid, Stack } from '@/components/layout';
+import { Container, Stack } from '@/components/layout';
 import { Link } from '@/components/Link';
 import { Reveal, Stagger } from '@/components/Reveal';
 

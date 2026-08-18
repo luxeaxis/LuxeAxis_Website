@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 500" width="100%" height="100%">
+  <rect width="950" height="500" fill="#B22234"/>
+  <!-- 13 Stripes -->
+  <path stroke="#FFFFFF" stroke-width="38.46" d="M0,57.7H950 M0,134.6H950 M0,211.5H950 M0,288.5H950 M0,365.4H950 M0,442.3H950"/>
+  <!-- Canton -->
+  <rect width="380" height="269.2" fill="#3C3B6E"/>
+  <!-- Stars grid representation -->
+  <g fill="#FFFFFF">
+    <g id="s1">
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(31.6,22.4) scale(0.9)"/>
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(94.8,22.4) scale(0.9)"/>
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(158,22.4) scale(0.9)"/>
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(221.2,22.4) scale(0.9)"/>
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(284.4,22.4) scale(0.9)"/>
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(347.6,22.4) scale(0.9)"/>
+    </g>
+    <g id="s2">
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(63.2,44.8) scale(0.9)"/>
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(126.4,44.8) scale(0.9)"/>
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(189.6,44.8) scale(0.9)"/>
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(252.8,44.8) scale(0.9)"/>
+      <polygon points="0,-9 2.6,-2.8 9.1,-2.8 3.9,1 5.9,7.3 0,3.1 -5.9,7.3 -3.9,1 -9.1,-2.8 -2.6,-2.8" transform="translate(316,44.8) scale(0.9)"/>
+    </g>
+    <use href="#s1" y="44.8"/>
+    <use href="#s2" y="44.8"/>
+    <use href="#s1" y="89.6"/>
+    <use href="#s2" y="89.6"/>
+    <use href="#s1" y="134.4"/>
+    <use href="#s2" y="134.4"/>
+    <use href="#s1" y="179.2"/>
+  </g>
+</svg>

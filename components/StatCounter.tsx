@@ -52,22 +52,6 @@ function formatNumber(value: number, decimals: number): string {
 // §2.3's "Value tween" pattern names its own duration token verbatim
 // ("number counts to target, `ui`") — `duration.ui` is 240ms
 // (tokens/luxe-axis.tokens.json). The token pipeline only ever emits CSS
-// custom properties (styles/tokens.css), never a JS-importable constant, so
-// this reads the resolved `--duration-ui` value off the root element at
-// animation start instead of duplicating "240" as a bare number — if the
-// token changes, the rAF loop keeps pace with it instead of silently
-// drifting out of sync. `fallbackMs` only fires if the custom property is
-// somehow missing or unparsable (e.g. in a test environment with no
-// stylesheet loaded), so the animation degrades gracefully rather than
-// breaking.
-function readDurationMs(varName: string, fallbackMs: number): number {
-  const raw = getComputedStyle(document.documentElement)
-    .getPropertyValue(varName)
-    .trim();
-  const parsed = Number.parseFloat(raw);
-  return Number.isFinite(parsed) ? parsed : fallbackMs;
-}
-
 export function StatCounter({
   value,
   decimals = 0,

@@ -186,3 +186,253 @@ export function heroSlidesForVertical(slug: string): readonly HeroBackgroundSlid
   }
   return COMMERCIAL_HERO_SLIDES;
 }
+
+/**
+ * The intelligence hub page (`/intelligence`).
+ */
+export const INTELLIGENCE_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/intel-hero-main.png',
+    alt: 'High-tech luxury architectural design studio with holographic 3D floor plans and lighting analysis interface.',
+    label: 'Spatial Intelligence Command Studio',
+  },
+  {
+    src: '/posters/service-vastu-tech.png',
+    alt: 'Vastu-Tech AI compass and solar orientation grid scan overlaid on a millimeter-accurate floorplan.',
+    label: 'Vastu-Tech AI Grid Scan',
+  },
+  {
+    src: '/posters/tech-enabled-studio.png',
+    alt: 'Flagship studio VR walkthrough room with 360-degree interactive spatial preview.',
+    label: 'Interactive VR Studio Walkthrough',
+  },
+];
+
+/**
+ * Vastu-Tech AI Engine page (`/intelligence/vastu-tech`).
+ */
+export const VASTU_TECH_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/intel-hero-vastu-tech.png',
+    alt: 'Vastu-Tech AI solar orientation and magnetic declination grid over luxury architectural floor plan.',
+    label: 'AI Vastu Orientation Grid & Compass',
+  },
+  {
+    src: '/posters/service-vastu-tech.png',
+    alt: 'Vastu-Tech AI solar orientation and magnetic declination grid over AutoCAD layout.',
+    label: 'AI Solar Compass Grid',
+  },
+  {
+    src: '/posters/residential-pooja-room-hero.png',
+    alt: 'Sacred Vastu-compliant pooja mandap with backlit onyx wall and carved teak wood joinery.',
+    label: 'Vastu Sacred Mandap Suite',
+  },
+];
+
+/**
+ * Space Score™ Index page (`/intelligence/space-score`).
+ */
+export const SPACE_SCORE_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/intel-hero-space-score.png',
+    alt: 'Luxury living room analyzed with digital graphics for acoustics, Lux daylight intensity, and air quality.',
+    label: 'Quantified 4-Pillar Space Score™',
+  },
+  {
+    src: '/posters/residential-living-room-hero.png',
+    alt: 'Contemporary living room scored for 4-pillar wellness, acoustic masking, and circadian Lux levels.',
+    label: '4-Pillar Wellness Living Room',
+  },
+  {
+    src: '/posters/residential-bedroom-hero.png',
+    alt: 'Master bedroom suite optimized for acoustic isolation and circadian lighting temperatures.',
+    label: 'Acoustic Master Suite',
+  },
+];
+
+/**
+ * Space OS Client Portal page (`/intelligence/space-os`).
+ */
+export const SPACE_OS_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/intel-hero-space-os.png',
+    alt: 'Space OS client portal tablet dashboard displaying live 3D site progress model and BOQ ledger.',
+    label: 'Live Space OS Dashboard',
+  },
+  {
+    src: '/posters/residential-3d-design-hero.png',
+    alt: 'Space OS interactive 3D site progress model and live financial drawdown dashboard.',
+    label: 'Space OS 3D Progress Model',
+  },
+  {
+    src: '/posters/digital-hub-hero.png',
+    alt: 'Digital BOQ budget breakdown and real-time material tracking portal on tablet.',
+    label: 'Real-Time BOQ Portal',
+  },
+];
+
+/**
+ * Virtual Real-Estate Staging page (`/intelligence/virtual-staging`).
+ */
+export const VIRTUAL_STAGING_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/intel-hero-virtual-staging.png',
+    alt: 'Photorealistic 8K virtual staging render of a luxury penthouse living room at dusk with cove lighting.',
+    label: 'Photorealistic 8K Virtual Staging',
+  },
+  {
+    src: '/posters/apt-after-living-luxury.png',
+    alt: 'Photorealistic 8K V-Ray virtual staging of a luxury penthouse living room.',
+    label: '8K V-Ray Virtual Staging',
+  },
+  {
+    src: '/posters/residential-apartments-hero.png',
+    alt: 'B2B real estate virtual staging for developer sales suite.',
+    label: 'Developer B2B Staged Suite',
+  },
+];
+
+/**
+ * Returns feature-tailored hero slides for `/intelligence/[feature]`.
+ */
+export function heroSlidesForIntelligenceFeature(slug: string): readonly HeroBackgroundSlide[] {
+  switch (slug) {
+    case 'vastu-tech':
+      return VASTU_TECH_HERO_SLIDES;
+    case 'space-score':
+      return SPACE_SCORE_HERO_SLIDES;
+    case 'space-os':
+      return SPACE_OS_HERO_SLIDES;
+    case 'virtual-staging':
+      return VIRTUAL_STAGING_HERO_SLIDES;
+    default:
+      return INTELLIGENCE_HERO_SLIDES;
+  }
+}
+
+/**
+ * Process page (`/process`).
+ */
+export const PROCESS_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/hero-process.png',
+    alt: 'Luxury home interior under high-precision execution with CNC cabinetry installation, laser alignment, and CAD blueprint on worktable.',
+    label: 'Precision Execution Protocol',
+  },
+  {
+    src: '/posters/residential-3d-design-hero.png',
+    alt: '3D Spatial OS site progress tracking model and pre-fabrication joinery review.',
+    label: '3D Site Progress Modeling',
+  },
+  {
+    src: '/posters/tech-enabled-studio.png',
+    alt: 'VR walkthrough and milestone sign-off session in experience studio.',
+    label: 'Milestone Review Studio',
+  },
+];
+
+/**
+ * About page (`/about`).
+ */
+export const ABOUT_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/hero-about.png',
+    alt: 'Senior interior architectural team collaborating over marble worktable, material swatches, and high-res renders in Chennai studio.',
+    label: 'South India Space Intelligence Studio',
+  },
+  {
+    src: '/posters/tech-enabled-studio.png',
+    alt: 'Flagship experience studio lounge with interactive VR spatial design walkthrough.',
+    label: 'Flagship VR Experience Center',
+  },
+  {
+    src: '/posters/hero-poes-garden.png',
+    alt: 'Completed luxury residence reflecting South Indian architectural elegance and craft.',
+    label: 'Architectural Heritage & Modern Luxury',
+  },
+];
+
+/**
+ * Journal page (`/journal`).
+ */
+export const JOURNAL_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/hero-journal.png',
+    alt: 'Architectural research studio desk with open Vastu Shastra guides, material swatches, and technical drawing tools under spotlight.',
+    label: 'Architectural Research & Vastu Essays',
+  },
+  {
+    src: '/posters/service-vastu-tech.png',
+    alt: 'Vastu-Tech CAD solar orientation compass and spatial energy alignment diagram.',
+    label: 'Spatial Intelligence Guides',
+  },
+  {
+    src: '/posters/residential-living-room-hero.png',
+    alt: 'Contemporary living room case study on acoustic reverberation and circadian lighting.',
+    label: 'Material & Ergonomic Analyses',
+  },
+];
+
+/**
+ * Contact page (`/contact`).
+ */
+export const CONTACT_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/hero-contact.png',
+    alt: 'Flagship experience studio reception lounge in Nungambakkam Chennai with backlit marble wall, VR booth, and Italian leather seating.',
+    label: 'Nungambakkam Flagship Studio',
+  },
+  {
+    src: '/posters/tech-enabled-studio.png',
+    alt: 'Interactive VR walkthrough lounge for client layout reviews.',
+    label: 'VR Immersion Lounge',
+  },
+  {
+    src: '/posters/hero-about.png',
+    alt: 'Senior interior architectural consultation desk at Luxe Axis studio.',
+    label: 'Direct Architectural Advisory',
+  },
+];
+
+/**
+ * Privacy Policy page (`/privacy`).
+ */
+export const PRIVACY_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/hero-privacy.png',
+    alt: 'High-tech digital data privacy vault monitor in architectural studio with 256-bit SSL encryption badge.',
+    label: 'DPDP Act 2023 Compliant Vault',
+  },
+  {
+    src: '/posters/intel-hero-main.png',
+    alt: 'Encrypted Space OS client portal and data security command dashboard.',
+    label: 'Space OS Secure Client Vault',
+  },
+  {
+    src: '/posters/hero-about.png',
+    alt: 'Architectural studio client record confidentiality governance desk.',
+    label: 'Statutory Data Governance',
+  },
+];
+
+/**
+ * Pricing page (`/pricing`).
+ */
+export const PRICING_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/hero-pricing.png',
+    alt: 'Studio financial estimation and BOQ cost engine dashboard with material allocation charts and rate cards.',
+    label: 'Radical Financial Transparency & BOQ Engine',
+  },
+  {
+    src: '/posters/residential-spotlight.png',
+    alt: 'Luxury interior investment tier breakdown and material specification sample board.',
+    label: 'Itemized Investment Rate Cards',
+  },
+  {
+    src: '/posters/digital-hub-hero.png',
+    alt: 'Interactive fee calculator and real-time budget ledger on tablet screen.',
+    label: 'Un-Gated Project Fee Calculator',
+  },
+];
+

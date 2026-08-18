@@ -52,25 +52,25 @@ export default async function ThreeDDesignPage() {
       num: '01',
       title: 'Laser Site Survey & CAD Floor Plan',
       desc: 'Our interior architects record laser-guided measurements, existing fixtures, and structural constraints to draft millimeter-precise AutoCAD floor plans.',
-      image: '/posters/persona-router.avif',
+      image: '/posters/service-vastu-tech.png',
     },
     {
       num: '02',
       title: '3D Spatial Modeling & Joinery',
       desc: '3D spatial geometry is built in 3ds Max. Custom kitchen modules, wardrobe shutters, false ceiling coves, and furniture layouts are aligned to Vastu grids.',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/residential-3d-design-hero.png',
     },
     {
       num: '03',
       title: 'V-Ray Photorealistic Rendering',
       desc: 'V-Ray ray-tracing renders every room with exact material shaders, Italian marble reflections, veneer textures, and ambient LED cove lighting physics.',
-      image: '/posters/hero.avif',
+      image: '/posters/kitchen-hero-bg.png',
     },
     {
       num: '04',
       title: 'VR Walkthrough & Formal Sign-Off',
       desc: 'Experience your future home in 360° VR at our flagship studio. Make instant material or layout swaps. Execution begins after your written sign-off.',
-      image: '/posters/portfolio.avif',
+      image: '/posters/tech-enabled-studio.png',
     },
   ];
 
@@ -98,25 +98,25 @@ export default async function ThreeDDesignPage() {
       title: '3BHK Villa Living Room Photorealistic 3D Render',
       tag: 'Living Room 3D',
       location: 'Adyar, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/residential-living-room-hero.png',
     },
     {
       title: 'Modular U-Kitchen 3D Spatial Visualisation',
       tag: 'Kitchen 3D',
       location: 'T. Nagar, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/kitchen-layout-ushape.png',
     },
     {
       title: 'Luxury Master Bedroom Suite 3D Fit-Out Plan',
       tag: 'Bedroom 3D',
       location: 'Velachery, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/residential-bedroom-hero.png',
     },
     {
       title: 'Bespoke Home Office & Teak Joinery 3D Plan',
       tag: 'Office 3D',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/home-interiors-hero.png',
     },
   ];
 

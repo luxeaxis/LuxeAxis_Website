@@ -301,7 +301,9 @@ export function Footer() {
                   DPDPA
                 </dt>
                 <dd className="text-on-surface-muted">
-                  privacy statement to be published
+                  <Link href="/privacy" variant="inline" className="hover:text-accent font-semibold">
+                    Act 2023 Compliant
+                  </Link>
                 </dd>
               </div>
             </dl>

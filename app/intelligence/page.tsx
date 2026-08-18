@@ -11,6 +11,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { INTELLIGENCE_HERO_SLIDES } from '@/lib/content/heroSlides';
 
 const ROUTE = '/intelligence';
 
@@ -60,7 +62,7 @@ export default async function IntelligencePage() {
         'Non-structural micro-corrections (color, brass & spatial placement)',
       ],
       href: '/intelligence/vastu-tech',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/service-vastu-tech.png',
     },
     {
       id: 'space-score',
@@ -76,7 +78,7 @@ export default async function IntelligencePage() {
         'Post-occupancy verification audit included',
       ],
       href: '/intelligence/space-score',
-      image: '/posters/hero.avif',
+      image: '/posters/residential-living-room-hero.png',
     },
     {
       id: 'space-os',
@@ -92,7 +94,7 @@ export default async function IntelligencePage() {
         'AR mobile preview for furniture & finishes',
       ],
       href: '/intelligence/space-os',
-      image: '/posters/portfolio.avif',
+      image: '/posters/residential-3d-design-hero.png',
     },
     {
       id: 'virtual-staging',
@@ -108,7 +110,7 @@ export default async function IntelligencePage() {
         '360° virtual reality walkthroughs for prospective buyers',
       ],
       href: '/intelligence/virtual-staging',
-      image: '/posters/persona-router.avif',
+      image: '/posters/apt-after-living-luxury.png',
     },
   ];
 
@@ -196,37 +198,43 @@ export default async function IntelligencePage() {
         }}
       />
 
-      {/* 1. Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Section with Ken Burns & Grid Overlay */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={INTELLIGENCE_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs path="/intelligence" />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Proprietary Spatial Technologies
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               The Intelligence <br />
               <span className="text-accent">Behind The Space</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Vastu-Tech, Space Score™, Space OS, and Virtual Staging. Four
               proprietary capabilities that eliminate spatial guesswork, predict
               room performance, and track your project budget in real-time.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Free Intelligence Audit
               </Button>
-              <Button as="a" href="/pricing" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/pricing"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 View BOQ Cost Engine →
               </Button>
             </div>
@@ -365,11 +373,11 @@ export default async function IntelligencePage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: 'Bare shell floor plan before spatial intelligence scan',
             }}
             afterImage={{
-              src: '/posters/pricing-axis.avif',
+              src: '/posters/service-vastu-tech.png',
               alt: 'Completed intelligence-optimized interior by Luxe Axis',
             }}
           />

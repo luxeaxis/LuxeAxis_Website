@@ -11,6 +11,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { Faq } from '@/components/Faq';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { PROCESS_HERO_SLIDES } from '@/lib/content/heroSlides';
 import { serviceJsonLd } from '@/lib/seo/jsonLd';
 import {
   getGuarantees,
@@ -103,27 +105,27 @@ export default async function ProcessPage() {
         })}
       />
 
-      {/* 1. Hero Stage & Breadcrumbs */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage & Breadcrumbs with Ken Burns Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={PROCESS_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs path="/process" />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Turnkey Execution Protocol
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Seven Stages of <br />
               <span className="text-accent">Architectural Execution</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               A project is systematic or it is chaos with good taste. Explore
               our 7-stage sequence from initial spatial audit to 10-year
               concierge care, with every contractual guarantee attached directly
@@ -131,10 +133,16 @@ export default async function ProcessPage() {
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Free Design Audit
               </Button>
-              <Button as="a" href="#guarantees" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="#guarantees"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 Explore Guarantees →
               </Button>
             </div>
@@ -393,11 +401,11 @@ export default async function ProcessPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: 'Raw shell apartment before Stage 1 Discover',
             }}
             afterImage={{
-              src: '/posters/pricing-axis.avif',
+              src: '/posters/apt-after-living-luxury.png',
               alt: 'Completed home interior after Stage 6 Handover',
             }}
           />

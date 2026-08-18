@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="100%" height="100%">
+  <!-- Blue background -->
+  <rect width="1200" height="600" fill="#00008B"/>
+  
+  <!-- Union Jack in top-left quarter (600x300) -->
+  <g id="uj">
+    <clipPath id="uj-clip">
+      <rect width="600" height="300"/>
+    </clipPath>
+    <g clip-path="url(#uj-clip)">
+      <path d="M0,0 L600,300 M0,300 L600,0" stroke="#FFFFFF" stroke-width="60"/>
+      <path d="M0,0 L600,300" stroke="#C8102E" stroke-width="40" clip-path="url(#uj-clip-t)"/>
+      <path d="M300,0 v300 M0,150 h600" stroke="#FFFFFF" stroke-width="100"/>
+      <path d="M300,0 v300 M0,150 h600" stroke="#C8102E" stroke-width="60"/>
+    </g>
+  </g>
+
+  <!-- Large Commonwealth Star (7-pointed) under Union Jack -->
+  <g fill="#FFFFFF" transform="translate(300, 450)">
+    <polygon points="0,-60 14.5,-23 51.5,-39 28.5,-6 58.5,19 21.5,23 27.5,60 0,31 -27.5,60 -21.5,23 -58.5,19 -28.5,-6 -51.5,-39 -14.5,-23"/>
+  </g>
+
+  <!-- Southern Cross (5 stars on right) -->
+  <g fill="#FFFFFF">
+    <!-- Gamma Crucis (top) -->
+    <polygon points="0,-25 6,-9.5 21.5,-16 12,-2.5 24.5,8 9,9.5 11.5,25 0,13 -11.5,25 -9,9.5 -24.5,8 -12,-2.5 -21.5,-16 -6,-9.5" transform="translate(900, 120)"/>
+    <!-- Beta Crucis (left) -->
+    <polygon points="0,-25 6,-9.5 21.5,-16 12,-2.5 24.5,8 9,9.5 11.5,25 0,13 -11.5,25 -9,9.5 -24.5,8 -12,-2.5 -21.5,-16 -6,-9.5" transform="translate(750, 240)"/>
+    <!-- Delta Crucis (right) -->
+    <polygon points="0,-25 6,-9.5 21.5,-16 12,-2.5 24.5,8 9,9.5 11.5,25 0,13 -11.5,25 -9,9.5 -24.5,8 -12,-2.5 -21.5,-16 -6,-9.5" transform="translate(1050, 200)"/>
+    <!-- Epsilon Crucis (small 5-pointed) -->
+    <polygon points="0,-14 4.1,-4.3 14.2,-4.3 6,1.6 9.1,11.3 0,4.7 -9.1,11.3 -6,1.6 -14.2,-4.3 -4.1,-4.3" transform="translate(970, 320)"/>
+    <!-- Alpha Crucis (bottom) -->
+    <polygon points="0,-25 6,-9.5 21.5,-16 12,-2.5 24.5,8 9,9.5 11.5,25 0,13 -11.5,25 -9,9.5 -24.5,8 -12,-2.5 -21.5,-16 -6,-9.5" transform="translate(900, 480)"/>
+  </g>
+</svg>

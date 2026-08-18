@@ -430,12 +430,12 @@ export default async function PortfolioPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
-              alt: 'Bare villa shell before fit-out',
+              src: '/posters/portfolio-chennai-residence-before.png',
+              alt: 'Bare shell residence living room before interior fit-out in Chennai',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
-              alt: 'Completed luxury interior by Luxe Axis',
+              src: '/posters/portfolio-chennai-residence-after.png',
+              alt: 'Completed luxury Vastu-Tech living room by Luxe Axis in Chennai',
             }}
           />
         </div>

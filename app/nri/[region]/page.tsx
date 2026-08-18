@@ -13,7 +13,7 @@ import { canonicalFor } from '@/lib/seo/hreflang';
 import { getFaqs, getNriRegions, getTestimonials } from '@/lib/content/source';
 import { STUDIO, whatsappHref } from '@/lib/content/studio';
 import { HeroBackground } from '@/components/sections/HeroBackground';
-import { NRI_HERO_SLIDES, heroSlidesForNriRegion } from '@/lib/content/heroSlides';
+import { heroSlidesForNriRegion } from '@/lib/content/heroSlides';
 
 /**
  * `/nri/[region]` (Spec §2.2: `/nri/singapore /uae /usa /uk /canada

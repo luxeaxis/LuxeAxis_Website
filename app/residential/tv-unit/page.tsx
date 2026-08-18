@@ -82,7 +82,7 @@ export default async function TvUnitPage() {
         'Storage cabinet with soft-close Hettich hardware',
         'Ideal for rooms with 9 to 10 ft walls',
       ],
-      image: '/posters/persona-router.avif',
+      image: '/posters/residential-tv-unit-hero.png',
     },
     {
       tag: 'Maximum Storage',
@@ -95,7 +95,7 @@ export default async function TvUnitPage() {
         'Integrated cable management channels',
         'Best for rooms with 10 ft plus slab height',
       ],
-      image: '/posters/portfolio.avif',
+      image: '/posters/living-room-after-new.png',
     },
     {
       tag: 'Fully Configurable',
@@ -108,7 +108,7 @@ export default async function TvUnitPage() {
         'Asymmetric compositions for editorial looks',
         'Hettich & Hafele hardware standard',
       ],
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/room-living-room.png',
     },
     {
       tag: 'Luxury & Villas',
@@ -121,7 +121,7 @@ export default async function TvUnitPage() {
         'Tunable white 2700K to 6500K available',
         'Smart dimmer scene control compatible',
       ],
-      image: '/posters/hero.avif',
+      image: '/posters/residential-living-room-hero.png',
     },
   ];
 
@@ -166,25 +166,25 @@ export default async function TvUnitPage() {
       title: 'Backlit Media Wall in 4BHK Living Suite',
       tag: 'Backlit Media Wall',
       location: 'Adyar, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/residential-living-room-hero.png',
     },
     {
       title: 'Floor-to-Ceiling Modular Media Wall',
       tag: 'Floor to Ceiling',
       location: 'Velachery, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/living-room-after-new.png',
     },
     {
       title: 'Floating TV Panel with Cove LED',
       tag: 'Floating Panel',
       location: 'OMR, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/residential-tv-unit-hero.png',
     },
     {
       title: 'Modular TV Wall with Open Shelves',
       tag: 'Modular Wall',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/room-living-room.png',
     },
   ];
 
@@ -596,11 +596,11 @@ export default async function TvUnitPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/living-room-before-new.png',
               alt: 'Plain living room wall before TV unit installation',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
+              src: '/posters/living-room-after-new.png',
               alt: 'Completed backlit media wall TV unit by Luxe Axis in Velachery',
             }}
           />

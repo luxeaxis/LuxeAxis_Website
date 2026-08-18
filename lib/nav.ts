@@ -216,7 +216,7 @@ export const COMMERCIAL_MEGA_MENU: MegaMenuConfig = {
     title: 'Corporate Headquarters',
     tagline: 'Precision engineered 15,000 sq.ft tech hub fitout in Chennai',
     href: '/commercial/workplace',
-    image: '/posters/portfolio.avif',
+    image: '/posters/commercial-workplace-hero.png',
     ctaText: 'View Commercial Showcase →',
   },
 };
@@ -275,7 +275,7 @@ export const DIGITAL_MEGA_MENU: MegaMenuConfig = {
     tagline:
       'Professional architectural design delivered remotely anywhere in the world',
     href: '/digital',
-    image: '/posters/pricing-axis.avif',
+    image: '/posters/digital-hub-hero.png',
     ctaText: 'Explore Digital Hub →',
   },
 };
@@ -346,7 +346,7 @@ export const INTELLIGENCE_MEGA_MENU: MegaMenuConfig = {
     title: 'Vastu-Tech AI Simulator',
     tagline: 'Scan your CAD floorplan against ancient cosmic grids in seconds',
     href: '/intelligence/vastu-tech',
-    image: '/posters/pricing-axis.avif',
+    image: '/posters/service-vastu-tech.png',
     ctaText: 'Launch Vastu Scan →',
   },
 };
@@ -420,7 +420,7 @@ export const PORTFOLIO_MEGA_MENU: MegaMenuConfig = {
     title: 'The Emerald Villa',
     tagline: '8,200 sq.ft Vastu-Tech Masterpiece in Indiranagar',
     href: '/portfolio/villas',
-    image: '/posters/persona-router.avif',
+    image: '/posters/residential-luxury-hero.png',
     ctaText: 'View Case Study →',
   },
 };
@@ -480,7 +480,7 @@ export const PRICING_MEGA_MENU: MegaMenuConfig = {
     title: 'Instant Cost Audit',
     tagline: 'Get a accurate BOQ breakdown tailored to your floorplan',
     href: '/pricing/calculator',
-    image: '/posters/hero.avif',
+    image: '/posters/residential-spotlight.png',
     ctaText: 'Calculate Budget →',
   },
 };

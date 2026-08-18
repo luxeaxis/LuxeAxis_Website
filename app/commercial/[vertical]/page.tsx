@@ -387,11 +387,11 @@ export default async function CommercialVerticalPage({
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: `Bare shell before ${vertical.name.toLowerCase()} fit-out`,
             }}
             afterImage={{
-              src: '/posters/portfolio.avif',
+              src: '/posters/commercial-workplace-hero.png',
               alt: `Completed ${vertical.name.toLowerCase()} interior in Chennai`,
             }}
           />

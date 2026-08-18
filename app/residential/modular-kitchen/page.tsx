@@ -72,28 +72,28 @@ export default async function ModularKitchenPage() {
       title: 'L-Shape Kitchen',
       desc: 'Two walls of cabinetry forming a right angle. Maximizes the work triangle between hob, sink, and refrigerator. Ideal for open-plan living and dining combinations.',
       sqft: '120 sq ft and above',
-      image: '/posters/hero.avif',
+      image: '/posters/kitchen-layout-lshape.png',
     },
     {
       badge: 'Best for 2BHK Apartments',
       title: 'Parallel Kitchen',
       desc: 'Facing rows of cabinets maximize storage in a narrow corridor. Highest cabinet count per square foot. The most efficient layout for Chennai 2BHK apartments.',
       sqft: '80 sq ft and above',
-      image: '/posters/persona-router.avif',
+      image: '/posters/kitchen-layout-parallel.png',
     },
     {
       badge: 'Maximum Storage',
       title: 'U-Shape Kitchen',
       desc: 'Three walls of cabinets deliver the highest usable storage in any layout. Dedicated prep, cooking, and cleaning zones for large families.',
       sqft: '150 sq ft and above',
-      image: '/posters/portfolio.avif',
+      image: '/posters/kitchen-layout-ushape.png',
     },
     {
       badge: 'Luxury Homes & Villas',
       title: 'Island Kitchen',
       desc: 'A freestanding island adds a second prep surface, breakfast bar, or integrated hob zone. Designed for villas, penthouses, and large 4BHK homes.',
       sqft: '200 sq ft and above',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/room-modular-kitchen.png',
     },
   ];
 
@@ -108,7 +108,7 @@ export default async function ModularKitchenPage() {
         'Scratch-resistant surface finish',
         'Flat 10-year finish warranty',
       ],
-      image: '/posters/persona-router.avif',
+      image: '/posters/kitchen-layout-lshape.png',
     },
     {
       name: 'High-Gloss Finish',
@@ -120,7 +120,7 @@ export default async function ModularKitchenPage() {
         'UV-stable color that will not yellow over time',
         'Flat 10-year finish warranty',
       ],
-      image: '/posters/portfolio.avif',
+      image: '/posters/kitchen-layout-parallel.png',
     },
     {
       name: 'Woodgrain Finish',
@@ -132,7 +132,7 @@ export default async function ModularKitchenPage() {
         'Greenlam HPL with anti-bacterial surface',
         'Flat 10-year finish warranty',
       ],
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/kitchen-layout-ushape.png',
     },
   ];
 
@@ -141,25 +141,25 @@ export default async function ModularKitchenPage() {
       title: 'Premium L-Shape with Quartz Island',
       tag: 'L-Shape Kitchen',
       location: 'Adyar, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/kitchen-hero-bg.png',
     },
     {
       title: 'Compact Parallel Kitchen in 2BHK',
       tag: 'Parallel Kitchen',
       location: 'Velachery, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/kitchen-layout-parallel.png',
     },
     {
       title: 'Anthracite Matte Modular Kitchen',
       tag: 'Matte Finish',
       location: 'T. Nagar, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/residential-kitchen-cabinets-hero.png',
     },
     {
       title: 'High-Gloss White 3BHK Kitchen',
       tag: 'High-Gloss',
       location: 'OMR, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/service-modular-kitchen.png',
     },
   ];
 
@@ -272,7 +272,7 @@ export default async function ModularKitchenPage() {
         {/* Full-Bleed Background Image with Ken Burns Cinematic Effect */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <Image
-            src="/posters/residential-modular-kitchen-hero.png"
+            src="/posters/kitchen-hero-bg.png"
             alt="Luxe Axis Modular Kitchen Interior Designers in Chennai"
             fill
             priority
@@ -556,11 +556,11 @@ export default async function ModularKitchenPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/renovation-kitchen-before.png',
               alt: 'Old carpenter-built kitchen before modular makeover',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
+              src: '/posters/renovation-kitchen-after.png',
               alt: 'Completed modular kitchen by Luxe Axis in Adyar Chennai',
             }}
           />
