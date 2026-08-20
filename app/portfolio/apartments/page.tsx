@@ -11,6 +11,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { APARTMENTS_PORTFOLIO_HERO_SLIDES } from '@/lib/content/heroSlides';
 
 const ROUTE = '/portfolio/apartments';
 
@@ -37,31 +39,31 @@ export default async function ApartmentsPortfolioPage() {
       area: '1,850 sq.ft',
       tier: 'Signature Tier',
       desc: 'Smart 3BHK apartment with fluted louvers, concealed pooja room mandap, and acrylic modular kitchen.',
-      image: '/posters/hero.avif',
+      image: '/posters/project-2bhk-tnagar.png',
     },
     {
       title: 'Velachery 4BHK Luxury Flat',
       location: 'Velachery, Chennai',
       area: '2,400 sq.ft',
       tier: 'Signature Tier',
-      desc: 'Spacious 4BHK featuring Italian marble dining counter, floor-to-ceiling sliding wardrobes, and Gyproc false ceilings.',
-      image: '/posters/portfolio.avif',
+      desc: 'Spacious 4BHK featuring Italian Botticino marble breakfast counter, Gyproc false ceiling, and magnetic architectural track lights.',
+      image: '/posters/apt-velachery-4bhk.png',
     },
     {
       title: 'Sholinganallur 2BHK Modern Home',
       location: 'Sholinganallur, Chennai',
       area: '1,250 sq.ft',
       tier: 'Essential Tier',
-      desc: 'Compact 2BHK designed with space-saving fold-down dining table, mirror wall accents, and warm cove lighting.',
-      image: '/posters/pricing-axis.avif',
+      desc: 'Compact 2BHK designed with space-saving fluted oak media console, bronze mirror wall accents, and warm ambient LED lighting.',
+      image: '/posters/apt-sholinganallur-2bhk.png',
     },
     {
       title: 'Anna Nagar Gated Apartment',
       location: 'Anna Nagar, Chennai',
       area: '2,100 sq.ft',
       tier: 'Signature Tier',
-      desc: 'Elegant 3BHK with stone veneer TV backdrops, bronze tinted glass wardrobes, and smart home lighting switches.',
-      image: '/posters/persona-router.avif',
+      desc: 'Elegant 3BHK with backlit translucent quartz TV backdrop, smoked walnut cabinetry, and smart home lighting scenes.',
+      image: '/posters/apt-annanagar-gated.png',
     },
   ];
 
@@ -114,40 +116,46 @@ export default async function ApartmentsPortfolioPage() {
         }}
       />
 
-      {/* 1. Hero Stage */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage with Full-Bleed Animated Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={APARTMENTS_PORTFOLIO_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs
             path="/portfolio/apartments"
             labels={{ apartments: 'Luxury Apartments' }}
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Urban Apartment Interiors
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Luxury Apartment <br />
               <span className="text-accent">Interiors in Chennai</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Luxury 2BHK, 3BHK, and 4BHK apartment interior design in Chennai.
               Smart space optimization, Blum soft-close kitchens, sensor
               wardrobes, and 45-day handover guarantee.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Apartment Audit
               </Button>
-              <Button as="a" href="/pricing" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/pricing"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 View Apartment Calculator →
               </Button>
             </div>
@@ -298,12 +306,12 @@ export default async function ApartmentsPortfolioPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
-              alt: 'Bare apartment shell before fit-out',
+              src: '/posters/apt-before-construction-raw.png',
+              alt: 'Bare shell 3BHK flat in T. Nagar before turnkey design and execution',
             }}
             afterImage={{
-              src: '/posters/pricing-axis.avif',
-              alt: 'Completed 3BHK apartment interior in T. Nagar',
+              src: '/posters/project-2bhk-tnagar.png',
+              alt: 'Completed luxury 3BHK apartment interior in T. Nagar',
             }}
           />
         </div>

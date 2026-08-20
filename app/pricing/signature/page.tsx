@@ -327,11 +327,11 @@ export default function SignaturePricingPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/penthouse-before-omr.png',
               alt: 'Bare shell penthouse before Signature fit-out',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
+              src: '/posters/penthouse-hero-omr.png',
               alt: 'Completed Signature Tier penthouse in OMR',
             }}
           />

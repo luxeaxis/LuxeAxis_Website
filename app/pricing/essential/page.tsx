@@ -327,11 +327,11 @@ export default function EssentialPricingPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: 'Bare shell flat before Essential fit-out',
             }}
             afterImage={{
-              src: '/posters/pricing-axis.avif',
+              src: '/posters/project-2bhk-tnagar.png',
               alt: 'Completed Essential Tier apartment in Velachery',
             }}
           />

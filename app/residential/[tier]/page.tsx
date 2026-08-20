@@ -362,11 +362,21 @@ export default async function TierPage({
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src:
+                tier.id === 'essential'
+                  ? '/posters/apt-before-construction-raw.png'
+                  : tier.id === 'signature'
+                    ? '/posters/penthouse-before-omr.png'
+                    : '/posters/res-luxury-before-raw-shell.png',
               alt: `Bare shell residence before ${tier.name} fit-out`,
             }}
             afterImage={{
-              src: '/posters/hero.avif',
+              src:
+                tier.id === 'essential'
+                  ? '/posters/project-2bhk-tnagar.png'
+                  : tier.id === 'signature'
+                    ? '/posters/penthouse-hero-omr.png'
+                    : '/posters/res-luxury-featured-adyar-estate.png',
               alt: `Completed ${tier.name} interior in Chennai`,
             }}
           />

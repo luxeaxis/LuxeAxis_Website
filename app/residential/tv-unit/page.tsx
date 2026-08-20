@@ -110,7 +110,7 @@ export default async function TvUnitPage() {
         'Storage cabinet with soft-close Hettich hardware',
         'Ideal for rooms with 9 to 10 ft walls',
       ],
-      image: '/posters/residential-tv-unit-hero.png',
+      image: '/posters/tv-unit-floating-minimalist.png',
     },
     {
       tag: 'Maximum Storage',
@@ -123,7 +123,7 @@ export default async function TvUnitPage() {
         'Integrated cable management channels',
         'Best for rooms with 10 ft plus slab height',
       ],
-      image: '/posters/living-room-after-new.png',
+      image: '/posters/tv-unit-fluted-walnut.png',
     },
     {
       tag: 'Fully Configurable',
@@ -136,7 +136,7 @@ export default async function TvUnitPage() {
         'Asymmetric compositions for editorial looks',
         'Hettich & Hafele hardware standard',
       ],
-      image: '/posters/room-living-room.png',
+      image: '/posters/tv-unit-rotary-partition.png',
     },
     {
       tag: 'Luxury & Villas',
@@ -149,7 +149,7 @@ export default async function TvUnitPage() {
         'Tunable white 2700K to 6500K available',
         'Smart dimmer scene control compatible',
       ],
-      image: '/posters/residential-living-room-hero.png',
+      image: '/posters/tv-unit-backlit-onyx.png',
     },
   ];
 
@@ -194,25 +194,25 @@ export default async function TvUnitPage() {
       title: 'Backlit Media Wall in 4BHK Living Suite',
       tag: 'Backlit Media Wall',
       location: 'Adyar, Chennai',
-      image: '/posters/residential-living-room-hero.png',
+      image: '/posters/tv-unit-backlit-onyx.png',
     },
     {
       title: 'Floor-to-Ceiling Modular Media Wall',
       tag: 'Floor to Ceiling',
       location: 'Velachery, Chennai',
-      image: '/posters/living-room-after-new.png',
+      image: '/posters/tv-unit-fluted-walnut.png',
     },
     {
       title: 'Floating TV Panel with Cove LED',
       tag: 'Floating Panel',
       location: 'OMR, Chennai',
-      image: '/posters/residential-tv-unit-hero.png',
+      image: '/posters/tv-unit-floating-minimalist.png',
     },
     {
-      title: 'Modular TV Wall with Open Shelves',
+      title: 'Rotary Partition Media Wall',
       tag: 'Modular Wall',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/room-living-room.png',
+      image: '/posters/tv-unit-rotary-partition.png',
     },
   ];
 

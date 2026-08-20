@@ -407,11 +407,11 @@ export default async function ResidentialPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: 'Bare shell 3BHK flat before interior fit-out',
             }}
             afterImage={{
-              src: '/posters/portfolio.avif',
+              src: '/posters/apt-after-living-luxury.png',
               alt: 'Completed luxury 3BHK residential interior in Chennai',
             }}
           />

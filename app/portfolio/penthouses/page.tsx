@@ -11,6 +11,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { PENTHOUSES_PORTFOLIO_HERO_SLIDES } from '@/lib/content/heroSlides';
 
 const ROUTE = '/portfolio/penthouses';
 
@@ -39,32 +41,32 @@ export default async function PenthousesPortfolioPage() {
       location: 'OMR, Chennai',
       area: '5,800 sq.ft',
       tier: 'Signature Tier',
-      desc: 'Double-height living room with book-matched Calacatta marble wall, suspended brass chandelier, and automated sky lounge.',
-      image: '/posters/hero.avif',
+      desc: 'Double-height living room with book-matched Calacatta gold marble wall, suspended brass chandelier, and automated sky lounge.',
+      image: '/posters/penthouse-hero-omr.png',
     },
     {
       title: 'Nungambakkam Sky Villa',
       location: 'Nungambakkam, Chennai',
       area: '6,400 sq.ft',
       tier: 'Elite Tier',
-      desc: 'Panoramic terrace apartment with Venetian plaster walls, motorized drapery, and integrated Bang & Olufsen soundscapes.',
-      image: '/posters/portfolio.avif',
+      desc: 'Panoramic terrace apartment with travertine flooring, custom fluted bar with liquid brass inlays, and city skyline views.',
+      image: '/posters/penthouse-nungambakkam-sky.png',
     },
     {
       title: 'Adyar Riverfront Penthouse',
       location: 'Adyar, Chennai',
       area: '5,200 sq.ft',
       tier: 'Elite Tier',
-      desc: 'Full-floor residence with private elevator vestibule, smoked oak flooring, and custom Italian glass wardrobes.',
-      image: '/posters/pricing-axis.avif',
+      desc: 'Full-floor residence with floor-to-ceiling glass framing the Adyar estuary, smoked oak herringbone flooring, and Italian glass wardrobes.',
+      image: '/posters/penthouse-adyar-riverfront.png',
     },
     {
       title: 'Anna Nagar Tower Residence',
       location: 'Anna Nagar, Chennai',
       area: '4,600 sq.ft',
       tier: 'Signature Tier',
-      desc: 'Minimalist penthouse featuring cantilevered stone breakfast island, concealed pantry door, and smart lighting scenes.',
-      image: '/posters/persona-router.avif',
+      desc: 'Minimalist penthouse featuring cantilevered Statuario marble waterfall island, concealed walnut cabinetry, and smart lighting scenes.',
+      image: '/posters/penthouse-annanagar-tower.png',
     },
   ];
 
@@ -117,40 +119,46 @@ export default async function PenthousesPortfolioPage() {
         }}
       />
 
-      {/* 1. Hero Stage */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage with Full-Bleed Animated Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={PENTHOUSES_PORTFOLIO_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs
             path="/portfolio/penthouses"
             labels={{ penthouses: 'Penthouse Residences' }}
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 High-Rise Architectural Fit-Outs
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Penthouse & Sky Villa <br />
               <span className="text-accent">Interiors in Chennai</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Panoramic duplex penthouses, sky villas, and high-rise luxury
               interiors. Custom Italian marble, double-height acoustic joinery,
               and integrated home automation.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Penthouse Audit
               </Button>
-              <Button as="a" href="/pricing" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/pricing"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 View Investment Tiers →
               </Button>
             </div>
@@ -301,12 +309,12 @@ export default async function PenthousesPortfolioPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
-              alt: 'Bare shell penthouse space before fit-out',
+              src: '/posters/penthouse-before-omr.png',
+              alt: 'Raw bare-shell penthouse apartment in OMR before turnkey execution',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
-              alt: 'Completed penthouse interior in OMR',
+              src: '/posters/penthouse-hero-omr.png',
+              alt: 'Completed luxury double-height duplex penthouse living room in OMR',
             }}
           />
         </div>

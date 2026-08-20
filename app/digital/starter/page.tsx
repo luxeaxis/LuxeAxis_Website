@@ -180,11 +180,11 @@ export default async function StarterDigitalPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/apt-before-construction-raw.png',
               alt: 'Bare shell living room before Starter Digital design',
             }}
             afterImage={{
-              src: '/posters/pricing-axis.avif',
+              src: '/posters/project-2bhk-tnagar.png',
               alt: 'Completed living room using Starter Digital floorplans',
             }}
           />

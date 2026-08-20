@@ -89,7 +89,7 @@ export default async function WardrobePage() {
         'Full internal fitting customization',
         'Flat 10-year warranty included',
       ],
-      image: '/posters/residential-wardrobe-hero.png',
+      image: '/posters/wardrobe-tinted-glass-sliding.png',
     },
     {
       tag: 'Walk-In Wardrobe',
@@ -103,7 +103,7 @@ export default async function WardrobePage() {
         'Optional central island unit with mirror',
         'Integrated warm LED wardrobe lighting',
       ],
-      image: '/posters/service-master-bedroom.png',
+      image: '/posters/wardrobe-walkin-closet.png',
     },
     {
       tag: 'Hinged Wardrobe',
@@ -117,7 +117,7 @@ export default async function WardrobePage() {
         'Complete internal fitting selection',
         'Flat 10-year warranty included',
       ],
-      image: '/posters/room-wardrobe-storage.png',
+      image: '/posters/wardrobe-solid-teak-hinged.png',
     },
     {
       tag: 'Modular Wardrobe',
@@ -131,7 +131,7 @@ export default async function WardrobePage() {
         'Same internal fittings as fixed wardrobes',
         'Flat 10-year warranty included',
       ],
-      image: '/posters/room-master-bedroom.png',
+      image: '/posters/wardrobe-corner-l-shape.png',
     },
   ];
 
@@ -173,25 +173,25 @@ export default async function WardrobePage() {
       title: 'Contemporary 4-Door Sliding Wardrobe Suite',
       tag: 'Sliding Wardrobe',
       location: 'Adyar, Chennai',
-      image: '/posters/residential-wardrobe-hero.png',
+      image: '/posters/wardrobe-tinted-glass-sliding.png',
     },
     {
       title: '3-Wall Walk-In Wardrobe Suite',
       tag: 'Walk-In Suite',
       location: 'T. Nagar, Chennai',
-      image: '/posters/service-master-bedroom.png',
+      image: '/posters/wardrobe-walkin-closet.png',
     },
     {
       title: 'Full-Depth Veneer Hinged Wardrobe',
       tag: 'Hinged Wardrobe',
       location: 'OMR, Chennai',
-      image: '/posters/room-wardrobe-storage.png',
+      image: '/posters/wardrobe-solid-teak-hinged.png',
     },
     {
-      title: 'Modular White Laminate Wardrobe System',
+      title: 'Corner Vanity Modular Wardrobe System',
       tag: 'Modular Wardrobe',
       location: 'Anna Nagar, Chennai',
-      image: '/posters/renovation-bedroom-after.png',
+      image: '/posters/wardrobe-corner-l-shape.png',
     },
   ];
 

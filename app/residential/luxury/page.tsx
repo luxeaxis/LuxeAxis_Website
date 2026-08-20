@@ -138,25 +138,25 @@ export default async function LuxuryPage() {
       title: 'Marble & Brass Residence Villa',
       tag: 'Luxury Villa',
       location: 'Adyar, Chennai',
-      image: '/posters/hero.avif',
+      image: '/posters/res-luxury-gallery-adyar-villa.png',
     },
     {
       title: 'Venetian Plaster Master Suite',
       tag: 'Master Suite',
       location: 'Nungambakkam, Chennai',
-      image: '/posters/portfolio.avif',
+      image: '/posters/res-luxury-gallery-nungambakkam-suite.png',
     },
     {
       title: 'Italian Veneer Kitchen Suite',
       tag: 'Luxury Kitchen',
       location: 'Besant Nagar, Chennai',
-      image: '/posters/pricing-axis.avif',
+      image: '/posters/res-luxury-gallery-besant-nagar-kitchen.png',
     },
     {
       title: 'Full-Floor Penthouse Interior',
       tag: 'Penthouse',
       location: 'OMR, Chennai',
-      image: '/posters/persona-router.avif',
+      image: '/posters/res-luxury-gallery-omr-penthouse.png',
     },
   ];
 
@@ -533,7 +533,7 @@ export default async function LuxuryPage() {
       >
         <div className="relative rounded-2xl overflow-hidden border border-accent/30 aspect-[16/9] shadow-2xl">
           <Image
-            src="/posters/hero.avif"
+            src="/posters/res-luxury-featured-adyar-estate.png"
             alt="The Adyar Residence luxury villa interior"
             fill
             sizes="100vw"
@@ -569,11 +569,11 @@ export default async function LuxuryPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/res-luxury-before-raw-shell.png',
               alt: 'Bare villa shell before luxury fit-out',
             }}
             afterImage={{
-              src: '/posters/hero.avif',
+              src: '/posters/res-luxury-featured-adyar-estate.png',
               alt: 'Completed luxury villa interior by Luxe Axis in Adyar',
             }}
           />

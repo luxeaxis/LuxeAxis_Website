@@ -325,11 +325,11 @@ export default function ElitePricingPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
+              src: '/posters/res-luxury-before-raw-shell.png',
               alt: 'Bare villa shell before Elite fit-out',
             }}
             afterImage={{
-              src: '/posters/portfolio.avif',
+              src: '/posters/res-luxury-featured-adyar-estate.png',
               alt: 'Completed Elite Tier villa in Adyar',
             }}
           />

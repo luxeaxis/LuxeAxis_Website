@@ -541,5 +541,86 @@ export const CAREERS_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
   },
 ];
 
+/**
+ * Penthouse & Sky Villa Portfolio (`/portfolio/penthouses`).
+ */
+export const PENTHOUSES_PORTFOLIO_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/penthouse-hero-omr.png',
+    alt: 'Double-height luxury duplex penthouse in OMR Chennai with Calacatta gold marble wall and panoramic Bay of Bengal ocean view.',
+    label: 'The OMR Duplex Penthouse',
+  },
+  {
+    src: '/posters/penthouse-nungambakkam-sky.png',
+    alt: 'Panoramic sky villa penthouse in Nungambakkam with seamless travertine floors and private skyline terrace.',
+    label: 'Nungambakkam Sky Villa',
+  },
+  {
+    src: '/posters/penthouse-adyar-riverfront.png',
+    alt: 'Riverfront penthouse master suite in Adyar with floor-to-ceiling glass and smoked herringbone oak floors.',
+    label: 'Adyar Riverfront Penthouse',
+  },
+  {
+    src: '/posters/penthouse-annanagar-tower.png',
+    alt: 'Minimalist tower penthouse kitchen with cantilevered Statuario marble island and city skyline backdrop.',
+    label: 'Anna Nagar Tower Residence',
+  },
+];
+
+/**
+ * Luxury Villa & Gated Estate Portfolio (`/portfolio/villas`).
+ */
+export const VILLAS_PORTFOLIO_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/project-villa-velachery.png',
+    alt: 'Sprawling 5BHK luxury estate villa in Adyar with double-height mezzanine and brass architectural details.',
+    label: 'The Emerald Villa — Adyar',
+  },
+  {
+    src: '/posters/villa-besant-nagar-coastal.png',
+    alt: 'Contemporary beachfront villa in Besant Nagar with exposed teakwood ceiling rafters and infinity pool deck.',
+    label: 'Besant Nagar Coastal Estate',
+  },
+  {
+    src: '/posters/villa-ecr-sanctuary.png',
+    alt: 'Private gated tropical estate on ECR with central open courtyard and solid live-edge teak dining suite.',
+    label: 'ECR Sanctuary Bungalow',
+  },
+  {
+    src: '/posters/villa-annanagar-heritage.png',
+    alt: 'Modernized heritage villa in Anna Nagar with backlit honey onyx bar and handcrafted teak fluted paneling.',
+    label: 'Anna Nagar Heritage Villa',
+  },
+];
+
+/**
+ * Luxury Apartment Portfolio (`/portfolio/apartments`).
+ */
+export const APARTMENTS_PORTFOLIO_HERO_SLIDES: readonly HeroBackgroundSlide[] = [
+  {
+    src: '/posters/project-2bhk-tnagar.png',
+    alt: 'Smart luxury 3BHK apartment in T. Nagar with fluted paneling and Italian marble accents.',
+    label: 'The T. Nagar 3BHK Residence',
+  },
+  {
+    src: '/posters/apt-velachery-4bhk.png',
+    alt: 'Contemporary 4BHK apartment in Velachery with Botticino marble breakfast counter and magnetic track lights.',
+    label: 'Velachery 4BHK Luxury Flat',
+  },
+  {
+    src: '/posters/apt-sholinganallur-2bhk.png',
+    alt: 'Modern 2BHK apartment in Sholinganallur with fluted oak media console and bronze mirror wall.',
+    label: 'Sholinganallur 2BHK Modern Home',
+  },
+  {
+    src: '/posters/apt-annanagar-gated.png',
+    alt: 'High-end 3BHK gated apartment in Anna Nagar with backlit quartz TV wall and smoked walnut cabinetry.',
+    label: 'Anna Nagar Gated Apartment',
+  },
+];
+
+
+
+
 
 

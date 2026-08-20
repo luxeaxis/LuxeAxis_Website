@@ -11,6 +11,8 @@ import { CTASection } from '@/components/sections/CTASection';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
 import { canonicalFor } from '@/lib/seo/hreflang';
+import { HeroBackground } from '@/components/sections/HeroBackground';
+import { VILLAS_PORTFOLIO_HERO_SLIDES } from '@/lib/content/heroSlides';
 
 const ROUTE = '/portfolio/villas';
 
@@ -50,31 +52,31 @@ export default async function VillasPortfolioPage() {
       area: '8,200 sq.ft',
       tier: 'Elite Tier',
       desc: 'Sprawling 5BHK gated villa featuring central open-to-sky courtyard, Vastu-Tech brass mandap, and Calacatta marble flooring.',
-      image: '/posters/persona-router.avif',
+      image: '/posters/project-villa-velachery.png',
     },
     {
       title: 'Besant Nagar Coastal Estate',
       location: 'Besant Nagar, Chennai',
       area: '7,500 sq.ft',
       tier: 'Elite Tier',
-      desc: 'Contemporary beachside villa with teakwood ceiling rafters, sea-facing master suite lounge, and automated infinity pool deck.',
-      image: '/posters/hero.avif',
+      desc: 'Contemporary beachside villa with exposed teakwood ceiling rafters, sea-facing master suite lounge, and automated infinity pool deck.',
+      image: '/posters/villa-besant-nagar-coastal.png',
     },
     {
       title: 'ECR Sanctuary Bungalow',
       location: 'ECR, Chennai',
       area: '9,000 sq.ft',
       tier: 'Elite Tier',
-      desc: 'Private gated estate with tropical courtyard landscaping, double-volume dining room, and custom wine cellar.',
-      image: '/posters/portfolio.avif',
+      desc: 'Private gated estate with central tropical courtyard landscaping, double-volume dining room, and solid live-edge teak dining suite.',
+      image: '/posters/villa-ecr-sanctuary.png',
     },
     {
       title: 'Anna Nagar Heritage Villa',
       location: 'Anna Nagar, Chennai',
       area: '6,800 sq.ft',
       tier: 'Signature Tier',
-      desc: 'Modernized traditional villa with carved solid teak main door, onyx lighted bar counter, and home theater suite.',
-      image: '/posters/pricing-axis.avif',
+      desc: 'Modernized traditional villa with handcrafted teak fluted paneling, backlit honey onyx bar counter, and home theater suite.',
+      image: '/posters/villa-annanagar-heritage.png',
     },
   ];
 
@@ -127,40 +129,46 @@ export default async function VillasPortfolioPage() {
         }}
       />
 
-      {/* 1. Hero Stage */}
-      <section className="relative overflow-hidden pt-12 pb-16 bg-surface-deep border-b border-border-subtle/40">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent pointer-events-none" />
+      {/* 1. Hero Stage with Full-Bleed Animated Background */}
+      <section className="relative overflow-hidden pt-12 pb-16 min-h-[82vh] flex flex-col justify-center bg-surface-deep border-b border-border-subtle/40 isolate">
+        <HeroBackground slides={VILLAS_PORTFOLIO_HERO_SLIDES} overlay="grid" />
 
-        <Container>
+        <Container className="relative z-10">
           <Breadcrumbs
             path="/portfolio/villas"
             labels={{ villas: 'Gated Estate Villas' }}
           />
 
           <Stack gap={6} className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 w-fit">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/40 w-fit backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="font-ui text-overline uppercase tracking-wider text-accent font-bold">
                 Private Estate Architecture
               </span>
             </div>
 
-            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.1] tracking-[var(--font-tracking-tight)] text-on-surface font-bold">
+            <h1 className="font-display text-[length:var(--typography-display-font-size)] leading-[1.08] tracking-[var(--font-tracking-tight)] text-on-surface font-bold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Luxury Villa & Estate <br />
               <span className="text-accent">Interiors in Chennai</span>
             </h1>
 
-            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface-2 font-medium leading-relaxed max-w-3xl">
+            <p className="text-[length:var(--typography-body-lg-font-size)] text-on-surface font-medium leading-relaxed max-w-3xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Private estate villas, independent bungalows, and luxury gated
               community homes. Vastu-Tech solar alignment, Italian marble, and
               bespoke teakwood joinery.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button as="a" href="/book-audit" size="lg">
+              <Button as="a" href="/book-audit" size="lg" className="shadow-2xl">
                 Book Villa Design Audit
               </Button>
-              <Button as="a" href="/pricing" variant="secondary" size="lg">
+              <Button
+                as="a"
+                href="/pricing"
+                variant="secondary"
+                size="lg"
+                className="bg-surface-raised/90 border border-accent/30 backdrop-blur-md"
+              >
                 View Villa BOQ Calculator →
               </Button>
             </div>
@@ -311,12 +319,12 @@ export default async function VillasPortfolioPage() {
         <div className="max-w-4xl mx-auto">
           <BeforeAfterSlider
             beforeImage={{
-              src: '/posters/persona-router.avif',
-              alt: 'Bare villa shell before fit-out',
+              src: '/posters/emerald-villa-before.png',
+              alt: 'Raw bare-shell villa estate in Adyar before turnkey execution',
             }}
             afterImage={{
-              src: '/posters/portfolio.avif',
-              alt: 'Completed villa interior in Adyar',
+              src: '/posters/project-villa-velachery.png',
+              alt: 'Completed luxury estate villa living room in Adyar',
             }}
           />
         </div>
