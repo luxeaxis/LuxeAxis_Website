@@ -2,13 +2,13 @@
   "name": "luxeaxis-web",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@10.5.2",
   "engines": {
-    "node": ">=20.11"
+    "node": "20.x"
   },
   "scripts": {
     "dev": "tinacms dev -c \"next dev\"",
-    "build": "tinacms build --local --skip-cloud-checks && npm run tokens && next build",
+    "build": "npm run tokens && next build",
     "start": "next start",
     "tokens": "tsx scripts/build-tokens.ts",
     "typecheck": "tsc --noEmit",
